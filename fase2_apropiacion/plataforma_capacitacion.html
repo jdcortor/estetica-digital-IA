@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Streaming - Capacitación de Estética</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --header-yellow-hover: #e5bd00;
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --panel-bg-glass: rgba(30, 30, 34, 0.75);
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            
+            /* Colores de las Técnicas */
+            --comp-purple: #6c53a3;
+            --maq-blue: #30a0e0;
+            --diario-pink: #f4629e;
+            --crochet-green: #5cc472;
+            
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--header-yellow);
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .title-container p {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            transform: scale(1.03);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (WORKSPACE) --- */
+        .workspace {
+            flex: 1;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 300px 1fr 380px;
+            overflow: hidden;
+            background-color: #16161a;
+        }
+
+        /* --- COLUMNA 1: CANALES Y AGENDA (IZQUIERDA) --- */
+        .left-section {
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-family: var(--font-labels);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--header-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channels-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .channel-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .channel-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--header-yellow);
+        }
+
+        .channel-card.active {
+            background: rgba(251, 208, 8, 0.08);
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 10px rgba(251, 208, 8, 0.15);
+        }
+
+        .channel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .channel-badge {
+            background: var(--danger-color);
+            color: white;
+            font-size: 8px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .channel-title {
+            font-family: var(--font-labels);
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .channel-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .channel-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .channel-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .channel-meta .viewers-count {
+            color: var(--success-color);
+        }
+
+        /* Próximas Sesiones */
+        .agenda-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .agenda-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .agenda-time {
+            font-family: var(--font-labels);
+            font-size: 10.5px;
+            font-weight: 800;
+            color: var(--header-yellow);
+        }
+
+        .agenda-title {
+            font-family: var(--font-main);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .agenda-teacher {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-reminder {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--border-color);
+            color: #ffffff;
+            font-size: 10.5px;
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .btn-reminder:hover {
+            background: rgba(251, 208, 8, 0.1);
+            border-color: var(--header-yellow);
+            color: var(--header-yellow);
+        }
+
+        .btn-reminder.active {
+            background: var(--success-color);
+            color: white;
+            border-style: solid;
+            border-color: var(--success-color);
+        }
+
+        /* --- COLUMNA 2: REPRODUCTOR DE VIDEO (CENTRO) --- */
+        .center-section {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .video-player-wrapper {
+            position: relative;
+            width: 100%;
+            background-color: #000;
+            border-radius: 14px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .video-player-wrapper.active-border {
+            border-color: var(--header-yellow);
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Overlay de Reacciones Flotantes */
+        .reactions-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none; /* Dejar pasar clics */
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .emoji-bubble {
+            position: absolute;
+            bottom: -50px;
+            font-size: 28px;
+            animation: floatEmoji 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            opacity: 0.9;
+        }
+
+        @keyframes floatEmoji {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.6);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-50px) translateX(var(--drift-1)) scale(1.1);
+            }
+            50% {
+                transform: translateY(-200px) translateX(var(--drift-2)) scale(1);
+            }
+            100% {
+                transform: translateY(-450px) translateX(var(--drift-3)) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* Información del Video */
+        .video-info {
+            background: rgba(30, 30, 34, 0.6);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .live-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .live-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-badge {
+            background: var(--danger-color);
+            color: #fff;
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .live-indicator-dot {
+            width: 7px;
+            height: 7px;
+            background-color: white;
+            border-radius: 50%;
+            animation: pulse 1.2s infinite;
+        }
+
+        .viewer-badge {
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-muted);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .viewer-badge strong {
+            color: var(--success-color);
+        }
+
+        .video-title {
+            font-family: var(--font-labels);
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .video-teacher-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 5px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .teacher-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 13px;
+            box-shadow: 0 2px 6px rgba(251, 208, 8, 0.3);
+        }
+
+        .teacher-meta-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .teacher-name {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .teacher-role {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        /* --- COLUMNA 3: CHAT EN VIVO (DERECHA) --- */
+        .right-section {
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-header h3 {
+            font-family: var(--font-labels);
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .chat-online-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--success-color);
+        }
+
+        .chat-clear-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .chat-clear-btn:hover {
+            color: var(--header-yellow);
+        }
+
+        /* Mensajes del Chat */
+        .chat-history {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(18, 18, 20, 0.25);
+        }
+
+        .chat-msg {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            max-width: 95%;
+            align-self: flex-start;
+            animation: messageFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes messageFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-msg.moderator {
+            background: rgba(251, 208, 8, 0.05);
+            border-left: 3px solid var(--header-yellow);
+            border-color: rgba(251, 208, 8, 0.15) rgba(251, 208, 8, 0.15) rgba(251, 208, 8, 0.15) var(--header-yellow);
+        }
+
+        .chat-msg.student-user {
+            background: rgba(108, 83, 163, 0.08);
+            border-right: 3px solid var(--comp-purple);
+            border-color: rgba(108, 83, 163, 0.15) var(--comp-purple) rgba(108, 83, 163, 0.15) rgba(108, 83, 163, 0.15);
+            align-self: flex-end;
+        }
+
+        .chat-msg-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .chat-msg-author {
+            font-size: 11px;
+            font-weight: 700;
+            font-family: var(--font-labels);
+        }
+
+        .chat-msg-author.mod-name {
+            color: var(--header-yellow);
+        }
+
+        .chat-msg-author.student-name {
+            color: var(--maq-blue);
+        }
+
+        .chat-msg-author.user-name {
+            color: #d8b4fe;
+        }
+
+        .chat-msg-tag {
+            font-size: 8px;
+            font-weight: 800;
+            padding: 1.5px 5px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .chat-msg-tag.tag-mod {
+            background: var(--header-yellow);
+            color: var(--header-dark);
+        }
+
+        .chat-msg-tag.tag-user {
+            background: var(--comp-purple);
+            color: #ffffff;
+        }
+
+        .chat-msg-content {
+            font-size: 12.5px;
+            line-height: 1.45;
+            color: #e4e4e7;
+            word-break: break-word;
+        }
+
+        /* Area de entrada de texto */
+        .chat-input-area {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .quick-reactions-row {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reaction-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 6px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reaction-btn:hover {
+            background: rgba(251, 208, 8, 0.1);
+            border-color: var(--header-yellow);
+            transform: scale(1.08);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-text-input {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13px;
+            padding: 10px 12px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-text-input:focus {
+            outline: none;
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 6px rgba(251, 208, 8, 0.2);
+        }
+
+        .chat-send-btn {
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            border: none;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--header-yellow-hover);
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Aula Virtual <span>Streaming Estética</span></h1>
+            <p>Capacitación y Clases en Vivo · Colegio Danilo Cifuentes · Grado 11</p>
+        </div>
+        
+        <div class="actions-container">
+            <button class="close-btn" onclick="volverAlMapa()">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+            </button>
+        </div>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="workspace">
+        
+        <!-- COLUMNA 1: CANALES Y AGENDA (IZQUIERDA) -->
+        <div class="left-section">
+            <div>
+                <div class="section-title">
+                    <i class="fa-solid fa-tower-broadcast"></i> En Vivo Ahora
+                </div>
+                <div class="channels-list" id="channels-container">
+                    <!-- Canales cargados dinámicamente -->
+                </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <div class="section-title">
+                    <i class="fa-regular fa-calendar-days"></i> Próximas Sesiones
+                </div>
+                <div class="agenda-list" id="agenda-container">
+                    <!-- Clases programadas cargadas dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA 2: REPRODUCTOR DE VIDEO (CENTRO) -->
+        <div class="center-section">
+            <div class="video-player-wrapper" id="video-player-container">
+                <!-- Capa flotante de reacciones -->
+                <div class="reactions-overlay" id="reactions-space"></div>
+                
+                <!-- Reproductor de Video Nativo -->
+                <video class="video-iframe" id="video-iframe-player" 
+                    controls 
+                    autoplay 
+                    muted 
+                    loop 
+                    style="object-fit: cover; width: 100%; height: 100%; border: none;">
+                </video>
+            </div>
+
+            <div class="video-info">
+                <div class="live-status-row">
+                    <div class="live-label">
+                        <span class="live-badge">
+                            <span class="live-indicator-dot"></span> EN VIVO
+                        </span>
+                    </div>
+                    <div class="viewer-badge">
+                        <i class="fa-solid fa-eye"></i> Espectadores: <strong id="viewer-count-val">120</strong>
+                    </div>
+                </div>
+                <h2 class="video-title" id="video-title-val">Cargando transmisión...</h2>
+                
+                <div class="video-teacher-card">
+                    <div class="teacher-avatar" id="teacher-avatar-val">LV</div>
+                    <div class="teacher-meta-text">
+                        <span class="teacher-name" id="teacher-name-val">Profra. Laura Villanueva</span>
+                        <span class="teacher-role" id="teacher-role-val">Moderador de Clase</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA 3: CHAT EN VIVO (DERECHA) -->
+        <div class="right-section">
+            <div class="chat-header">
+                <div class="chat-title-group">
+                    <span class="chat-online-dot"></span>
+                    <h3>Chat de la Clase</h3>
+                </div>
+                <button class="chat-clear-btn" onclick="limpiarChat()" title="Limpiar Chat">
+                    <i class="fa-solid fa-trash-arrow-up"></i>
+                </button>
+            </div>
+
+            <!-- Zona de mensajes -->
+            <div class="chat-history" id="chat-history-container">
+                <!-- Mensajes virtuales fluyendo -->
+            </div>
+
+            <!-- Entrada de chat y reacciones -->
+            <div class="chat-input-area">
+                <!-- Reacciones rápidas de emoticones -->
+                <div class="quick-reactions-row">
+                    <button class="reaction-btn" onclick="lanzarEmoji('👏')" title="Aplauso">👏</button>
+                    <button class="reaction-btn" onclick="lanzarEmoji('❤️')" title="Me Gusta">❤️</button>
+                    <button class="reaction-btn" onclick="lanzarEmoji('💡')" title="Idea">💡</button>
+                    <button class="reaction-btn" onclick="lanzarEmoji('😮')" title="Sorpresa">😮</button>
+                    <button class="reaction-btn" onclick="lanzarEmoji('🔥')" title="Fuego">🔥</button>
+                </div>
+                <!-- Fila de escritura -->
+                <div class="input-row">
+                    <input type="text" class="chat-text-input" id="chat-user-msg" 
+                        placeholder="Pregunta o comenta algo en clase..." 
+                        onkeypress="handleKeyPress(event)">
+                    <button class="chat-send-btn" onclick="enviarMensajeUsuario()">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // --- 1. BASE DE DATOS DE CANALES (STREAMINGS) ---
+        const channelsData = [
+            {
+                id: 1,
+                title: "Inmersión y Portafolios de Arte en Estética",
+                desc: "Clase introductoria sobre el portafolio, la contextualización artística y cómo usar Gemini en el proyecto.",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-painting-a-colorful-canvas-with-a-brush-42220-large.mp4",
+                teacher: "Laura Villanueva",
+                teacherAbbr: "LV",
+                viewersMin: 110,
+                viewersMax: 160,
+                participants: ["Santiago Gómez", "Valentina Ortiz", "Mateo Ríos", "Sofía Vargas", "Camila Castro", "Nicolás Pérez"],
+                phrases: [
+                    "¿Profe, en la Fase 1 de inmersión la bitácora debe include los bocetos iniciales de IA?",
+                    "Me pareció genial cómo el abanico clasifica los chatbots de texto para idear.",
+                    "Profe, ¿el compromiso de autoría se firma por cada IA seleccionada?",
+                    "¡Qué buen video de ejemplo de portafolios del año pasado!",
+                    "Yo ya guardé mi Ficha de Selección Responsable, ¿también debo subirla a la bitácora?",
+                    "Es clave justificar bien el uso de la IA, a mí me costó un poco redactar la de Leonardo AI.",
+                    "¿Podemos usar ChatGPT y Claude a la vez o el límite de 2 es estricto?",
+                    "Entendido, los referentes visuales no son el producto final del proyecto."
+                ],
+                welcomeMsg: "Bienvenidos a la clase. Hoy estamos revisando la estructura general del portafolio y los acuerdos éticos."
+            },
+            {
+                id: 2,
+                title: "Curaduría y Creación de Museos Virtuales",
+                desc: "Diseño espacial, selección de obras, guion curatorial y emulación de galerías digitales de arte contemporáneo.",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-sculptor-working-on-a-clay-bust-43336-large.mp4",
+                teacher: "Maria Isabel Alfonso",
+                teacherAbbr: "MA",
+                viewersMin: 85,
+                viewersMax: 125,
+                participants: ["Daniel Silva", "Mariana Cárdenas", "Andrés Felipe", "Gabriela Nova", "Samuel Tobar", "Isabella Ruiz"],
+                phrases: [
+                    "¿El museo digital debe tener un recorrido tridimensional ordenado?",
+                    "Profe, ¿cuántos trabajos de Estética se deben exhibir en la galería final?",
+                    "A mí me interesa mucho el concepto de curaduría, es como contar una historia con obras.",
+                    "¿Podemos subir imágenes creadas con IA como obras conceptuales si justificamos la co-creación?",
+                    "Estoy usando Artsteps para diseñar las salas del museo, queda espectacular.",
+                    "¿El guion curatorial del museo digital se sube como documento PDF en la bitácora?",
+                    "Me gusta que podamos hacer salas temáticas según la técnica artística.",
+                    "¿Cómo definimos las proporciones de las obras en la pared del museo virtual?"
+                ],
+                welcomeMsg: "Hola a todos. Iniciamos la sesión de curaduría. Analizaremos cómo dar coherencia discursiva a sus museos digitales."
+            },
+            {
+                id: 3,
+                title: "Fundamentos de Composición Visual y Diseño",
+                desc: "Reglas de composición, tipografía y maquetación de piezas aplicadas a los portafolios de Estética.",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-drawing-sketches-in-a-notebook-42234-large.mp4",
+                teacher: "José David Cortés",
+                teacherAbbr: "JC",
+                viewersMin: 95,
+                viewersMax: 145,
+                participants: ["Lucas Marín", "Salomé Duque", "Julián Ortega", "Manuela Vélez", "Esteban Cruz", "Juliana Medina"],
+                phrases: [
+                    "Profe, ¿cuál es la mejor paleta de colores para un portafolio de estilo premium?",
+                    "Ayer usé Canva para maquetar pero combinando mis dibujos a mano alzada.",
+                    "La regla de los tercios en el diseño de afiches ayuda un montón a jerarquizar la lectura.",
+                    "¿La tipografía Nunito se lee mejor que la Arial estándar para títulos de proyectos?",
+                    "Profe, ¿qué IA del abanico nos sirve para optimizar las escalas y cálculos de las maquetas?",
+                    "¡Me encanta este tutorial de composición! Es súper claro.",
+                    "Yo estoy haciendo el diseño espacial, ¿cómo compongo el fondo de la presentación?",
+                    "Entendido, la coherencia de fuentes es clave para el portafolio final."
+                ],
+                welcomeMsg: "Buenas tardes. Hoy nos enfocaremos en los principios de balance, peso visual y tipografías para su portafolio."
+            },
+            {
+                id: 4,
+                title: "Estética Textil y Técnicas de Crochet Artístico",
+                desc: "Arte tridimensional, texturas, crochet e identidad en el diseño artístico y material de grado once.",
+                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-knitting-wool-with-needles-42233-large.mp4",
+                teacher: "Victor Ardila",
+                teacherAbbr: "VA",
+                viewersMin: 60,
+                viewersMax: 90,
+                participants: ["Paula Rojas", "Martín Santos", "CatalinaPinzón", "Felipe Henao", "Clara Inés", "Sebastián Mora"],
+                phrases: [
+                    "Profe, ¿cómo puedo fotografiar las texturas del crochet para que resalten en el portafolio?",
+                    "Ayer busqué referentes de crochet artístico en Midjourney y saqué unas ideas increíbles para tejer.",
+                    "¿Podemos simular patrones de tejido con IA antes de realizar el tejido físico?",
+                    "La escultura suave en crochet permite explorar la identidad orgánica.",
+                    "¿Para crochet también se puede usar la IA de Wolfram Alpha para calcular los puntos?",
+                    "¡Qué increíble ver cómo el tejido tradicional se convierte en arte contemporáneo de museo!",
+                    "Profe, ¿cuántos registros fotográficos de avances de tejido debemos subir a la bitácora?",
+                    "Es genial tejer y registrar el diálogo reflexivo con la IA a la vez."
+                ],
+                welcomeMsg: "Bienvenidos. Hoy veremos la relación entre arte textil, crochet y cómo registrar este proceso físico de forma digital."
+            }
+        ];
+
+        // Agenda de Clases Programadas (Estático/Simulado)
+        const agendaData = [
+            { id: 101, time: "Mañana · 08:30 AM", title: "Asesoría de Rúbricas de Portafolio", teacher: "Laura Villanueva" },
+            { id: 102, time: "25 de Mayo · 10:00 AM", title: "Taller Práctico de Prompts en Arte", teacher: "José David Cortés" },
+            { id: 103, time: "28 de Mayo · 02:00 PM", title: "Montaje Final de Galerías 3D", teacher: "Maria Isabel Alfonso" }
+        ];
+
+        // --- 2. VARIABLES DE ESTADO ---
+        let currentChannelId = 1;
+        let chatInterval = null;
+        let chatTimeout = null;
+        let studentSessionName = "Estudiante Invitado";
+        let studentSessionCode = "EST-11";
+        let recordatoriosActivos = [];
+
+        // --- 3. INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarDatosUsuario();
+            renderCanales();
+            renderAgenda();
+            cambiarCanal(1);
+        });
+
+        // Cargar datos de localStorage si el estudiante ya ingresó por bitacora o ficha
+        function cargarDatosUsuario() {
+            const storedFicha = localStorage.getItem('estetica_ficha_responsable');
+            if (storedFicha) {
+                try {
+                    const data = JSON.parse(storedFicha);
+                    if (data.name) studentSessionName = data.name;
+                    if (data.code) studentSessionCode = data.code;
+                } catch (e) {
+                    console.error("Error al cargar localStorage:", e);
+                }
+            }
+        }
+
+        // --- 4. RENDERIZACIÓN DE CANALES (IZQUIERDA) ---
+        function renderCanales() {
+            const container = document.getElementById('channels-container');
+            container.innerHTML = '';
+
+            channelsData.forEach(ch => {
+                const card = document.createElement('div');
+                card.className = `channel-card ${ch.id === currentChannelId ? 'active' : ''}`;
+                card.id = `channel-card-${ch.id}`;
+                card.onclick = () => cambiarCanal(ch.id);
+
+                // Cantidad aleatoria inicial de espectadores
+                const viewers = Math.floor(Math.random() * (ch.viewersMax - ch.viewersMin + 1)) + ch.viewersMin;
+
+                card.innerHTML = `
+                    <div class="channel-header">
+                        <span class="channel-badge">En Vivo</span>
+                        <span class="channel-meta" style="margin: 0;"><span class="viewers-count"><i class="fa-solid fa-user-group"></i> <span id="ch-viewers-${ch.id}">${viewers}</span></span></span>
+                    </div>
+                    <div class="channel-title">${ch.title}</div>
+                    <div class="channel-desc">${ch.desc.substring(0, 75)}...</div>
+                    <div class="channel-meta">
+                        <span><i class="fa-solid fa-user-tie"></i> ${ch.teacher}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAgenda() {
+            const container = document.getElementById('agenda-container');
+            container.innerHTML = '';
+
+            agendaData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'agenda-card';
+                card.innerHTML = `
+                    <div class="agenda-time"><i class="fa-regular fa-clock"></i> ${item.time}</div>
+                    <div class="agenda-title">${item.title}</div>
+                    <div class="agenda-teacher"><i class="fa-solid fa-user-tie"></i> ${item.teacher}</div>
+                    <button class="btn-reminder" id="reminder-btn-${item.id}" onclick="alternarRecordatorio(${item.id})">
+                        <i class="fa-regular fa-bell"></i> Recordarme
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function alternarRecordatorio(id) {
+            const btn = document.getElementById(`reminder-btn-${id}`);
+            if (recordatoriosActivos.includes(id)) {
+                recordatoriosActivos = recordatoriosActivos.filter(x => x !== id);
+                btn.classList.remove('active');
+                btn.innerHTML = `<i class="fa-regular fa-bell"></i> Recordarme`;
+            } else {
+                recordatoriosActivos.push(id);
+                btn.classList.add('active');
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> ¡Recordatorio Guardado!`;
+            }
+        }
+
+        // --- 5. LÓGICA DE CAMBIO DE CANAL ---
+        function cambiarCanal(id) {
+            // Detener temporizador previo
+            if (chatInterval) clearInterval(chatInterval);
+            if (chatTimeout) clearTimeout(chatTimeout);
+
+            currentChannelId = id;
+            const channel = channelsData.find(c => c.id === id);
+            if (!channel) return;
+
+            // Actualizar active visual cards
+            document.querySelectorAll('.channel-card').forEach(card => card.classList.remove('active'));
+            const activeCard = document.getElementById(`channel-card-${id}`);
+            if (activeCard) activeCard.classList.add('active');
+
+            // Cargar Video Nativo (.mp4)
+            const player = document.getElementById('video-iframe-player');
+            player.src = channel.videoUrl;
+            player.play().catch(err => console.log("Autoplay bloqueado:", err));
+
+            // Efecto flash dorado temporal al borde del reproductor
+            const wrapper = document.getElementById('video-player-container');
+            wrapper.classList.add('active-border');
+            setTimeout(() => wrapper.classList.remove('active-border'), 1500);
+
+            // Cargar Info
+            document.getElementById('video-title-val').textContent = channel.title;
+            document.getElementById('teacher-name-val').textContent = `Prof. ${channel.teacher}`;
+            document.getElementById('teacher-avatar-val').textContent = channel.teacherAbbr;
+
+            // Actualizar espectadores iniciales
+            const viewersInitial = Math.floor(Math.random() * (channel.viewersMax - channel.viewersMin + 1)) + channel.viewersMin;
+            document.getElementById('viewer-count-val').textContent = viewersInitial;
+
+            // Reiniciar y limpiar chat
+            limpiarChat();
+
+            // Insertar Mensaje de Bienvenida del Moderador
+            insertarMensajeChat(channel.teacher, channel.welcomeMsg, true);
+
+            // Iniciar flujo de mensajes simulados del chat
+            iniciarChatInfinito();
+        }
+
+        // --- 6. SIMULACIÓN DEL CHAT EN VIVO ---
+        function iniciarChatInfinito() {
+            // Lanzar un mensaje inicial rápido a los 2 segundos
+            chatTimeout = setTimeout(generarMensajeSimulado, 2000);
+
+            // Programar intervalo regular (cada 4 a 7 segundos)
+            chatInterval = setInterval(generarMensajeSimulado, 5000);
+        }
+
+        function generarMensajeSimulado() {
+            const channel = channelsData.find(c => c.id === currentChannelId);
+            if (!channel) return;
+
+            // Variar ligeramente espectadores
+            const currentViewers = parseInt(document.getElementById('viewer-count-val').textContent);
+            const variation = Math.floor(Math.random() * 7) - 3; // de -3 a +3
+            const limitViewers = Math.max(channel.viewersMin, Math.min(channel.viewersMax, currentViewers + variation));
+            document.getElementById('viewer-count-val').textContent = limitViewers;
+            
+            // Actualizar el valor en la tarjeta del canal izquierdo también
+            const chViewersText = document.getElementById(`ch-viewers-${channel.id}`);
+            if (chViewersText) chViewersText.textContent = limitViewers;
+
+            // Elegir participante aleatorio y frase
+            const name = channel.participants[Math.floor(Math.random() * channel.participants.length)];
+            const text = channel.phrases[Math.floor(Math.random() * channel.phrases.length)];
+
+            // Insertar
+            insertarMensajeChat(name, text, false);
+
+            // Lanzar reacción flotante aleatoria en la pantalla (25% de probabilidad)
+            if (Math.random() < 0.3) {
+                const emojis = ['👏', '❤️', '💡', '😮', '🔥'];
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                lanzarEmoji(emoji, true);
+            }
+        }
+
+        function insertarMensajeChat(author, text, isMod = false, isUser = false) {
+            const container = document.getElementById('chat-history-container');
+            const msg = document.createElement('div');
+            
+            let typeClass = '';
+            let authorClass = 'student-name';
+            let tagHtml = '';
+
+            if (isMod) {
+                typeClass = 'moderator';
+                authorClass = 'mod-name';
+                tagHtml = `<span class="chat-msg-tag tag-mod">Moderador</span>`;
+            } else if (isUser) {
+                typeClass = 'student-user';
+                authorClass = 'user-name';
+                tagHtml = `<span class="chat-msg-tag tag-user">Tú</span>`;
+            }
+
+            msg.className = `chat-msg ${typeClass}`;
+            msg.innerHTML = `
+                <div class="chat-msg-meta">
+                    <span class="chat-msg-author ${authorClass}">${author}</span>
+                    ${tagHtml}
+                </div>
+                <div class="chat-msg-content">${text}</div>
+            `;
+
+            container.appendChild(msg);
+
+            // Auto Scroll
+            container.scrollTop = container.scrollHeight;
+
+            // Limitar a máximo 60 mensajes en el DOM para evitar saturar memoria
+            const allMsgs = container.querySelectorAll('.chat-msg');
+            if (allMsgs.length > 60) {
+                allMsgs[0].remove();
+            }
+        }
+
+        function limpiarChat() {
+            document.getElementById('chat-history-container').innerHTML = '';
+        }
+
+        // --- 7. INTERACCIÓN DEL ESTUDIANTE (CHAT + RESPUESTA IA) ---
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                enviarMensajeUsuario();
+            }
+        }
+
+        function enviarMensajeUsuario() {
+            const input = document.getElementById('chat-user-msg');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Limpiar campo
+            input.value = '';
+
+            // Insertar mensaje del alumno
+            insertarMensajeChat(studentSessionName, text, false, true);
+
+            // Generar respuesta del ecosistema (Moderador o alumnos virtuales)
+            generarRespuestaEcosistema(text);
+        }
+
+        function generarRespuestaEcosistema(userText) {
+            const channel = channelsData.find(c => c.id === currentChannelId);
+            if (!channel) return;
+
+            const textLower = userText.toLowerCase();
+            let responseText = "";
+            let responder = channel.teacher; // Por defecto responde el moderador
+            let isModResponse = true;
+
+            // Búsqueda de coincidencia de palabras clave
+            if (textLower.includes("hola") || textLower.includes("buenas") || textLower.includes("saludos")) {
+                responseText = `¡Hola, ${studentSessionName}! Qué gusto tenerte en la transmisión. ¿Cómo va tu proyecto de Estética?`;
+            } 
+            else if (textLower.includes("portafolio") || textLower.includes("fase") || textLower.includes("entregable")) {
+                responseText = `Justamente estamos analizando los portafolios, ${studentSessionName}. Acuérdate que debemos enlazar la bitácora y la ficha de IAs en la entrega.`;
+                // Responde un alumno
+                responder = channel.participants[0];
+                isModResponse = false;
+            } 
+            else if (textLower.includes("nota") || textLower.includes("evaluar") || textLower.includes("rúbrica") || textLower.includes("criterio")) {
+                responseText = `Hola ${studentSessionName}. La evaluación es continua mediante la Bitácora Digital. Revísate la rúbrica interactiva (matriz de 5 niveles) para asegurar tu nota.`;
+            } 
+            else if (textLower.includes("crochet") || textLower.includes("lana") || textLower.includes("tejido")) {
+                if (currentChannelId === 4) {
+                    responseText = `¡Gran tema, ${studentSessionName}! El crochet nos permite estructurar volúmenes orgánicos que desafían el espacio tradicional. Te sugiero explorar bocetos de texturas.`;
+                } else {
+                    responseText = `Para temas de crochet artístico te sugiero conectarte al Canal 4 del Prof. Victor Ardila, ahí se discute el arte textil a fondo.`;
+                }
+            } 
+            else if (textLower.includes("museo") || textLower.includes("3d") || textLower.includes("virtual")) {
+                responseText = `¡El Museo Digital es genial! Recuerda que debes armar un guion curatorial ordenado de tus obras antes de montar la galería virtual en 3D.`;
+                responder = "Mariana Cárdenas";
+                isModResponse = false;
+            }
+            else if (textLower.includes("duda") || textLower.includes("pregunta") || textLower.includes("ayuda") || textLower.includes("no entiendo")) {
+                responseText = `Claro ${studentSessionName}, dime cuál es tu duda específica sobre lo que muestra el video o sobre tu bitácora para ayudarte a resolverla ahora.`;
+            }
+            else {
+                // Respuesta genérica contextual al canal
+                const genericResponses = [
+                    `Excelente punto, ${studentSessionName}. Eso aporta muchísimo a la discusión de esta clase.`,
+                    `Muy de acuerdo con lo que comentas. ¿Alguien más tiene una postura diferente en el grupo?`,
+                    `¡Gracias por participar en el chat, ${studentSessionName}! Sigamos prestando atención a esta sección del video.`,
+                    `Exacto. La idea es que apliquemos estos conceptos de estética en el diseño de su propio portafolio digital.`
+                ];
+                responseText = genericResponses[Math.floor(Math.random() * genericResponses.length)];
+            }
+
+            // Simular retraso de escritura de 1.5 segundos
+            setTimeout(() => {
+                insertarMensajeChat(responder, responseText, isModResponse, false);
+            }, 1200);
+        }
+
+        // --- 8. ANIMACIÓN DE REACCIONES FLOTANTES (EMOJIS) ---
+        function lanzarEmoji(emoji, isAuto = false) {
+            const space = document.getElementById('reactions-space');
+            const bubble = document.createElement('span');
+            bubble.className = 'emoji-bubble';
+            bubble.textContent = emoji;
+
+            // Posición horizontal aleatoria (dentro de la pantalla de video)
+            const leftOffset = Math.floor(Math.random() * 80) + 10; // de 10% a 90%
+            bubble.style.left = `${leftOffset}%`;
+
+            // Variaciones aleatorias para la animación (drifting)
+            const drift1 = `${Math.floor(Math.random() * 60) - 30}px`;
+            const drift2 = `${Math.floor(Math.random() * 80) - 40}px`;
+            const drift3 = `${Math.floor(Math.random() * 100) - 50}px`;
+            
+            bubble.style.setProperty('--drift-1', drift1);
+            bubble.style.setProperty('--drift-2', drift2);
+            bubble.style.setProperty('--drift-3', drift3);
+
+            space.appendChild(bubble);
+
+            // Eliminar del DOM después de terminar la animación (4 segundos)
+            setTimeout(() => {
+                bubble.remove();
+            }, 4000);
+
+            // Si el usuario hace clic, agregamos un mensaje simbólico al chat (opcional)
+            if (!isAuto) {
+                // Registrar reacción en el chat con probabilidad
+                if (Math.random() < 0.4) {
+                    setTimeout(() => {
+                        insertarMensajeChat(studentSessionName, `reaccionó con un ${emoji}`, false, true);
+                    }, 500);
+                }
+            }
+        }
+
+        // --- 9. NAVEGACIÓN ---
+        function volverAlMapa() {
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>

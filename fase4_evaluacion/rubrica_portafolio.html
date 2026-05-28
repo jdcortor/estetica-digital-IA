@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rúbrica de Portafolio e Índice IAP</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --header-yellow-hover: #e5bd00;
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --panel-bg-light: #2a2a30;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            
+            /* Colores de Niveles */
+            --excelente: #22c55e;
+            --bueno: #3b82f6;
+            --desarrollo: #f59e0b;
+            --critico: #ef4444;
+            --inicial: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--header-yellow);
+        }
+
+        /* --- BARRA SUPERIOR --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: var(--critico);
+            border-color: var(--critico);
+            transform: scale(1.03);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 25px;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 1100px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- MATRIZ DE RÚBRICA (IZQUIERDA) --- */
+        .rubric-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-title {
+            font-family: var(--font-labels);
+            font-size: 22px;
+            color: #ffffff;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-title span {
+            color: var(--header-yellow);
+        }
+
+        .rubric-description {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 10px;
+        }
+
+        .rubric-table th {
+            text-align: left;
+            padding: 10px 15px;
+            font-family: var(--font-labels);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rubric-row {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .rubric-row:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .criterion-cell {
+            padding: 20px 15px;
+            vertical-align: middle;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            width: 160px;
+        }
+
+        .criterion-title {
+            font-family: var(--font-labels);
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .criterion-weight {
+            font-size: 12px;
+            color: var(--header-yellow);
+            font-weight: 600;
+        }
+
+        .level-cell {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            width: 16%;
+            position: relative;
+        }
+
+        .level-cell:last-child {
+            border-right: 1px solid var(--border-color);
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .level-header {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .level-score {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .level-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            transition: color 0.25s ease;
+        }
+
+        /* Colores de Niveles en Hover */
+        .level-cell.lvl-5:hover { background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.4); }
+        .level-cell.lvl-4:hover { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.4); }
+        .level-cell.lvl-3:hover { background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.4); }
+        .level-cell.lvl-2:hover { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.4); }
+        .level-cell.lvl-1:hover { background: rgba(139, 92, 246, 0.08); border-color: rgba(139, 92, 246, 0.4); }
+
+        .level-cell.lvl-5:hover .level-header { color: var(--excelente); }
+        .level-cell.lvl-4:hover .level-header { color: var(--bueno); }
+        .level-cell.lvl-3:hover .level-header { color: var(--desarrollo); }
+        .level-cell.lvl-2:hover .level-header { color: var(--critico); }
+        .level-cell.lvl-1:hover .level-header { color: var(--inicial); }
+
+        /* Estados Seleccionados */
+        .level-cell.lvl-5.selected { background: rgba(34, 197, 94, 0.15) !important; border-color: var(--excelente) !important; box-shadow: inset 0 0 10px rgba(34, 197, 94, 0.2); }
+        .level-cell.lvl-4.selected { background: rgba(59, 130, 246, 0.15) !important; border-color: var(--bueno) !important; box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.2); }
+        .level-cell.lvl-3.selected { background: rgba(245, 158, 11, 0.15) !important; border-color: var(--desarrollo) !important; box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.2); }
+        .level-cell.lvl-2.selected { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--critico) !important; box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.2); }
+        .level-cell.lvl-1.selected { background: rgba(139, 92, 246, 0.15) !important; border-color: var(--inicial) !important; box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.2); }
+
+        .level-cell.selected .level-header { font-weight: 900; }
+        .level-cell.selected.lvl-5 .level-header { color: var(--excelente); }
+        .level-cell.selected.lvl-4 .level-header { color: var(--bueno); }
+        .level-cell.selected.lvl-3 .level-header { color: var(--desarrollo); }
+        .level-cell.selected.lvl-2 .level-header { color: var(--critico); }
+        .level-cell.selected.lvl-1 .level-header { color: var(--inicial); }
+
+        .level-cell.selected.lvl-5 .level-score { background: var(--excelente); color: #fff; }
+        .level-cell.selected.lvl-4 .level-score { background: var(--bueno); color: #fff; }
+        .level-cell.selected.lvl-3 .level-score { background: var(--desarrollo); color: #fff; }
+        .level-cell.selected.lvl-2 .level-score { background: var(--critico); color: #fff; }
+        .level-cell.selected.lvl-1 .level-score { background: var(--inicial); color: #fff; }
+
+        .level-cell.selected .level-text { color: #ffffff; font-weight: 500; }
+
+        /* Marcación de check de selección */
+        .level-cell.selected::after {
+            content: "✓";
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .level-cell.selected.lvl-5::after { color: var(--excelente); }
+        .level-cell.selected.lvl-4::after { color: var(--bueno); }
+        .level-cell.selected.lvl-3::after { color: var(--desarrollo); }
+        .level-cell.selected.lvl-2::after { color: var(--critico); }
+        .level-cell.selected.lvl-1::after { color: var(--inicial); }
+
+
+        /* --- CALCULADORA DE IAP (DERECHA) --- */
+        .calculator-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+        }
+
+        .calc-header {
+            font-family: var(--font-labels);
+            font-size: 18px;
+            color: #ffffff;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-display-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .circular-gauge {
+            width: 140px;
+            height: 140px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .circular-gauge svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: #2a2a30;
+            stroke-width: 10;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke: var(--header-yellow);
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 377; /* 377 es vacío, 0 es lleno */
+            transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.6s ease;
+        }
+
+        .gauge-value {
+            position: absolute;
+            font-family: var(--font-labels);
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .gauge-value span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .iap-range-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .badge-excelente { background-color: var(--excelente); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3); }
+        .badge-bueno { background-color: var(--bueno); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        .badge-desarrollo { background-color: var(--desarrollo); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+        .badge-critico { background-color: var(--critico); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .badge-inicial { background-color: var(--inicial); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+
+        .calc-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .formula-card {
+            background: var(--panel-bg-light);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.5;
+            border: 1px solid var(--border-color);
+        }
+
+        .formula-math {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 700;
+            color: var(--header-yellow);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .save-report-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--header-dark);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: var(--header-yellow);
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 208, 8, 0.25);
+            text-transform: uppercase;
+        }
+
+        .save-report-btn:hover {
+            background-color: var(--header-yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 208, 8, 0.4);
+        }
+
+        .session-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            margin-top: 5px;
+        }
+
+        .session-info strong {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Rúbrica Evaluativa e <span>Índice IAP</span></h1>
+        </div>
+        <div class="actions-container">
+            <a href="../index.html" class="close-btn">
+                <span>&times;</span> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="main-container">
+        
+        <!-- MATRIZ DE RÚBRICA (IZQUIERDA) -->
+        <div class="rubric-panel">
+            <div class="panel-title">
+                <span>📋</span> Matriz de Desempeño
+            </div>
+            <p class="rubric-description">
+                Esta rúbrica interactiva te permite evaluar el avance de tu portafolio digital y tus niveles de apropiación tecnológica y co-creación con IA en cada una de las fases del proyecto. <strong>Haz clic sobre el nivel obtenido en cada fila</strong> para calcular dinámicamente tu Índice de Aprobación del Proceso (IAP).
+            </p>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th style="width: 170px;">Fase / Criterio</th>
+                        <th>5 - Excelente</th>
+                        <th>4 - Bueno</th>
+                        <th>3 - En Desarrollo</th>
+                        <th>2 - Crítico</th>
+                        <th>1 - Inicial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- FILA 1: INMERSIÓN -->
+                    <tr class="rubric-row" id="row-inmersion">
+                        <td class="criterion-cell">
+                            <div class="criterion-title">Fase 1: Inmersión</div>
+                            <div class="criterion-weight">Ponderación: 20%</div>
+                        </td>
+                        <td class="level-cell lvl-5" onclick="selectLevel('inmersion', 5, this)">
+                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                            <div class="level-text">Explora activamente todos los entornos 3D, interactúa críticamente con los elementos y responde con profundidad a los estímulos iniciales.</div>
+                        </td>
+                        <td class="level-cell lvl-4" onclick="selectLevel('inmersion', 4, this)">
+                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                            <div class="level-text">Recorre la mayoría de los entornos 3D de inmersión y responde de forma completa a las actividades iniciales.</div>
+                        </td>
+                        <td class="level-cell lvl-3" onclick="selectLevel('inmersion', 3, this)">
+                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                            <div class="level-text">Realiza un recorrido parcial de los espacios tridimensionales y sus respuestas son descriptivas pero poco profundas.</div>
+                        </td>
+                        <td class="level-cell lvl-2" onclick="selectLevel('inmersion', 2, this)">
+                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                            <div class="level-text">Presenta dificultades para interactuar con los entornos inmersivos y sus reflexiones son mínimas o fragmentadas.</div>
+                        </td>
+                        <td class="level-cell lvl-1" onclick="selectLevel('inmersion', 1, this)">
+                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                            <div class="level-text">No realiza el recorrido inmersivo ni participa de las actividades de inducción y sensibilización.</div>
+                        </td>
+                    </tr>
+
+                    <!-- FILA 2: APROPIACIÓN -->
+                    <tr class="rubric-row" id="row-apropiacion">
+                        <td class="criterion-cell">
+                            <div class="criterion-title">Fase 2: Apropiación</div>
+                            <div class="criterion-weight">Ponderación: 25%</div>
+                        </td>
+                        <td class="level-cell lvl-5" onclick="selectLevel('apropiacion', 5, this)">
+                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                            <div class="level-text">Comprende rigurosamente el abanico de IAs y demuestra honestidad académica firmando y aplicando el Acuerdo Ético en su práctica.</div>
+                        </td>
+                        <td class="level-cell lvl-4" onclick="selectLevel('apropiacion', 4, this)">
+                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                            <div class="level-text">Identifica de forma clara las herramientas de IA y completa el Acuerdo Ético con compromisos válidos de uso responsable.</div>
+                        </td>
+                        <td class="level-cell lvl-3" onclick="selectLevel('apropiacion', 3, this)">
+                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                            <div class="level-text">Conoce superficialmente las herramientas de IA disponibles y suscribe el pacto ético de forma automática o incompleta.</div>
+                        </td>
+                        <td class="level-cell lvl-2" onclick="selectLevel('apropiacion', 2, this)">
+                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                            <div class="level-text">Muestra confusión sobre las herramientas de IA y no asume compromisos claros de honestidad intelectual.</div>
+                        </td>
+                        <td class="level-cell lvl-1" onclick="selectLevel('apropiacion', 1, this)">
+                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                            <div class="level-text">Evade el uso de los recursos de capacitación y no completa el Acuerdo Ético obligatorio.</div>
+                        </td>
+                    </tr>
+
+                    <!-- FILA 3: CONSTRUCCIÓN -->
+                    <tr class="rubric-row" id="row-construccion">
+                        <td class="criterion-cell">
+                            <div class="criterion-title">Fase 3: Construcción</div>
+                            <div class="criterion-weight">Ponderación: 55%</div>
+                        </td>
+                        <td class="level-cell lvl-5" onclick="selectLevel('construccion', 5, this)">
+                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                            <div class="level-text">Desarrolla un prototipo estético robusto con DaVinci, justificando críticamente cada edición, y registra minuciosamente su agencia en la bitácora.</div>
+                        </td>
+                        <td class="level-cell lvl-4" onclick="selectLevel('construccion', 4, this)">
+                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                            <div class="level-text">Construye un prototipo funcional con ayuda de DaVinci y documenta adecuadamente las variaciones y decisiones en la bitácora.</div>
+                        </td>
+                        <td class="level-cell lvl-3" onclick="selectLevel('construccion', 3, this)">
+                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                            <div class="level-text">El prototipo tiene un avance básico con IA, pero la documentación en la bitácora carece de justificaciones reflexivas detalladas.</div>
+                        </td>
+                        <td class="level-cell lvl-2" onclick="selectLevel('construccion', 2, this)">
+                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                            <div class="level-text">El prototipo presenta fallos técnicos notables o se limita a copiar la salida de la IA sin registrar el proceso de curaduría.</div>
+                        </td>
+                        <td class="level-cell lvl-1" onclick="selectLevel('construccion', 1, this)">
+                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                            <div class="level-text">No presenta avances del prototipo de la técnica seleccionada ni registra entradas coherentes en su bitácora digital.</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CALCULADORA DE IAP (DERECHA) -->
+        <div class="calculator-panel">
+            <div class="calc-header">
+                📊 Calculadora de IAP
+            </div>
+
+            <div class="score-display-container">
+                <div class="circular-gauge">
+                    <svg>
+                        <circle class="gauge-bg" cx="70" cy="70" r="60"></circle>
+                        <circle class="gauge-fill" id="gauge-fill-circle" cx="70" cy="70" r="60"></circle>
+                    </svg>
+                    <div class="gauge-value">
+                        <span id="iap-value-text">0.0</span>
+                        <span>de 5.0</span>
+                    </div>
+                </div>
+                <div id="iap-range-badge" class="iap-range-badge badge-inicial">
+                    Inicial
+                </div>
+            </div>
+
+            <div class="calc-details">
+                <div class="detail-row">
+                    <span class="detail-label">Inmersión (I):</span>
+                    <span class="detail-value" id="val-inmersion">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Apropiación (C):</span>
+                    <span class="detail-value" id="val-apropiacion">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Construcción (D):</span>
+                    <span class="detail-value" id="val-construccion">--</span>
+                </div>
+            </div>
+
+            <div class="formula-card">
+                El Índice de Aprobación del Proceso se pondera según la fórmula:
+                <div class="formula-math">IAP = 0.20·I + 0.25·C + 0.55·D</div>
+            </div>
+
+            <button class="save-report-btn" onclick="saveEvaluationReport()">
+                💾 Guardar Evaluación
+            </button>
+
+            <div class="session-info" id="session-display">
+                Sin estudiante activo en sesión.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS LÓGICOS -->
+    <script>
+        // --- VARIABLES DE EVALUACIÓN ---
+        let scores = {
+            inmersion: 0,
+            apropiacion: 0,
+            construccion: 0
+        };
+
+        let activeStudent = null;
+
+        // Cargar sesión del estudiante desde localStorage (de acuerdo_etico o bitacora_session)
+        window.addEventListener('DOMContentLoaded', () => {
+            // Revisar acuerdo ético primero
+            const pactSession = localStorage.getItem('estetica_ficha_responsable');
+            const bitacoraSession = localStorage.getItem('bitacora_session');
+            
+            if (pactSession) {
+                activeStudent = JSON.parse(pactSession);
+            } else if (bitacoraSession) {
+                activeStudent = JSON.parse(bitacoraSession);
+            }
+
+            const sessionDisplay = document.getElementById('session-display');
+            if (activeStudent) {
+                sessionDisplay.innerHTML = `Estudiante: <strong>${activeStudent.name}</strong><br>Código: <strong>${activeStudent.code}</strong>`;
+            } else {
+                sessionDisplay.innerHTML = `<em>No se detectó sesión de estudiante. Registra tus datos en el Acuerdo Ético o la Bitácora.</em>`;
+            }
+
+            // Seleccionar por defecto niveles iniciales en la tabla (o leer de una evaluación guardada)
+            const storedEval = localStorage.getItem(activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest');
+            if (storedEval) {
+                const loadedScores = JSON.parse(storedEval);
+                scores = loadedScores;
+                restoreSelectedLevels();
+            } else {
+                // Seleccionar Excelente por defecto para iniciar en la visualización
+                selectLevel('inmersion', 5, document.querySelector('#row-inmersion .lvl-5'));
+                selectLevel('apropiacion', 5, document.querySelector('#row-apropiacion .lvl-5'));
+                selectLevel('construccion', 5, document.querySelector('#row-construccion .lvl-5'));
+            }
+        });
+
+        // Seleccionar un nivel y deseleccionar los otros de la misma fila
+        function selectLevel(criterion, val, element) {
+            scores[criterion] = val;
+
+            // Deseleccionar hermanos
+            const row = element.parentElement;
+            const cells = row.querySelectorAll('.level-cell');
+            cells.forEach(c => c.classList.remove('selected'));
+
+            // Seleccionar celda activa
+            element.classList.add('selected');
+
+            // Actualizar etiquetas laterales
+            document.getElementById(`val-${criterion}`).innerText = `${val.toFixed(1)} / 5.0`;
+
+            calculateIAP();
+        }
+
+        // Restaurar niveles basados en la base de datos guardada
+        function restoreSelectedLevels() {
+            for (const key in scores) {
+                const val = scores[key];
+                if (val > 0) {
+                    const rowId = `row-${key}`;
+                    const element = document.querySelector(`#${rowId} .lvl-${val}`);
+                    if (element) {
+                        selectLevel(key, val, element);
+                    }
+                }
+            }
+        }
+
+        // Calcular el Índice de Aprobación del Proceso
+        function calculateIAP() {
+            const I = scores.inmersion || 0;
+            const C = scores.apropiacion || 0;
+            const D = scores.construccion || 0;
+
+            const iap = (0.20 * I) + (0.25 * C) + (0.55 * D);
+            
+            // Actualizar texto del valor
+            document.getElementById('iap-value-text').innerText = iap.toFixed(2);
+
+            // Actualizar círculo de progreso (SVG)
+            // Radio de 60 -> Perímetro de 2 * PI * 60 ≈ 377
+            const circle = document.getElementById('gauge-fill-circle');
+            const circumference = 2 * Math.PI * 60; // ≈ 376.99
+            
+            // Normalizar el IAP de 1.0-5.0 a 0-100%
+            // Si el mínimo es 1.0 y el máximo es 5.0, el porcentaje de avance es: (iap - 1) / (5 - 1)
+            let percent = 0;
+            if (iap > 0) {
+                percent = (iap - 1) / 4;
+            }
+            if (percent < 0) percent = 0;
+            if (percent > 1) percent = 1;
+
+            const offset = circumference - (percent * circumference);
+            circle.style.strokeDasharray = circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Actualizar badge del rango
+            const badge = document.getElementById('iap-range-badge');
+            badge.className = 'iap-range-badge'; // Reset
+
+            if (iap >= 4.5) {
+                badge.innerText = 'Excelente';
+                badge.classList.add('badge-excelente');
+                circle.style.stroke = 'var(--excelente)';
+            } else if (iap >= 3.8) {
+                badge.innerText = 'Bueno';
+                badge.classList.add('badge-bueno');
+                circle.style.stroke = 'var(--bueno)';
+            } else if (iap >= 3.0) {
+                badge.innerText = 'En Desarrollo';
+                badge.classList.add('badge-desarrollo');
+                circle.style.stroke = 'var(--desarrollo)';
+            } else if (iap >= 2.0) {
+                badge.innerText = 'Crítico';
+                badge.classList.add('badge-critico');
+                circle.style.stroke = 'var(--critico)';
+            } else {
+                badge.innerText = 'Inicial';
+                badge.classList.add('badge-inicial');
+                circle.style.stroke = 'var(--inicial)';
+            }
+        }
+
+        // Guardar la evaluación actual en el LocalStorage
+        function saveEvaluationReport() {
+            if (!scores.inmersion || !scores.apropiacion || !scores.construccion) {
+                alert('Por favor, selecciona tu nivel de desempeño para todas las fases antes de guardar.');
+                return;
+            }
+
+            const key = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
+            localStorage.setItem(key, JSON.stringify(scores));
+
+            // Guardar también la nota final IAP en el perfil
+            const I = scores.inmersion;
+            const C = scores.apropiacion;
+            const D = scores.construccion;
+            const iap = (0.20 * I) + (0.25 * C) + (0.55 * D);
+
+            localStorage.setItem(activeStudent ? `iap_score_${activeStudent.code}` : 'iap_score_guest', iap.toFixed(2));
+
+            alert('Tu evaluación y cálculo de Índice IAP se han guardado correctamente en tu navegador.');
+        }
+    </script>
+</body>
+</html>

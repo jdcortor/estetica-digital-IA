@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estética & Diseño - Sala en Vivo</title>
+    <style>
+        :root {
+            --bg-color: #fcf9f5;
+            --card-bg: #ffffff;
+            --text-main: #2c2520;
+            --text-muted: #7a6f66;
+            --accent-color: #b8860b;
+            --accent-light: #f5efe6;
+            --border-color: #eae3da;
+            --live-red: #e02424;
+            --green-active: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 60px;
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        nav ul li a.active, nav ul li a:hover {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 4px;
+        }
+
+        .user-avatar-nav {
+            background-color: #e5e7eb;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Video Area */
+        .video-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            background-color: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--live-red);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Info Card */
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .info-header h1 {
+            font-family: 'Georgia', serif;
+            font-size: 1.45rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-patrones {
+            background-color: #f9f8f6;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+        }
+
+        .meta-technique {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .meta-technique strong {
+            color: var(--text-main);
+        }
+
+        .instructor-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .instructor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .instructor-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .instructor-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Chat Panel */
+        .chat-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            height: calc(16 / 9 * 50vw);
+            max-height: 620px;
+        }
+
+        @media (max-width: 900px) {
+            .chat-panel {
+                height: 450px;
+            }
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            background-color: #e8f9ee;
+            color: var(--green-active);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background-color: #ffffff;
+        }
+
+        .chat-welcome {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background-color: #f3f4f6;
+            padding: 6px 12px;
+            border-radius: 4px;
+            align-self: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .msg-container {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .msg-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .msg-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-author {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .msg-text {
+            font-size: 0.85rem;
+            color: #4b5563;
+            line-height: 1.4;
+        }
+
+        .chat-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            border-radius: 0 0 12px 12px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-input {
+            width: 100%;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            padding: 10px 45px 10px 16px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent-color);
+            background-color: #fff;
+        }
+
+        .btn-send {
+            position: absolute;
+            right: 8px;
+            background-color: #c49a45;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .btn-send:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Upcoming Section */
+        .upcoming-section {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .upcoming-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .upcoming-header h2 {
+            font-family: 'Georgia', serif;
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+
+        .btn-calendar {
+            font-size: 0.85rem;
+            color: #c49a45;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .grid-upcoming {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card-upcoming {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-upcoming:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .thumb-upcoming {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .time-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text-main);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(243, 244, 246, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .lock-icon {
+            font-size: 1.5rem;
+            color: #9ca3af;
+        }
+
+        .lock-text {
+            font-size: 0.75rem;
+            background-color: #4b5563;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" style="cursor: pointer;" onclick="window.location.href='../index.html'">🪶 Estética <span>& Diseño</span></div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Volver al Mapa</a></li>
+                <li><a href="#" class="active">Sala en Vivo</a></li>
+                <li><a href="#">Próximos Directos</a></li>
+                <li><a href="#">Mi Perfil</a></li>
+            </ul>
+        </nav>
+        <div class="user-avatar-nav">TU</div>
+    </header>
+
+    <main class="main-container">
+        <!-- Panel Izquierdo: Video e Información -->
+        <section class="video-panel">
+            <div class="video-wrapper">
+                <div class="live-badge" id="liveIndicator">
+                    <span class="live-dot"></span> EN DIRECTO &nbsp;|&nbsp; 👁️ <span id="viewCount">346</span>
+                </div>
+                <!-- Contenedor del reproductor dinámico -->
+                <div id="videoContainer" style="width:100%; height:100%;"></div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-header">
+                    <h1 id="mainTitle">GRUPO 4: DISEÑO ARTÍSTICO Y MATERIAL</h1>
+                    <button class="btn-patrones">📁 Patrones</button>
+                </div>
+                <div class="meta-technique" id="mainDescription">
+                    <strong>Técnica: Crochet.</strong> Exploración de la estética a través de la materialidad, creando texturas y volúmenes mediante el tejido estructurado.
+                </div>
+                <div class="instructor-profile">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150" alt="Prof. Mariana Ríos" class="instructor-avatar">
+                    <div class="instructor-info">
+                        <h3>Prof. Mariana Ríos</h3>
+                        <p>Especialista en Artes Textiles y Diseño Material</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Chat Interactivo -->
+        <aside class="chat-panel">
+            <div class="chat-header">
+                <div class="chat-title">💬 Chat de la clase <span class="status-badge" id="chatStatus">Activo</span></div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-welcome">Bienvenido a la sala en vivo</div>
+                <!-- Los mensajes se cargarán de forma dinámica desde JavaScript -->
+            </div>
+            <div class="chat-footer" id="chatFooter">
+                <div class="input-wrapper">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Escribe una pregunta o comentario...">
+                    <button id="btnSend" class="btn-send">➔</button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Sección de Próximos Directos -->
+    <section class="upcoming-section">
+        <div class="upcoming-header">
+            <h2>Próximos Directos</h2>
+            <a href="#" class="btn-calendar">Ver calendario completo</a>
+        </div>
+        <div class="grid-upcoming" id="upcomingGrid">
+            <!-- Renderizado dinámico desde JS -->
+        </div>
+    </section>
+
+    <script>
+        /******************************************************************
+         * CONFIGURACIÓN DE DATOS (ZONA DE COPIAR Y PEGAR ENLACES)
+         ******************************************************************/
+        
+        // Coloque aquí su clave API de Gemini
+        const GEMINI_API_KEY = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ"; 
+
+        // Base de datos de videos e información asociada
+        const VIDEOS_DATABASE = [
+            {
+                id: "v1",
+                titulo: "GRUPO 4: DISEÑO ARTÍSTICO Y MATERIAL",
+                tecnica: "Crochet",
+                descripcion: "Exploración de la estética a través de la materialidad, creando texturas y volúmenes mediante el tejido estructurado.",
+                url: "https://www.youtube.com/watch?v=Ce1-__2H3xM", // Reemplazar por enlace Embed de YouTube
+                thumbnail: "https://images.unsplash.com/photo-1610030469668-93535c17b6b3?w=500",
+                fecha: "Mañana, 10:00 AM",
+                exclusivo: false
+            },
+            {
+                id: "v2",
+                titulo: "GRUPO 1: COMPOSICIÓN Y TIPOGRAFÍA CONTEMPORÁNEA",
+                tecnica: "Diseño Gráfico",
+                descripcion: "Análisis conceptual del peso visual y la jerarquía de las fuentes tipográficas en entornos urbanos.",
+                url: "https://www.youtube.com/watch?v=M-MUn0Zi3yA&t=14s", // Reemplazar por enlace Embed de YouTube
+                thumbnail: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500",
+                fecha: "15 Oct, 18:00 PM",
+                exclusivo: false
+            },
+            {
+                id: "v3",
+                titulo: "GRUPO 2: DIAGRAMACIÓN Y MAQUETADO DE CONTENIDOS",
+                tecnica: "Layout",
+                descripcion: "Estructuración de retículas complejas y distribución armónica del espacio negativo.",
+                url: "https://www.youtube.com/watch?v=GlHrbXEZZn4", // Reemplazar por enlace Embed de YouTube
+                thumbnail: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500",
+                fecha: "18 Oct, 09:00 AM",
+                exclusivo: false
+            },
+            {
+                id: "v4",
+                titulo: "GRUPO 3: BITÁCORA E ILUSTRACIÓN DE CAMPO",
+                tecnica: "Diario de Campo",
+                descripcion: "Técnicas mixtas de dibujo gestual y anotaciones críticas en el registro de experiencias de campo.",
+                url: "https://www.youtube.com/watch?v=zAw95N2JoCs", // Reemplazar por enlace Embed de YouTube
+                thumbnail: "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?w=500",
+                fecha: "Exclusivo Alumnos",
+                exclusivo: true
+            }
+        ];
+
+        // Historial inicial simulado del chat de la clase
+        const HISTORIAL_CHAT = [
+            { autor: "Camila V.", texto: "¡Hola! Lista con mis agujas y estambre.", color: "#3b82f6" },
+            { autor: "Juan P.", texto: "Buenas tardes profesora, me encanta esta técnica.", color: "#a855f7" }
+        ];
+
+        // Nombres de estudiantes ficticios para simular la interacción en vivo vía Gemini
+        const AVATARES_ESTUDIANTES = [
+            { autor: "Andrés M.", color: "#ec4899" },
+            { autor: "Valeria Z.", color: "#10b981" },
+            { autor: "Carlos D.", color: "#f59e0b" },
+            { autor: "Lucía F.", color: "#ef4444" },
+            { autor: "Santiago R.", color: "#06b6d4" }
+        ];
+
+        /******************************************************************
+         * LÓGICA DE CONTROL DE LA APLICACIÓN
+         ******************************************************************/
+        let videoActual = null;
+
+        // Inicialización de la plataforma
+        window.addEventListener('DOMContentLoaded', () => {
+            seleccionarVideoRandomInicial();
+            cargarHistorialChat();
+            renderizarProximosDirectos();
+
+            // Eventos de entrada de chat
+            document.getElementById('btnSend').addEventListener('click', procesarMensajeUsuario);
+            document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') procesarMensajeUsuario();
+            });
+        });
+
+        // 1. Selección randómica del video principal
+        function seleccionarVideoRandomInicial() {
+            // Se filtran los videos no exclusivos para la simulación inicial en directo
+            const opciones = VIDEOS_DATABASE.filter(v => !v.exclusivo);
+            const indexRandom = Math.floor(Math.random() * opciones.length);
+            cambiarVideoPrincipal(opciones[indexRandom].id, true);
+        }
+
+        // 2. Cambio de estado y visualización del video principal
+        function cambiarVideoPrincipal(id, esInicial = false) {
+            videoActual = VIDEOS_DATABASE.find(v => v.id === id);
+            
+            const videoContainer = document.getElementById('videoContainer');
+            const liveIndicator = document.getElementById('liveIndicator');
+            const chatStatus = document.getElementById('chatStatus');
+            const chatInput = document.getElementById('chatInput');
+
+            // Actualización de textos informativos
+            document.getElementById('mainTitle').innerText = videoActual.titulo;
+            document.getElementById('mainDescription').innerHTML = `<strong>Técnica: ${videoActual.tecnica}.</strong> ${videoActual.descripcion}`;
+
+            // Helper to clean and format youtube URL
+            function cleanYoutubeId(url) {
+                let videoId = "";
+                if (url.includes("v=")) {
+                    videoId = url.split("v=")[1];
+                    if (videoId.includes("&")) {
+                        videoId = videoId.split("&")[0];
+                    }
+                } else if (url.includes("youtu.be/")) {
+                    videoId = url.split("youtu.be/")[1];
+                    if (videoId.includes("?")) {
+                        videoId = videoId.split("?")[0];
+                    }
+                }
+                return videoId;
+            }
+
+            if (esInicial) {
+                // Modo Directo Activo
+                const embedId = cleanYoutubeId(videoActual.url);
+                videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                liveIndicator.style.display = "flex";
+                chatStatus.innerText = "Activo";
+                chatStatus.style.backgroundColor = "#e8f9ee";
+                chatStatus.style.color = "var(--green-active)";
+                chatInput.disabled = false;
+                chatInput.placeholder = "Escribe una pregunta o comentario...";
+            } else {
+                // Modo Próximo Video (Desactivación de interactividad en tiempo real)
+                videoContainer.innerHTML = `
+                    <div style="background:#111; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; padding:20px; text-align:center;">
+                        <span style="font-size:3rem; margin-bottom:10px;">⏳</span>
+                        <h3 style="font-family:'Georgia',serif; margin-bottom:8px;">Este evento iniciará pronto</h3>
+                        <p style="font-size:0.9rem; color:#9ca3af;">Programado para: ${videoActual.fecha}</p>
+                    </div>`;
+                liveIndicator.style.display = "none";
+                chatStatus.innerText = "Inactivo";
+                chatStatus.style.backgroundColor = "#fee2e2";
+                chatStatus.style.color = "var(--live-red)";
+                chatInput.disabled = true;
+                chatInput.placeholder = "El chat se activará cuando inicie el directo";
+            }
+        }
+
+        // 3. Renderizado de componentes de la lista inferior
+        function renderizarProximosDirectos() {
+            const grid = document.getElementById('upcomingGrid');
+            grid.innerHTML = "";
+
+            VIDEOS_DATABASE.forEach(video => {
+                const card = document.createElement('div');
+                card.className = "card-upcoming";
+                card.onclick = () => cambiarVideoPrincipal(video.id, false);
+
+                if (video.exclusivo) {
+                    card.innerHTML = `
+                        <div class="thumb-upcoming" style="background-image: url('${video.thumbnail}')"></div>
+                        <div class="lock-overlay">
+                            <span class="lock-icon">🔒</span>
+                            <span class="lock-text">Exclusivo Alumnos</span>
+                        </div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="thumb-upcoming" style="background-image: url('${video.thumbnail}')">
+                            <span class="time-badge">${video.fecha}</span>
+                        </div>
+                    `;
+                }
+                grid.appendChild(card);
+            });
+        }
+
+        // 4. Gestión e inserción de mensajes en la interfaz del chat
+        function cargarHistorialChat() {
+            HISTORIAL_CHAT.forEach(msg => agregarMensajePantalla(msg.autor, msg.texto, msg.color));
+        }
+
+        function agregarMensajePantalla(autor, texto, color) {
+            const container = document.getElementById('chatMessages');
+            const letraInicial = autor.charAt(0).toUpperCase();
+
+            const msgHtml = `
+                <div class="msg-container">
+                    <div class="msg-avatar" style="background-color: ${color}">${letraInicial}</div>
+                    <div class="msg-body">
+                        <span class="msg-author">${autor}</span>
+                        <span class="msg-text">${texto}</span>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', msgHtml);
+            container.scrollTop = container.scrollHeight; // Auto-scroll
+        }
+
+        // 5. Procesamiento y conexión con la API de Gemini para simulación de estudiantes
+        function procesarMensajeUsuario() {
+            const input = document.getElementById('chatInput');
+            const texto = input.value.trim();
+            if (!texto) return;
+
+            // Renderizar mensaje del usuario local
+            agregarMensajePantalla("Tú", texto, "#1f2937");
+            input.value = "";
+
+            // Si el video actual está inactivo, no se disparan respuestas automatizadas
+            if (document.getElementById('chatStatus').innerText === "Inactivo") return;
+
+            // Simular retraso de procesamiento y respuesta de la comunidad / Gemini
+            setTimeout(() => {
+                llamarAPIGemini(texto);
+            }, 1500);
+        }
+
+        async function llamarAPIGemini(mensajeUsuario) {
+            // Selección aleatoria del perfil de estudiante que emulará la respuesta
+            const estudianteRandom = AVATARES_ESTUDIANTES[Math.floor(Math.random() * AVATARES_ESTUDIANTES.length)];
+            
+            // Si no se ha configurado la API Key, se utiliza una respuesta local de respaldo
+            if (!GEMINI_API_KEY || GEMINI_API_KEY === "SU_API_KEY_AQUI") {
+                agregarMensajePantalla(estudianteRandom.autor, "¡Qué buen punto! Yo opino que la técnica de " + videoActual.tecnica + " requiere mucha práctica.", estudianteRandom.color);
+                return;
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            
+            const promptContexto = `
+                Eres un estudiante de grado 11 (entre 16 y 18 años) llamado ${estudianteRandom.autor}. 
+                Estás asistiendo a una clase en directo sobre la técnica artística: "${videoActual.tecnica}".
+                El tema de la sesión es: "${videoActual.titulo}".
+                Un compañero en el chat acaba de decir: "${mensajeUsuario}".
+                Responde al comentario del compañero de forma natural, corta (máximo 2 líneas), usando un lenguaje apropiado para un joven de secundaria colombiano, entusiasmado por el arte y el diseño. No uses modismos ofensivos, mantén un tono amigable de comunidad escolar.
+            `;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptContexto }] }]
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    const respuestaIA = data.candidates[0].content.parts[0].text.trim();
+                    agregarMensajePantalla(estudianteRandom.autor, respuestaIA, estudianteRandom.color);
+                } else {
+                    throw new Error("Estructura de respuesta inesperada");
+                }
+            } catch (error) {
+                console.error("Error al conectar con la API de Gemini:", error);
+                agregarMensajePantalla(estudianteRandom.autor, "Oigan, ¿soy yo o se pausó un momento la explicación del ejercicio?", estudianteRandom.color);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente DaVinci - Portafolios Digitales</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --bg-light: #e8e9eb;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            --showcase-purple: #6c53a3;
+            --fresh-green: #5cc472;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-main);
+        }
+
+        /* --- BARRA SUPERIOR --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--header-dark);
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .info-btn:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        /* --- INTERFAZ DEL AGENTE DAVINCI --- */
+        .davinci-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .chat-interface {
+            width: 100%;
+            max-width: 900px;
+            height: 95%;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid var(--header-yellow);
+        }
+
+        .chat-header {
+            background: var(--showcase-purple);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .davinci-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--header-yellow);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            border: 2px solid #ffffff;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 20px;
+        }
+        
+        .chat-header p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .msg-bubble {
+            max-width: 85%;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-ai {
+            background: #ffffff;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--header-yellow);
+        }
+
+        .msg-user {
+            background: var(--header-dark);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .msg-user img {
+            max-width: 250px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: block;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .input-area {
+            padding: 20px;
+            background: #ffffff;
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .image-preview-container {
+            display: none;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .image-preview-container img {
+            height: 60px;
+            border-radius: 4px;
+        }
+
+        .remove-img-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .upload-btn {
+            background: var(--showcase-purple);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .upload-btn:hover {
+            background: #5a458a;
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-family: var(--font-main);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--header-yellow);
+        }
+
+        .send-btn {
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            border: none;
+            border-radius: 25px;
+            padding: 0 30px;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            background: #e5bd00;
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* --- MODAL DE FUNDAMENTACIÓN --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+
+        .modal-content {
+            width: 800px;
+            max-height: 85vh;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            background: var(--header-dark);
+            color: var(--header-yellow);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .modal-header h3 { margin: 0; font-family: var(--font-labels); }
+        .modal-close { background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            line-height: 1.7;
+            color: #444;
+        }
+        
+        .modal-body h4 { color: var(--showcase-purple); margin-top: 0; }
+        
+        /* Animación de carga */
+        .loading-dots { display: inline-flex; gap: 5px; }
+        .loading-dots span {
+            width: 8px; height: 8px; background-color: var(--header-yellow); border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+    </style>
+</head>
+<body>
+
+    <!-- Barra Superior -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Agente <span>DaVinci</span></h1>
+        </div>
+        <div class="actions-container">
+            <button class="info-btn" onclick="openInfoModal()">
+                <span>📚</span> Fundamentación Pedagógica
+            </button>
+            <a href="../index.html" class="close-btn">
+                <span>&times;</span> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal del Agente -->
+    <div class="davinci-container">
+        <div class="chat-interface">
+            <div class="chat-header">
+                <div class="davinci-avatar">🎨</div>
+                <div>
+                    <h2>DaVinci</h2>
+                    <p>Asistente de Retroalimentación en Diseño y Estética</p>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="msg-bubble msg-ai">
+                    <strong>¡Hola! Soy DaVinci.</strong><br><br>
+                    Estoy aquí para acompañarte en la creación de tu prototipo artístico. Sube una foto de tu boceto, avance o maqueta (o descríbeme en qué estás trabajando) y te ayudaré a revisar aspectos de composición, color, equilibrio y técnica.<br><br>
+                    <em>¿Qué te gustaría que revisemos hoy?</em>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <!-- Preview de imagen seleccionada -->
+                <div class="image-preview-container" id="image-preview-container">
+                    <img id="preview-img" src="" alt="Vista previa">
+                    <span id="preview-name" style="font-size: 13px; color: #555;"></span>
+                    <button class="remove-img-btn" onclick="clearImage()">×</button>
+                </div>
+
+                <div class="controls-row">
+                    <label class="upload-btn">
+                        📷 Subir Avance
+                        <input type="file" id="image-upload" accept="image/png, image/jpeg, image/webp" onchange="handleImageSelect(event)">
+                    </label>
+                    <input type="text" id="user-input" placeholder="Ej: Este es el boceto de mi diario ilustrado, ¿qué opinas de la composición?" onkeypress="handleEnter(event)">
+                    <button class="send-btn" id="send-btn" onclick="sendMessage()">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Fundamentación (Para el docente) -->
+    <div class="modal-overlay" id="info-modal" onclick="closeInfoModalOnOutside(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Fundamentación del Agente DaVinci</h3>
+                <button class="modal-close" onclick="closeInfoModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Fase 3: Iteración mediante Desarrollo - Agente de Retroalimentación</h4>
+                <p>Se propone la construcción de un agente de IA denominado <strong>DaVinci</strong>, concebido como un recurso de acompañamiento individual dentro del proceso de elaboración del prototipo en la técnica seleccionada por el estudiante de grado 11.</p>
+                <p>Este agente funciona como un asistente virtual con <strong>capacidades multimodales</strong>, capaz de interpretar imágenes, bocetos y descripciones. Su propósito es ofrecer retroalimentación formativa sobre parámetros de diseño (composición, proporción, equilibrio, color, manejo técnico).</p>
+                <p><strong>Enfoque Pedagógico:</strong> El propósito <em>no es reemplazar la valoración del docente</em> ni asumir decisiones creativas. A partir de la información, el agente formula observaciones y preguntas orientadoras. La construcción se fundamenta en los modelos <strong>ADDIE</strong> y <strong>SAM (Successive Approximation Model)</strong>, permitiendo una lógica iterativa y flexible donde el agente se ajusta según la experiencia del estudiante.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURACIÓN DE LA API ---
+        const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ"; 
+        
+        // PROMPT DEL SISTEMA DEFINIDO POR EL DOCENTE
+        const systemPrompt = `Actúa como diseñador pedagógico, asesor en estética visual y especialista en retroalimentación formativa mediada por inteligencia artificial. Tu nombre es DaVinci y tu función es acompañar a estudiantes de grado 11, entre 16 y 18 años, en el proceso de construcción de un prototipo artístico o visual desarrollado a partir de una técnica específica: Composición y Tipografía, Maquetado, Diario Ilustrado o Crochet. 
+        Debes analizar imágenes, bocetos, avances del prototipo o descripciones escritas enviadas por el estudiante. A partir de esta información, identifica la técnica trabajada y ofrece retroalimentación clara, respetuosa y formativa sobre los parámetros de diseño correspondientes, tales como composición, proporción, equilibrio, jerarquía visual, uso del color, textura, coherencia estética, relación entre intención y resultado, manejo técnico y posibles ajustes. 
+        Tu retroalimentación no debe reemplazar el criterio del docente ni decidir por el estudiante. Debes actuar como un guía que formula observaciones, preguntas orientadoras y sugerencias de mejora. Evita dar respuestas cerradas o imponer una única solución. Promueve la reflexión, la autonomía, la toma de decisiones y la mejora progresiva del prototipo. 
+        Organiza tus respuestas en cuatro partes:
+        1. Reconocimiento de la técnica y del avance presentado.
+        2. Fortalezas observadas en el prototipo.
+        3. Aspectos por mejorar según los parámetros de diseño.
+        4. Preguntas orientadoras o recomendaciones para el siguiente ajuste.
+        Utiliza un lenguaje claro, cercano y pedagógico, adecuado para estudiantes de grado 11. Cuando no tengas suficiente información visual o textual, solicita al estudiante una imagen más clara, una explicación de su intención estética o una descripción del proceso realizado.`;
+
+        let chatHistory = [];
+        let currentBase64Image = null;
+        let currentMimeType = null;
+
+        // --- MANEJO DE IMÁGENES ---
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fullBase64 = e.target.result;
+                currentMimeType = file.type;
+                currentBase64Image = fullBase64.split(',')[1];
+                
+                document.getElementById('preview-img').src = fullBase64;
+                document.getElementById('preview-name').innerText = file.name;
+                document.getElementById('image-preview-container').style.display = 'flex';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearImage() {
+            currentBase64Image = null;
+            currentMimeType = null;
+            document.getElementById('image-upload').value = '';
+            document.getElementById('image-preview-container').style.display = 'none';
+        }
+
+        // --- LÓGICA DE INTERFAZ CHAT ---
+        function handleEnter(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function addMessageToUI(text, sender, imgSrc = null) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.classList.add('msg-bubble', sender === 'user' ? 'msg-user' : 'msg-ai');
+            
+            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formattedText = formattedText.replace(/\n/g, '<br>');
+
+            div.innerHTML = formattedText;
+
+            if (imgSrc) {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                div.appendChild(img);
+            }
+            
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addLoading() {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.classList.add('msg-bubble', 'msg-ai');
+            div.id = 'ai-loading';
+            div.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeLoading() {
+            const el = document.getElementById('ai-loading');
+            if(el) el.remove();
+        }
+
+        // --- CONEXIÓN API GEMINI MULTIMODAL ---
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const btn = document.getElementById('send-btn');
+            const text = input.value.trim();
+
+            if (!text && !currentBase64Image) return;
+
+            input.value = '';
+            input.disabled = true;
+            btn.disabled = true;
+
+            const previewSrc = currentBase64Image ? document.getElementById('preview-img').src : null;
+            addMessageToUI(text || "📷 Imagen adjunta", 'user', previewSrc);
+
+            let userParts = [];
+            if (text) userParts.push({ text: text });
+            if (currentBase64Image) {
+                userParts.push({
+                    inlineData: {
+                        mimeType: currentMimeType,
+                        data: currentBase64Image
+                    }
+                });
+            }
+
+            chatHistory.push({ role: "user", parts: userParts });
+            
+            clearImage();
+            addLoading();
+
+            try {
+                // CORRECCIÓN APLICADA AQUÍ: Actualización de la versión del modelo a gemini-2.5-flash
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    contents: chatHistory
+                };
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                
+                const data = await response.json();
+                removeLoading();
+
+                if (data.candidates && data.candidates[0].content) {
+                    const aiText = data.candidates[0].content.parts[0].text;
+                    addMessageToUI(aiText, 'ai');
+                    chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                }
+
+            } catch (error) {
+                console.error(error);
+                removeLoading();
+                addMessageToUI("Lo siento, hubo un error analizando la imagen o conectando con el servidor. Por favor, intenta de nuevo.", 'ai');
+                chatHistory.pop();
+            } finally {
+                input.disabled = false;
+                btn.disabled = false;
+                input.focus();
+            }
+        }
+
+        function openInfoModal() { document.getElementById('info-modal').classList.add('active'); }
+        function closeInfoModal() { document.getElementById('info-modal').classList.remove('active'); }
+        function closeInfoModalOnOutside(e) { if(e.target.id === 'info-modal') closeInfoModal(); }
+
+    </script>
+</body>
+</html>

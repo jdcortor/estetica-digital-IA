@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museo Digital - Portafolios</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --bg-light: #e8e9eb;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Botón para abrir la Metodología ADDIE */
+        .addie-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--header-dark);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 15px;
+            background-color: var(--header-yellow);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(251, 208, 8, 0.3);
+        }
+
+        .addie-btn:hover {
+            background-color: #e5bd00;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.5);
+        }
+
+        /* Botón de cierre tradicional */
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        .iframe-container {
+            flex: 1;
+            width: 100%;
+            background-color: var(--bg-light);
+            position: relative;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- INTERFAZ DEL POPUP MODAL (EFECTO LIBRO 3D) --- */
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px; /* Otorga profundidad para la animación 3D */
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 85%;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            
+            /* Simulación del giro de la tapa de un libro al abrirse */
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .addie-modal-body {
+            flex: 1;
+            background: #525659; /* Tono neutro para integrar el visor de PDF */
+            position: relative;
+        }
+
+        .addie-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra superior de navegación modificada -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Museo <span>Digital</span></h1>
+        </div>
+        <div class="actions-container">
+            <button class="addie-btn" onclick="openAddieModal()" title="Ver Diseño de Recurso">
+                <span>📖</span> Diseño de Recurso
+            </button>
+            <a href="../index.html" class="close-btn">
+                <span>&times;</span> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenedor del Iframe con la presentación de Genially -->
+    <div class="iframe-container">
+        <iframe 
+            src="https://view.genially.com/69ee3edbc6e29311f5f3a0a7" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Popup Modal para desplegar el documento PDF local -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body">
+                <!-- Se incrusta el archivo PDF local parametrizado -->
+                <iframe src="../museo.pdf"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+
+        // Cierra el modal si el usuario hace clic fuera de la estructura del contenedor (en el fondo oscuro)
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
+            }
+        }
+    </script>
+
+</body>
+</html>

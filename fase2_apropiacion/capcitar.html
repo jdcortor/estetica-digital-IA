@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Capacitación - Aula Virtual de Estética</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --bg-light: #e8e9eb;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            --showcase-purple: #6c53a3;
+            --fresh-green: #5cc472;
+            --text-dark: #333333;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light);
+            font-family: var(--font-main);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- BARRA SUPERIOR --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        /* --- CUERPO PRINCIPAL --- */
+        .workspace {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Columna Izquierda: Reproductor y Controles */
+        .left-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .video-player-container {
+            flex: 1;
+            background: #000000;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 2px solid var(--header-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Pantalla de Próxima Clase Diferida */
+        .waiting-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #2c2c2c 0%, #111111 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+
+        .waiting-screen h2 {
+            font-family: var(--font-labels);
+            font-size: 32px;
+            color: var(--header-yellow);
+            margin: 0 0 10px 0;
+        }
+
+        .waiting-screen p {
+            font-size: 18px;
+            margin: 0 0 25px 0;
+            max-width: 500px;
+            opacity: 0.8;
+        }
+
+        .countdown-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--header-yellow);
+        }
+
+        /* Panel de Reacciones e Información del video actual */
+        .video-meta-row {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reaction-btn {
+            background: var(--bg-light);
+            border: 1px solid #ddd;
+            font-size: 20px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.15);
+            background: var(--header-yellow);
+            border-color: var(--header-yellow);
+        }
+
+        /* Columna Derecha: Sistema de Chat e Interacción */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--showcase-purple);
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .chat-header {
+            background: var(--showcase-purple);
+            color: #ffffff;
+            padding: 15px 20px;
+            font-family: var(--font-labels);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live-indicator {
+            background: #ff4d4d;
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: var(--font-main);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #fdfdfd;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-bubble {
+            font-size: 13.5px;
+            line-height: 1.5;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--bg-light);
+            max-width: 95%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .student-name {
+            font-weight: 700;
+            color: var(--showcase-purple);
+            margin-right: 5px;
+        }
+
+        .student-tech {
+            font-size: 10px;
+            background: rgba(108, 83, 163, 0.1);
+            color: var(--showcase-purple);
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .chat-bubble.my-msg {
+            background: #fbeea7;
+            align-self: flex-end;
+            border-right: 4px solid var(--header-yellow);
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            outline: none;
+            font-family: var(--font-main);
+            font-size: 13px;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--showcase-purple);
+        }
+
+        .send-chat-btn {
+            background: var(--showcase-purple);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Plataforma de <span>Capacitación</span></h1>
+        </div>
+        <a href="../index.html" class="close-btn">
+            <span>&times;</span> Volver al Mapa
+        </a>
+    </div>
+
+    <div class="workspace">
+        
+        <div class="left-panel">
+            
+            <div class="video-player-container">
+                <div class="waiting-screen" id="waiting-screen">
+                    <h2 id="waiting-title">Próxima Clase Sincrónica</h2>
+                    <p id="waiting-desc">Cargando la programación del aula virtual en estética...</p>
+                    <div class="countdown-badge" id="countdown-badge">PROGRAMADO: --:--</div>
+                </div>
+                <div id="player-iframe-container" style="width:100%; height:100%; display:none;"></div>
+            </div>
+
+            <div class="video-meta-row">
+                <div class="meta-text">
+                    <h3 id="meta-title">Cargando Sesión...</h3>
+                    <p id="meta-desc">Por favor espere a la validación temporal de los contenidos del Portafolio.</p>
+                </div>
+                <div class="reaction-bar">
+                    <button class="reaction-btn" onclick="emitReaction('👏')" title="Aplaudir">👏</button>
+                    <button class="reaction-btn" onclick="emitReaction('💡')" title="Idea Brillante">💡</button>
+                    <button class="reaction-btn" onclick="emitReaction('😮')" title="Sorprendido">😮</button>
+                    <button class="reaction-btn" onclick="emitReaction('❤️')" title="Me Encanta">❤️</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="right-panel">
+            <div class="chat-header">
+                <span>💬 Chat En Vivo de la Clase</span>
+                <span class="live-indicator" id="live-indicator" style="display:none;">EN VIVO</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-bubble" style="background:#fff3cd; color:#856404; text-align:center; max-width:100%;">
+                    <strong>Sistema:</strong> Conectando con la sala de interacción de Grado 11...
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="student-msg-input" placeholder="Comenta en la clase virtual..." onkeypress="handleChatEnter(event)" disabled>
+                <button class="send-chat-btn" id="send-chat-btn" onclick="sendStudentMessage()" disabled>Enviar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- CONFIGURACIÓN DE SEGURIDAD ---
+        const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ"; // Pegar clave de Google AI Studio si se desea IA real en el chat
+        
+        // --- BASE DE DATOS LOCAL PROVISTA POR EL DOCENTE ---
+        const VIDEOS_DATABASE = [
+            {
+                id: "v1",
+                titulo: "GRUPO 4: DISEÑO ARTÍSTICO Y MATERIAL",
+                tecnica: "Crochet",
+                descripcion: "Exploración de la estética a través de la materialidad, creando texturas y volúmenes mediante el tejido estructurado.",
+                url: "https://www.youtube.com/watch?v=Ce1-__2H3xM",
+                exclusivo: false
+            },
+            {
+                id: "v2",
+                titulo: "GRUPO 1: COMPOSICIÓN Y TIPOGRAFÍA CONTEMPORÁNEA",
+                tecnica: "Diseño Gráfico",
+                descripcion: "Análisis conceptual del peso visual y la jerarquía de las fuentes tipográficas en entornos urbanos.",
+                url: "https://www.youtube.com/watch?v=M-MUn0Zi3yA&t=14s",
+                exclusivo: false
+            },
+            {
+                id: "v3",
+                titulo: "GRUPO 2: DIAGRAMACIÓN Y MAQUETADO DE CONTENIDOS",
+                tecnica: "Layout",
+                descripcion: "Estructuración de retículas complejas y distribución armónica del espacio negativo.",
+                url: "https://www.youtube.com/watch?v=GlHrbXEZZn4",
+                exclusivo: false
+            },
+            {
+                id: "v4",
+                titulo: "GRUPO 3: BITÁCORA E ILUSTRACIÓN DE CAMPO",
+                tecnica: "Diario de Campo",
+                descripcion: "Técnicas mixtas de dibujo gestual y anotaciones críticas en el registro de experiences de campo.",
+                url: "https://www.youtube.com/watch?v=zAw95N2JoCs",
+                exclusivo: true
+            }
+        ];
+
+        // --- EXTRACCIÓN DINÁMICA DE ID DE YOUTUBE ---
+        function cleanYoutubeId(url) {
+            let videoId = "";
+            if (url.includes("v=")) {
+                videoId = url.split("v=")[1];
+                if (videoId.includes("&")) {
+                    videoId = videoId.split("&")[0];
+                }
+            } else if (url.includes("youtu.be/")) {
+                videoId = url.split("youtu.be/")[1];
+                if (videoId.includes("?")) {
+                    videoId = videoId.split("?")[0];
+                }
+            }
+            return videoId;
+        }
+
+        // --- SISTEMA TEMPORAL ALEATORIO (REQUISITO: 2:00 A 23:00) ---
+        const selectedVideo = VIDEOS_DATABASE[Math.floor(Math.random() * VIDEOS_DATABASE.length)];
+        const scheduledHour = Math.floor(Math.random() * (23 - 2 + 1)) + 2; // Rango inclusivo 2 a 23
+        
+        // Estudiantes virtuales para poblar el chat dinámico
+        const virtualStudents = [
+            { nombre: "Santiago Yepes", tecnica: "Maquetado" },
+            { nombre: "Laura Castillo", tecnica: "Crochet" },
+            { nombre: "Cristian Villada", tecnica: "Tipografía" },
+            { nombre: "Estela Cepeda", tecnica: "Diario de Campo" },
+            { nombre: "Juan Bilbao", tecnica: "Diseño Gráfico" }
+        ];
+
+        let chatSimulationInterval;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('countdown-badge').innerText = `PROGRAMADO HOY A LAS: ${scheduledHour}:00 HS`;
+            document.getElementById('meta-title').innerText = selectedVideo.titulo;
+            document.getElementById('meta-desc').innerText = `Técnica asociada: ${selectedVideo.tecnica}. ${selectedVideo.descripcion}`;
+            
+            // Iniciar ciclo de comprobación horaria
+            evaluateTimeline();
+            setInterval(evaluateTimeline, 10000); // Evaluar cada 10 segundos
+        });
+
+        function evaluateTimeline() {
+            const currentHour = new Date().getHours();
+            const waitingScreen = document.getElementById('waiting-screen');
+            const playerContainer = document.getElementById('player-iframe-container');
+            const liveIndicator = document.getElementById('live-indicator');
+            const inputField = document.getElementById('student-msg-input');
+            const sendBtn = document.getElementById('send-chat-btn');
+
+            // Ventana de acceso: Habilitado únicamente si coincide exactamente la hora o falta menos de 5 minutos para su inicio
+            if (currentHour === scheduledHour) {
+                // Habilitar transmisión
+                waitingScreen.style.display = 'none';
+                playerContainer.style.display = 'block';
+                liveIndicator.style.display = 'block';
+                inputField.disabled = false;
+                sendBtn.disabled = false;
+
+                // Si no hay iframe incrustado, construirlo usando la sintaxis de incrustación de seguridad (/embed/)
+                if (playerContainer.innerHTML === "") {
+                    const embedId = cleanYoutubeId(selectedVideo.url);
+                    playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                    appendSystemMessage(`La transmisión en vivo de "${selectedVideo.tecnica}" ha comenzado.`);
+                    startVirtualChatEngine();
+                }
+            } else {
+                // Bloquear transmisión
+                waitingScreen.style.display = 'flex';
+                playerContainer.style.display = 'none';
+                liveIndicator.style.display = 'none';
+                inputField.disabled = true;
+                sendBtn.disabled = true;
+                playerContainer.innerHTML = "";
+                clearInterval(chatSimulationInterval);
+                
+                document.getElementById('waiting-title').innerText = "Próxima Clase Sincrónica";
+                document.getElementById('waiting-desc').innerText = `El aula de "${selectedVideo.titulo}" se encuentra cerrada en este momento. La sesión en directo se activará de forma exclusiva en la hora parametrizada.`;
+            }
+        }
+
+        function appendSystemMessage(text) {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML += `<div class="chat-bubble" style="background:#e2f0d9; color:#385723; text-align:center; max-width:100%;"><strong>Sistema:</strong> ${text}</div>`;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // --- MOTOR DE SIMULACIÓN DE CHAT (INTEGRACIÓN COGNITIVA) ---
+        function startVirtualChatEngine() {
+            if (chatSimulationInterval) clearInterval(chatSimulationInterval);
+
+            // Primer disparo de mensajes virtuales de ambientación
+            setTimeout(triggerVirtualComment, 3000);
+
+            // Ciclo repetitivo de comentarios cada 12 segundos
+            chatSimulationInterval = setInterval(triggerVirtualComment, 12000);
+        }
+
+        async function triggerVirtualComment() {
+            const student = virtualStudents[Math.floor(Math.random() * virtualStudents.length)];
+            let commentText = "";
+
+            // Lógica de respaldo por si no hay Clave API provista
+            if (!apiKey) {
+                const backupPhrases = [
+                    "¡Qué buen manejo de las proporciones estructurales se ve ahí!",
+                    "Profe David, ¿ese manejo del espacio negativo aplica también para las bitácoras?",
+                    "Espectacular la transición del color en esa composición.",
+                    "Me aclara muchas dudas sobre el equilibrio visual que pide la rúbrica.",
+                    "No se me había ocurrido estructurar la técnica de esa manera."
+                ];
+                commentText = backupPhrases[Math.floor(Math.random() * backupPhrases.length)];
+                injectMessageInUI(student.nombre, student.tecnica, commentText);
+                return;
+            }
+
+            // Si hay API Key, Gemini genera la conversación simulada contextualizada al vídeo
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{
+                        role: "user",
+                        parts: [{
+                            text: `Genera un comentario corto de chat de clase virtual (máximo un renglón). Quien escribe es un estudiante de grado 11 llamado ${student.nombre}, especializado en la técnica de ${student.tecnica}. El comentario debe ser sobre la clase actual de "${selectedVideo.titulo}" enfocada en la técnica de "${selectedVideo.tecnica}". Sé natural, usa español de Colombia sin exagerar, y demuestra que estás analizando los parámetros estéticos visuales del ejercicio.`
+                        }]
+                    }]
+                };
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    commentText = data.candidates[0].content.parts[0].text.trim();
+                    injectMessageInUI(student.nombre, student.tecnica, commentText);
+                }
+            } catch (e) {
+                console.error("Fallo de comunicación con Gemini en Chat:", e);
+            }
+        }
+
+        function injectMessageInUI(name, tech, text, isMe = false) {
+            const container = document.getElementById('chat-messages');
+            const bubble = document.createElement('div');
+            bubble.classList.add('chat-bubble');
+            if (isMe) bubble.classList.add('my-msg');
+
+            bubble.innerHTML = isMe ? 
+                `<strong>Tú:</strong> ${text}` : 
+                `<span class="student-name">${name}</span><span class="student-tech">${tech}</span><br>${text}`;
+
+            container.appendChild(bubble);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // --- ENVÍO DE MENSAJES DEL ESTUDIANTE REAL ---
+        function sendStudentMessage() {
+            const input = document.getElementById('student-msg-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            injectMessageInUI("Usuario", "Estudiante", text, true);
+            input.value = "";
+            
+            // Simular que un compañero virtual o el sistema responde a la interacción del usuario 4 segundos después
+            setTimeout(() => {
+                if (Math.random() > 0.4) {
+                    const student = virtualStudents[Math.floor(Math.random() * virtualStudents.length)];
+                    injectMessageInUI(student.nombre, student.tecnica, "¡De acuerdo con lo que acabas de escribir! A mí también me llamó la atención ese detalle técnico.");
+                }
+            }, 4000);
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') sendStudentMessage();
+        }
+
+        // --- SISTEMA DE REACCIONES Y VALORACIÓN ---
+        function emitReaction(emoji) {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML += `<div class="chat-bubble my-msg" style="background: transparent; border: none; font-size: 24px; padding: 0; margin-bottom: 5px;">${emoji}</div>`;
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>

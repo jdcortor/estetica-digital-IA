@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acuerdo Ético de Inteligencia Artificial - Estética</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --header-yellow-hover: #e5bd00;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --accent-gold: #fbd008;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .title-container p {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: rgba(251, 208, 8, 0.2);
+            border-color: var(--header-yellow);
+            transform: scale(1.03);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- PACT CARD STYLING --- */
+        .glass-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), transparent);
+        }
+
+        .section-title {
+            font-family: var(--font-labels);
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pact-intro {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: #d1d1d6;
+            margin-bottom: 25px;
+        }
+
+        /* --- CHECKLIST SYSTEM --- */
+        .checklist-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .check-item:hover {
+            background: rgba(251, 208, 8, 0.03);
+            border-color: rgba(251, 208, 8, 0.2);
+            transform: translateX(3px);
+        }
+
+        .check-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            color: transparent;
+            font-size: 12px;
+        }
+
+        .check-item input[type="checkbox"]:checked + .custom-checkbox {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: #121214;
+        }
+
+        .check-text {
+            font-size: 13.5px;
+            line-height: 1.45;
+            color: #e4e4e7;
+            user-select: none;
+        }
+
+        /* --- SIGNATURE SECTION --- */
+        .signature-section {
+            opacity: 0.4;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .signature-section.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-field label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-gold);
+        }
+
+        .form-field input {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13.5px;
+            padding: 10px 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-field input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 8px rgba(251, 208, 8, 0.2);
+        }
+
+        .canvas-wrapper {
+            margin-top: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1.5px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        canvas {
+            background-color: #1a1a1e;
+            border-radius: 8px;
+            cursor: crosshair;
+            width: 100%;
+            height: 140px;
+            touch-action: none;
+        }
+
+        .canvas-actions {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 13.5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: #121214;
+            flex-grow: 1;
+            box-shadow: 0 4px 15px rgba(251, 208, 8, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--header-yellow-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            background-color: #3f3f46;
+            color: #71717a;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* --- CERTIFICATE DISPLAY --- */
+        .cert-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 40px;
+        }
+
+        .certificate {
+            background: linear-gradient(135deg, #1b1b22 0%, #121216 100%);
+            border: 2px solid #3a321d;
+            border-radius: 16px;
+            padding: 40px 30px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            min-height: 480px;
+            justify-content: space-between;
+        }
+
+        /* Gold frame effect */
+        .certificate::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border: 1px solid rgba(251, 208, 8, 0.15);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        /* Sealed background logo */
+        .watermark {
+            position: absolute;
+            font-size: 150px;
+            color: rgba(251, 208, 8, 0.02);
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .cert-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .cert-badge {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffe76c 0%, #d4af37 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #121214;
+            font-size: 26px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        }
+
+        .cert-title {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 26px;
+            color: var(--accent-gold);
+            margin-top: 10px;
+        }
+
+        .cert-subtitle {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .cert-statement {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e4e4e7;
+            max-width: 320px;
+        }
+
+        .cert-student-name {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            min-width: 180px;
+            margin: 10px 0;
+            text-transform: uppercase;
+        }
+
+        .cert-date {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .cert-signature-img {
+            max-height: 55px;
+            max-width: 160px;
+            margin-top: 15px;
+            border-bottom: 1.5px solid var(--accent-gold);
+            padding-bottom: 4px;
+            filter: drop-shadow(0 0 4px rgba(251,208,8,0.3));
+        }
+
+        .cert-actions {
+            display: flex;
+            width: 100%;
+            gap: 15px;
+        }
+
+        .unsigned-msg {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-style: italic;
+            max-width: 250px;
+            line-height: 1.5;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Compromiso <span>Ético de IA</span></h1>
+            <p>Ecosistema de Portafolios de Arte · Colegio Danilo Cifuentes</p>
+        </div>
+        <button class="close-btn" onclick="window.location.href='../index.html'">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+        </button>
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="container">
+        
+        <!-- PACT FORM -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fa-solid fa-shield-halved"></i> Compromiso de Honestidad
+            </h2>
+            <p class="pact-intro">
+                Para el desarrollo del portafolio del área de Estética en Grado 11, promovemos el uso de Inteligencia Artificial como catalizador creativo. Antes de iniciar la construcción, comprométete a seguir las siguientes directrices éticas:
+            </p>
+
+            <div class="checklist-group" id="checklist">
+                <label class="check-item">
+                    <input type="checkbox" onchange="checkPact()">
+                    <span class="custom-checkbox"><i class="fa-solid fa-check"></i></span>
+                    <span class="check-text">Reconozco que la Inteligencia Artificial es una herramienta de apoyo, y no sustituye mi pensamiento reflexivo ni mi autoría de proyecto.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" onchange="checkPact()">
+                    <span class="custom-checkbox"><i class="fa-solid fa-check"></i></span>
+                    <span class="check-text">Me comprometo a citar todas las herramientas de IA utilizadas, registrando detalladamente en mi Bitácora los prompts generados.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" onchange="checkPact()">
+                    <span class="custom-checkbox"><i class="fa-solid fa-check"></i></span>
+                    <span class="check-text">Garantizo que las piezas del portafolio final corresponden a una co-creación guiada por mi criterio estético, y no son copias automáticas 100% de la IA.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" onchange="checkPact()">
+                    <span class="custom-checkbox"><i class="fa-solid fa-check"></i></span>
+                    <span class="check-text">Acepto que presentar imágenes o escritos generados por IA simulándolos como trabajos manuales propios es considerado plagio académico.</span>
+                </label>
+            </div>
+
+            <!-- SIGNATURE INPUTS -->
+            <div class="signature-section" id="sig-section">
+                <div class="input-row">
+                    <div class="form-field">
+                        <label for="student-name">Nombre del Estudiante</label>
+                        <input type="text" id="student-name" placeholder="Ej. Camila Vargas" oninput="updateForm()">
+                    </div>
+                    <div class="form-field">
+                        <label for="student-code">Código de Alumno</label>
+                        <input type="text" id="student-code" placeholder="Ej. EST-1104" oninput="updateForm()">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Firma Digital (Dibuja sobre el lienzo inferior)</label>
+                    <div class="canvas-wrapper">
+                        <canvas id="sig-canvas"></canvas>
+                        <div class="canvas-actions">
+                            <button class="btn btn-secondary" onclick="clearSig()">
+                                <i class="fa-solid fa-eraser"></i> Limpiar
+                            </button>
+                            <button class="btn btn-primary" id="btn-submit" onclick="signPact()" disabled>
+                                <i class="fa-solid fa-file-signature"></i> Firmar Pacto
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CERTIFICATE AREA -->
+        <div class="cert-container">
+            <div class="certificate" id="cert-card">
+                <div class="watermark"><i class="fa-solid fa-scroll"></i></div>
+                
+                <!-- Unsigned State -->
+                <div id="unsigned-state" class="cert-content">
+                    <div class="cert-badge" style="background: #3f3f46; color:#71717a; box-shadow:none; animation:none;">
+                        <i class="fa-solid fa-signature"></i>
+                    </div>
+                    <p class="unsigned-msg">
+                        Acepta todas las condiciones del Compromiso Ético para desbloquear tu firma digital y generar tu Certificado de Autoría.
+                    </p>
+                </div>
+
+                <!-- Signed State (Hidden initially) -->
+                <div id="signed-state" class="cert-content" style="display: none; width:100%;">
+                    <div class="cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="cert-title">Certificado de Ética</div>
+                    <div class="cert-subtitle">Uso Responsable de Inteligencia Artificial</div>
+                    
+                    <p class="cert-statement">
+                        Este documento certifica que el estudiante de Grado 11 se compromete a usar las tecnologías generativas con rigurosidad ética y transparencia.
+                    </p>
+
+                    <div class="cert-student-name" id="cert-display-name">ESTUDIANTE INVITADO</div>
+                    <div class="cert-date" id="cert-display-date">Fecha de Firma: --/--/----</div>
+
+                    <img id="cert-sig-preview" class="cert-signature-img" src="" alt="Firma digital">
+                </div>
+            </div>
+
+            <!-- Certificate Actions -->
+            <div class="cert-actions" id="cert-actions-div" style="display: none;">
+                <button class="btn btn-primary" onclick="downloadCertificate()" style="width: 100%;">
+                    <i class="fa-solid fa-download"></i> Descargar Certificado (PNG)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNATURE CANVAS LOGIC -->
+    <script>
+        const canvas = document.getElementById('sig-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let hasDrawn = false;
+
+        // Adjust canvas resolution dynamically
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            clearSig();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        document.addEventListener('DOMContentLoaded', () => {
+            resizeCanvas();
+            loadExistingSession();
+        });
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = getMousePos(e);
+        });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+
+        // Touch Events (for Mobile)
+        canvas.addEventListener('touchstart', (e) => {
+            isDrawing = true;
+            const touch = e.touches[0];
+            [lastX, lastY] = getTouchPos(touch);
+            e.preventDefault();
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (!isDrawing) return;
+            const touch = e.touches[0];
+            const [x, y] = getTouchPos(touch);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = '#fbd008';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            [lastX, lastY] = [x, y];
+            hasDrawn = true;
+            updateForm();
+            e.preventDefault();
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', () => isDrawing = false);
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return [
+                e.clientX - rect.left,
+                e.clientY - rect.top
+            ];
+        }
+
+        function getTouchPos(touch) {
+            const rect = canvas.getBoundingClientRect();
+            return [
+                touch.clientX - rect.left,
+                touch.clientY - rect.top
+            ];
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const [x, y] = getMousePos(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = '#fbd008'; // Golden ink
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            [lastX, lastY] = [x, y];
+            hasDrawn = true;
+            updateForm();
+        }
+
+        function clearSig() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hasDrawn = false;
+            updateForm();
+        }
+
+        // Enable Signature Section when all items are checked
+        function checkPact() {
+            const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const sigSection = document.getElementById('sig-section');
+            
+            if (allChecked) {
+                sigSection.classList.add('active');
+            } else {
+                sigSection.classList.remove('active');
+            }
+            updateForm();
+        }
+
+        // Check if student details and signature are ready
+        function updateForm() {
+            const nameVal = document.getElementById('student-name').value.trim();
+            const codeVal = document.getElementById('student-code').value.trim();
+            const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const submitBtn = document.getElementById('btn-submit');
+
+            if (nameVal && codeVal && hasDrawn && allChecked) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Action when Signing the Pact
+        function signPact() {
+            const name = document.getElementById('student-name').value.trim();
+            const code = document.getElementById('student-code').value.trim();
+            const dateStr = new Date().toLocaleDateString();
+
+            // Save to localStorage
+            const userSession = {
+                name: name,
+                code: code,
+                signed: true,
+                date: dateStr
+            };
+            localStorage.setItem('estetica_ficha_responsable', JSON.stringify(userSession));
+
+            // Set content in Certificate display
+            document.getElementById('cert-display-name').textContent = name;
+            document.getElementById('cert-display-date').textContent = `Fecha de Firma: ${dateStr}`;
+            
+            // Render canvas signature inside preview img
+            const sigDataUrl = canvas.toDataURL();
+            document.getElementById('cert-sig-preview').src = sigDataUrl;
+
+            // Transition animations
+            document.getElementById('unsigned-state').style.display = 'none';
+            
+            const signedState = document.getElementById('signed-state');
+            signedState.style.display = 'flex';
+            signedState.style.opacity = 0;
+            signedState.style.transform = 'scale(0.95)';
+            
+            const actionsDiv = document.getElementById('cert-actions-div');
+            actionsDiv.style.display = 'flex';
+            actionsDiv.style.opacity = 0;
+
+            setTimeout(() => {
+                signedState.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                signedState.style.opacity = 1;
+                signedState.style.transform = 'scale(1)';
+
+                actionsDiv.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                actionsDiv.style.opacity = 1;
+            }, 50);
+        }
+
+        // Load existing session if saved in localStorage
+        function loadExistingSession() {
+            const storedFicha = localStorage.getItem('estetica_ficha_responsable');
+            if (storedFicha) {
+                try {
+                    const data = JSON.parse(storedFicha);
+                    if (data.signed) {
+                        document.getElementById('student-name').value = data.name || '';
+                        document.getElementById('student-code').value = data.code || '';
+                        
+                        // Check all check boxes
+                        const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+                        checkboxes.forEach(cb => cb.checked = true);
+                        checkPact();
+
+                        // Draw a mock signature on canvas to make form validate
+                        ctx.beginPath();
+                        ctx.moveTo(canvas.width / 4, canvas.height / 2);
+                        ctx.lineTo(canvas.width * 3/4, canvas.height / 2);
+                        ctx.strokeStyle = '#fbd008';
+                        ctx.lineWidth = 2.5;
+                        ctx.stroke();
+                        hasDrawn = true;
+                        
+                        signPact();
+                    }
+                } catch(e) {
+                    console.error("Error loading stored ethical pact:", e);
+                }
+            }
+        }
+
+        // Download Certificate using HTML5 Canvas rendering
+        function downloadCertificate() {
+            const name = document.getElementById('student-name').value.trim().toUpperCase();
+            const code = document.getElementById('student-code').value.trim().toUpperCase();
+            const dateStr = new Date().toLocaleDateString();
+
+            // Create a temporary canvas representing a printable certificate size
+            const printCanvas = document.createElement('canvas');
+            printCanvas.width = 800;
+            printCanvas.height = 600;
+            const pctx = printCanvas.getContext('2d');
+
+            // Draw Background Gradients
+            const bgGrad = pctx.createLinearGradient(0, 0, 800, 600);
+            bgGrad.addColorStop(0, '#121214');
+            bgGrad.addColorStop(1, '#1e1e24');
+            pctx.fillStyle = bgGrad;
+            pctx.fillRect(0, 0, 800, 600);
+
+            // Draw Golden Frames
+            pctx.lineWidth = 15;
+            pctx.strokeStyle = '#3a321d';
+            pctx.strokeRect(20, 20, 760, 560);
+
+            pctx.lineWidth = 2;
+            pctx.strokeStyle = '#fbd008';
+            pctx.strokeRect(35, 35, 730, 530);
+
+            // Draw Decorative corner shapes
+            pctx.fillStyle = '#fbd008';
+            const corners = [[35,35], [765,35], [35,565], [765,565]];
+            corners.forEach(([cx, cy]) => {
+                pctx.beginPath();
+                pctx.arc(cx, cy, 10, 0, Math.PI * 2);
+                pctx.fill();
+            });
+
+            // Write Title
+            pctx.fillStyle = '#fbd008';
+            pctx.textAlign = 'center';
+            pctx.font = 'italic bold 38px Georgia, serif';
+            pctx.fillText('Certificado de Ética y Co-Creación', 400, 110);
+
+            pctx.fillStyle = '#a0a0ab';
+            pctx.font = 'bold 13px Nunito, sans-serif';
+            pctx.fillText('USO RESPONSABLE DE INTELIGENCIA ARTIFICIAL EN EL AULA DE ESTÉTICA', 400, 150);
+
+            // Write Statement
+            pctx.fillStyle = '#e4e4e7';
+            pctx.font = '16px Montserrat, sans-serif';
+            
+            const lines = [
+                "Este documento oficial de grado undécimo valida que el/la estudiante se",
+                "compromete a actuar bajo los principios de autoría, honestidad y transparencia.",
+                "Declara citar los prompts de IA y utilizar la tecnología generativa únicamente",
+                "como un apoyo interactivo, preservando la co-creación artística propia."
+            ];
+            
+            let startY = 220;
+            lines.forEach(l => {
+                pctx.fillText(l, 400, startY);
+                startY += 28;
+            });
+
+            // Student Name
+            pctx.fillStyle = '#ffffff';
+            pctx.font = 'bold 28px Nunito, sans-serif';
+            pctx.fillText(name, 400, 390);
+            
+            pctx.lineWidth = 2;
+            pctx.strokeStyle = '#3f3f46';
+            pctx.beginPath();
+            pctx.moveTo(250, 405);
+            pctx.lineTo(550, 405);
+            pctx.stroke();
+
+            pctx.fillStyle = '#a0a0ab';
+            pctx.font = '12px Montserrat, sans-serif';
+            pctx.fillText(`CÓDIGO DE ALUMNO: ${code}`, 400, 425);
+            pctx.fillText(`FECHA DE COMPROMISO: ${dateStr}`, 400, 445);
+
+            // Draw Signature
+            pctx.fillText('FIRMA DEL COMPROMISARIO', 400, 545);
+            
+            // Draw signature from original canvas
+            const sigImg = new Image();
+            sigImg.onload = function() {
+                // Center and draw signature image
+                const sigW = 160;
+                const sigH = 56;
+                pctx.drawImage(sigImg, 400 - sigW/2, 470, sigW, sigH);
+
+                // Trigger direct file download
+                const printDataUrl = printCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = `Acuerdo_Etico_IA_${name.replace(/\s+/g, '_')}.png`;
+                link.href = printDataUrl;
+                link.click();
+            };
+            sigImg.src = canvas.toDataURL();
+        }
+    </script>
+</body>
+</html>

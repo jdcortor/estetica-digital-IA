@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla Periódica de IAs - Estética</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --header-yellow-hover: #e5bd00;
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            
+            /* Colores de las Categorías de la Tabla Periódica */
+            --cat-text: #8b5cf6;       /* Morado - Chatbots y Texto */
+            --cat-query: #0ea5e9;      /* Celeste - Consulta y Verificación */
+            --cat-image: #f97316;      /* Naranja - Imágenes y Referentes */
+            --cat-design: #10b981;     /* Esmeralda - Diseño y Presentaciones */
+            --cat-video: #ef4444;      /* Rojo - Video y Animación */
+            --cat-audio: #f59e0b;      /* Ámbar - Audio y Narración */
+            --cat-support: #6366f1;    /* Índigo - Organización y Apoyo */
+            --cat-tech: #14b8a6;       /* Turquesa - Apoyo Técnico */
+            
+            /* Colores de las Técnicas */
+            --comp-purple: #6c53a3;
+            --maq-blue: #30a0e0;
+            --diario-pink: #f4629e;
+            --crochet-green: #5cc472;
+            
+            /* Semáforo Ético */
+            --ethic-green: #22c55e;
+            --ethic-yellow: #f59e0b;
+            --ethic-red: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--header-yellow);
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .title-container p {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: var(--ethic-red);
+            border-color: var(--ethic-red);
+            transform: scale(1.03);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (WORKSPACE) --- */
+        .workspace {
+            flex: 1;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            overflow: hidden;
+            background-color: #16161a;
+        }
+
+        /* --- COLUMNA DE LA TABLA PERIÓDICA (IZQUIERDA) --- */
+        .table-section {
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        /* FILTROS E INFO DE LA TABLA */
+        .table-controls {
+            background: rgba(30, 30, 34, 0.6);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-label {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--header-yellow);
+            margin-bottom: 4px;
+        }
+
+        .filter-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 1.5px solid transparent;
+            transition: all 0.25s ease;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        .filter-badge:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Estilos activos de filtros de técnica */
+        .filter-badge.active[data-tec="ALL"] { border-color: #fff; color: #fff; background: rgba(255, 255, 255, 0.15); }
+        .filter-badge.active[data-tec="CT"] { border-color: var(--comp-purple); color: #fff; background: rgba(108, 83, 163, 0.25); }
+        .filter-badge.active[data-tec="M"] { border-color: var(--maq-blue); color: #fff; background: rgba(48, 160, 224, 0.25); }
+        .filter-badge.active[data-tec="DI"] { border-color: var(--diario-pink); color: #fff; background: rgba(244, 98, 158, 0.25); }
+        .filter-badge.active[data-tec="C"] { border-color: var(--crochet-green); color: #fff; background: rgba(92, 196, 114, 0.25); }
+
+        /* Estilos del semáforo ético en controles */
+        .ethic-indicator-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .ethic-indicator-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .ethic-indicator-item:hover, .ethic-indicator-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .ethic-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .ethic-dot.green { background-color: var(--ethic-green); box-shadow: 0 0 6px var(--ethic-green); }
+        .ethic-dot.yellow { background-color: var(--ethic-yellow); box-shadow: 0 0 6px var(--ethic-yellow); }
+        .ethic-dot.red { background-color: var(--ethic-red); box-shadow: 0 0 6px var(--ethic-red); }
+
+        /* LA REJILLA DE LA TABLA PERIÓDICA */
+        .periodic-table-wrapper {
+            flex: 1;
+            overflow-x: auto;
+            padding: 10px 5px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, minmax(64px, 1fr));
+            grid-template-rows: repeat(5, minmax(76px, 1fr));
+            gap: 6px;
+            min-width: 1200px;
+            width: 100%;
+        }
+
+        /* CELDA DE ELEMENTO */
+        .element-cell {
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            user-select: none;
+        }
+
+        .element-cell::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            border: 1.5px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .element-cell:hover {
+            transform: scale(1.08);
+            z-index: 5;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+        }
+
+        .element-cell.active-cell::after {
+            border-color: #ffffff;
+            box-shadow: inset 0 0 8px rgba(255,255,255,0.3);
+        }
+
+        /* Atenuación por Filtro */
+        .element-cell.dimmed {
+            opacity: 0.15;
+            filter: grayscale(80%) blur(0.5px);
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        /* Encabezados y Detalles de la Celda */
+        .cell-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+            font-weight: 700;
+            font-family: var(--font-labels);
+        }
+
+        .cell-number {
+            opacity: 0.6;
+        }
+
+        .cell-price {
+            font-size: 8px;
+            background: rgba(0,0,0,0.3);
+            padding: 1px 3.5px;
+            border-radius: 3px;
+        }
+
+        .cell-symbol {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            font-weight: 900;
+            text-align: center;
+            margin: 2px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .cell-name {
+            font-size: 9px;
+            font-weight: 600;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            letter-spacing: -0.2px;
+            opacity: 0.9;
+        }
+
+        /* Pequeño punto de técnica en celdas */
+        .cell-dots {
+            display: flex;
+            justify-content: center;
+            gap: 2.5px;
+            margin-top: 2px;
+            height: 4px;
+        }
+
+        .cell-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+
+        .cell-dot.ct { background-color: var(--comp-purple); }
+        .cell-dot.m { background-color: var(--maq-blue); }
+        .cell-dot.di { background-color: var(--diario-pink); }
+        .cell-dot.c { background-color: var(--crochet-green); }
+
+        /* Semáforo indicador arriba a la derecha de la celda */
+        .cell-ethic-mark {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            position: absolute;
+            top: 6px;
+            right: 6px;
+        }
+
+        /* Colores por Categorías en la Rejilla */
+        .cell-cat-1 { background: linear-gradient(135deg, rgba(139, 92, 246, 0.45) 0%, rgba(139, 92, 246, 0.15) 100%); border-top: 3px solid var(--cat-text); color: #c4b5fd; }
+        .cell-cat-2 { background: linear-gradient(135deg, rgba(14, 165, 233, 0.45) 0%, rgba(14, 165, 233, 0.15) 100%); border-top: 3px solid var(--cat-query); color: #bae6fd; }
+        .cell-cat-3 { background: linear-gradient(135deg, rgba(249, 115, 22, 0.45) 0%, rgba(249, 115, 22, 0.15) 100%); border-top: 3px solid var(--cat-image); color: #fed7aa; }
+        .cell-cat-4 { background: linear-gradient(135deg, rgba(16, 185, 129, 0.45) 0%, rgba(16, 185, 129, 0.15) 100%); border-top: 3px solid var(--cat-design); color: #a7f3d0; }
+        .cell-cat-5 { background: linear-gradient(135deg, rgba(239, 68, 110, 0.45) 0%, rgba(239, 68, 110, 0.15) 100%); border-top: 3px solid var(--cat-video); color: #fecdd3; }
+        .cell-cat-6 { background: linear-gradient(135deg, rgba(245, 158, 11, 0.45) 0%, rgba(245, 158, 11, 0.15) 100%); border-top: 3px solid var(--cat-audio); color: #fef08a; }
+        .cell-cat-7 { background: linear-gradient(135deg, rgba(99, 102, 241, 0.45) 0%, rgba(99, 102, 241, 0.15) 100%); border-top: 3px solid var(--cat-support); color: #c7d2fe; }
+        .cell-cat-8 { background: linear-gradient(135deg, rgba(20, 184, 166, 0.45) 0%, rgba(20, 184, 166, 0.15) 100%); border-top: 3px solid var(--cat-tech); color: #99f6e4; }
+
+        /* BLOQUE CENTRAL DE LA TABLA PERIODICA (LEYENDA DE COLORES EN HUECO) */
+        .table-central-legend {
+            grid-column: 3 / span 10;
+            grid-row: 1 / span 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px 30px;
+            background: rgba(30, 30, 34, 0.3);
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            margin: 5px;
+        }
+
+        .legend-title {
+            font-family: var(--font-labels);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #d1d1d6;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* --- COLUMNA DE DETALLES Y FICHA (DERECHA) --- */
+        .side-section {
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* PESTAÑAS (TABS) */
+        .tabs-header {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px 10px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-labels);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background-color: rgba(255,255,255,0.02);
+        }
+
+        .tab-btn.active {
+            color: var(--header-yellow);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--header-yellow);
+        }
+
+        .tab-badge {
+            background-color: var(--ethic-red);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CONTENIDO DE LAS PESTAÑAS */
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* PESTAÑA 1: DETALLES DE IA */
+        .detail-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--text-muted);
+            gap: 15px;
+            padding: 40px 20px;
+        }
+
+        .detail-placeholder i {
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 1.5px solid rgba(255,255,255,0.15);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .detail-title h2 {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .detail-title span {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .info-label {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+        }
+
+        .info-value {
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #e4e4e7;
+        }
+
+        .info-value p {
+            margin-bottom: 8px;
+        }
+
+        /* Badge list in details */
+        .detail-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .detail-badge-tec {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .detail-badge-tec.ct { background-color: var(--comp-purple); }
+        .detail-badge-tec.m { background-color: var(--maq-blue); }
+        .detail-badge-tec.di { background-color: var(--diario-pink); }
+        .detail-badge-tec.c { background-color: var(--crochet-green); }
+
+        /* Semáforo Ético Card */
+        .ethic-card {
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border: 1px solid transparent;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .ethic-card.green {
+            background-color: rgba(34, 197, 94, 0.08);
+            border-color: rgba(34, 197, 94, 0.2);
+            color: #bbf7d0;
+        }
+        .ethic-card.yellow {
+            background-color: rgba(245, 158, 11, 0.08);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: #fef08a;
+        }
+        .ethic-card.red {
+            background-color: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #fecdd3;
+        }
+
+        .ethic-card-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .warning-card {
+            border-left: 4px solid var(--ethic-yellow);
+            background: rgba(245, 158, 11, 0.06);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            font-style: italic;
+            color: #fde047;
+        }
+
+        .action-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: rgba(255,255,255,0.05);
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-color: #ffffff;
+        }
+
+        .btn-add {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--header-yellow);
+            color: var(--header-dark);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(251, 208, 8, 0.25);
+        }
+
+        .btn-add:hover {
+            background-color: var(--header-yellow-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(251, 208, 8, 0.4);
+        }
+
+        /* PESTAÑA 2: FICHA DE SELECCIÓN */
+        .ficha-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .ficha-header-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        .ficha-header-info strong {
+            color: #ffffff;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 6px rgba(251, 208, 8, 0.2);
+        }
+
+        /* Bloque de herramienta seleccionada en la ficha */
+        .selected-tool-block {
+            border: 1.5px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .selected-tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-tool-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .selected-tool-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .selected-tool-name {
+            font-weight: 700;
+            font-size: 13.5px;
+        }
+
+        .selected-tool-remove {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .selected-tool-remove:hover {
+            color: var(--ethic-red);
+        }
+
+        .selected-tool-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .selected-tool-inputs textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 12.5px;
+            padding: 8px 10px;
+            resize: vertical;
+            min-height: 55px;
+        }
+
+        .selected-tool-inputs textarea:focus {
+            outline: none;
+            border-color: var(--header-yellow);
+        }
+
+        .selected-tool-inputs label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .btn-submit-ficha {
+            background-color: var(--header-yellow);
+            color: var(--header-dark);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(251, 208, 8, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-submit-ficha:hover {
+            background-color: var(--header-yellow-hover);
+        }
+
+        .empty-selection-msg {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-style: italic;
+            padding: 20px 10px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        /* --- VISTA DE IMPRESIÓN (PRINT PREVIEW / EXPORT) --- */
+        #print-preview-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(18, 18, 20, 0.95);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #print-preview-overlay.active {
+            display: flex;
+        }
+
+        .print-modal {
+            background: #ffffff;
+            color: #000000;
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .print-modal-header {
+            background-color: #f2f2f7;
+            padding: 15px 25px;
+            border-bottom: 1.5px solid #d1d1d6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .print-modal-header h3 {
+            font-family: var(--font-labels);
+            font-size: 16px;
+            font-weight: 800;
+            color: #1c1c1e;
+        }
+
+        .print-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-print-action {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print-exec {
+            background-color: var(--header-dark);
+            color: #ffffff;
+        }
+
+        .btn-print-exec:hover {
+            background-color: #3b3a3a;
+        }
+
+        .btn-print-close {
+            background-color: transparent;
+            border: 1px solid #d1d1d6;
+            color: #555559;
+        }
+
+        .btn-print-close:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        /* EL INFORME DE LA FICHA QUE SE IMPRIME */
+        .print-document-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            background-color: #ffffff;
+        }
+
+        .print-document {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000000;
+            line-height: 1.5;
+            background: #ffffff;
+        }
+
+        .doc-header {
+            text-align: center;
+            border-bottom: 2px double #000000;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .doc-school-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-subject {
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .doc-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-student-data {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 20px;
+            font-size: 13px;
+            margin-bottom: 30px;
+            border: 1px solid #000000;
+            padding: 12px 15px;
+        }
+
+        .data-item strong {
+            font-weight: bold;
+        }
+
+        .doc-section {
+            margin-bottom: 25px;
+        }
+
+        .doc-section-title {
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+        }
+
+        .doc-tool-block {
+            border: 1px solid #cccccc;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .doc-tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #dddddd;
+            padding-bottom: 5px;
+        }
+
+        .doc-tool-title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .doc-tool-cat {
+            font-size: 11px;
+            font-style: italic;
+            color: #555555;
+        }
+
+        .doc-tool-text {
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .doc-tool-text strong {
+            display: block;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #333333;
+            margin-bottom: 3px;
+        }
+
+        .doc-tool-text p {
+            margin-left: 10px;
+        }
+
+        .doc-ethics-commitment {
+            border: 1px solid #000000;
+            padding: 15px;
+            background-color: #fafafa;
+            font-size: 13px;
+        }
+
+        .doc-signatures {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000000;
+            padding-top: 8px;
+            margin: 0 auto;
+            width: 220px;
+        }
+
+        /* --- STYLES EXCLUSIVOS PARA IMPRESIÓN --- */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-preview-overlay, #print-preview-overlay * {
+                visibility: hidden;
+            }
+            .print-document-scroll, .print-document-scroll * {
+                visibility: visible;
+            }
+            .print-document-scroll {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 0;
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Tabla Periódica <span>Abanico de IAs</span></h1>
+            <p>Selección Crítica y Responsable · Colegio Danilo Cifuentes · Estética · Grado 11</p>
+        </div>
+        
+        <div class="actions-container">
+            <button class="close-btn" onclick="volverAlMapa()">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+            </button>
+        </div>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="workspace">
+        
+        <!-- SECCIÓN DE LA TABLA (IZQUIERDA) -->
+        <div class="table-section">
+            
+            <!-- CONTROLES -->
+            <div class="table-controls">
+                <div class="control-row">
+                    <!-- Filtros por Técnica -->
+                    <div>
+                        <div class="filter-label">Filtrar por Técnica de Estética:</div>
+                        <div class="filter-badges">
+                            <span class="filter-badge active" data-tec="ALL" onclick="filtrarTecnica('ALL')">Ver Todo</span>
+                            <span class="filter-badge" data-tec="CT" onclick="filtrarTecnica('CT')">CT · Composición y Tipografía</span>
+                            <span class="filter-badge" data-tec="M" onclick="filtrarTecnica('M')">M · Maquetado</span>
+                            <span class="filter-badge" data-tec="DI" onclick="filtrarTecnica('DI')">DI · Diario Ilustrado</span>
+                            <span class="filter-badge" data-tec="C" onclick="filtrarTecnica('C')">C · Crochet</span>
+                        </div>
+                    </div>
+
+                    <!-- Filtros por Semáforo Ético -->
+                    <div>
+                        <div class="filter-label">Semáforo Ético en Proyecto:</div>
+                        <div class="ethic-indicator-group">
+                            <div class="ethic-indicator-item active" id="ethic-filter-all" onclick="filtrarEtica('ALL')">
+                                <span style="font-size: 10.5px; font-weight: bold; text-transform: uppercase;">Todos</span>
+                            </div>
+                            <div class="ethic-indicator-item" id="ethic-filter-g" onclick="filtrarEtica('g')">
+                                <span class="ethic-dot green"></span> <span>Permitido</span>
+                            </div>
+                            <div class="ethic-indicator-item" id="ethic-filter-y" onclick="filtrarEtica('y')">
+                                <span class="ethic-dot yellow"></span> <span>Revisión Docente</span>
+                            </div>
+                            <div class="ethic-indicator-item" id="ethic-filter-r" onclick="filtrarEtica('r')">
+                                <span class="ethic-dot red"></span> <span>No Final</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR DE LA TABLA -->
+            <div class="periodic-table-wrapper">
+                <div class="periodic-table" id="periodic-table-grid">
+                    
+                    <!-- LEYENDA CENTRAL (Ubicada en el hueco superior) -->
+                    <div class="table-central-legend">
+                        <div class="legend-title">ORGANIZACIÓN DE CATEGORÍAS (IA-TPACK)</div>
+                        <div class="legend-grid">
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-text)"></span> Chatbots y Texto (Tx)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-video)"></span> Video y Animación (Va)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-query)"></span> Consulta y Verificación (Cv)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-audio)"></span> Audio y Narración (Au)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-image)"></span> Imágenes y Referentes (Im)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-support)"></span> Organización y Apoyo (Or)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-design)"></span> Diseño y Presentaciones (Dp)</div>
+                            <div class="legend-item"><span class="legend-color" style="background-color: var(--cat-tech)"></span> Apoyo Técnico (At)</div>
+                        </div>
+                    </div>
+
+                    <!-- Las celdas se renderizan dinámicamente con JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN DE DETALLES Y FICHA (DERECHA) -->
+        <div class="side-section">
+            
+            <!-- Encabezado de Pestañas -->
+            <div class="tabs-header">
+                <button class="tab-btn active" id="tab-btn-detail" onclick="switchTab('detail')">
+                    <i class="fa-solid fa-magnifying-glass"></i> Detalle IA
+                </button>
+                <button class="tab-btn" id="tab-btn-ficha" onclick="switchTab('ficha')">
+                    <i class="fa-solid fa-file-signature"></i> Mi Ficha <span class="tab-badge" id="ficha-count-badge">0</span>
+                </button>
+            </div>
+
+            <!-- CONTENIDO PESTAÑA 1: DETALLES -->
+            <div class="tab-content active" id="tab-content-detail">
+                <div class="detail-placeholder" id="detail-placeholder">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Haz clic en cualquier herramienta de la tabla periódica para ver sus detalles de uso, técnicas y consideraciones éticas.</p>
+                </div>
+                
+                <div class="detail-card" id="detail-card" style="display: none;">
+                    <div class="detail-header">
+                        <div class="detail-avatar" id="detail-avatar"></div>
+                        <div class="detail-title">
+                            <h2 id="detail-name">Nombre IA</h2>
+                            <span id="detail-category-label">Categoría</span>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Función Pedagógica:</span>
+                        <div class="info-value" id="detail-pedagogy">Idear, aclarar conceptos y redactar.</div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Técnicas en que Apoya:</span>
+                        <div class="detail-badges" id="detail-badges-tec"></div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Uso Permitido en el Proyecto:</span>
+                        <div class="ethic-card" id="detail-ethic-card">
+                            <div class="ethic-card-icon" id="detail-ethic-icon"></div>
+                            <div id="detail-ethic-text">Uso responsable permitido bajo autodeclaración en bitácora.</div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Advertencia Ética Crítica:</span>
+                        <div class="warning-card" id="detail-warning">Advertencia del sistema.</div>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">Modelo Financiero:</span>
+                        <div class="info-value" id="detail-price">Gratuito / Freemium.</div>
+                    </div>
+
+                    <div class="action-btns">
+                        <button class="btn-add" onclick="agregarAFichaActiva()">
+                            <i class="fa-solid fa-plus"></i> Añadir a mi Ficha de Selección
+                        </button>
+                        <a href="#" target="_blank" class="btn-link" id="detail-domain-btn">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Visitar Sitio Oficial
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENIDO PESTAÑA 2: FICHA DE SELECCIÓN -->
+            <div class="tab-content" id="tab-content-ficha">
+                <div class="ficha-form">
+                    <div class="ficha-header-info">
+                        <strong>Fase 2 - Actividad 1:</strong> Selecciona máximo 2 herramientas de la tabla periódica. Luego, justifica su uso de forma intencionada según la técnica de tu proyecto y asume el compromiso de honestidad académica.
+                    </div>
+
+                    <!-- Datos Generales -->
+                    <div class="form-group">
+                        <label>Nombre del Estudiante:</label>
+                        <input type="text" id="ficha-student-name" placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Usuario/Código:</label>
+                        <input type="text" id="ficha-student-code" placeholder="Ej. JP11A" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Técnica Artística Seleccionada:</label>
+                        <select id="ficha-technique" onchange="actualizarSeleccionTecnicaFicha()">
+                            <option value="">-- Selecciona una técnica --</option>
+                            <option value="CT">Composición y Tipografía (Diseño Visual)</option>
+                            <option value="M">Maquetado (Diseño Espacial)</option>
+                            <option value="DI">Diario Ilustrado (Identidad y Expresión)</option>
+                            <option value="C">Crochet (Diseño Artístico y Material)</option>
+                        </select>
+                    </div>
+
+                    <!-- Herramientas Seleccionadas -->
+                    <div class="form-group">
+                        <label>Herramientas de IA Seleccionadas (Máx. 2):</label>
+                        <div id="ficha-selected-tools-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 6px;">
+                            <div class="empty-selection-msg" id="empty-selection-msg">
+                                No has añadido ninguna herramienta. Selecciona una en "Detalle IA" y haz clic en "Añadir a mi Ficha".
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compromiso Ético General -->
+                    <div class="form-group" id="compromiso-group" style="display: none;">
+                        <label>Compromiso Ético y Declaración:</label>
+                        <div class="selected-tool-inputs" style="margin-top: 0;">
+                            <textarea id="ficha-ethics-general" placeholder="Escribe tu compromiso general de honestidad académica. Ej. Me comprometo a usar la IA únicamente como asistente para bocetos y redacción de apoyo, justificando cada aporte y declarando explícitamente su uso en la bitácora final."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Botón Enviar -->
+                    <button type="button" class="btn-submit-ficha" onclick="abrirVistaImpresion()">
+                        <i class="fa-solid fa-file-pdf"></i> Generar Ficha de Selección
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- OVERLAY DE VISTA DE IMPRESIÓN (PRINT PREVIEW) -->
+    <div id="print-preview-overlay">
+        <div class="print-modal">
+            <div class="print-modal-header">
+                <h3>Vista Previa del Documento de Selección</h3>
+                <div class="print-actions">
+                    <button class="btn-print-action btn-print-exec" onclick="ejecutarImpresion()">
+                        <i class="fa-solid fa-print"></i> Imprimir / Guardar PDF
+                    </button>
+                    <button class="btn-print-action btn-print-close" onclick="cerrarVistaImpresion()">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+            
+            <div class="print-document-scroll">
+                <div class="print-document" id="print-document-content">
+                    <!-- Contenido dinámico del reporte en Times New Roman -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE APLICACIÓN -->
+    <script>
+        // --- 1. BASE DE DATOS DE LAS 48 HERRAMIENTAS DE IA ---
+        const toolsData = [
+            // Chatbots y Texto (8 tools)
+            { id: 1, symbol: "Ch", name: "ChatGPT", cat: 1, row: 1, col: 1, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://chat.openai.com", fn: "Idear, aclarar conceptos, organizar procesos y construir preguntas de bitácora.", w: "El texto generado debe revisarse, transformarse y declararse." },
+            { id: 2, symbol: "Ge", name: "Gemini", cat: 1, row: 2, col: 1, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://gemini.google.com", fn: "Organizar ideas y generar preguntas reflexivas con búsqueda integrada.", w: "Reelabora siempre el texto con tu propia voz." },
+            { id: 3, symbol: "Cp", name: "Copilot", cat: 1, row: 2, col: 2, tec: ["CT", "M", "DI", "C"], price: "Gratis", ethic: "g", domain: "https://copilot.microsoft.com", fn: "Redactar justificaciones y organizar etapas del proyecto con asistencia contextual.", w: "Personaliza y declara el uso en bitácora." },
+            { id: 4, symbol: "Cl", name: "Claude", cat: 1, row: 3, col: 1, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://claude.ai", fn: "Acompañar la construcción de sentido y reflexión del proyecto.", w: "Claude es interlocutor, no autor de tu proyecto." },
+            { id: 5, symbol: "Px", name: "Perplexity", cat: 1, row: 3, col: 2, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://perplexity.ai", fn: "Consulta información con fuentes citadas para investigación inicial.", w: "Verifica la fuente original antes de citar." },
+            { id: 6, symbol: "Gy", name: "Grammarly", cat: 1, row: 4, col: 1, tec: ["CT", "DI"], price: "Gratis", ethic: "g", domain: "https://grammarly.com", fn: "Mejorar la redacción, ortografía y coherencia de textos propios.", w: "Solo para revisar textos ya escritos por ti." },
+            { id: 7, symbol: "Qb", name: "Quillbot", cat: 1, row: 4, col: 2, tec: ["CT", "DI"], price: "Freemium", ethic: "g", domain: "https://quillbot.com", fn: "Reformular textos para mejorar claridad o adaptar el tono.", w: "El resultado debe reflejar tu entendimiento real." },
+            { id: 8, symbol: "Dl", name: "DeepL", cat: 1, row: 4, col: 3, tec: ["CT", "DI"], price: "Freemium", ethic: "g", domain: "https://deepl.com", fn: "Traducir textos para consultar fuentes en otros idiomas.", w: "Cita la fuente original, no la traducción." },
+
+            // Consulta y Verificación (5 tools)
+            { id: 9, symbol: "Rg", name: "ResearchGPT", cat: 2, row: 4, col: 4, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://openai.com", fn: "Consultar documentos académicos e interrogar textos de apoyo.", w: "Verifica con la fuente original. No cites resúmenes automáticos." },
+            { id: 10, symbol: "Cd", name: "ChatPDF", cat: 2, row: 4, col: 5, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://chatpdf.com", fn: "Hacer preguntas sobre el contenido de un PDF de forma conversacional.", w: "Lee la sección completa antes de usar el dato." },
+            { id: 11, symbol: "Hu", name: "Humata", cat: 2, row: 4, col: 6, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://humata.ai", fn: "Resumir y responder preguntas sobre documentos extensos.", w: "No cites resúmenes automáticos como fuentes académicas." },
+            { id: 12, symbol: "Ay", name: "AskYourPDF", cat: 2, row: 4, col: 7, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://askyourpdf.com", fn: "Interactuar con PDFs mediante preguntas para localizar información específica.", w: "Contrasta con la fuente original antes de usar cualquier dato." },
+            { id: 13, symbol: "Pa", name: "PDF AI", cat: 2, row: 4, col: 8, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://pdf.ai", fn: "Analizar archivos PDF y responder preguntas sobre su contenido.", w: "Si copias respuestas sin reelaborar, decláralo." },
+
+            // Imágenes y Referentes (9 tools)
+            { id: 14, symbol: "Le", name: "Leonardo AI", cat: 3, row: 4, col: 9, tec: ["CT", "M", "DI"], price: "Créditos Gratuitos", ethic: "y", domain: "https://leonardo.ai", fn: "Generar imágenes de alta calidad para explorar estilos y paletas como referente.", w: "La imagen generada es referente, no producto final sin transformación." },
+            { id: 15, symbol: "Md", name: "MS Designer", cat: 3, row: 4, col: 10, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "y", domain: "https://designer.microsoft.com", fn: "Crear composiciones visuales y piezas gráficas para exploración de estilos.", w: "Adapta y justifica cada elemento visual incorporado." },
+            { id: 16, symbol: "Ae", name: "Adobe Express", cat: 3, row: 4, col: 11, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "y", domain: "https://adobe.com/express", fn: "Diseñar piezas visuales con tipografías y herramientas de edición Adobe.", w: "No entregues plantillas sin personalizar significativamente." },
+            { id: 17, symbol: "Sd", name: "Stable Diff.", cat: 3, row: 4, col: 12, tec: ["CT", "M", "DI"], price: "Gratis", ethic: "y", domain: "https://stability.ai", fn: "Generar imágenes desde texto con variedad estilística para explorar variaciones.", w: "Usa como referente o punto de partida del boceto." },
+            { id: 18, symbol: "Pi", name: "Pikaso", cat: 3, row: 4, col: 13, tec: ["CT", "M", "DI"], price: "Freemium", ethic: "y", domain: "https://pikaso.ai", fn: "Convertir bocetos manuales en imágenes elaboradas en tiempo real.", w: "El boceto manual es parte esencial. El resultado es referente." },
+            { id: 19, symbol: "We", name: "Wepik", cat: 3, row: 4, col: 14, tec: ["CT", "M", "DI"], price: "Freemium", ethic: "y", domain: "https://wepik.com", fn: "Crear diseños con plantillas editables generadas con IA para explorar estilos.", w: "Adapta las plantillas. Documenta tus decisiones." },
+            { id: 20, symbol: "Fl", name: "Flair AI", cat: 3, row: 4, col: 15, tec: ["CT", "M"], price: "Freemium", ethic: "y", domain: "https://flair.ai", fn: "Diseñar imágenes de producto con fondos y composición generados por IA.", w: "Las imágenes son referentes de presentación, no el prototipo real." },
+            { id: 21, symbol: "Na", name: "Napkin AI", cat: 3, row: 4, col: 16, tec: ["CT", "M"], price: "Créditos Gratuitos", ethic: "y", domain: "https://napkin.ai", fn: "Convertir texto en diagramas y esquemas visuales para organizar ideas.", w: "Ajusta el diagrama generado a tu propuesta específica." },
+            { id: 22, symbol: "Ie", name: "AI Img Enl.", cat: 3, row: 4, col: 17, tec: ["CT", "M", "DI"], price: "Freemium", ethic: "y", domain: "https://imglarger.com", fn: "Mejorar la resolución y calidad de imágenes existentes de autoría propia.", w: "Solo para imágenes que ya son de tu autoría." },
+
+            // Diseño y Presentaciones (7 tools)
+            { id: 23, symbol: "Ca", name: "Canva", cat: 4, row: 5, col: 1, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://canva.com", fn: "Organizar información visual, infografías, portafolios y piezas de presentación.", w: "Las plantillas son puntos de partida. Personaliza cada elemento." },
+            { id: 24, symbol: "Ga", name: "Gamma", cat: 4, row: 5, col: 2, tec: ["CT", "M", "DI", "C"], price: "Créditos Gratuitos", ethic: "g", domain: "https://gamma.app", fn: "Crear presentaciones visuales atractivas con estructura narrativa generada por IA.", w: "Revisa y ajusta. Debe reflejar tu proceso real." },
+            { id: 25, symbol: "To", name: "Tome", cat: 4, row: 5, col: 3, tec: ["CT", "M", "DI", "C"], price: "Créditos Gratuitos", ethic: "g", domain: "https://tome.app", fn: "Crear presentaciones con narrativa visual fluida combinando texto e imagen.", w: "La narrativa debe ser tuya aunque la herramienta organice el formato." },
+            { id: 26, symbol: "Sa", name: "Slides AI", cat: 4, row: 5, col: 4, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://slidesai.io", fn: "Generar diapositivas automáticamente a partir de texto o ideas estructuradas.", w: "Transforma el contenido con tu propia voz y decisiones." },
+            { id: 27, symbol: "Sg", name: "SlidesGPT", cat: 4, row: 5, col: 5, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://slidesgpt.com", fn: "Crear presentaciones completas a partir de prompts descriptivos.", w: "Ajusta y personaliza todo el contenido generado." },
+            { id: 28, symbol: "Cu", name: "Curipod", cat: 4, row: 5, col: 6, tec: ["CT", "M", "DI", "C"], price: "Créditos Gratuitos", ethic: "g", domain: "https://curipod.com", fn: "Crear presentaciones interactivas con encuestas y actividades participativas.", w: "El contenido y la dinámica deben ser diseñados por ti." },
+            { id: 29, symbol: "Lo", name: "Looka", cat: 4, row: 5, col: 7, tec: ["CT"], price: "Freemium", ethic: "g", domain: "https://looka.com", fn: "Generar logotipos, paletas de color e identidades visuales con IA.", w: "El logo final debe tener decisiones propias justificadas." },
+
+            // Video y Animación (7 tools)
+            { id: 30, symbol: "Lu", name: "Lumen5", cat: 5, row: 3, col: 13, tec: ["CT", "M", "DI"], price: "Freemium", ethic: "y", domain: "https://lumen5.com", fn: "Convertir texto en videos con imágenes y animaciones para síntesis del proceso.", w: "Revisa y ajusta el contenido automático. Escribe tú el guion." },
+            { id: 31, symbol: "Fi", name: "Fliki", cat: 5, row: 3, col: 14, tec: ["M", "DI"], price: "Créditos Gratuitos", ethic: "y", domain: "https://fliki.ai", fn: "Transformar texto en videos cortos con voz generada y subtítulos automáticos.", w: "El guion debe ser tuyo. Declara el uso de voz IA." },
+            { id: 32, symbol: "Vi", name: "Vizard", cat: 5, row: 3, col: 15, tec: ["M", "DI"], price: "Freemium", ethic: "y", domain: "https://vizard.ai", fn: "Editar videos: recortar, subtitular y crear clips desde grabaciones propias.", w: "La grabación y el contenido deben ser originales." },
+            { id: 33, symbol: "Qt", name: "Quicktube", cat: 5, row: 3, col: 16, tec: ["M", "DI"], price: "Gratis", ethic: "y", domain: "https://quicktube.io", fn: "Generar resúmenes y clips cortos de videos de referentes para investigación.", w: "Solo para sintetizar referentes. Cita la fuente original." },
+            { id: 34, symbol: "Ad", name: "Anim. Drawings", cat: 5, row: 4, col: 18, tec: ["DI"], price: "Gratis", ethic: "y", domain: "https://sketch.metademolab.com", fn: "Animar dibujos hechos a mano convirtiéndolos en personajes en movimiento.", w: "Los dibujos deben ser de tu autoría. La IA solo anima." },
+            { id: 35, symbol: "Ll", name: "LumaLabs", cat: 5, row: 2, col: 14, tec: ["M"], price: "Créditos Gratuitos", ethic: "y", domain: "https://lumalabs.ai", fn: "Generar videos y modelos 3D desde imágenes para visualizar espacios del maquetado.", w: "El prototipo físico es el producto final. La visualización es referente." },
+            { id: 36, symbol: "Hg", name: "HeyGen", cat: 5, row: 2, col: 13, tec: ["M", "DI"], price: "Freemium", ethic: "y", domain: "https://heygen.com", fn: "Crear videos con presentadores virtuales para explicar procesos o proyectos.", w: "No uses avatares de personas reales sin autorización. Declara el uso." },
+
+            // Audio y Narración (7 tools)
+            { id: 37, symbol: "Ap", name: "Adobe Podcast", cat: 6, row: 3, col: 18, tec: ["DI", "M"], price: "Freemium", ethic: "y", domain: "https://podcast.adobe.com", fn: "Mejorar calidad de grabaciones de voz y crear narraciones de alta calidad.", w: "La narración debe ser tu voz y tus palabras." },
+            { id: 38, symbol: "Tt", name: "TTS Maker", cat: 6, row: 2, col: 15, tec: ["DI", "M"], price: "Gratis", ethic: "y", domain: "https://ttsmaker.com", fn: "Convertir texto en voz natural para narraciones auditivas del proceso.", w: "El texto narrado debe ser escrito por ti. Declara el uso de voz artificial." },
+            { id: 39, symbol: "Sf", name: "Speechify", cat: 6, row: 2, col: 17, tec: ["DI"], price: "Freemium", ethic: "y", domain: "https://speechify.com", fn: "Convertir textos en audio para escuchar fuentes y referentes mientras trabajas.", w: "Solo para consumir contenido de lectura, no para generarlo." },
+            { id: 40, symbol: "Mu", name: "Murf", cat: 6, row: 2, col: 18, tec: ["DI", "M"], price: "Freemium", ethic: "y", domain: "https://murf.ai", fn: "Generar narraciones de voz realistas en múltiples idiomas y estilos.", w: "Declara el uso de voz IA. No uses voces de personas reales sin autorización." },
+            { id: 41, symbol: "El", name: "ElevenLabs", cat: 6, row: 3, col: 17, tec: ["DI", "M"], price: "Freemium", ethic: "y", domain: "https://elevenlabs.io", fn: "Generar voces altamente realistas en múltiples idiomas para producciones.", w: "Prohibido clonar voces ajenas ni simular identidades. Declara siempre." },
+            { id: 42, symbol: "Su", name: "Suno", cat: 6, row: 1, col: 18, tec: ["DI"], price: "Créditos Gratuitos", ethic: "y", domain: "https://suno.com", fn: "Generar música original con letra y melodía a partir de un prompt descriptivo.", w: "Declara que la música fue generada con IA. Verifica derechos." },
+            { id: 43, symbol: "Mf", name: "MusicFX", cat: 6, row: 2, col: 16, tec: ["DI"], price: "Freemium", ethic: "y", domain: "https://musicfx.google", fn: "Generar efectos de sonido y ambientes musicales para producciones audiovisuales.", w: "Úsalo como apoyo ambiental. Declara el uso de audio generado por IA." },
+
+            // Organización y Apoyo (9 tools)
+            { id: 44, symbol: "Pd", name: "Padlet", cat: 7, row: 5, col: 8, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://padlet.com", fn: "Organizar ideas, avances e imágenes en un tablero colaborativo visual.", w: "Úsalo para registrar, no para reemplazar la bitácora física." },
+            { id: 45, symbol: "Ms", name: "Magic School", cat: 7, row: 5, col: 9, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://magicschool.ai", fn: "Crear rutas de aprendizaje, rúbricas, preguntas y materiales de apoyo pedagógico.", w: "La autoevaluación debe ser genuina y no delegada a la IA." },
+            { id: 46, symbol: "Qw", name: "Question Well", cat: 7, row: 5, col: 10, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://questionwell.org", fn: "Generar preguntas de comprensión y reflexión sobre cualquier contenido dado.", w: "Las respuestas a las preguntas deben ser tuyas y reflejar tu experiencia real." },
+            { id: 47, symbol: "Fo", name: "Formative", cat: 7, row: 5, col: 11, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://formative.com", fn: "Crear evaluaciones formativas interactivas y seguimiento en tiempo real.", w: "Responde con honestidad. La evaluación depende de tu sinceridad." },
+            { id: 48, symbol: "Ep", name: "EduPrompts", cat: 7, row: 5, col: 12, tec: ["CT", "M", "DI", "C"], price: "Gratis", ethic: "g", domain: "https://eduprompts.com", fn: "Proporcionar prompts educativos para interactuar con IA de forma intencionada.", w: "Los prompts son herramientas de aprendizaje, no atajos." },
+            { id: 49, symbol: "Sc", name: "Socratic", cat: 7, row: 5, col: 13, tec: ["CT", "M", "DI", "C"], price: "Gratis", ethic: "g", domain: "https://socratic.org", fn: "Explicar conceptos, resolver dudas y orientar el aprendizaje de forma socrática.", w: "Verifica la información con el docente o fuentes académicas." },
+            { id: 50, symbol: "Mo", name: "Monica AI", cat: 7, row: 5, col: 14, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://monica.im", fn: "Asistente multifuncional para organizar tareas y apoyar el trabajo escolar.", w: "Las decisiones del proyecto deben ser tuyas. La IA organiza, no decide." },
+            { id: 51, symbol: "Sr", name: "Scribe", cat: 7, row: 5, col: 15, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://scribehow.com", fn: "Crear guías paso a paso automáticamente capturando procesos digitales.", w: "Las guías deben documentar tu proceso real, no uno idealizado." },
+            { id: 52, symbol: "Gu", name: "Guidde", cat: 7, row: 5, col: 16, tec: ["CT", "M", "DI", "C"], price: "Freemium", ethic: "g", domain: "https://guidde.com", fn: "Crear tutoriales en video a partir de la grabación de procesos digitales.", w: "Documenta tu proceso genuino. El tutorial debe ser honesto." },
+
+            // Apoyo Técnico (1 tool)
+            { id: 53, symbol: "Wa", name: "Wolfram Alpha", cat: 8, row: 5, col: 17, tec: ["M"], price: "Freemium", ethic: "g", domain: "https://wolframalpha.com", fn: "Apoyar cálculos de proporciones, medidas, escalas y relaciones espaciales del maquetado.", w: "El estudiante debe comprender y justificar cada cálculo aplicado al diseño." }
+        ];
+
+        // Mapeo de Categorías
+        const categoriesMapping = {
+            1: { name: "Chatbots y Texto", code: "Tx", colorVar: "--cat-text" },
+            2: { name: "Consulta y Verificación", code: "Cv", colorVar: "--cat-query" },
+            3: { name: "Imágenes y Referentes", code: "Im", colorVar: "--cat-image" },
+            4: { name: "Diseño y Presentaciones", code: "Dp", colorVar: "--cat-design" },
+            5: { name: "Video y Animación", code: "Va", colorVar: "--cat-video" },
+            6: { name: "Audio y Narración", code: "Au", colorVar: "--cat-audio" },
+            7: { name: "Organización y Apoyo", code: "Or", colorVar: "--cat-support" },
+            8: { name: "Apoyo Técnico", code: "At", colorVar: "--cat-tech" }
+        };
+
+        // Semáforo Ético Detalles
+        const ethicDetails = {
+            g: {
+                label: "Uso Permitido en Proyecto",
+                color: "green",
+                icon: "fa-solid fa-circle-check",
+                text: "Uso responsable permitido. Debes declarar explícitamente su aporte en tu bitácora digital e indicar el prompt utilizado."
+            },
+            y: {
+                label: "Con Revisión Docente",
+                color: "yellow",
+                icon: "fa-solid fa-triangle-exclamation",
+                text: "Uso condicionado a revisión docente. Ideal para bocetar, planificar o curar paletas. No reemplaza el proceso manual."
+            },
+            r: {
+                label: "No como Producto Final",
+                color: "red",
+                icon: "fa-solid fa-circle-xmark",
+                text: "Prohibido entregar el resultado tal cual como producto final. Úsalo exclusivamente como referente visual o de audio conceptual."
+            }
+        };
+
+        // --- 2. CONFIGURACIÓN E INICIALIZACIÓN ---
+        let selectedToolId = null;
+        let selectedFichaTools = []; // Almacena objetos de herramientas seleccionadas para la ficha
+        let activeTechniqueFilter = "ALL";
+        let activeEthicFilter = "ALL";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPeriodicTable();
+            cargarSesionFicha();
+        });
+
+        // --- 3. RENDERIZACIÓN DE LA TABLA ---
+        function renderPeriodicTable() {
+            const grid = document.getElementById('periodic-table-grid');
+            
+            // Eliminar celdas anteriores que no sean la leyenda
+            const cells = grid.querySelectorAll('.element-cell');
+            cells.forEach(c => c.remove());
+
+            toolsData.forEach(tool => {
+                const cat = categoriesMapping[tool.cat];
+                const cell = document.createElement('div');
+                cell.className = `element-cell cell-cat-${tool.cat}`;
+                cell.style.gridColumn = tool.col;
+                cell.style.gridRow = tool.row;
+                cell.setAttribute('data-id', tool.id);
+                cell.setAttribute('data-ethic', tool.ethic);
+
+                // Semáforo marcador superior
+                const ethicColor = tool.ethic === 'g' ? 'var(--ethic-green)' : (tool.ethic === 'y' ? 'var(--ethic-yellow)' : 'var(--ethic-red)');
+                
+                // Puntos de técnicas
+                let dotHtml = '';
+                tool.tec.forEach(t => {
+                    dotHtml += `<span class="cell-dot ${t.toLowerCase()}"></span>`;
+                });
+
+                cell.innerHTML = `
+                    <div class="cell-top">
+                        <span class="cell-number">${tool.id}</span>
+                        <span class="cell-price">${tool.price === 'Gratis' ? 'G' : 'F'}</span>
+                    </div>
+                    <div class="cell-ethic-mark" style="background-color: ${ethicColor}; box-shadow: 0 0 4px ${ethicColor};"></div>
+                    <div class="cell-symbol">${tool.symbol}</div>
+                    <div class="cell-name">${tool.name}</div>
+                    <div class="cell-dots">${dotHtml}</div>
+                `;
+
+                cell.addEventListener('click', () => selectTool(tool.id));
+                grid.appendChild(cell);
+            });
+
+            aplicarFiltros();
+        }
+
+        // --- 4. SELECCIÓN DE HERRAMIENTA ---
+        function selectTool(id) {
+            selectedToolId = id;
+            const tool = toolsData.find(t => t.id === id);
+            if (!tool) return;
+
+            // Visual active border
+            document.querySelectorAll('.element-cell').forEach(c => {
+                c.classList.remove('active-cell');
+                if (parseInt(c.getAttribute('data-id')) === id) {
+                    c.classList.add('active-cell');
+                }
+            });
+
+            // Actualizar panel lateral
+            const cat = categoriesMapping[tool.cat];
+            const ethic = ethicDetails[tool.ethic];
+
+            document.getElementById('detail-placeholder').style.display = 'none';
+            const card = document.getElementById('detail-card');
+            card.style.display = 'flex';
+
+            // Nombre y Símbolo
+            const avatar = document.getElementById('detail-avatar');
+            avatar.textContent = tool.symbol;
+            avatar.className = `detail-avatar`;
+            avatar.style.backgroundColor = `var(${cat.colorVar})`;
+
+            document.getElementById('detail-name').textContent = tool.name;
+            
+            const categoryLabel = document.getElementById('detail-category-label');
+            categoryLabel.textContent = `${cat.name} (${cat.code})`;
+            categoryLabel.style.color = `var(${cat.colorVar})`;
+
+            // Función Pedagógica
+            document.getElementById('detail-pedagogy').textContent = tool.fn;
+
+            // Badges de técnicas
+            const badgesContainer = document.getElementById('detail-badges-tec');
+            badgesContainer.innerHTML = '';
+            tool.tec.forEach(t => {
+                const labelMap = { CT: "Composición", M: "Maquetado", DI: "Diario", C: "Crochet" };
+                const badge = document.createElement('span');
+                badge.className = `detail-badge-tec ${t.toLowerCase()}`;
+                badge.textContent = `${t} · ${labelMap[t] || t}`;
+                badgesContainer.appendChild(badge);
+            });
+
+            // Semáforo ético
+            const ethicCard = document.getElementById('detail-ethic-card');
+            ethicCard.className = `ethic-card ${ethic.color}`;
+            
+            const ethicIcon = document.getElementById('detail-ethic-icon');
+            ethicIcon.innerHTML = `<i class="${ethic.icon}"></i>`;
+            
+            const ethicText = document.getElementById('detail-ethic-text');
+            ethicText.innerHTML = `<strong>${ethic.label}</strong><br>${ethic.text}`;
+
+            // Advertencia ética
+            document.getElementById('detail-warning').innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <strong>Advertencia Crítica:</strong> ${tool.w}`;
+
+            // Precio y Enlace
+            document.getElementById('detail-price').textContent = `${tool.price}`;
+            
+            const domainBtn = document.getElementById('detail-domain-btn');
+            domainBtn.href = tool.domain;
+            domainBtn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Visitar ${tool.name}`;
+
+            // Switch to details tab automatically
+            switchTab('detail');
+        }
+
+        // --- 5. LÓGICA DE FILTRADO ---
+        function filtrarTecnica(tec) {
+            activeTechniqueFilter = tec;
+            
+            // Actualizar botones de filtros
+            document.querySelectorAll('.filter-badge').forEach(b => {
+                b.classList.remove('active');
+                if (b.getAttribute('data-tec') === tec) {
+                    b.classList.add('active');
+                }
+            });
+
+            aplicarFiltros();
+        }
+
+        function filtrarEtica(ethic) {
+            activeEthicFilter = ethic;
+
+            // Actualizar indicadores visuales
+            document.querySelectorAll('.ethic-indicator-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const mapFilterId = {
+                ALL: "ethic-filter-all",
+                g: "ethic-filter-g",
+                y: "ethic-filter-y",
+                r: "ethic-filter-r"
+            };
+
+            document.getElementById(mapFilterId[ethic]).classList.add('active');
+
+            aplicarFiltros();
+        }
+
+        function aplicarFiltros() {
+            const cells = document.querySelectorAll('.element-cell');
+            cells.forEach(cell => {
+                const id = parseInt(cell.getAttribute('data-id'));
+                const ethic = cell.getAttribute('data-ethic');
+                const tool = toolsData.find(t => t.id === id);
+
+                if (!tool) return;
+
+                const matchTec = (activeTechniqueFilter === "ALL" || tool.tec.includes(activeTechniqueFilter));
+                const matchEthic = (activeEthicFilter === "ALL" || ethic === activeEthicFilter);
+
+                if (matchTec && matchEthic) {
+                    cell.classList.remove('dimmed');
+                } else {
+                    cell.classList.add('dimmed');
+                }
+            });
+        }
+
+        // --- 6. GESTIÓN DE PESTAÑAS (TABS) ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            document.getElementById(`tab-btn-${tabName}`).classList.add('active');
+            document.getElementById(`tab-content-${tabName}`).classList.add('active');
+        }
+
+        // --- 7. LÓGICA DE LA FICHA DE SELECCIÓN ---
+        function cargarSesionFicha() {
+            // Intentar cargar datos previos de localStorage si existen
+            const storedFicha = localStorage.getItem('estetica_ficha_responsable');
+            if (storedFicha) {
+                try {
+                    const data = JSON.parse(storedFicha);
+                    document.getElementById('ficha-student-name').value = data.name || '';
+                    document.getElementById('ficha-student-code').value = data.code || '';
+                    document.getElementById('ficha-technique').value = data.technique || '';
+                    document.getElementById('ficha-ethics-general').value = data.ethicsGeneral || '';
+
+                    // Cargar herramientas previamente agregadas
+                    selectedFichaTools = data.selectedTools || [];
+                    actualizarListaSeleccionFicha();
+                } catch (e) {
+                    console.error("Error cargando ficha guardada:", e);
+                }
+            }
+        }
+
+        function guardarSesionFicha() {
+            const data = {
+                name: document.getElementById('ficha-student-name').value,
+                code: document.getElementById('ficha-student-code').value,
+                technique: document.getElementById('ficha-technique').value,
+                ethicsGeneral: document.getElementById('ficha-ethics-general').value,
+                selectedTools: selectedFichaTools
+            };
+            localStorage.setItem('estetica_ficha_responsable', JSON.stringify(data));
+        }
+
+        function agregarAFichaActiva() {
+            if (!selectedToolId) return;
+
+            const tool = toolsData.find(t => t.id === selectedToolId);
+            if (!tool) return;
+
+            // Verificar si ya está agregada
+            if (selectedFichaTools.some(t => t.id === tool.id)) {
+                alert("Esta herramienta ya está en tu ficha.");
+                return;
+            }
+
+            // Verificar límite de 2 herramientas
+            if (selectedFichaTools.length >= 2) {
+                alert("Has alcanzado el límite pedagógico de máximo 2 herramientas de IA.");
+                return;
+            }
+
+            // Agregar a la lista con campos vacíos de justificación
+            selectedFichaTools.push({
+                id: tool.id,
+                name: tool.name,
+                symbol: tool.symbol,
+                cat: tool.cat,
+                justification: "",
+                commitment: ""
+            });
+
+            actualizarListaSeleccionFicha();
+            guardarSesionFicha();
+
+            // Switch to Ficha tab to write justifications
+            switchTab('ficha');
+        }
+
+        function removerDeFicha(id) {
+            selectedFichaTools = selectedFichaTools.filter(t => t.id !== id);
+            actualizarListaSeleccionFicha();
+            guardarSesionFicha();
+        }
+
+        function actualizarListaSeleccionFicha() {
+            const container = document.getElementById('ficha-selected-tools-container');
+            const emptyMsg = document.getElementById('empty-selection-msg');
+            const badge = document.getElementById('ficha-count-badge');
+            const compromisoGroup = document.getElementById('compromiso-group');
+
+            // Actualizar Badge en la pestaña
+            badge.textContent = selectedFichaTools.length;
+            if (selectedFichaTools.length > 0) {
+                badge.style.display = 'flex';
+                emptyMsg.style.display = 'none';
+                compromisoGroup.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                compromisoGroup.style.display = 'none';
+            }
+
+            // Eliminar bloques previos de herramienta
+            const toolBlocks = container.querySelectorAll('.selected-tool-block');
+            toolBlocks.forEach(b => b.remove());
+
+            selectedFichaTools.forEach((tool, index) => {
+                const mainTool = toolsData.find(t => t.id === tool.id);
+                const cat = categoriesMapping[mainTool.cat];
+
+                const block = document.createElement('div');
+                block.className = 'selected-tool-block';
+                block.setAttribute('data-id', tool.id);
+
+                block.innerHTML = `
+                    <div class="selected-tool-header">
+                        <div class="selected-tool-info">
+                            <div class="selected-tool-badge" style="background-color: var(${cat.colorVar})">${tool.symbol}</div>
+                            <span class="selected-tool-name">${tool.name}</span>
+                        </div>
+                        <button type="button" class="selected-tool-remove" onclick="removerDeFicha(${tool.id})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                    <div class="selected-tool-inputs">
+                        <label>¿Para qué la usarás? (Objetivo pedagógico):</label>
+                        <textarea id="justification-${tool.id}" oninput="actualizarTextosFicha(${tool.id}, 'justification')" placeholder="Ej. La usaré para explorar bocetos de composición tipográfica y sugerir combinaciones de fuentes para mi afiche.">${tool.justification || ''}</textarea>
+                        
+                        <label>¿Cómo garantizarás tu autoría y uso ético?:</label>
+                        <textarea id="commitment-${tool.id}" oninput="actualizarTextosFicha(${tool.id}, 'commitment')" placeholder="Ej. Modificaré sustancialmente las imágenes sugeridas realizando mis propios dibujos y declararé la IA en la bitácora.">${tool.commitment || ''}</textarea>
+                    </div>
+                `;
+
+                container.appendChild(block);
+            });
+        }
+
+        function actualizarTextosFicha(id, field) {
+            const tool = selectedFichaTools.find(t => t.id === id);
+            if (tool) {
+                const val = document.getElementById(`${field}-${id}`).value;
+                tool[field] = val;
+                guardarSesionFicha();
+            }
+        }
+
+        function actualizarSeleccionTecnicaFicha() {
+            guardarSesionFicha();
+        }
+
+        // --- 8. VISTA DE IMPRESIÓN Y EXPORTACIÓN ---
+        function abrirVistaImpresion() {
+            const name = document.getElementById('ficha-student-name').value.trim();
+            const code = document.getElementById('ficha-student-code').value.trim();
+            const technique = document.getElementById('ficha-technique').value;
+            const ethicsGeneral = document.getElementById('ficha-ethics-general').value.trim();
+
+            if (!name || !code || !technique) {
+                alert("Por favor completa los campos obligatorios: Nombre, Código y Técnica.");
+                switchTab('ficha');
+                return;
+            }
+
+            if (selectedFichaTools.length === 0) {
+                alert("Debes seleccionar al menos una herramienta de IA (máximo 2) para tu ficha.");
+                return;
+            }
+
+            // Validar justificaciones completas
+            for (let t of selectedFichaTools) {
+                if (!t.justification.trim() || !t.commitment.trim()) {
+                    alert(`Por favor, completa la justificación y compromiso ético para la herramienta: ${t.name}`);
+                    switchTab('ficha');
+                    return;
+                }
+            }
+
+            // Construir el reporte en HTML
+            const docContent = document.getElementById('print-document-content');
+            
+            const techLabels = {
+                CT: "Composición y Tipografía (Diseño Visual)",
+                M: "Maquetado (Diseño Espacial)",
+                DI: "Diario Ilustrado (Expresión e Identidad)",
+                C: "Crochet (Diseño Artístico y Material)"
+            };
+
+            const dateStr = new Date().toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            let toolsHtml = '';
+            selectedFichaTools.forEach((tool, idx) => {
+                const mainTool = toolsData.find(t => t.id === tool.id);
+                const cat = categoriesMapping[mainTool.cat];
+                const ethic = ethicDetails[mainTool.ethic];
+
+                toolsHtml += `
+                    <div class="doc-tool-block">
+                        <div class="doc-tool-header">
+                            <span class="doc-tool-title">${idx + 1}. [${tool.symbol}] ${tool.name}</span>
+                            <span class="doc-tool-cat">Categoría: ${cat.name} (${cat.code})</span>
+                        </div>
+                        <div class="doc-tool-text">
+                            <strong>1. Función pedagógica asignada:</strong>
+                            <p>${mainTool.fn}</p>
+                        </div>
+                        <div class="doc-tool-text">
+                            <strong>2. Nivel de uso ético (Semáforo):</strong>
+                            <p>${ethic.label} - ${ethic.text}</p>
+                        </div>
+                        <div class="doc-tool-text">
+                            <strong>3. Justificación pedagógica del estudiante:</strong>
+                            <p>${tool.justification}</p>
+                        </div>
+                        <div class="doc-tool-text">
+                            <strong>4. Medidas de autoría y prevención de plagio:</strong>
+                            <p>${tool.commitment}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            docContent.innerHTML = `
+                <div class="doc-header">
+                    <div class="doc-school-title">Colegio Danilo Cifuentes</div>
+                    <div class="doc-subject">Asignatura: Estética · Grado Once</div>
+                    <div class="doc-title">Ficha de Selección Responsable de IA</div>
+                </div>
+
+                <div class="doc-student-data">
+                    <div class="data-item"><strong>Estudiante:</strong> ${name}</div>
+                    <div class="data-item"><strong>Código/Usuario:</strong> ${code}</div>
+                    <div class="data-item"><strong>Técnica Elegida:</strong> ${techLabels[technique]}</div>
+                    <div class="data-item"><strong>Fecha de Registro:</strong> ${dateStr}</div>
+                </div>
+
+                <div class="doc-section">
+                    <div class="doc-section-title">Herramientas de IA Seleccionadas</div>
+                    ${toolsHtml}
+                </div>
+
+                <div class="doc-section">
+                    <div class="doc-section-title">Declaración de Compromiso Ético General</div>
+                    <div class="doc-ethics-commitment">
+                        <p>${ethicsGeneral || 'El estudiante se compromete a realizar un uso ético y reflexivo de las IAs seleccionadas, asegurando que su intervención analítica, bocetos iniciales y ajustes finales representen su propia autoría, respetando la rúbrica pedagógica del proyecto.'}</p>
+                    </div>
+                </div>
+
+                <div class="doc-signatures">
+                    <div>
+                        <div style="height: 50px;"></div>
+                        <div class="signature-line">Firma del Estudiante</div>
+                        <div style="font-size: 10px; margin-top: 3px; color: #555;">Documento Autodeclarado</div>
+                    </div>
+                    <div>
+                        <div style="height: 50px;"></div>
+                        <div class="signature-line">Firma Docente Estética</div>
+                        <div style="font-size: 10px; margin-top: 3px; color: #555;">Revisado y Avalado</div>
+                    </div>
+                </div>
+            `;
+
+            // Mostrar el Overlay
+            document.getElementById('print-preview-overlay').classList.add('active');
+        }
+
+        function cerrarVistaImpresion() {
+            document.getElementById('print-preview-overlay').classList.remove('active');
+        }
+
+        function ejecutarImpresion() {
+            window.print();
+        }
+
+        // --- 9. NAVEGACIÓN ---
+        function volverAlMapa() {
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>

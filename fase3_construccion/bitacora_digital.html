@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora Digital - Portafolio de Estética</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --header-dark: #222121;
+            --header-yellow: #fbd008;
+            --header-yellow-hover: #e5bd00;
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            
+            /* Colores de las Técnicas */
+            --comp-purple: #6c53a3;
+            --maq-blue: #30a0e0;
+            --diario-pink: #f4629e;
+            --crochet-green: #5cc472;
+            
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--header-yellow);
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-yellow);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-yellow);
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--header-dark);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: var(--header-yellow);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(251, 208, 8, 0.3);
+        }
+
+        .action-btn:hover {
+            background-color: var(--header-yellow-hover);
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.5);
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            transform: scale(1.03);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (WORKSPACE) --- */
+        .workspace {
+            flex: 1;
+            width: 100%;
+            position: relative;
+            display: flex;
+        }
+
+        /* --- LOGIN OVERLAY --- */
+        .login-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1b1b1f 0%, #0d0d0e 80%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .login-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            background: rgba(30, 30, 34, 0.75);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            width: 480px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--header-yellow) 0%, #f39c12 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(251, 208, 8, 0.4);
+        }
+
+        .login-logo svg {
+            width: 45px;
+            height: 45px;
+            fill: var(--header-dark);
+        }
+
+        .login-card h2 {
+            font-family: var(--font-labels);
+            font-size: 26px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--header-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 8px rgba(251, 208, 8, 0.25);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 208, 8, 0.3);
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--header-yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 208, 8, 0.45);
+        }
+
+        /* --- DASHBOARD CONTAINER --- */
+        .dashboard {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 320px 1fr 380px;
+            gap: 20px;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .dashboard.visible {
+            opacity: 1;
+        }
+
+        /* --- ESTILOS DE LOS PANELES (MARCOS) --- */
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* --- PANEL 1: USUARIO Y OPCIONES --- */
+        .panel-user {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 3px solid var(--border-color);
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: border-color 0.4s ease;
+        }
+
+        .avatar-container svg {
+            width: 65px;
+            height: 65px;
+        }
+
+        .profile-name {
+            font-family: var(--font-labels);
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-user {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .badge-technique {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Badges de Técnicas */
+        .badge-comp { background-color: var(--comp-purple); }
+        .badge-maq { background-color: var(--maq-blue); }
+        .badge-diario { background-color: var(--diario-pink); }
+        .badge-crochet { background-color: var(--crochet-green); }
+
+        .stats-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Nivel de Agencia Gauge */
+        .agency-gauge-container {
+            margin-top: 5px;
+        }
+
+        .agency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .agency-bar {
+            width: 100%;
+            height: 10px;
+            background: #2a2a30;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .agency-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--success-color));
+            border-radius: 5px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .agency-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .panel-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--header-yellow);
+            transform: translateX(4px);
+        }
+
+        .menu-btn.active {
+            background: rgba(251, 208, 8, 0.1);
+            border-color: var(--header-yellow);
+            color: var(--header-yellow);
+        }
+
+        .menu-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .logout-btn {
+            margin-top: 15px;
+            border-color: rgba(239, 68, 68, 0.4);
+            color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger-color);
+            color: #ffffff;
+        }
+
+        /* --- PANEL 2: FORMULARIO DE LLENADO (EDITOR) --- */
+        .panel-editor {
+            background: #ffffff;
+            color: #1c1c1e;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            padding: 20px 25px;
+            border-bottom: 1.5px solid #e5e5ea;
+            background: #f2f2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-header h2 {
+            font-family: var(--font-labels);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--header-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .editor-header h2 svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .editor-scroll {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .editor-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .editor-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .editor-group label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #555559;
+        }
+
+        .editor-group input, .editor-group textarea, .editor-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #d1d1d6;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 14px;
+            background: #ffffff;
+            color: #1c1c1e;
+            transition: all 0.3s ease;
+        }
+
+        .editor-group input:focus, .editor-group textarea:focus, .editor-group select:focus {
+            outline: none;
+            border-color: var(--comp-purple);
+            box-shadow: 0 0 6px rgba(108, 83, 163, 0.25);
+        }
+
+        /* Secciones Pedagógicas de la Bitácora */
+        .editor-section {
+            border-left: 4px solid #d1d1d6;
+            padding-left: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .section-title {
+            font-family: var(--font-labels);
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-ai { border-color: var(--comp-purple); }
+        .section-ai .section-title { color: var(--comp-purple); }
+        .section-agency { border-color: var(--maq-blue); }
+        .section-agency .section-title { color: var(--maq-blue); }
+        .section-ethics { border-color: var(--crochet-green); }
+        .section-ethics .section-title { color: var(--crochet-green); }
+
+        .editor-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
+            font-size: 13.5px;
+        }
+
+        .editor-footer {
+            padding: 15px 25px;
+            border-top: 1.5px solid #e5e5ea;
+            background: #f2f2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .agency-feedback {
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .editor-btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save {
+            background-color: var(--header-dark);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .btn-save:hover {
+            background-color: #3b3a3a;
+            transform: scale(1.02);
+        }
+
+        .btn-cancel {
+            background-color: transparent;
+            border: 1px solid #d1d1d6;
+            color: #555559;
+        }
+
+        .btn-cancel:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        /* --- PANEL 3: HISTÓRICO DE BITÁCORAS --- */
+        .panel-history {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .panel-history h2 {
+            font-family: var(--font-labels);
+            font-size: 18px;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .search-filter-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 14px 10px 35px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--header-yellow);
+        }
+
+        .search-bar svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 5px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-tab {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            color: #ffffff;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .filter-tab.active-all.active { border-color: var(--header-yellow); color: var(--header-yellow); }
+        .filter-tab.active-comp.active { border-color: var(--comp-purple); background: rgba(108, 83, 163, 0.15); color: #c4b5fd; }
+        .filter-tab.active-maq.active { border-color: var(--maq-blue); background: rgba(48, 160, 224, 0.15); color: #bae6fd; }
+        .filter-tab.active-diario.active { border-color: var(--diario-pink); background: rgba(244, 98, 158, 0.15); color: #fbcfe8; }
+        .filter-tab.active-crochet.active { border-color: var(--crochet-green); background: rgba(92, 196, 114, 0.15); color: #bbf7d0; }
+
+        .entries-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 2px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .empty-state svg {
+            width: 70px;
+            height: 70px;
+            stroke: var(--text-muted);
+            fill: none;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            justify-content: center;
+            line-height: 1.5;
+        }
+
+        .entry-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .entry-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .entry-card.active-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--header-yellow);
+        }
+
+        .entry-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .entry-card-title {
+            font-family: var(--font-labels);
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .entry-card-date {
+            font-size: 11px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .entry-card-snippet {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .entry-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .entry-card-tag {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-action-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-action-btn:hover {
+            color: #ffffff;
+        }
+
+        .card-action-btn.btn-delete:hover {
+            color: var(--danger-color);
+        }
+
+        .card-action-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* --- POPUP MODAL (RÚBRICA) --- */
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px;
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 90%;
+            max-width: 1100px;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .addie-modal-header h3 span {
+            color: var(--header-yellow);
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: var(--danger-color);
+            transform: scale(1.1);
+        }
+
+        .addie-modal-body {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            color: #333333;
+        }
+
+        /* Estilos de la tabla de la rúbrica */
+        .rubric-intro {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #666;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--comp-purple);
+            padding-left: 15px;
+        }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .rubric-table th, .rubric-table td {
+            padding: 15px;
+            text-align: left;
+            vertical-align: top;
+            border: 1px solid #e2e8f0;
+            line-height: 1.5;
+        }
+
+        .rubric-table th {
+            background-color: var(--header-dark);
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rubric-table th:first-child {
+            width: 18%;
+        }
+
+        .rubric-table td:first-child {
+            font-weight: 700;
+            color: var(--header-dark);
+            background-color: #f1f5f9;
+        }
+
+        .rubric-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .rubric-cell-title {
+            display: block;
+            font-family: var(--font-labels);
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .level-5 { color: var(--success-color); }
+        .level-4 { color: #3b82f6; }
+        .level-3 { color: #eab308; }
+        .level-2 { color: #f97316; }
+        .level-1 { color: var(--danger-color); }
+
+        .rubric-table td ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 5px;
+        }
+
+        .rubric-table td ul li {
+            position: relative;
+            padding-left: 12px;
+            margin-bottom: 5px;
+        }
+
+        .rubric-table td ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--comp-purple);
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Bitácora <span>Digital</span></h1>
+        </div>
+        <div class="actions-container">
+            <button class="action-btn" onclick="openRubricModal()" title="Ver rúbrica evaluativa del proyecto">
+                <span>📋</span> Rúbrica Evaluativa
+            </button>
+            <a href="../index.html" class="close-btn">
+                <span>&times;</span> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- CUERPO DE TRABAJO -->
+    <div class="workspace">
+
+        <!-- PANTALLA DE IDENTIFICACIÓN (LOGIN) -->
+        <div id="login-overlay" class="login-overlay">
+            <div class="login-card">
+                <div class="login-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                </div>
+                <h2>Identificación del Estudiante</h2>
+                <p>Ingresa tu nombre y código estudiantil para acceder a tu Bitácora Digital de Estética (Grado 11) y registrar tus interacciones y decisiones de diseño con la IA.</p>
+                
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="input-name">Nombre Completo</label>
+                        <input type="text" id="input-name" placeholder="Ej. Carlos Mendoza" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-code">Usuario / Código</label>
+                        <input type="text" id="input-code" placeholder="Ej. EST-11-042" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="select-technique">Técnica Seleccionada</label>
+                        <select id="select-technique" required>
+                            <option value="" disabled selected>-- Elige una técnica --</option>
+                            <option value="composición y tipografía">Diseño Visual: Composición y Tipografía</option>
+                            <option value="maquetado">Diseño Espacial: Maquetado (Mockup)</option>
+                            <option value="diario ilustrado">Cuerpo y Expresión: Diario de Campo Ilustrado</option>
+                            <option value="crochet">Diseño Artístico y Material: Crochet</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="login-btn">Ingresar a mi Bitácora</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- DASHBOARD (Visible solo tras loguearse) -->
+        <div id="dashboard" class="dashboard">
+
+            <!-- MARCO 1: USUARIO Y OPCIONES -->
+            <div class="panel panel-user">
+                <div class="profile-card">
+                    <div class="avatar-container" id="profile-avatar">
+                        <!-- SVG del Avatar dinámico -->
+                    </div>
+                    <div class="profile-name" id="profile-name">Cargando...</div>
+                    <div class="profile-user" id="profile-user">Código: --</div>
+                    <span class="badge-technique" id="profile-badge-technique">Técnica</span>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Entradas:</span>
+                        <span class="stat-value" id="stat-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Último Registro:</span>
+                        <span class="stat-value" id="stat-last-date">Nunca</span>
+                    </div>
+                    
+                    <div class="agency-gauge-container">
+                        <div class="agency-header">
+                            <span>Agencia del Estudiante (IA)</span>
+                            <span id="agency-percent">0%</span>
+                        </div>
+                        <div class="agency-bar">
+                            <div class="agency-fill" id="agency-bar-fill"></div>
+                        </div>
+                        <div class="agency-desc" id="agency-badge-text">Inicia tu bitácora para evaluar tu agencia.</div>
+                    </div>
+                </div>
+
+                <div class="panel-menu">
+                    <button class="menu-btn active" onclick="clickNewEntry()" id="menu-btn-new">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Nueva Entrada
+                    </button>
+                    <button class="menu-btn" onclick="openRubricModal()">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Ver Rúbrica
+                    </button>
+                    <button class="menu-btn logout-btn" onclick="handleLogout()">
+                        <svg viewBox="0 0 24 24"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <!-- MARCO 2: LLENADO DE LA BITÁCORA (EDITOR) -->
+            <div class="panel panel-editor">
+                <div class="editor-header">
+                    <h2 id="editor-title-display">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Nueva Entrada de Bitácora
+                    </h2>
+                    <span style="font-size: 12px; color: #555559;" id="editor-mode">Modo: Creación</span>
+                </div>
+                
+                <div class="editor-scroll">
+                    <form id="bitacora-form" onsubmit="saveEntry(event)" class="editor-form">
+                        <input type="hidden" id="entry-id">
+                        
+                        <div class="form-row">
+                            <div class="editor-group">
+                                <label for="entry-title">Título de la Sesión / Actividad</label>
+                                <input type="text" id="entry-title" placeholder="Ej. Explorando paletas con Midjourney para Crochet" required>
+                            </div>
+                            <div class="editor-group">
+                                <label for="entry-date">Fecha</label>
+                                <input type="date" id="entry-date" required>
+                            </div>
+                        </div>
+
+                        <div class="editor-group">
+                            <label for="entry-technique">Técnica Relacionada</label>
+                            <select id="entry-technique" required>
+                                <option value="composición y tipografía">Composición y Tipografía (Diseño Visual)</option>
+                                <option value="maquetado">Maquetado (Diseño Espacial)</option>
+                                <option value="diario ilustrado">Diario de Campo Ilustrado (Cuerpo, Identidad y Expresión)</option>
+                                <option value="crochet">Crochet (Diseño Artístico y Material)</option>
+                            </select>
+                        </div>
+
+                        <!-- SECCIÓN 1: DIÁLOGO CON LA IA -->
+                        <div class="editor-section section-ai">
+                            <div class="section-title">
+                                🤖 A. Diálogo e Interacción con la IA
+                            </div>
+                            
+                            <div class="editor-group">
+                                <label for="entry-prompts">Prompts Utilizados e Iteración</label>
+                                <textarea id="entry-prompts" placeholder="Describe los prompts específicos que le escribiste a la IA y cómo evolucionó el diálogo a partir de sus respuestas para ajustar los detalles de tu boceto..." required></textarea>
+                            </div>
+
+                            <div class="editor-group">
+                                <label for="entry-ai-output">Respuesta Obtenida de la IA</label>
+                                <textarea id="entry-ai-output" placeholder="Pega o describe la respuesta inicial dada por la IA (texto, ideas de diseño, sugerencias de paletas, etc.)..." required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: AGENCIA DEL ESTUDIANTE -->
+                        <div class="editor-section section-agency">
+                            <div class="section-title">
+                                🧠 B. Agencia y Modificación Creativa
+                            </div>
+
+                            <div class="editor-group">
+                                <label for="entry-comparison">Comparación y Contraste (Propuesta vs Resultado Final)</label>
+                                <textarea id="entry-comparison" placeholder="Detalla los cambios entre la propuesta inicial dada por la IA y la versión final física o digital realizada por ti. ¿Qué quitaste, agregaste o cambiaste del boceto?..." required></textarea>
+                            </div>
+
+                            <div class="editor-group">
+                                <label for="entry-justification">Justificación de Decisiones de Diseño</label>
+                                <textarea id="entry-justification" placeholder="Explica tus argumentos estéticos: ¿Por qué decidiste aceptar o rechazar las sugerencias de la IA? Fundamenta tus decisiones a partir de la intención artística de tu proyecto..." required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 3: REFLEXIÓN ÉTICA -->
+                        <div class="editor-section section-ethics">
+                            <div class="section-title">
+                                🟢 C. Curaduría y Reflexión Ética
+                            </div>
+
+                            <div class="editor-group">
+                                <label for="entry-ethics">Verificación y Honestidad Académica</label>
+                                <textarea id="entry-ethics" placeholder="¿Cómo verificaste que los datos aportados por la IA fueran correctos o seguros? Expresa en qué momentos específicos del proceso usaste la IA y reflexiona sobre tu co-autoría..." required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="editor-footer">
+                    <div class="agency-feedback">
+                        <span>Estado:</span>
+                        <span id="agency-status-badge" class="feedback-badge" style="background-color: var(--border-color);">Vacío</span>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="editor-btn btn-cancel" onclick="resetEditor()">Limpiar</button>
+                        <button type="submit" form="bitacora-form" class="editor-btn btn-save">💾 Guardar Registro</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MARCO 3: HISTÓRICO DE BITÁCORAS -->
+            <div class="panel panel-history">
+                <h2>Historial de Bitácoras</h2>
+                
+                <div class="search-filter-box">
+                    <div class="search-bar">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Buscar por título..." oninput="renderHistory()">
+                    </div>
+                    
+                    <div class="filter-tabs">
+                        <div class="filter-tab active active-all" onclick="setFilter('all')" id="filter-all">Ver Todas</div>
+                        <div class="filter-tab" onclick="setFilter('composición y tipografía')" id="filter-comp">Visual</div>
+                        <div class="filter-tab" onclick="setFilter('maquetado')" id="filter-maq">Espacial</div>
+                        <div class="filter-tab" onclick="setFilter('diario ilustrado')" id="filter-diario">Cuerpo</div>
+                        <div class="filter-tab" onclick="setFilter('crochet')" id="filter-crochet">Crochet</div>
+                    </div>
+                </div>
+
+                <div class="entries-list" id="entries-list">
+                    <!-- Cards se renderizan dinámicamente con JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- POPUP MODAL (RÚBRICA DE BITÁCORA) -->
+    <div id="rubric-modal-overlay" class="addie-modal-overlay" onclick="closeRubricModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📋 Rúbrica Evaluativa - <span>Bitácora de Creación e Interacción con IA</span></h3>
+                <button class="addie-close-x" onclick="closeRubricModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body">
+                <div class="rubric-intro">
+                    Esta rúbrica evalúa la capacidad de diálogo crítico, curaduría, justificación y reflexión ética del estudiante de grado 11 frente al uso de modelos de IA generativa durante el desarrollo del prototipo de estética.
+                </div>
+                
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto Evaluado</th>
+                            <th>5 - Excelente</th>
+                            <th>4 - Bueno</th>
+                            <th>3 - Aceptable</th>
+                            <th>2 - Insuficiente</th>
+                            <th>1 - Deficiente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Prompts e Iteración</strong></td>
+                            <td>
+                                <span class="rubric-cell-title level-5">Excelente</span>
+                                Identifica y describe claramente todos los comandos (prompts) utilizados. Muestra una evolución lógica de preguntas y refinamientos basados en las respuestas de la IA.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-4">Bueno</span>
+                                Registra la mayoría de prompts utilizados. Explica algunas variaciones de comandos, mostrando cierto grado de adaptación a las respuestas obtenidas.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-3">Aceptable</span>
+                                Registra los prompts de forma básica. Hay poca evidencia de iteración o refinamiento de los comandos al recibir respuestas iniciales.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-2">Insuficiente</span>
+                                Solo registra un prompt general de forma fragmentada. No hay evidencias de diálogo continuado ni refinamiento de respuestas.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-1">Deficiente</span>
+                                No registra los comandos utilizados o usa la IA sin documentar ningún tipo de instrucción o prompt de búsqueda.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comparación y Contraste</strong></td>
+                            <td>
+                                <span class="rubric-cell-title level-5">Excelente</span>
+                                Contraste exhaustivo y visual/textual entre la propuesta generativa inicial de la IA y el prototipo final real realizado por el estudiante, detallando sus propios aportes y modificaciones.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-4">Bueno</span>
+                                Establece comparaciones claras entre el boceto de la IA y la obra final. Describe los cambios estructurales más relevantes hechos a la propuesta de la IA.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-3">Aceptable</span>
+                                Realiza una comparación superficial. Indica que hubo cambios pero no describe con detalle en qué consistieron las variaciones.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-2">Insuficiente</span>
+                                Muestra fotos o descripciones de la IA y la propia pero sin ningún análisis de diferencias ni reconocimiento de aportes individuales.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-1">Deficiente</span>
+                                El producto final es una copia idéntica del modelo sugerido por la IA o no se evidencia ninguna relación comparativa.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Justificación de Decisiones</strong></td>
+                            <td>
+                                <span class="rubric-cell-title level-5">Excelente</span>
+                                Justifica con rigurosidad estética por qué aceptó o rechazó las sugerencias de la IA. Demuestra un rol de editor sumamente activo, autónomo y crítico.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-4">Bueno</span>
+                                Explica de forma coherentemente las razones para usar o descartar sugerencias de la IA. Argumenta basándose en la viabilidad técnica de su proyecto.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-3">Aceptable</span>
+                                Justificación limitada. Responde de forma breve sobre las decisiones tomadas sin profundizar en argumentos artísticos o prácticos.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-2">Insuficiente</span>
+                                Muestra una justificación vaga o conformista (ej. "usé esto porque me gustó"). Su rol se percibe muy pasivo ante las propuestas de la IA.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-1">Deficiente</span>
+                                No presenta argumentos ni justificaciones sobre la selección de elementos de diseño generados por la IA.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reflexión Ética y Curaduría</strong></td>
+                            <td>
+                                <span class="rubric-cell-title level-5">Excelente</span>
+                                Realiza verificación sistemática de datos (curaduría). Declara explícitamente en qué partes se usó la IA y demuestra una sólida postura de co-creación honesta.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-4">Bueno</span>
+                                Expresa los momentos clave de uso de la IA. Hace alguna verificación de las ideas o datos recibidos de la IA antes de aplicarlos.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-3">Aceptable</span>
+                                Declara el uso de la IA de manera general, pero no identifica fuentes ni verifica los datos de forma consciente (curaduría básica).
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-2">Insuficiente</span>
+                                Menciona la IA a nivel anecdótico sin un análisis crítico ético de autoría ni verificación de sus propuestas.
+                            </td>
+                            <td>
+                                <span class="rubric-cell-title level-1">Deficiente</span>
+                                Oculta el uso de la IA o no presenta reflexiones éticas, intentando hacer pasar el contenido generativo completo como autoría propia.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS LÓGICOS -->
+    <script>
+        // --- BASE DE DATOS Y SESIÓN ---
+        let currentStudent = null;
+        let entries = [];
+        let activeFilter = 'all';
+        let isEditing = false;
+
+        // Cargar datos al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            const session = localStorage.getItem('bitacora_session');
+            if (session) {
+                currentStudent = JSON.parse(session);
+                loadStudentDashboard();
+            } else {
+                document.getElementById('login-overlay').classList.remove('hidden');
+            }
+            
+            // Poner la fecha actual por defecto en el input date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('entry-date').value = today;
+            
+            // Agregar listener en inputs para calcular la agencia en tiempo real
+            const textareas = ['entry-prompts', 'entry-ai-output', 'entry-comparison', 'entry-justification', 'entry-ethics'];
+            textareas.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateLiveAgencyBadge);
+            });
+        });
+
+        // --- MANEJO DEL LOGIN ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-name').value.trim();
+            const code = document.getElementById('input-code').value.trim();
+            const technique = document.getElementById('select-technique').value;
+
+            if (!name || !code || !technique) return;
+
+            currentStudent = { name, code, technique };
+            localStorage.setItem('bitacora_session', JSON.stringify(currentStudent));
+            
+            // Transición suave
+            document.getElementById('login-overlay').classList.add('hidden');
+            loadStudentDashboard();
+        }
+
+        // --- CARGAR INTERFAZ DEL ESTUDIANTE ---
+        function loadStudentDashboard() {
+            document.getElementById('dashboard').classList.add('visible');
+            
+            // Textos del perfil
+            document.getElementById('profile-name').innerText = currentStudent.name;
+            document.getElementById('profile-user').innerText = `Código: ${currentStudent.code}`;
+            
+            // Badge de técnica
+            const badge = document.getElementById('profile-badge-technique');
+            badge.innerText = currentStudent.technique;
+            badge.className = 'badge-technique'; // reset
+            
+            // Color del badge y avatar dinámico
+            let avatarSvg = '';
+            if (currentStudent.technique.includes('composición')) {
+                badge.classList.add('badge-comp');
+                avatarSvg = `<svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--comp-purple)" stroke-width="3"/>
+                    <rect x="30" y="30" width="40" height="40" fill="none" stroke="var(--comp-purple)" stroke-width="4"/>
+                    <line x1="30" y1="30" x2="70" y2="70" stroke="var(--comp-purple)" stroke-width="2"/>
+                    <text x="50" y="55" fill="var(--comp-purple)" font-family="Montserrat" font-size="14" font-weight="900" text-anchor="middle">A</text>
+                </svg>`;
+            } else if (currentStudent.technique.includes('maquetado')) {
+                badge.classList.add('badge-maq');
+                avatarSvg = `<svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--maq-blue)" stroke-width="3"/>
+                    <polygon points="50,15 85,45 85,85 15,85 15,45" fill="none" stroke="var(--maq-blue)" stroke-width="4"/>
+                    <line x1="15" y1="45" x2="85" y2="45" stroke="var(--maq-blue)" stroke-width="2"/>
+                </svg>`;
+            } else if (currentStudent.technique.includes('diario')) {
+                badge.classList.add('badge-diario');
+                avatarSvg = `<svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--diario-pink)" stroke-width="3"/>
+                    <path d="M30,20 h35 a10,10 0 0,1 10,10 v50 a10,10 0 0,1 -10,10 h-35 a5,5 0 0,1 -5,-5 v-60 a5,5 0 0,1 5,-5 z" fill="none" stroke="var(--diario-pink)" stroke-width="4"/>
+                    <line x1="40" y1="35" x2="60" y2="35" stroke="var(--diario-pink)" stroke-width="2"/>
+                    <line x1="40" y1="50" x2="60" y2="50" stroke="var(--diario-pink)" stroke-width="2"/>
+                    <line x1="40" y1="65" x2="55" y2="65" stroke="var(--diario-pink)" stroke-width="2"/>
+                </svg>`;
+            } else {
+                badge.classList.add('badge-crochet');
+                avatarSvg = `<svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--crochet-green)" stroke-width="3"/>
+                    <path d="M 30,50 C 30,30 45,25 50,40 C 55,25 70,30 70,50 C 70,70 55,75 50,60 C 45,75 30,70 30,50 Z" fill="none" stroke="var(--crochet-green)" stroke-width="4"/>
+                    <line x1="20" y1="20" x2="80" y2="80" stroke="var(--crochet-green)" stroke-width="2" stroke-dasharray="3,3"/>
+                </svg>`;
+            }
+            document.getElementById('profile-avatar').innerHTML = avatarSvg;
+
+            // Pre-seleccionar la técnica activa en el formulario
+            document.getElementById('entry-technique').value = currentStudent.technique;
+
+            // Cargar historial de este estudiante
+            loadStoredEntries();
+            renderHistory();
+            resetEditor();
+        }
+
+        // --- CERRAR SESIÓN ---
+        function handleLogout() {
+            localStorage.removeItem('bitacora_session');
+            currentStudent = null;
+            entries = [];
+            
+            document.getElementById('dashboard').classList.remove('visible');
+            document.getElementById('login-overlay').classList.remove('hidden');
+            
+            // Limpiar inputs de login
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-code').value = '';
+            document.getElementById('select-technique').value = '';
+        }
+
+        // --- LEER DE LOCALSTORAGE ---
+        function loadStoredEntries() {
+            const key = `entries_${currentStudent.code}`;
+            const stored = localStorage.getItem(key);
+            if (stored) {
+                entries = JSON.parse(stored);
+            } else {
+                entries = [];
+            }
+            updateMetrics();
+        }
+
+        // --- ACTUALIZAR MÉTRICAS Y AGENCIA ---
+        function updateMetrics() {
+            document.getElementById('stat-count').innerText = entries.length;
+            
+            if (entries.length > 0) {
+                // Última fecha
+                const sorted = [...entries].sort((a,b) => new Date(b.date) - new Date(a.date));
+                const lastDate = sorted[0].date;
+                const [year, month, day] = lastDate.split('-');
+                document.getElementById('stat-last-date').innerText = `${day}/${month}/${year}`;
+                
+                // Calcular Agencia Media
+                let totalScore = 0;
+                entries.forEach(entry => {
+                    totalScore += calculateEntryAgencyScore(entry);
+                });
+                const averageAgency = Math.round(totalScore / entries.length);
+                
+                document.getElementById('agency-percent').innerText = `${averageAgency}%`;
+                document.getElementById('agency-bar-fill').style.width = `${averageAgency}%`;
+                
+                let agencyWord = '';
+                if (averageAgency >= 85) {
+                    agencyWord = 'Editor Activo (Alta Agencia)';
+                } else if (averageAgency >= 60) {
+                    agencyWord = 'Co-creador (Media Agencia)';
+                } else {
+                    agencyWord = 'Consumidor Pasivo (Baja Agencia)';
+                }
+                document.getElementById('agency-badge-text').innerText = `Rango actual: ${agencyWord}. Sigue refinando tu diálogo y curaduría.`;
+            } else {
+                document.getElementById('stat-last-date').innerText = 'Nunca';
+                document.getElementById('agency-percent').innerText = '0%';
+                document.getElementById('agency-bar-fill').style.width = '0%';
+                document.getElementById('agency-badge-text').innerText = 'Registra tu primera bitácora para evaluar tu nivel de agencia.';
+            }
+        }
+
+        // --- CÁLCULO DILIGENTE DE AGENCIA INDIVIDUAL ---
+        function calculateEntryAgencyScore(entry) {
+            // El nivel de agencia se evalúa según la profundidad (número de palabras/longitud)
+            // de las justificaciones y comparaciones críticas que hace el estudiante frente a la IA.
+            const promptsLen = (entry.prompts || '').length;
+            const outputLen = (entry.aiOutput || '').length;
+            const compLen = (entry.comparison || '').length;
+            const justLen = (entry.justification || '').length;
+            const ethicsLen = (entry.ethics || '').length;
+
+            if (!promptsLen || !outputLen) return 0;
+
+            // Puntuación base en base a caracteres escritos en los apartados reflexivos humanos
+            // Excelente es Justificación > 100, Comparación > 100, Ética > 80.
+            let score = 30; // base por llenar la bitácora
+            
+            // Puntos por Prompts detallados (diálogo)
+            if (promptsLen > 150) score += 15;
+            else if (promptsLen > 60) score += 10;
+            
+            // Puntos por Comparación exhaustiva
+            if (compLen > 150) score += 20;
+            else if (compLen > 60) score += 12;
+
+            // Puntos por Justificación pedagógica/estética (el núcleo de la agencia)
+            if (justLen > 180) score += 20;
+            else if (justLen > 70) score += 13;
+
+            // Puntos por Reflexión Ética
+            if (ethicsLen > 130) score += 15;
+            else if (ethicsLen > 50) score += 10;
+
+            return Math.min(score, 100);
+        }
+
+        // --- ACTUALIZACIÓN DE INDICADOR EN TIEMPO REAL ---
+        function updateLiveAgencyBadge() {
+            const entry = {
+                prompts: document.getElementById('entry-prompts').value,
+                aiOutput: document.getElementById('entry-ai-output').value,
+                comparison: document.getElementById('entry-comparison').value,
+                justification: document.getElementById('entry-justification').value,
+                ethics: document.getElementById('entry-ethics').value
+            };
+            
+            // Comprobar si está totalmente vacío
+            if (!entry.prompts && !entry.aiOutput && !entry.comparison && !entry.justification && !entry.ethics) {
+                const badge = document.getElementById('agency-status-badge');
+                badge.innerText = 'Vacío';
+                badge.style.backgroundColor = 'var(--border-color)';
+                return;
+            }
+
+            const score = calculateEntryAgencyScore(entry);
+            const badge = document.getElementById('agency-status-badge');
+            
+            if (score >= 85) {
+                badge.innerText = 'Editor Activo';
+                badge.style.backgroundColor = 'var(--success-color)';
+            } else if (score >= 60) {
+                badge.innerText = 'Co-creador';
+                badge.style.backgroundColor = 'var(--warning-color)';
+            } else {
+                badge.innerText = 'Consumidor Pasivo';
+                badge.style.backgroundColor = 'var(--danger-color)';
+            }
+        }
+
+        // --- ABRIR NUEVA ENTRADA ---
+        function clickNewEntry() {
+            document.getElementById('menu-btn-new').classList.add('active');
+            resetEditor();
+        }
+
+        // --- RESETEAR EL FORMULARIO ---
+        function resetEditor() {
+            isEditing = false;
+            document.getElementById('entry-id').value = '';
+            document.getElementById('entry-title').value = '';
+            document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('entry-technique').value = currentStudent ? currentStudent.technique : 'composición y tipografía';
+            
+            document.getElementById('entry-prompts').value = '';
+            document.getElementById('entry-ai-output').value = '';
+            document.getElementById('entry-comparison').value = '';
+            document.getElementById('entry-justification').value = '';
+            document.getElementById('entry-ethics').value = '';
+            
+            document.getElementById('editor-title-display').innerHTML = `
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Nueva Entrada de Bitácora
+            `;
+            document.getElementById('editor-mode').innerText = 'Modo: Creación';
+            
+            // Deseleccionar tarjetas del historial
+            const cards = document.querySelectorAll('.entry-card');
+            cards.forEach(c => c.classList.remove('active-card'));
+            
+            updateLiveAgencyBadge();
+        }
+
+        // --- GUARDAR ENTRADA EN LOCALSTORAGE ---
+        function saveEntry(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('entry-id').value;
+            const title = document.getElementById('entry-title').value.trim();
+            const date = document.getElementById('entry-date').value;
+            const technique = document.getElementById('entry-technique').value;
+            
+            const prompts = document.getElementById('entry-prompts').value.trim();
+            const aiOutput = document.getElementById('entry-ai-output').value.trim();
+            const comparison = document.getElementById('entry-comparison').value.trim();
+            const justification = document.getElementById('entry-justification').value.trim();
+            const ethics = document.getElementById('entry-ethics').value.trim();
+
+            if (!title || !date || !technique || !prompts || !aiOutput || !comparison || !justification || !ethics) {
+                alert('Por favor, completa todos los campos del formulario.');
+                return;
+            }
+
+            const entryData = {
+                id: id || Date.now().toString(),
+                title,
+                date,
+                technique,
+                prompts,
+                aiOutput,
+                comparison,
+                justification,
+                ethics
+            };
+
+            if (isEditing) {
+                // Reemplazar existente
+                entries = entries.map(item => item.id === id ? entryData : item);
+            } else {
+                // Añadir nuevo
+                entries.unshift(entryData);
+            }
+
+            // Guardar en LocalStorage
+            const key = `entries_${currentStudent.code}`;
+            localStorage.setItem(key, JSON.stringify(entries));
+
+            alert(isEditing ? 'Entrada de bitácora actualizada con éxito.' : 'Nueva entrada de bitácora guardada.');
+            
+            // Recargar
+            loadStoredEntries();
+            renderHistory();
+            resetEditor();
+        }
+
+        // --- EDITAR ENTRADA (CARGAR EN FORMULARIO) ---
+        function loadEntryToForm(id) {
+            const entry = entries.find(item => item.id === id);
+            if (!entry) return;
+
+            isEditing = true;
+            document.getElementById('entry-id').value = entry.id;
+            document.getElementById('entry-title').value = entry.title;
+            document.getElementById('entry-date').value = entry.date;
+            document.getElementById('entry-technique').value = entry.technique;
+            
+            document.getElementById('entry-prompts').value = entry.prompts;
+            document.getElementById('entry-ai-output').value = entry.aiOutput;
+            document.getElementById('entry-comparison').value = entry.comparison;
+            document.getElementById('entry-justification').value = entry.justification;
+            document.getElementById('entry-ethics').value = entry.ethics;
+            
+            document.getElementById('editor-title-display').innerHTML = `
+                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                Editando Entrada
+            `;
+            document.getElementById('editor-mode').innerText = `Modo: Edición (${entry.title.substring(0, 15)}...)`;
+            
+            // Marcar tarjeta como activa
+            const cards = document.querySelectorAll('.entry-card');
+            cards.forEach(c => {
+                c.classList.remove('active-card');
+                if (c.getAttribute('data-id') === id) {
+                    c.classList.add('active-card');
+                }
+            });
+
+            // Enfocar el título
+            document.getElementById('entry-title').focus();
+            
+            updateLiveAgencyBadge();
+        }
+
+        // --- ELIMINAR ENTRADA ---
+        function deleteEntry(id, event) {
+            event.stopPropagation(); // Evitar que cargue en el formulario
+            
+            if (!confirm('¿Estás seguro de que deseas eliminar esta entrada de bitácora? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            entries = entries.filter(item => item.id !== id);
+            
+            const key = `entries_${currentStudent.code}`;
+            localStorage.setItem(key, JSON.stringify(entries));
+
+            // Si estábamos editando la que se eliminó, resetear
+            const currentEditingId = document.getElementById('entry-id').value;
+            if (currentEditingId === id) {
+                resetEditor();
+            }
+
+            loadStoredEntries();
+            renderHistory();
+        }
+
+        // --- FILTROS DE HISTORIAL ---
+        function setFilter(filterType) {
+            activeFilter = filterType;
+            
+            const tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if (filterType === 'all') document.getElementById('filter-all').classList.add('active');
+            else if (filterType.includes('composición')) document.getElementById('filter-comp').classList.add('active');
+            else if (filterType.includes('maquetado')) document.getElementById('filter-maq').classList.add('active');
+            else if (filterType.includes('diario')) document.getElementById('filter-diario').classList.add('active');
+            else if (filterType.includes('crochet')) document.getElementById('filter-crochet').classList.add('active');
+            
+            renderHistory();
+        }
+
+        // --- RENDERIZAR LISTADO DE HISTORIAL ---
+        function renderHistory() {
+            const listContainer = document.getElementById('entries-list');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            // Filtrar entradas
+            let filtered = entries;
+            if (activeFilter !== 'all') {
+                filtered = filtered.filter(item => item.technique.toLowerCase() === activeFilter.toLowerCase());
+            }
+            if (searchVal) {
+                filtered = filtered.filter(item => item.title.toLowerCase().includes(searchVal) || item.prompts.toLowerCase().includes(searchVal));
+            }
+
+            listContainer.innerHTML = '';
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2" fill="none"/>
+                            <line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/>
+                            <line x1="8" y1="16" x2="14" y2="16" stroke-width="2"/>
+                            <circle cx="9" cy="8" r="1.5" fill="currentColor"/>
+                        </svg>
+                        <p>No se encontraron entradas de bitácora.<br>${searchVal || activeFilter !== 'all' ? 'Intenta cambiar los filtros.' : '¡Agrega tu primera entrada en el panel central!'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(entry => {
+                const card = document.createElement('div');
+                card.className = 'entry-card';
+                card.setAttribute('data-id', entry.id);
+                
+                // Borde izquierdo según técnica
+                let techColor = 'var(--border-color)';
+                let techShortName = 'Técnica';
+                if (entry.technique.includes('composición')) { techColor = 'var(--comp-purple)'; techShortName = 'Visual'; }
+                else if (entry.technique.includes('maquetado')) { techColor = 'var(--maq-blue)'; techShortName = 'Espacial'; }
+                else if (entry.technique.includes('diario')) { techColor = 'var(--diario-pink)'; techShortName = 'Cuerpo'; }
+                else if (entry.technique.includes('crochet')) { techColor = 'var(--crochet-green)'; techShortName = 'Crochet'; }
+                
+                card.style.borderLeftColor = techColor;
+
+                // Formatear fecha
+                const [year, month, day] = entry.date.split('-');
+                const formattedDate = `${day}/${month}/${year}`;
+
+                // Nivel de agencia para la tarjeta
+                const score = calculateEntryAgencyScore(entry);
+                let agencyBadgeColor = 'var(--border-color)';
+                let agencyText = 'Pasivo';
+                if (score >= 85) { agencyBadgeColor = 'var(--success-color)'; agencyText = 'Editor'; }
+                else if (score >= 60) { agencyBadgeColor = 'var(--warning-color)'; agencyText = 'Co-creador'; }
+                else { agencyBadgeColor = 'var(--danger-color)'; }
+
+                card.innerHTML = `
+                    <div class="entry-card-header">
+                        <div class="entry-card-title">${entry.title}</div>
+                        <div class="entry-card-date">${formattedDate}</div>
+                    </div>
+                    <div class="entry-card-snippet">${entry.justification || 'Sin justificación registrada.'}</div>
+                    <div class="entry-card-footer">
+                        <div>
+                            <span class="entry-card-tag" style="background-color: ${techColor}">${techShortName}</span>
+                            <span class="entry-card-tag" style="background-color: ${agencyBadgeColor}; margin-left: 5px; font-size: 8px;">${agencyText}</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action-btn" onclick="loadEntryToForm('${entry.id}')" title="Editar entrada">
+                                <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                            </button>
+                            <button class="card-action-btn btn-delete" onclick="deleteEntry('${entry.id}', event)" title="Eliminar entrada">
+                                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => loadEntryToForm(entry.id));
+                listContainer.appendChild(card);
+            });
+            
+            // Marcar la activa si existe
+            const currentEditingId = document.getElementById('entry-id').value;
+            if (currentEditingId) {
+                const activeCard = document.querySelector(`.entry-card[data-id="${currentEditingId}"]`);
+                if (activeCard) activeCard.classList.add('active-card');
+            }
+        }
+
+        // --- CONTROL DEL MODAL (RÚBRICA) ---
+        function openRubricModal() {
+            document.getElementById('rubric-modal-overlay').classList.add('active');
+        }
+
+        function closeRubricModal() {
+            document.getElementById('rubric-modal-overlay').classList.remove('active');
+        }
+
+        function closeRubricModalOnOverlay(event) {
+            if (event.target.id === 'rubric-modal-overlay') {
+                closeRubricModal();
+            }
+        }
+    </script>
+</body>
+</html>

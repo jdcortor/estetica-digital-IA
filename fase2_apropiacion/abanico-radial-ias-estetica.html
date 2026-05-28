@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1640">
+<title>Abanico Digital de IAs para Estética</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#f8f6f0;--warm:#edeae0;--ink:#15131f;--ink2:#3a3650;--muted:#7a7695;
+  --c1:#7c3aed;--c2:#1d6fb5;--c3:#c2510e;--c4:#1a8a5c;--c5:#be1e38;--c6:#a0600a;--c7:#1560a0;--c8:#2d7a3a;
+  --tct:#c0303a;--tm:#c07000;--tdi:#1a8a5c;--tc:#1677b3;
+  --eg:#2d7a3a;--ey:#c07000;--er:#be1e38;
+  --r:8px;
+}
+html,body{min-height:100vh;background:#d0cdc4;display:flex;flex-direction:column;align-items:center;padding:16px 8px;font-family:'Georgia',serif}
+/* ══ POSTER ══ */
+.poster{
+  width:1620px;background:var(--paper);
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 12px 48px rgba(0,0,0,.3);
+  display:flex;flex-direction:column;
+}
+/* ══ HEADER ══ */
+.hd{
+  background:var(--ink);color:#fff;
+  padding:16px 28px 14px;
+  display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:center;
+}
+.hd h1{font-size:28px;letter-spacing:-.5px;line-height:1.1}
+.hd h1 em{color:#a8d4ea;font-style:normal}
+.hd .sub{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:4px;font-family:'Courier New',monospace}
+.hd .msg{font-size:11px;color:rgba(255,255,255,.5);margin-top:5px;font-style:italic;line-height:1.45}
+.mbox{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--r);padding:10px 14px;
+}
+.mbox .ml{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.4);font-family:'Courier New',monospace;margin-bottom:4px}
+.mbox p{font-size:10.5px;color:rgba(255,255,255,.72);line-height:1.5}
+.mbox p strong{color:#a8d4ea}
+/* ══ META BAR ══ */
+.meta{
+  background:var(--warm);border-bottom:2px solid #d8d4c8;
+  padding:8px 28px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+}
+.leg-row{display:flex;align-items:center;gap:8px}
+.leg-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink2);font-family:'Courier New',monospace;font-weight:700;white-space:nowrap}
+.tags{display:flex;gap:5px}
+.tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700;font-family:'Courier New',monospace;white-space:nowrap}
+.tag.ct{background:#ffe8ea;color:#be1e38;border:1.5px solid #be1e38}
+.tag.m {background:#fff3d0;color:#c07000;border:1.5px solid #c07000}
+.tag.di{background:#e0f7ee;color:#1a8a5c;border:1.5px solid #1a8a5c}
+.tag.c {background:#dff0ff;color:#1677b3;border:1.5px solid #1677b3}
+.sem{display:flex;align-items:center;gap:12px}
+.sitem{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink2)}
+.sdot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.sdot.g{background:#2d7a3a;box-shadow:0 0 6px rgba(45,122,58,.4)}
+.sdot.y{background:#c07000;box-shadow:0 0 6px rgba(192,112,0,.4)}
+.sdot.r{background:#be1e38;box-shadow:0 0 6px rgba(190,30,56,.4)}
+.vsep{width:1px;height:24px;background:#d0ccc0;flex-shrink:0}
+/* filter btns */
+.frow{display:flex;gap:5px;align-items:center;margin-left:auto}
+.flbl{font-size:10px;color:var(--muted);font-family:'Courier New',monospace;white-space:nowrap}
+.fbtn{
+  padding:4px 11px;border-radius:100px;border:1.5px solid #c0bdb0;
+  background:#fff;color:var(--ink2);font-size:10px;font-family:'Courier New',monospace;font-weight:700;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.fbtn:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.fbtn.act{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fbtn.act.fct{background:#be1e38;border-color:#be1e38}
+.fbtn.act.fm {background:#c07000;border-color:#c07000}
+.fbtn.act.fdi{background:#1a8a5c;border-color:#1a8a5c}
+.fbtn.act.fc {background:#1677b3;border-color:#1677b3}
+/* ══ MAIN CANVAS ══ */
+.canvas{
+  display:grid;grid-template-columns:1fr 230px;
+  flex:1;overflow:hidden;min-height:680px;
+}
+/* ══ FAN ZONE ══ */
+.fanzone{
+  position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 110%, #ebe8e0 0%, #f8f6f0 60%);
+}
+/* control buttons */
+.controls{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:20;
+}
+.cbtn{
+  padding:6px 16px;border-radius:100px;
+  border:1.5px solid #c0bdb0;background:#fff;
+  color:var(--ink);font-size:11px;font-family:'Courier New',monospace;font-weight:700;
+  cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.cbtn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* SVG fan container */
+.fansvg{
+  position:absolute;
+  left:50%;bottom:0;
+  transform:translateX(-50%);
+}
+/* ══ TOOLTIP ══ */
+.tooltip{
+  position:fixed;
+  background:var(--ink);color:#fff;
+  border-radius:10px;padding:12px 15px;
+  font-size:11.5px;line-height:1.55;
+  max-width:240px;z-index:9999;
+  pointer-events:none;display:none;
+  box-shadow:0 6px 24px rgba(0,0,0,.4);
+  font-family:'Trebuchet MS',sans-serif;
+}
+.tooltip .tn{font-weight:700;font-size:13px;color:#a8d4ea;margin-bottom:5px}
+.tooltip .tf{color:rgba(255,255,255,.85);margin-bottom:6px;font-size:11px}
+.tooltip .tw{font-size:10px;color:#ffd166;border-top:1px solid rgba(255,255,255,.15);padding-top:5px}
+/* ══ PANEL LATERAL ══ */
+.sidepanel{
+  background:var(--warm);border-left:2px solid #d8d4c8;
+  padding:12px 12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;
+}
+.side-ttl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'Courier New',monospace;font-weight:700;text-align:center;margin-bottom:2px}
+/* category panel */
+.catpanel{display:none;flex-direction:column;gap:6px}
+.catpanel.vis{display:flex}
+.cp-head{border-radius:var(--r);padding:9px 11px;color:#fff;font-size:12px;font-weight:700;line-height:1.3}
+.cp-fn{background:#fff;border-radius:0 0 var(--r) var(--r);border:1.5px solid #d8d4c8;border-top:none;padding:9px 11px}
+.cp-fn .row{font-size:11px;color:var(--ink2);margin-bottom:5px;line-height:1.4}
+.cp-fn .row strong{color:var(--ink);display:block;font-size:10px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.cp-warn{font-size:10.5px;color:#8a6000;background:#fff8e0;border-left:3px solid #c07000;border-radius:0 4px 4px 0;padding:7px 9px;margin-top:4px;font-style:italic;line-height:1.4}
+/* tech cards */
+.tech-block{background:#fff;border-radius:var(--r);border:1.5px solid #d8d4c8;overflow:hidden}
+.tech-head{padding:7px 10px;color:#fff;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700}
+.tech-head.ct{background:#be1e38}
+.tech-head.m {background:#c07000}
+.tech-head.di{background:#1a8a5c}
+.tech-head.c {background:#1677b3}
+.tech-body{padding:7px 10px;font-size:10px;color:var(--ink2);line-height:1.5}
+.tech-body .tw2{color:#8a6000;font-style:italic;margin-top:3px;border-top:1px solid #eee;padding-top:3px}
+/* default panel */
+.defpanel{display:flex;flex-direction:column;gap:6px}
+/* ══ BOTTOM ══ */
+.bottom{
+  background:var(--ink2);color:#fff;
+  padding:9px 24px;
+  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;
+}
+.steps{display:flex;gap:0;align-items:stretch}
+.step{display:flex;flex-direction:column;align-items:center;padding:0 14px;position:relative;text-align:center}
+.step:not(:last-child)::after{content:'›';position:absolute;right:-4px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.3);font-size:16px}
+.snum{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-bottom:3px;font-family:'Courier New',monospace}
+.sh{font-size:10px;font-weight:700;color:#a8d4ea;margin-bottom:2px}
+.st{font-size:9px;color:rgba(255,255,255,.6);line-height:1.3;max-width:80px}
+.declare{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--r);padding:8px 13px;min-width:340px}
+.declare .dl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);font-family:'Courier New',monospace;margin-bottom:3px}
+.declare p{font-size:10px;color:rgba(255,255,255,.75);line-height:1.55;font-style:italic}
+.declare .bl{display:inline-block;border-bottom:1px solid rgba(168,212,234,.6);min-width:55px;color:#a8d4ea;font-style:normal;font-family:'Courier New',monospace;font-size:9px;vertical-align:bottom}
+/* foot */
+.foot{background:#111020;padding:5px 24px;display:flex;justify-content:space-between;align-items:center}
+.foot p{font-size:9px;color:rgba(255,255,255,.3);font-family:'Courier New',monospace}
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+<!-- HEADER -->
+<div class="hd">
+  <div>
+    <h1>Abanico Digital de <em>IAs</em> para Estética</h1>
+    <div class="sub">Herramientas para explorar · crear · organizar · presentar · reflexionar con uso responsable</div>
+    <div class="msg">"La IA puede apoyar tu proceso creativo, pero tus decisiones, bocetos, ajustes, bitácora y autoría siguen siendo centrales."</div>
+  </div>
+  <div class="mbox">
+    <div class="ml">Metodología y enfoque</div>
+    <p><strong>ADDIE</strong>: análisis, diseño, desarrollo, implementación y evaluación.<br><strong>IA-TPACK</strong>: articula contenido de Estética, mediación docente, herramientas de IA y criterios éticos.<br><span style="font-size:9px;color:rgba(255,255,255,.4)">Colegio Danilo Cifuentes · Estética · Grado 11</span></p>
+  </div>
+</div>
+
+<!-- META BAR -->
+<div class="meta">
+  <div class="leg-row">
+    <span class="leg-lbl">Técnicas:</span>
+    <div class="tags">
+      <span class="tag ct" style="cursor:pointer" onclick="filterTec('CT',this)">CT · Composición y Tipografía</span>
+      <span class="tag m"  style="cursor:pointer" onclick="filterTec('M',this)">M · Maquetado</span>
+      <span class="tag di" style="cursor:pointer" onclick="filterTec('DI',this)">DI · Diario Ilustrado</span>
+      <span class="tag c"  style="cursor:pointer" onclick="filterTec('C',this)">C · Crochet</span>
+    </div>
+  </div>
+  <div class="vsep"></div>
+  <div class="leg-row">
+    <span class="leg-lbl">Uso ético:</span>
+    <div class="sem">
+      <div class="sitem"><div class="sdot g"></div><span>Permitido</span></div>
+      <div class="sitem"><div class="sdot y"></div><span>Con revisión docente</span></div>
+      <div class="sitem"><div class="sdot r"></div><span>No como producto final</span></div>
+    </div>
+  </div>
+  <div class="vsep"></div>
+  <div class="frow">
+    <span class="flbl">Filtrar:</span>
+    <button class="fbtn act" onclick="filterAll(this)">Ver todo</button>
+    <button class="fbtn fct" onclick="filterTecBtn('CT',this)">CT</button>
+    <button class="fbtn fm"  onclick="filterTecBtn('M',this)">M</button>
+    <button class="fbtn fdi" onclick="filterTecBtn('DI',this)">DI</button>
+    <button class="fbtn fc"  onclick="filterTecBtn('C',this)">C</button>
+  </div>
+</div>
+
+<!-- MAIN CANVAS -->
+<div class="canvas">
+
+  <!-- FAN ZONE -->
+  <div class="fanzone" id="fanzone">
+    <div class="controls">
+      <button class="cbtn" onclick="deployAll()">⊕ Desplegar todo</button>
+      <button class="cbtn" onclick="closeAll()">⊖ Cerrar abanico</button>
+    </div>
+    <svg class="fansvg" id="fansvg" width="1200" height="660" viewBox="0 0 1200 660"></svg>
+  </div>
+
+  <!-- SIDE PANEL -->
+  <div class="sidepanel">
+    <div class="side-ttl">Información de categoría</div>
+
+    <!-- Default state -->
+    <div class="defpanel" id="defpanel">
+      <div style="text-align:center;padding:10px 0;color:var(--muted);font-size:11px;font-style:italic;line-height:1.5">
+        Haz clic en una hoja del abanico para ver la información de esa categoría.
+      </div>
+      <div class="tech-block">
+        <div class="tech-head ct">✏️ CT · Composición y Tipografía</div>
+        <div class="tech-body">texto · imagen · diseño · presentación<br><strong style="color:var(--ink)">ChatGPT · Gemini · Leonardo AI · Canva · Adobe Express · Looka · Gamma</strong>
+        <div class="tw2">No copies composiciones generadas; transforma y justifica.</div></div>
+      </div>
+      <div class="tech-block">
+        <div class="tech-head m">📦 M · Maquetado</div>
+        <div class="tech-body">texto · imagen · diseño · video · técnico<br><strong style="color:var(--ink)">ChatGPT · Gemini · MS Designer · Canva · LumaLabs · Wolfram Alpha · Padlet</strong>
+        <div class="tw2">La escala, forma y función deben ser decisiones propias.</div></div>
+      </div>
+      <div class="tech-block">
+        <div class="tech-head di">📖 DI · Diario Ilustrado</div>
+        <div class="tech-body">texto · imagen · audio · video · diseño<br><strong style="color:var(--ink)">ChatGPT · Quillbot · Leonardo AI · Canva · Suno · Murf · Fliki</strong>
+        <div class="tw2">La voz personal del diario no puede ser reemplazada.</div></div>
+      </div>
+      <div class="tech-block">
+        <div class="tech-head c">🧶 C · Crochet</div>
+        <div class="tech-body">texto · consulta · organización · video<br><strong style="color:var(--ink)">ChatGPT · Gemini · Perplexity · Canva · Padlet · MS Designer · Guidde</strong>
+        <div class="tw2">La ejecución manual y ajustes pertenecen al estudiante.</div></div>
+      </div>
+    </div>
+
+    <!-- Category panels (one per category, shown on click) -->
+    <div class="catpanel" id="cp1">
+      <div class="cp-head" style="background:#7c3aed">💬 Chatbots y Texto</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Idear, aclarar conceptos, organizar procesos, formular preguntas y apoyar bitácoras.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI · C</div>
+        <div class="row"><strong>Herramientas</strong>ChatGPT · Gemini · Copilot · Claude · Perplexity · Grammarly · Quillbot · DeepL</div>
+        <div class="cp-warn">⚠ El texto generado debe revisarse, transformarse y declararse en la bitácora.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp2">
+      <div class="cp-head" style="background:#1d6fb5">📄 Consulta y Verificación</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Consultar documentos, revisar referentes, contrastar información y apoyar decisiones.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI · C</div>
+        <div class="row"><strong>Herramientas</strong>ResearchGPT · ChatPDF · Humata · AskYourPDF · PDF AI</div>
+        <div class="cp-warn">⚠ No copiar respuestas sin análisis ni reelaboración.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp3">
+      <div class="cp-head" style="background:#c2510e">🎨 Imágenes y Referentes</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Explorar estilos, paletas, composición, referentes visuales y bocetos iniciales.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI (principalmente)</div>
+        <div class="row"><strong>Herramientas</strong>Leonardo AI · MS Designer · Adobe Express · Stable Diffusion · Pikaso · Wepik · Flair · Napkin · AI Img Enlarger</div>
+        <div class="cp-warn">⚠ La imagen generada es referente, no producto final sin transformación y boceto propio.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp4">
+      <div class="cp-head" style="background:#1a8a5c">🖥 Diseño y Presentaciones</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Organizar información visual, crear infografías, portafolios y socializaciones.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI · C</div>
+        <div class="row"><strong>Herramientas</strong>Canva · Gamma · Tome · Slides AI · SlidesGPT · Curipod · Looka</div>
+        <div class="cp-warn">⚠ Adaptar el diseño y explicar las decisiones propias.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp5">
+      <div class="cp-head" style="background:#be1e38">🎬 Video y Animación</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Crear videos explicativos, recorridos visuales y presentaciones del proceso.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI (principalmente)</div>
+        <div class="row"><strong>Herramientas</strong>Lumen5 · Fliki · Vizard · Quicktube · Animated Drawings · LumaLabs · HeyGen</div>
+        <div class="cp-warn">⚠ Revisar uso de imagen, voz, avatares y derechos de autor.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp6">
+      <div class="cp-head" style="background:#a0600a">🎙 Audio y Narración</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Crear narraciones, mejorar audios y ambientar socializaciones del proyecto.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>DI · M (principalmente)</div>
+        <div class="row"><strong>Herramientas</strong>Adobe Podcast · TTS Maker · Speechify · Murf · ElevenLabs · Suno · MusicFX</div>
+        <div class="cp-warn">⚠ No clonar voces ni simular identidades. Declarar el uso siempre.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp7">
+      <div class="cp-head" style="background:#1560a0">📋 Organización y Apoyo</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Organizar avances, crear preguntas, registrar procesos y apoyar autoevaluación.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>CT · M · DI · C</div>
+        <div class="row"><strong>Herramientas</strong>Padlet · Magic School · Question Well · Formative · EduPrompts · Socratic · Monica AI · Scribe · Guidde</div>
+        <div class="cp-warn">⚠ La IA apoya el seguimiento, pero no reemplaza la reflexión del estudiante.</div>
+      </div>
+    </div>
+    <div class="catpanel" id="cp8">
+      <div class="cp-head" style="background:#2d7a3a">📐 Apoyo Técnico</div>
+      <div class="cp-fn">
+        <div class="row"><strong>Función pedagógica</strong>Calcular proporciones, medidas, escalas y relaciones espaciales del maquetado.</div>
+        <div class="row"><strong>Técnicas que apoya</strong>M</div>
+        <div class="row"><strong>Herramienta</strong>Wolfram Alpha</div>
+        <div class="cp-warn">⚠ El estudiante debe comprender y justificar cada cálculo aplicado.</div>
+      </div>
+    </div>
+
+  </div><!-- /sidepanel -->
+</div><!-- /canvas -->
+
+<!-- BOTTOM -->
+<div class="bottom">
+  <div class="steps">
+    <div class="step"><div class="snum">1</div><div class="sh">Explora</div><div class="st">Observa las categorías</div></div>
+    <div class="step"><div class="snum">2</div><div class="sh">Identifica</div><div class="st">Reconoce tu técnica: CT, M, DI o C</div></div>
+    <div class="step"><div class="snum">3</div><div class="sh">Selecciona</div><div class="st">Elige máximo dos IAs pertinentes</div></div>
+    <div class="step"><div class="snum">4</div><div class="sh">Registra</div><div class="st">Anota el uso en la bitácora</div></div>
+    <div class="step"><div class="snum">5</div><div class="sh">Transforma</div><div class="st">Adapta, boceta, ajusta y crea</div></div>
+  </div>
+  <div class="declare">
+    <div class="dl">Declaración en bitácora</div>
+    <p>"Utilicé <span class="bl">herramienta</span> con el propósito de <span class="bl">objetivo</span>. El resultado fue <span class="bl">describe</span>. Lo transformé mediante <span class="bl">cómo</span>. Su uso fue responsable porque <span class="bl">justifica</span>."</p>
+  </div>
+</div>
+
+<!-- FOOT -->
+<div class="foot">
+  <p>Figura X. Abanico Digital de IAs para Estética.</p>
+  <p>Fuente: Elaboración propia con apoyo de IA generativa. · Metodología ADDIE · Enfoque IA-TPACK · Colegio Danilo Cifuentes · Estética · Grado 11</p>
+</div>
+
+</div><!-- /poster -->
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+  <div class="tn" id="tn"></div>
+  <div class="tf" id="tf"></div>
+  <div class="tw" id="tw"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════
+const CATS = [
+  {
+    id:1, label:'Chatbots\ny Texto', icon:'💬', color:'#7c3aed', ethic:'g',
+    tools:[
+      {n:'ChatGPT', tec:'CT,M,DI,C', fn:'Idear, aclarar conceptos, organizar procesos y construir preguntas de bitácora.', w:'El texto generado debe revisarse, transformarse y declararse.'},
+      {n:'Gemini',  tec:'CT,M,DI,C', fn:'Organizar ideas y generar preguntas reflexivas con búsqueda integrada.', w:'Reelabora siempre el texto con tu propia voz.'},
+      {n:'Copilot', tec:'CT,M,DI,C', fn:'Redactar justificaciones y organizar etapas del proyecto con asistencia contextual.', w:'Personaliza y declara el uso en bitácora.'},
+      {n:'Claude',  tec:'CT,M,DI,C', fn:'Acompañar la construcción de sentido y reflexión del proyecto.', w:'Claude es interlocutor, no autor de tu proyecto.'},
+      {n:'Perplexity', tec:'CT,M,DI,C', fn:'Consulta información con fuentes citadas para investigación inicial.', w:'Verifica la fuente original antes de citar.'},
+      {n:'Grammarly',  tec:'CT,DI',     fn:'Mejorar la redacción, ortografía y coherencia de textos propios.', w:'Solo para revisar textos ya escritos por ti.'},
+      {n:'Quillbot',   tec:'CT,DI',     fn:'Reformular textos para mejorar claridad o adaptar el tono.', w:'El resultado debe reflejar tu entendimiento real.'},
+      {n:'DeepL',      tec:'CT,DI',     fn:'Traducir textos para consultar fuentes en otros idiomas.', w:'Cita la fuente original, no la traducción.'},
+    ]
+  },
+  {
+    id:2, label:'Consulta y\nVerificación', icon:'📄', color:'#1d6fb5', ethic:'g',
+    tools:[
+      {n:'ResearchGPT', tec:'CT,M,DI,C', fn:'Consultar documentos académicos e interrogar textos de apoyo.', w:'Verifica con la fuente original. No cites resúmenes automáticos.'},
+      {n:'ChatPDF',     tec:'CT,M,DI,C', fn:'Hacer preguntas sobre el contenido de un PDF de forma conversacional.', w:'Lee la sección completa antes de usar el dato.'},
+      {n:'Humata',      tec:'CT,M,DI,C', fn:'Resumir y responder preguntas sobre documentos extensos.', w:'No cites resúmenes automáticos como fuentes académicas.'},
+      {n:'AskYourPDF',  tec:'CT,M,DI,C', fn:'Interactuar con PDFs mediante preguntas para localizar información específica.', w:'Contrasta con la fuente original antes de usar cualquier dato.'},
+      {n:'PDF AI',      tec:'CT,M,DI,C', fn:'Analizar archivos PDF y responder preguntas sobre su contenido.', w:'Si copias respuestas sin reelaborar, decláralo.'},
+    ]
+  },
+  {
+    id:3, label:'Imágenes y\nReferentes', icon:'🎨', color:'#c2510e', ethic:'y',
+    tools:[
+      {n:'Leonardo AI',  tec:'CT,M,DI',   fn:'Generar imágenes de alta calidad para explorar estilos y paletas como referente.', w:'La imagen generada es referente, no producto final sin transformación.'},
+      {n:'MS Designer',  tec:'CT,M,DI,C', fn:'Crear composiciones visuales y piezas gráficas para exploración de estilos.', w:'Adapta y justifica cada elemento visual incorporado.'},
+      {n:'Adobe Express',tec:'CT,M,DI,C', fn:'Diseñar piezas visuales con tipografías y herramientas de edición Adobe.', w:'No entregues plantillas sin personalizar significativamente.'},
+      {n:'Stable Diff.', tec:'CT,M,DI',   fn:'Generar imágenes desde texto con variedad estilística para explorar variaciones.', w:'Usa como referente o punto de partida del boceto.'},
+      {n:'Pikaso',       tec:'CT,M,DI',   fn:'Convertir bocetos manuales en imágenes elaboradas en tiempo real.', w:'El boceto manual es parte esencial. El resultado es referente.'},
+      {n:'Wepik',        tec:'CT,M,DI',   fn:'Crear diseños con plantillas editables generadas con IA para explorar estilos.', w:'Adapta las plantillas. Documenta tus decisiones.'},
+      {n:'Flair',        tec:'CT,M',      fn:'Diseñar imágenes de producto con fondos y composición generados por IA.', w:'Las imágenes son referentes de presentación, no el prototipo real.'},
+      {n:'Napkin',       tec:'CT,M',      fn:'Convertir texto en diagramas y esquemas visuales para organizar ideas.', w:'Ajusta el diagrama generado a tu propuesta específica.'},
+      {n:'AI Img Enl.',  tec:'CT,M,DI',   fn:'Mejorar la resolución y calidad de imágenes existentes de autoría propia.', w:'Solo para imágenes que ya son de tu autoría.'},
+    ]
+  },
+  {
+    id:4, label:'Diseño y\nPresentaciones', icon:'🖥', color:'#1a8a5c', ethic:'g',
+    tools:[
+      {n:'Canva',     tec:'CT,M,DI,C', fn:'Organizar información visual, infografías, portafolios y piezas de presentación.', w:'Las plantillas son puntos de partida. Personaliza cada elemento.'},
+      {n:'Gamma',     tec:'CT,M,DI,C', fn:'Crear presentaciones visuales atractivas con estructura narrativa generada por IA.', w:'Revisa y ajusta. Debe reflejar tu proceso real.'},
+      {n:'Tome',      tec:'CT,M,DI,C', fn:'Crear presentaciones con narrativa visual fluida combinando texto e imagen.', w:'La narrativa debe ser tuya aunque la herramienta organice el formato.'},
+      {n:'Slides AI', tec:'CT,M,DI,C', fn:'Generar diapositivas automáticamente a partir de texto o ideas estructuradas.', w:'Transforma el contenido con tu propia voz y decisiones.'},
+      {n:'SlidesGPT', tec:'CT,M,DI,C', fn:'Crear presentaciones completas a partir de prompts descriptivos.', w:'Ajusta y personaliza todo el contenido generado.'},
+      {n:'Curipod',   tec:'CT,M,DI,C', fn:'Crear presentaciones interactivas con encuestas y actividades participativas.', w:'El contenido y la dinámica deben ser diseñados por ti.'},
+      {n:'Looka',     tec:'CT',        fn:'Generar logotipos, paletas de color e identidades visuales con IA.', w:'El logo final debe tener decisiones propias justificadas.'},
+    ]
+  },
+  {
+    id:5, label:'Video y\nAnimación', icon:'🎬', color:'#be1e38', ethic:'y',
+    tools:[
+      {n:'Lumen5',    tec:'CT,M,DI', fn:'Convertir texto en videos con imágenes y animaciones para síntesis del proceso.', w:'Revisa y ajusta el contenido automático. Escribe tú el guion.'},
+      {n:'Fliki',     tec:'M,DI',    fn:'Transformar texto en videos cortos con voz generada y subtítulos automáticos.', w:'El guion debe ser tuyo. Declara el uso de voz IA.'},
+      {n:'Vizard',    tec:'M,DI',    fn:'Editar videos: recortar, subtitular y crear clips desde grabaciones propias.', w:'La grabación y el contenido deben ser originales.'},
+      {n:'Quicktube', tec:'M,DI',    fn:'Generar resúmenes y clips cortos de videos de referentes para investigación.', w:'Solo para sintetizar referentes. Cita la fuente original.'},
+      {n:'Anim. Drw.',tec:'DI',      fn:'Animar dibujos hechos a mano convirtiéndolos en personajes en movimiento.', w:'Los dibujos deben ser de tu autoría. La IA solo anima.'},
+      {n:'LumaLabs',  tec:'M',       fn:'Generar videos y modelos 3D desde imágenes para visualizar espacios del maquetado.', w:'El prototipo físico es el producto final. La visualización es referente.'},
+      {n:'HeyGen',    tec:'M,DI',    fn:'Crear videos con presentadores virtuales para explicar procesos o proyectos.', w:'No uses avatares de personas reales sin autorización. Declara el uso.'},
+    ]
+  },
+  {
+    id:6, label:'Audio y\nNarración', icon:'🎙', color:'#a0600a', ethic:'y',
+    tools:[
+      {n:'Adobe Podcast', tec:'DI,M', fn:'Mejorar calidad de grabaciones de voz y crear narraciones de alta calidad.', w:'La narración debe ser tu voz y tus palabras.'},
+      {n:'TTS Maker',     tec:'DI,M', fn:'Convertir texto en voz natural para narraciones auditivas del proceso.', w:'El texto narrado debe ser escrito por ti. Declara el uso de voz artificial.'},
+      {n:'Speechify',     tec:'DI',   fn:'Convertir textos en audio para escuchar fuentes y referentes mientras trabajas.', w:'Solo para consumir contenido de lectura, no para generarlo.'},
+      {n:'Murf',          tec:'DI,M', fn:'Generar narraciones de voz realistas en múltiples idiomas y estilos.', w:'Declara el uso de voz IA. No uses voces de personas reales sin autorización.'},
+      {n:'ElevenLabs',    tec:'DI,M', fn:'Generar voces altamente realistas en múltiples idiomas para producciones.', w:'Prohibido clonar voces ajenas ni simular identidades. Declara siempre.'},
+      {n:'Suno',          tec:'DI',   fn:'Generar música original con letra y melodía a partir de un prompt descriptivo.', w:'Declara que la música fue generada con IA. Verifica derechos.'},
+      {n:'MusicFX',       tec:'DI',   fn:'Generar efectos de sonido y ambientes musicales para producciones audiovisuales.', w:'Úsalo como apoyo ambiental. Declara el uso de audio generado por IA.'},
+    ]
+  },
+  {
+    id:7, label:'Organización\ny Apoyo', icon:'📋', color:'#1560a0', ethic:'g',
+    tools:[
+      {n:'Padlet',       tec:'CT,M,DI,C', fn:'Organizar ideas, avances e imágenes en un tablero colaborativo visual.', w:'Úsalo para registrar, no para reemplazar la bitácora física.'},
+      {n:'Magic School', tec:'CT,M,DI,C', fn:'Crear rutas de aprendizaje, rúbricas, preguntas y materiales de apoyo pedagógico.', w:'La autoevaluación debe ser genuina y no delegada a la IA.'},
+      {n:'Question Well', tec:'CT,M,DI,C',fn:'Generar preguntas de comprensión y reflexión sobre cualquier contenido dado.', w:'Las respuestas a las preguntas deben ser tuyas y reflejar tu experiencia real.'},
+      {n:'Formative',    tec:'CT,M,DI,C', fn:'Crear evaluaciones formativas interactivas y seguimiento en tiempo real.', w:'Responde con honestidad. La evaluación depende de tu sinceridad.'},
+      {n:'EduPrompts',   tec:'CT,M,DI,C', fn:'Proporcionar prompts educativos para interactuar con IA de forma intencionada.', w:'Los prompts son herramientas de aprendizaje, no atajos.'},
+      {n:'Socratic',     tec:'CT,M,DI,C', fn:'Explicar conceptos, resolver dudas y orientar el aprendizaje de forma socrática.', w:'Verifica la información con el docente o fuentes académicas.'},
+      {n:'Monica AI',    tec:'CT,M,DI,C', fn:'Asistente multifuncional para organizar tareas y apoyar el trabajo escolar.', w:'Las decisiones del proyecto deben ser tuyas. La IA organiza, no decide.'},
+      {n:'Scribe',       tec:'CT,M,DI,C', fn:'Crear guías paso a paso automáticamente capturando procesos digitales.', w:'Las guías deben documentar tu proceso real, no uno idealizado.'},
+      {n:'Guidde',       tec:'CT,M,DI,C', fn:'Crear tutoriales en video a partir de la grabación de procesos digitales.', w:'Documenta tu proceso genuino. El tutorial debe ser honesto.'},
+    ]
+  },
+  {
+    id:8, label:'Apoyo\nTécnico', icon:'📐', color:'#2d7a3a', ethic:'g',
+    tools:[
+      {n:'Wolfram Alpha', tec:'M', fn:'Apoyar cálculos de proporciones, medidas, escalas y relaciones espaciales del maquetado.', w:'El estudiante debe comprender y justificar cada cálculo aplicado al diseño.'},
+    ]
+  }
+];
+
+// ══════════════════════════════════════════════════════
+// DRAW FAN
+// ══════════════════════════════════════════════════════
+const SVG_W = 1200, SVG_H = 660;
+const CX = SVG_W / 2, CY = SVG_H - 10; // pivot bottom-center
+const BLADE_COUNT = 8;
+const INNER_R = 90, OUTER_R_CLOSED = 200, OUTER_R_OPEN = 560;
+const CLOSED_SPREAD = 2.5;   // degrees per blade when closed
+const OPEN_START = -165, OPEN_END = -15; // semicircle angles
+
+const svg = document.getElementById('fansvg');
+let bladeStates = new Array(8).fill(false); // false=closed, true=open
+let activeCat = null;
+let activeTec = null;
+
+function toRad(d){ return d * Math.PI / 180; }
+
+// Compute blade open angle center (in degrees)
+function bladeAngle(i){ // 0-indexed
+  const range = OPEN_END - OPEN_START;
+  const step = range / (BLADE_COUNT - 1);
+  return OPEN_START + i * step;
+}
+
+// Compute closed angle (stacked near center-bottom)
+function bladeClosedAngle(i){
+  return -90 + (i - (BLADE_COUNT-1)/2) * CLOSED_SPREAD;
+}
+
+// SVG arc path for a blade
+function bladePath(angleDeg, spreadDeg, innerR, outerR){
+  const a1 = toRad(angleDeg - spreadDeg/2);
+  const a2 = toRad(angleDeg + spreadDeg/2);
+  const p1x = CX + innerR * Math.cos(a1), p1y = CY + innerR * Math.sin(a1);
+  const p2x = CX + outerR * Math.cos(a1), p2y = CY + outerR * Math.sin(a1);
+  const p3x = CX + outerR * Math.cos(a2), p3y = CY + outerR * Math.sin(a2);
+  const p4x = CX + innerR * Math.cos(a2), p4y = CY + innerR * Math.sin(a2);
+  const la = spreadDeg > 180 ? 1 : 0;
+  return `M${p1x.toFixed(1)},${p1y.toFixed(1)} L${p2x.toFixed(1)},${p2y.toFixed(1)} A${outerR},${outerR} 0 ${la} 1 ${p3x.toFixed(1)},${p3y.toFixed(1)} L${p4x.toFixed(1)},${p4y.toFixed(1)} A${innerR},${innerR} 0 ${la} 0 ${p1x.toFixed(1)},${p1y.toFixed(1)} Z`;
+}
+
+function midAngle(angleDeg){ return toRad(angleDeg); }
+
+function createSVG(){
+  svg.innerHTML = '';
+
+  // Central pivot circle
+  const pivot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  pivot.setAttribute('cx', CX); pivot.setAttribute('cy', CY);
+  pivot.setAttribute('r', 28);
+  pivot.setAttribute('fill', '#1a1628');
+  svg.appendChild(pivot);
+  const pivotRing = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  pivotRing.setAttribute('cx', CX); pivotRing.setAttribute('cy', CY);
+  pivotRing.setAttribute('r', 20);
+  pivotRing.setAttribute('fill', '#2d2650');
+  svg.appendChild(pivotRing);
+
+  CATS.forEach((cat, i) => {
+    const isOpen = bladeStates[i];
+    const angleDeg = isOpen ? bladeAngle(i) : bladeClosedAngle(i);
+    const outerR = isOpen ? OUTER_R_OPEN : OUTER_R_CLOSED;
+    const spreadDeg = isOpen ? ((OPEN_END - OPEN_START) / (BLADE_COUNT - 1)) - 2 : CLOSED_SPREAD;
+    const z = isOpen ? 15 - i : i; // open blades on top
+    const isActive = activeCat === cat.id;
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('data-catid', cat.id);
+    g.style.cursor = 'pointer';
+    g.style.zIndex = z;
+
+    // Blade path
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', bladePath(angleDeg, spreadDeg, INNER_R, outerR));
+    path.setAttribute('fill', cat.color);
+    path.setAttribute('fill-opacity', isActive ? '1' : '0.82');
+    path.setAttribute('stroke', '#fff');
+    path.setAttribute('stroke-width', '2');
+    path.style.transition = 'all 0.5s cubic-bezier(.4,0,.2,1)';
+    g.appendChild(path);
+
+    // If open, render content inside
+    if(isOpen){
+      renderBladeContent(g, cat, angleDeg, spreadDeg, outerR);
+    } else {
+      // Show only icon + number for closed blade
+      const ma = midAngle(angleDeg);
+      const labelR = (INNER_R + OUTER_R_CLOSED) / 2;
+      const lx = CX + labelR * Math.cos(ma);
+      const ly = CY + labelR * Math.sin(ma);
+
+      const numEl = document.createElementNS('http://www.w3.org/2000/svg','text');
+      numEl.setAttribute('x', lx); numEl.setAttribute('y', ly - 8);
+      numEl.setAttribute('text-anchor','middle');
+      numEl.setAttribute('dominant-baseline','middle');
+      numEl.setAttribute('fill','#fff');
+      numEl.setAttribute('font-size','16');
+      numEl.setAttribute('font-weight','700');
+      numEl.setAttribute('font-family','Georgia,serif');
+      numEl.textContent = cat.id;
+      g.appendChild(numEl);
+
+      const iconEl = document.createElementNS('http://www.w3.org/2000/svg','text');
+      iconEl.setAttribute('x', lx); iconEl.setAttribute('y', ly + 12);
+      iconEl.setAttribute('text-anchor','middle');
+      iconEl.setAttribute('dominant-baseline','middle');
+      iconEl.setAttribute('fill','rgba(255,255,255,0.85)');
+      iconEl.setAttribute('font-size','14');
+      iconEl.textContent = cat.icon;
+      g.appendChild(iconEl);
+    }
+
+    // Click handler
+    g.addEventListener('click', () => { toggleBlade(i); });
+
+    svg.insertBefore(g, pivot);
+  });
+
+  // Re-append pivots on top
+  svg.appendChild(pivot);
+  svg.appendChild(pivotRing);
+
+  // Pivot label
+  const pl = document.createElementNS('http://www.w3.org/2000/svg','text');
+  pl.setAttribute('x', CX); pl.setAttribute('y', CY + 1);
+  pl.setAttribute('text-anchor','middle');
+  pl.setAttribute('dominant-baseline','middle');
+  pl.setAttribute('fill','rgba(255,255,255,.6)');
+  pl.setAttribute('font-size','9');
+  pl.setAttribute('font-family','Courier New,monospace');
+  pl.textContent = 'IA';
+  svg.appendChild(pl);
+}
+
+function renderBladeContent(g, cat, angleDeg, spreadDeg, outerR){
+  const ma = midAngle(angleDeg);
+  const cols = cat.tools.length <= 4 ? 1 : 2;
+  const rows = Math.ceil(cat.tools.length / cols);
+  const toolH = 30, toolW = cols === 1 ? 90 : 80;
+  const totalH = rows * toolH + 10;
+  const startR = INNER_R + 30;
+
+  // Category title in mid-blade
+  const titleR = INNER_R + 20;
+  const tx = CX + titleR * Math.cos(ma);
+  const ty = CY + titleR * Math.sin(ma);
+
+  // Draw title along the blade
+  const titleBg = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+  titleBg.setAttribute('cx', tx.toFixed(1));
+  titleBg.setAttribute('cy', ty.toFixed(1));
+  titleBg.setAttribute('rx', 38);
+  titleBg.setAttribute('ry', 16);
+  titleBg.setAttribute('fill', 'rgba(0,0,0,0.25)');
+  g.appendChild(titleBg);
+
+  const catLabel = document.createElementNS('http://www.w3.org/2000/svg','text');
+  catLabel.setAttribute('x', tx.toFixed(1));
+  catLabel.setAttribute('y', ty.toFixed(1));
+  catLabel.setAttribute('text-anchor','middle');
+  catLabel.setAttribute('dominant-baseline','middle');
+  catLabel.setAttribute('fill','#fff');
+  catLabel.setAttribute('font-size','10');
+  catLabel.setAttribute('font-weight','700');
+  catLabel.setAttribute('font-family','Georgia,serif');
+  catLabel.textContent = cat.id + ' · ' + cat.icon;
+  g.appendChild(catLabel);
+
+  // Render tools as mini cards along radial direction
+  const toolCount = cat.tools.length;
+  const segment = (outerR - INNER_R - 55) / toolCount;
+
+  cat.tools.forEach((tool, ti) => {
+    const tr = INNER_R + 50 + ti * segment;
+    const tx2 = CX + tr * Math.cos(ma);
+    const ty2 = CY + tr * Math.sin(ma);
+
+    const isHighlighted = !activeTec || tool.tec.split(',').includes(activeTec);
+
+    // Card background
+    const cardW = Math.max(70, segment * 0.85);
+    const cardH = 22;
+    const crx = tx2 - cardW/2, cry = ty2 - cardH/2;
+
+    const cardRect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    cardRect.setAttribute('x', crx.toFixed(1));
+    cardRect.setAttribute('y', cry.toFixed(1));
+    cardRect.setAttribute('width', cardW.toFixed(1));
+    cardRect.setAttribute('height', cardH);
+    cardRect.setAttribute('rx', '5');
+    cardRect.setAttribute('fill', isHighlighted ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.25)');
+    cardRect.setAttribute('stroke', isHighlighted ? '#fff' : 'rgba(255,255,255,0.3)');
+    cardRect.setAttribute('stroke-width', '1');
+    g.appendChild(cardRect);
+
+    // Tool name
+    const toolName = document.createElementNS('http://www.w3.org/2000/svg','text');
+    toolName.setAttribute('x', (crx + cardW/2).toFixed(1));
+    toolName.setAttribute('y', (ty2 - 3).toFixed(1));
+    toolName.setAttribute('text-anchor','middle');
+    toolName.setAttribute('dominant-baseline','middle');
+    toolName.setAttribute('fill', isHighlighted ? cat.color : 'rgba(255,255,255,0.6)');
+    toolName.setAttribute('font-size','9');
+    toolName.setAttribute('font-weight','700');
+    toolName.setAttribute('font-family','Trebuchet MS,sans-serif');
+    const shortName = tool.n.length > 12 ? tool.n.substring(0,11)+'.' : tool.n;
+    toolName.textContent = shortName;
+    g.appendChild(toolName);
+
+    // Ethics dot
+    const dotColors = {g:'#2d7a3a', y:'#c07000', r:'#be1e38'};
+    const edot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    edot.setAttribute('cx', (crx + cardW - 8).toFixed(1));
+    edot.setAttribute('cy', ty2.toFixed(1));
+    edot.setAttribute('r', '3.5');
+    edot.setAttribute('fill', dotColors[cat.ethic]);
+    g.appendChild(edot);
+
+    // Tech tags (tiny)
+    const tags = tool.tec.split(',');
+    const tagColors = {CT:'#be1e38', M:'#c07000', DI:'#1a8a5c', C:'#1677b3'};
+    tags.slice(0,3).forEach((tg, tgi) => {
+      const tagEl = document.createElementNS('http://www.w3.org/2000/svg','text');
+      tagEl.setAttribute('x', (crx + 4 + tgi * 18).toFixed(1));
+      tagEl.setAttribute('y', (ty2 + 7).toFixed(1));
+      tagEl.setAttribute('fill', tagColors[tg] || '#666');
+      tagEl.setAttribute('font-size','7');
+      tagEl.setAttribute('font-weight','700');
+      tagEl.setAttribute('font-family','Courier New,monospace');
+      tagEl.textContent = tg;
+      g.appendChild(tagEl);
+    });
+
+    // Invisible hover target with tooltip data
+    const hitArea = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    hitArea.setAttribute('x', crx.toFixed(1));
+    hitArea.setAttribute('y', cry.toFixed(1));
+    hitArea.setAttribute('width', cardW.toFixed(1));
+    hitArea.setAttribute('height', cardH);
+    hitArea.setAttribute('fill','transparent');
+    hitArea.setAttribute('stroke','none');
+    hitArea.style.cursor = 'help';
+    hitArea.dataset.name = tool.n;
+    hitArea.dataset.fn = tool.fn;
+    hitArea.dataset.warn = tool.w;
+    hitArea.addEventListener('mouseenter', showTooltip);
+    hitArea.addEventListener('mousemove', moveTooltip);
+    hitArea.addEventListener('mouseleave', hideTooltip);
+    g.appendChild(hitArea);
+  });
+}
+
+// ── Blade toggle ──
+function toggleBlade(i){
+  const wasOpen = bladeStates[i];
+  bladeStates.fill(false);
+  if(!wasOpen){ bladeStates[i] = true; activeCat = CATS[i].id; }
+  else{ activeCat = null; }
+  showCatPanel(activeCat);
+  createSVG();
+}
+
+function deployAll(){
+  bladeStates.fill(true);
+  activeCat = null;
+  showCatPanel(null);
+  createSVG();
+}
+
+function closeAll(){
+  bladeStates.fill(false);
+  activeCat = null;
+  showCatPanel(null);
+  createSVG();
+}
+
+// ── Panel control ──
+function showCatPanel(catId){
+  document.getElementById('defpanel').style.display = catId ? 'none' : 'flex';
+  document.querySelectorAll('.catpanel').forEach(p => p.classList.remove('vis'));
+  if(catId){
+    const panel = document.getElementById('cp' + catId);
+    if(panel) panel.classList.add('vis');
+  }
+}
+
+// ── Technique filter ──
+function filterAll(btn){
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
+  btn.classList.add('act');
+  activeTec = null;
+  if(bladeStates.some(s=>s)) createSVG();
+}
+
+function filterTecBtn(tec, btn){
+  if(activeTec === tec){
+    activeTec = null;
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
+    document.querySelector('.fbtn[onclick*="filterAll"]').classList.add('act');
+  } else {
+    document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
+    btn.classList.add('act');
+    activeTec = tec;
+  }
+  if(bladeStates.some(s=>s)) createSVG();
+}
+
+function filterTec(tec, badge){
+  // clicking a badge tag in meta bar
+  activeTec = activeTec === tec ? null : tec;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('act'));
+  if(activeTec){
+    const btn = document.querySelector('.fbtn.f'+tec.toLowerCase());
+    if(btn){ btn.classList.add('act','f'+tec.toLowerCase()); }
+  } else {
+    document.querySelector('.fbtn[onclick*="filterAll"]').classList.add('act');
+  }
+  if(bladeStates.some(s=>s)) createSVG();
+}
+
+// ── Tooltip ──
+const tip = document.getElementById('tooltip');
+const tipN = document.getElementById('tn');
+const tipF = document.getElementById('tf');
+const tipW = document.getElementById('tw');
+
+function showTooltip(e){
+  tipN.textContent = e.currentTarget.dataset.name;
+  tipF.textContent = e.currentTarget.dataset.fn;
+  tipW.textContent = '⚠ ' + e.currentTarget.dataset.warn;
+  tip.style.display = 'block';
+  positionTip(e);
+}
+function moveTooltip(e){ positionTip(e); }
+function hideTooltip(){ tip.style.display = 'none'; }
+function positionTip(e){
+  let x = e.clientX + 16, y = e.clientY + 16;
+  if(x + 250 > window.innerWidth) x = e.clientX - 255;
+  if(y + 130 > window.innerHeight) y = e.clientY - 135;
+  tip.style.left = x + 'px';
+  tip.style.top = y + 'px';
+}
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  createSVG();
+});
+</script>
+</body>
+</html>

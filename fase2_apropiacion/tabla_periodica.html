@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla Periódica de Apps de IA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .grid-15 {
+            display: grid;
+            grid-template-columns: repeat(15, minmax(60px, 1fr));
+            gap: 0.5rem;
+        }
+        /* Custom scrollbar for mobile viewing */
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 10px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-10">
+
+    <!-- Top Banner -->
+    <div class="w-full text-center text-[10px] text-gray-500 py-1 bg-white border-b">
+        Queda prohibida la venta de este material. Puede distribuirse libremente siempre que se cite al autor Andrea Oviedo Villasana @andreaoviedov
+    </div>
+
+    <!-- Main Container (scrollable on mobile) -->
+    <div class="w-full overflow-x-auto scroll-container px-4 py-8">
+        <div class="min-w-[1100px] max-w-[1400px] mx-auto relative">
+            
+            <!-- Floating Top Right Buttons -->
+            <div class="absolute top-0 right-0 flex gap-3 items-center z-10">
+                <button onclick="window.location.href='../index.html'" class="bg-gray-800 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow hover:bg-gray-700 transition">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Volver al Mapa
+                </button>
+                <button class="bg-[#e53e3e] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow hover:bg-red-700 transition">
+                    <i class="fa-brands fa-youtube mr-1"></i> Suscríbete
+                </button>
+                <button class="bg-[#1c7bfe] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow hover:bg-blue-700 transition">
+                    <i class="fa-solid fa-download mr-1"></i> Descárgala
+                </button>
+                <button class="bg-[#1c7bfe] text-white text-sm font-bold px-4 py-1.5 rounded-full shadow hover:bg-blue-700 transition">
+                    <i class="fa-solid fa-plus mr-1"></i> Apps de IA
+                </button>
+                <span class="text-gray-600 font-bold ml-2">V 2.1</span>
+            </div>
+
+            <!-- The Grid -->
+            <div id="periodic-grid" class="grid-15 relative mt-10">
+                
+                <!-- Central Header & Legend Area (Spans columns 3-11, rows 1-3) -->
+                <div style="grid-column: 3 / span 9; grid-row: 1 / span 3;" class="flex flex-col items-center justify-start pt-2 pl-4 pr-10">
+                    
+                    <!-- Title -->
+                    <div class="text-center w-full">
+                        <div class="flex justify-between items-end w-full">
+                            <!-- License Badge -->
+                            <div class="bg-black text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                                <i class="fa-brands fa-creative-commons"></i>
+                                <i class="fa-brands fa-creative-commons-by"></i>
+                                <i class="fa-brands fa-creative-commons-nc"></i>
+                                <i class="fa-brands fa-creative-commons-sa"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-[#1a2b4c] ml-auto mr-auto pl-10">Tabla periódica de</h2>
+                        </div>
+                        <h1 class="text-5xl font-black text-[#1a2b4c] mt-1 tracking-tight">Apps gratuitas de Inteligencia Artificial</h1>
+                    </div>
+
+                    <!-- Author Info & URL -->
+                    <div class="flex items-center gap-4 mt-4 bg-white rounded-full pl-1 pr-6 py-1 shadow-sm border">
+                        <div class="bg-gray-200 text-gray-800 px-4 py-1.5 rounded-full font-bold flex items-center cursor-pointer hover:bg-gray-300 transition">
+                            andreaoviedo.com/tablaia 
+                            <i class="fa-solid fa-arrow-pointer ml-2 text-gray-500"></i>
+                        </div>
+                        <div class="flex items-center gap-3 text-lg text-[#1a2b4c] font-bold">
+                             por @andreaoviedov
+                            <i class="fa-brands fa-instagram hover:text-pink-600 cursor-pointer"></i>
+                            <i class="fa-brands fa-youtube hover:text-red-600 cursor-pointer"></i>
+                            <i class="fa-brands fa-linkedin hover:text-blue-600 cursor-pointer"></i>
+                        </div>
+                    </div>
+
+                    <!-- Legend Section -->
+                    <div class="flex items-center justify-between w-full mt-8 px-8">
+                        
+                        <!-- Color Key -->
+                        <div class="grid grid-cols-2 gap-x-8 gap-y-3 text-[13px] font-bold text-[#1a2b4c]">
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#3424d6]"></span> Chatbots y Texto</div>
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#4bd676]"></span> Video y animación</div>
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#2eb3ff]"></span> Imágenes</div>
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#e83ce8]"></span> Audio</div>
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#1ccbda]"></span> Presentaciones</div>
+                            <div class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-[#8013f3]"></span> Educación</div>
+                        </div>
+
+                        <!-- Cell Anatomy -->
+                        <div class="flex gap-4 items-center">
+                            <div class="text-[10px] text-right font-semibold text-gray-600 leading-tight">
+                                Donde aparezca este icono,<br>da clic para saber más.
+                            </div>
+                            <div class="w-[70px] h-[85px] bg-[#1a2b4c] text-white rounded-xl flex flex-col items-center justify-between p-1.5 shadow-md">
+                                <div class="w-full flex justify-between text-[10px] px-0.5">
+                                    <i class="fa-solid fa-plus bg-black/30 rounded-full w-4 h-4 flex items-center justify-center"></i>
+                                    <span class="font-bold">$</span>
+                                </div>
+                                <div class="bg-white text-[#1a2b4c] text-[10px] font-black px-2 py-0.5 rounded-full mt-1">
+                                    LOGO
+                                </div>
+                                <div class="text-[9px] text-center mt-auto pb-0.5">Nombre app</div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Codes -->
+                        <div class="text-xs font-bold text-[#1a2b4c] flex flex-col gap-1 border-l-2 border-gray-200 pl-6 relative">
+                            <div class="absolute -top-3 -right-3 w-5 h-5 bg-[#ff4d6d] rounded-full text-white flex items-center justify-center text-xs font-black">?</div>
+                            <p>G: Gratis</p>
+                            <p>F: Freemium</p>
+                            <p>C: Créditos gratuitos</p>
+                            <p>E: Gratis para educación</p>
+                            <p class="text-[9px] text-gray-500 font-normal mt-1 leading-tight max-w-[120px]">
+                                Selecciona el logo de la app para ver su descripción y enlace
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Bottom Left Promotional Area -->
+                
+                <!-- Promo Text Link -->
+                <div style="grid-column: 1 / span 3; grid-row: 7 / span 2;" class="flex flex-col items-start justify-center pr-4">
+                    <h2 class="text-[22px] font-black leading-tight text-[#1a2b4c]">
+                        Aprende más sobre<br>estas apps en:
+                    </h2>
+                    <a href="#" class="mt-3 text-[#1c7bfe] font-bold flex items-center gap-2 text-lg hover:underline">
+                        <i class="fa-solid fa-globe"></i> andreaoviedo.com/ia
+                    </a>
+                </div>
+
+                <!-- Promo Course 1 -->
+                <div style="grid-column: 4 / span 2; grid-row: 7 / span 2;" class="bg-gradient-to-br from-[#2eb3ff] to-[#3424d6] text-white rounded-2xl p-4 flex flex-col items-center justify-end relative shadow-lg hover:-translate-y-1 transition cursor-pointer">
+                    <div class="absolute top-4 bg-white/20 p-3 rounded-full">
+                        <i class="fa-solid fa-rocket text-4xl text-white drop-shadow-md"></i>
+                    </div>
+                    <div class="text-center mt-16 w-full">
+                        <p class="text-[11px] font-semibold leading-tight">Curso Práctico de</p>
+                        <p class="text-[14px] font-black leading-tight my-0.5">Inteligencia Artificial</p>
+                        <p class="text-[11px] font-semibold leading-tight bg-white text-[#3424d6] rounded-full py-0.5 px-2 mt-2 inline-block">para la productividad</p>
+                    </div>
+                </div>
+
+                <!-- Promo Course 2 -->
+                <div style="grid-column: 6 / span 2; grid-row: 7 / span 2;" class="bg-[#8013f3] text-white rounded-2xl p-4 flex flex-col items-center justify-end relative shadow-lg hover:-translate-y-1 transition cursor-pointer">
+                    <div class="absolute top-4 bg-white/20 p-3 rounded-full">
+                        <i class="fa-solid fa-book-open-reader text-4xl text-yellow-300 drop-shadow-md"></i>
+                    </div>
+                    <div class="text-center mt-16 w-full">
+                        <p class="text-[11px] font-semibold leading-tight">Curso Práctico de</p>
+                        <p class="text-[14px] font-black leading-tight my-0.5">Inteligencia Artificial</p>
+                        <p class="text-[11px] font-semibold leading-tight bg-white text-[#8013f3] rounded-full py-0.5 px-2 mt-2 inline-block">para profesores</p>
+                    </div>
+                </div>
+
+                <!-- Grid Cells will be generated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for App Details -->
+    <div id="appModal" class="fixed inset-0 bg-[#1a2b4c]/80 hidden items-center justify-center z-50 p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full relative transform scale-95 transition-transform duration-300" id="modalContent">
+            <button id="closeModal" class="absolute top-3 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold transition">&times;</button>
+            
+            <div class="flex items-center gap-4 mb-4">
+                <div id="modalIconContainer" class="w-16 h-16 rounded-xl flex items-center justify-center text-3xl text-white shadow-inner">
+                    <i id="modalIcon" class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                    <h3 id="modalTitle" class="text-2xl font-black text-[#1a2b4c]">App Name</h3>
+                    <p id="modalCategoryText" class="text-sm font-bold text-gray-500">Categoría</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 mb-4 text-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-500 font-semibold">Modelo de precios:</span>
+                    <span id="modalPriceLabel" class="font-bold bg-white border px-2 py-1 rounded shadow-sm text-xs">Freemium</span>
+                </div>
+                <p class="text-gray-600 mt-3 leading-relaxed">
+                    Esta es una aplicación generativa de inteligencia artificial diseñada para ayudarte con tareas relacionadas a su categoría. Es una herramienta poderosa para incrementar tu productividad.
+                </p>
+            </div>
+            
+            <a href="#" class="block w-full text-center bg-[#1a2b4c] text-white font-bold py-3 rounded-xl hover:bg-black transition shadow-md">
+                Visitar sitio web <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-sm"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Data structure for all the apps in the periodic table
+        const apps = [
+            // Row 1
+            { row: 1, col: 1, name: "ChatGPT", cat: "text", price: "F", icon: "fa-solid fa-comment-dots" },
+            { row: 1, col: 15, name: "Suno", cat: "aud", price: "C", icon: "fa-solid fa-compact-disc" },
+
+            // Row 2
+            { row: 2, col: 1, name: "Gemini", cat: "text", price: "F", icon: "fa-solid fa-sparkles" },
+            { row: 2, col: 2, name: "Copilot", cat: "text", price: "G", icon: "fa-solid fa-shield" },
+            { row: 2, col: 12, name: "LumaLabs", cat: "vid", price: "C", icon: "fa-solid fa-cube" },
+            { row: 2, col: 13, name: "HeyGen", cat: "vid", price: "F", icon: "fa-solid fa-circle-play" },
+            { row: 2, col: 14, name: "TTS Maker", cat: "aud", price: "G", icon: "fa-solid fa-wave-square" },
+            { row: 2, col: 15, name: "Music FX", cat: "aud", price: "F", icon: "fa-solid fa-music" },
+
+            // Row 3
+            { row: 3, col: 1, name: "Meta AI", cat: "text", price: "G", icon: "fa-solid fa-infinity" },
+            { row: 3, col: 2, name: "Claude AI", cat: "text", price: "F", icon: "fa-solid fa-robot" },
+            { row: 3, col: 12, name: "Vizard", cat: "vid", price: "F", icon: "fa-solid fa-video" },
+            { row: 3, col: 13, name: "Fliki", cat: "vid", price: "C", icon: "fa-solid fa-film" },
+            { row: 3, col: 14, name: "Speechify", cat: "aud", price: "F", icon: "fa-solid fa-headphones" },
+            { row: 3, col: 15, name: "Murf", cat: "aud", price: "F", icon: "fa-solid fa-microphone-lines" },
+
+            // Row 4
+            { row: 4, col: 1, name: "Perplexity", cat: "text", price: "F", icon: "fa-solid fa-braille" },
+            { row: 4, col: 2, name: "ChatPDF", cat: "text", price: "F", icon: "fa-solid fa-file-pdf" },
+            { row: 4, col: 3, name: "Humata", cat: "text", price: "F", icon: "fa-solid fa-tree" },
+            { row: 4, col: 4, name: "PDF AI", cat: "text", price: "F", icon: "fa-solid fa-file-circle-check" },
+            { row: 4, col: 5, name: "Ask your PDF", cat: "text", price: "F", icon: "fa-solid fa-file-circle-question" },
+            { row: 4, col: 6, name: "Microsoft Designer", cat: "img", price: "F", icon: "fa-solid fa-pen-nib" },
+            { row: 4, col: 7, name: "Adobe Express", cat: "img", price: "F", icon: "fa-solid fa-a" },
+            { row: 4, col: 8, name: "Leonardo AI", cat: "img", price: "C", icon: "fa-solid fa-palette" },
+            { row: 4, col: 9, name: "Pikaso", cat: "img", price: "F", icon: "fa-solid fa-image" },
+            { row: 4, col: 10, name: "MyLens AI", cat: "img", price: "F", icon: "fa-solid fa-camera" },
+            { row: 4, col: 11, name: "Gamma", cat: "pres", price: "C", icon: "fa-solid fa-layer-group" },
+            { row: 4, col: 12, name: "Quicktube", cat: "pres", price: "G", icon: "fa-solid fa-bolt" },
+            { row: 4, col: 13, name: "Lumen 5", cat: "vid", price: "F", icon: "fa-solid fa-clapperboard" },
+            { row: 4, col: 14, name: "ElevenLabs", cat: "aud", price: "F", icon: "fa-solid fa-bars-staggered" },
+            { row: 4, col: 15, name: "Adobe Podcast", cat: "aud", price: "F", icon: "fa-solid fa-podcast" },
+
+            // Row 5
+            { row: 5, col: 1, name: "ResearchGPT", cat: "text", price: "F", icon: "fa-solid fa-book-open" },
+            { row: 5, col: 2, name: "Yatter", cat: "text", price: "F", icon: "fa-solid fa-y" },
+            { row: 5, col: 3, name: "Speechnotes", cat: "text", price: "G", icon: "fa-solid fa-microphone" },
+            { row: 5, col: 4, name: "Flowvoice", cat: "text", price: "F", icon: "fa-solid fa-water" },
+            { row: 5, col: 5, name: "Grammarly", cat: "text", price: "G", icon: "fa-solid fa-g" },
+            { row: 5, col: 6, name: "Copy", cat: "img", price: "C", icon: "fa-solid fa-c" },
+            { row: 5, col: 7, name: "Cutout pro", cat: "img", price: "C", icon: "fa-solid fa-scissors" },
+            { row: 5, col: 8, name: "Stable diffusion", cat: "img", price: "G", icon: "fa-solid fa-paintbrush" },
+            { row: 5, col: 9, name: "Napkin", cat: "img", price: "C", icon: "fa-solid fa-note-sticky" },
+            { row: 5, col: 10, name: "Looka", cat: "img", price: "F", icon: "fa-solid fa-compass-drafting" },
+            { row: 5, col: 11, name: "Slides AI", cat: "pres", price: "F", icon: "fa-solid fa-desktop" },
+            { row: 5, col: 12, name: "Tome", cat: "pres", price: "C", icon: "fa-solid fa-t" },
+            { row: 5, col: 13, name: "Animated drawings", cat: "vid", price: "G", icon: "fa-solid fa-person-running" },
+            { row: 5, col: 14, name: "Selectext", cat: "vid", price: "G", icon: "fa-solid fa-text-width" },
+            { row: 5, col: 15, name: "MyEdit", cat: "aud", price: "F", icon: "fa-solid fa-sliders" },
+
+            // Row 6
+            { row: 6, col: 1, name: "ProPrompt", cat: "text", price: "F", icon: "fa-solid fa-terminal" },
+            { row: 6, col: 2, name: "Snack prompt", cat: "text", price: "F", icon: "fa-solid fa-cookie" },
+            { row: 6, col: 3, name: "GPT Genie", cat: "text", price: "F", icon: "fa-solid fa-wand-magic" },
+            { row: 6, col: 4, name: "Glasp", cat: "text", price: "F", icon: "fa-solid fa-highlighter" },
+            { row: 6, col: 5, name: "Quillbot", cat: "text", price: "F", icon: "fa-solid fa-pen-fancy" },
+            { row: 6, col: 6, name: "Writesonic", cat: "text", price: "C", icon: "fa-solid fa-w" },
+            { row: 6, col: 7, name: "DeepL", cat: "text", price: "F", icon: "fa-solid fa-language" },
+            { row: 6, col: 8, name: "AI image enlarger", cat: "img", price: "F", icon: "fa-regular fa-face-smile" },
+            { row: 6, col: 9, name: "Random face generator", cat: "img", price: "G", icon: "fa-solid fa-user-astronaut" },
+            { row: 6, col: 10, name: "Flair", cat: "img", price: "F", icon: "fa-solid fa-fire" },
+            { row: 6, col: 11, name: "Monstermash", cat: "img", price: "G", icon: "fa-solid fa-ghost" },
+            { row: 6, col: 12, name: "Curipod", cat: "pres", price: "C", icon: "fa-solid fa-seedling" },
+            { row: 6, col: 13, name: "Wepik", cat: "pres", price: "F", icon: "fa-solid fa-w" },
+            { row: 6, col: 14, name: "SlidesGPT", cat: "pres", price: "F", icon: "fa-solid fa-s" },
+            { row: 6, col: 15, name: "Krisp", cat: "aud", price: "F", icon: "fa-solid fa-microphone-slash" },
+
+            // Row 7 (Education 1)
+            { row: 7, col: 8, name: "EduPrompts", cat: "edu", price: "G", icon: "fa-solid fa-graduation-cap" },
+            { row: 7, col: 9, name: "Estudio mágico", cat: "edu", price: "C", icon: "fa-solid fa-wand-magic-sparkles" },
+            { row: 7, col: 10, name: "Edpuzzle", cat: "edu", price: "F", icon: "fa-solid fa-puzzle-piece" },
+            { row: 7, col: 11, name: "Padlet", cat: "edu", price: "F", icon: "fa-solid fa-chalkboard" },
+            { row: 7, col: 12, name: "Guidde", cat: "edu", price: "F", icon: "fa-solid fa-map-location-dot" },
+            { row: 7, col: 13, name: "Question Well", cat: "edu", price: "F", icon: "fa-solid fa-q" },
+            { row: 7, col: 14, name: "Comenio", cat: "edu", price: "F", icon: "fa-solid fa-c" },
+            { row: 7, col: 15, name: "Magic School", cat: "edu", price: "F", icon: "fa-solid fa-school" },
+
+            // Row 8 (Education 2)
+            { row: 8, col: 8, name: "Wolfram Alpha", cat: "edu", price: "F", icon: "fa-solid fa-square-root-variable" },
+            { row: 8, col: 9, name: "Socratic", cat: "edu", price: "G", icon: "fa-solid fa-book-open-reader" },
+            { row: 8, col: 10, name: "Conker", cat: "edu", price: "F", icon: "fa-solid fa-leaf" },
+            { row: 8, col: 11, name: "Parlay", cat: "edu", price: "F", icon: "fa-solid fa-comments" },
+            { row: 8, col: 12, name: "Scribe", cat: "edu", price: "F", icon: "fa-solid fa-pen" },
+            { row: 8, col: 13, name: "Formative", cat: "edu", price: "F", icon: "fa-solid fa-check-double" },
+            { row: 8, col: 14, name: "Monic.ai", cat: "edu", price: "F", icon: "fa-solid fa-m" },
+            { row: 8, col: 15, name: "SciSpace Copilot", cat: "edu", price: "F", icon: "fa-solid fa-rocket" }
+        ];
+
+        // Mapping categories to their specific styling
+        const catDetails = {
+            text: { color: "bg-[#3424d6]", label: "Chatbots y Texto" },
+            img: { color: "bg-[#2eb3ff]", label: "Imágenes" },
+            pres: { color: "bg-[#1ccbda]", label: "Presentaciones" },
+            vid: { color: "bg-[#4bd676]", label: "Video y animación" },
+            aud: { color: "bg-[#e83ce8]", label: "Audio" },
+            edu: { color: "bg-[#8013f3]", label: "Educación" }
+        };
+
+        const priceDetails = {
+            "G": "Gratis",
+            "F": "Freemium",
+            "C": "Créditos gratuitos",
+            "E": "Gratis para educación"
+        };
+
+        const gridContainer = document.getElementById('periodic-grid');
+        const modal = document.getElementById('appModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        // Render Grid
+        apps.forEach(app => {
+            const detail = catDetails[app.cat];
+            
+            // Create cell container
+            const cell = document.createElement('div');
+            // Setting position inline prevents issues with missing CSS classes
+            cell.style.gridColumn = app.col;
+            cell.style.gridRow = app.row;
+            
+            // Apply styling
+            cell.className = `${detail.color} text-white rounded-xl flex flex-col justify-between items-center p-1.5 shadow-sm cursor-pointer transform hover:scale-110 hover:shadow-xl hover:z-20 transition-all duration-200 w-full aspect-[1/1.1] relative group`;
+            
+            // Inject content
+            cell.innerHTML = `
+                <div class="flex justify-between w-full text-[9px] sm:text-[10px] font-bold px-0.5">
+                    <span class="bg-black/20 w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition">
+                        <i class="fa-solid fa-plus text-[8px] sm:text-[10px]"></i>
+                    </span>
+                    <span class="opacity-90">${app.price}</span>
+                </div>
+                <div class="flex-grow flex items-center justify-center pointer-events-none mt-1">
+                    <i class="${app.icon} text-2xl sm:text-3xl md:text-4xl drop-shadow-sm"></i>
+                </div>
+                <div class="text-[8px] sm:text-[9px] md:text-[10px] font-bold text-center leading-tight mt-1 line-clamp-2 px-0.5 pb-1 w-full pointer-events-none tracking-tight">
+                    ${app.name}
+                </div>
+            `;
+
+            // Open Modal event
+            cell.addEventListener('click', () => openModal(app, detail));
+            gridContainer.appendChild(cell);
+        });
+
+        // Modal Logic
+        function openModal(app, detail) {
+            document.getElementById('modalTitle').textContent = app.name;
+            document.getElementById('modalCategoryText').textContent = detail.label;
+            document.getElementById('modalPriceLabel').textContent = priceDetails[app.price] || "No definido";
+            
+            const iconContainer = document.getElementById('modalIconContainer');
+            iconContainer.className = `w-16 h-16 rounded-xl flex items-center justify-center text-3xl text-white shadow-inner ${detail.color}`;
+            document.getElementById('modalIcon').className = app.icon;
+
+            // Show Modal with basic animation
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Small delay to allow display:flex to apply before animating opacity/transform
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+    </script>
+</body>
+</html>
