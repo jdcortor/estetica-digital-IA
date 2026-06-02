@@ -717,6 +717,96 @@
             background: var(--header-yellow-hover);
             transform: scale(1.03);
         }
+
+        /* --- INTERFAZ DEL POPUP MODAL (EFECTO LIBRO 3D) --- */
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px;
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 85%;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .addie-modal-body {
+            flex: 1;
+            background: #525659;
+            position: relative;
+        }
+
+        .addie-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .poll-opt-btn:hover {
+            background: rgba(255,255,255,0.12) !important;
+            border-color: var(--header-yellow) !important;
+        }
     </style>
 </head>
 <body>
@@ -729,6 +819,9 @@
         </div>
         
         <div class="actions-container">
+            <button onclick="openAddieModal()" class="close-btn" style="background-color: var(--comp-purple); border-color: var(--comp-purple);">
+                <i class="fa-solid fa-pen-ruler"></i> Diseño de Recurso
+            </button>
             <button class="close-btn" onclick="volverAlMapa()">
                 <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
             </button>
@@ -765,14 +858,16 @@
                 <!-- Capa flotante de reacciones -->
                 <div class="reactions-overlay" id="reactions-space"></div>
                 
-                <!-- Reproductor de Video Nativo -->
-                <video class="video-iframe" id="video-iframe-player" 
-                    controls 
-                    autoplay 
-                    muted 
-                    loop 
-                    style="object-fit: cover; width: 100%; height: 100%; border: none;">
-                </video>
+                <!-- Selector flotante de fuente de video (Local / YouTube) -->
+                <div class="player-mode-selector" style="position: absolute; top: 15px; right: 15px; z-index: 20; display: flex; gap: 6px; background: rgba(0,0,0,0.75); padding: 4px 6px; border-radius: 20px; border: 1.5px solid var(--border-color); backdrop-filter: blur(5px);">
+                    <button id="mode-local-btn" onclick="setPlayerMode('local')" style="background: none; border: none; color: var(--text-muted); font-size: 10px; font-weight: 700; font-family: var(--font-main); padding: 4px 10px; border-radius: 12px; cursor: pointer; transition: all 0.2s;">LOCAL</button>
+                    <button id="mode-youtube-btn" onclick="setPlayerMode('youtube')" style="background: none; border: none; color: var(--text-muted); font-size: 10px; font-weight: 700; font-family: var(--font-main); padding: 4px 10px; border-radius: 12px; cursor: pointer; transition: all 0.2s;">STREAMING</button>
+                </div>
+                
+                <!-- Area del reproductor interactivo -->
+                <div id="player-media-content" style="width: 100%; height: 100%;">
+                    <!-- Se inyecta dinámicamente un video local o un iframe de YouTube -->
+                </div>
             </div>
 
             <div class="video-info">
@@ -847,21 +942,17 @@
                 id: 1,
                 title: "Inmersión y Portafolios de Arte en Estética",
                 desc: "Clase introductoria sobre el portafolio, la contextualización artística y cómo usar Gemini en el proyecto.",
-                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-painting-a-colorful-canvas-with-a-brush-42220-large.mp4",
+                videoUrl: "zAw95N2JoCs",
+                localUrl: "videos streaming/video_inmersion.mp4",
                 teacher: "Laura Villanueva",
                 teacherAbbr: "LV",
                 viewersMin: 110,
                 viewersMax: 160,
                 participants: ["Santiago Gómez", "Valentina Ortiz", "Mateo Ríos", "Sofía Vargas", "Camila Castro", "Nicolás Pérez"],
                 phrases: [
-                    "¿Profe, en la Fase 1 de inmersión la bitácora debe include los bocetos iniciales de IA?",
+                    "¿Profe, en la Fase 1 de inmersión la bitácora debe incluir los bocetos iniciales de IA?",
                     "Me pareció genial cómo el abanico clasifica los chatbots de texto para idear.",
-                    "Profe, ¿el compromiso de autoría se firma por cada IA seleccionada?",
-                    "¡Qué buen video de ejemplo de portafolios del año pasado!",
-                    "Yo ya guardé mi Ficha de Selección Responsable, ¿también debo subirla a la bitácora?",
-                    "Es clave justificar bien el uso de la IA, a mí me costó un poco redactar la de Leonardo AI.",
-                    "¿Podemos usar ChatGPT y Claude a la vez o el límite de 2 es estricto?",
-                    "Entendido, los referentes visuales no son el producto final del proyecto."
+                    "Profe, ¿el compromiso de autoría se firma por cada IA seleccionada?"
                 ],
                 welcomeMsg: "Bienvenidos a la clase. Hoy estamos revisando la estructura general del portafolio y los acuerdos éticos."
             },
@@ -869,7 +960,8 @@
                 id: 2,
                 title: "Curaduría y Creación de Museos Virtuales",
                 desc: "Diseño espacial, selección de obras, guion curatorial y emulación de galerías digitales de arte contemporáneo.",
-                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-sculptor-working-on-a-clay-bust-43336-large.mp4",
+                videoUrl: "M-MUn0Zi3yA",
+                localUrl: "videos streaming/video_curaduria.mp4",
                 teacher: "Maria Isabel Alfonso",
                 teacherAbbr: "MA",
                 viewersMin: 85,
@@ -877,13 +969,7 @@
                 participants: ["Daniel Silva", "Mariana Cárdenas", "Andrés Felipe", "Gabriela Nova", "Samuel Tobar", "Isabella Ruiz"],
                 phrases: [
                     "¿El museo digital debe tener un recorrido tridimensional ordenado?",
-                    "Profe, ¿cuántos trabajos de Estética se deben exhibir en la galería final?",
-                    "A mí me interesa mucho el concepto de curaduría, es como contar una historia con obras.",
-                    "¿Podemos subir imágenes creadas con IA como obras conceptuales si justificamos la co-creación?",
-                    "Estoy usando Artsteps para diseñar las salas del museo, queda espectacular.",
-                    "¿El guion curatorial del museo digital se sube como documento PDF en la bitácora?",
-                    "Me gusta que podamos hacer salas temáticas según la técnica artística.",
-                    "¿Cómo definimos las proporciones de las obras en la pared del museo virtual?"
+                    "A mí me interesa mucho el concepto de curaduría, es como contar una historia con obras."
                 ],
                 welcomeMsg: "Hola a todos. Iniciamos la sesión de curaduría. Analizaremos cómo dar coherencia discursiva a sus museos digitales."
             },
@@ -891,7 +977,8 @@
                 id: 3,
                 title: "Fundamentos de Composición Visual y Diseño",
                 desc: "Reglas de composición, tipografía y maquetación de piezas aplicadas a los portafolios de Estética.",
-                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-drawing-sketches-in-a-notebook-42234-large.mp4",
+                videoUrl: "GlHrbXEZZn4",
+                localUrl: "videos streaming/video_composicion.mp4",
                 teacher: "José David Cortés",
                 teacherAbbr: "JC",
                 viewersMin: 95,
@@ -899,13 +986,7 @@
                 participants: ["Lucas Marín", "Salomé Duque", "Julián Ortega", "Manuela Vélez", "Esteban Cruz", "Juliana Medina"],
                 phrases: [
                     "Profe, ¿cuál es la mejor paleta de colores para un portafolio de estilo premium?",
-                    "Ayer usé Canva para maquetar pero combinando mis dibujos a mano alzada.",
-                    "La regla de los tercios en el diseño de afiches ayuda un montón a jerarquizar la lectura.",
-                    "¿La tipografía Nunito se lee mejor que la Arial estándar para títulos de proyectos?",
-                    "Profe, ¿qué IA del abanico nos sirve para optimizar las escalas y cálculos de las maquetas?",
-                    "¡Me encanta este tutorial de composición! Es súper claro.",
-                    "Yo estoy haciendo el diseño espacial, ¿cómo compongo el fondo de la presentación?",
-                    "Entendido, la coherencia de fuentes es clave para el portafolio final."
+                    "La regla de los tercios en el diseño de afiches ayuda un montón a jerarquizar la lectura."
                 ],
                 welcomeMsg: "Buenas tardes. Hoy nos enfocaremos en los principios de balance, peso visual y tipografías para su portafolio."
             },
@@ -913,21 +994,16 @@
                 id: 4,
                 title: "Estética Textil y Técnicas de Crochet Artístico",
                 desc: "Arte tridimensional, texturas, crochet e identidad en el diseño artístico y material de grado once.",
-                videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-knitting-wool-with-needles-42233-large.mp4",
+                videoUrl: "Ce1-__2H3xM",
+                localUrl: "videos streaming/video_crochet.mp4",
                 teacher: "Victor Ardila",
                 teacherAbbr: "VA",
                 viewersMin: 60,
                 viewersMax: 90,
-                participants: ["Paula Rojas", "Martín Santos", "CatalinaPinzón", "Felipe Henao", "Clara Inés", "Sebastián Mora"],
+                participants: ["Paula Rojas", "Martín Santos", "Catalina Pinzón", "Felipe Henao", "Clara Inés", "Sebastián Mora"],
                 phrases: [
                     "Profe, ¿cómo puedo fotografiar las texturas del crochet para que resalten en el portafolio?",
-                    "Ayer busqué referentes de crochet artístico en Midjourney y saqué unas ideas increíbles para tejer.",
-                    "¿Podemos simular patrones de tejido con IA antes de realizar el tejido físico?",
-                    "La escultura suave en crochet permite explorar la identidad orgánica.",
-                    "¿Para crochet también se puede usar la IA de Wolfram Alpha para calcular los puntos?",
-                    "¡Qué increíble ver cómo el tejido tradicional se convierte en arte contemporáneo de museo!",
-                    "Profe, ¿cuántos registros fotográficos de avances de tejido debemos subir a la bitácora?",
-                    "Es genial tejer y registrar el diálogo reflexivo con la IA a la vez."
+                    "Ayer busqué referentes de crochet artístico en Midjourney y saqué unas ideas increíbles."
                 ],
                 welcomeMsg: "Bienvenidos. Hoy veremos la relación entre arte textil, crochet y cómo registrar este proceso físico de forma digital."
             }
@@ -947,12 +1023,14 @@
         let studentSessionName = "Estudiante Invitado";
         let studentSessionCode = "EST-11";
         let recordatoriosActivos = [];
+        let playerMode = (window.location.protocol === 'file:') ? 'local' : 'youtube';
 
         // --- 3. INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', () => {
             cargarDatosUsuario();
             renderCanales();
             renderAgenda();
+            setPlayerMode(playerMode);
             cambiarCanal(1);
         });
 
@@ -1031,7 +1109,52 @@
             }
         }
 
-        // --- 5. LÓGICA DE CAMBIO DE CANAL ---
+        // --- 5. LÓGICA DE REPRODUCTOR HÍBRIDO Y CANALES ---
+        function setPlayerMode(mode) {
+            playerMode = mode;
+            
+            const localBtn = document.getElementById('mode-local-btn');
+            const ytBtn = document.getElementById('mode-youtube-btn');
+            
+            if (playerMode === 'local') {
+                localBtn.style.backgroundColor = 'var(--header-yellow)';
+                localBtn.style.color = 'var(--header-dark)';
+                ytBtn.style.backgroundColor = 'transparent';
+                ytBtn.style.color = 'var(--text-muted)';
+            } else {
+                ytBtn.style.backgroundColor = 'var(--header-yellow)';
+                ytBtn.style.color = 'var(--header-dark)';
+                localBtn.style.backgroundColor = 'transparent';
+                localBtn.style.color = 'var(--text-muted)';
+            }
+            
+            actualizarReproductor();
+        }
+
+        function actualizarReproductor() {
+            const channel = channelsData.find(c => c.id === currentChannelId);
+            if (!channel) return;
+            
+            const mediaContent = document.getElementById('player-media-content');
+            
+            if (playerMode === 'local') {
+                mediaContent.innerHTML = `
+                    <video class="video-iframe" id="video-html5-player" controls autoplay muted loop style="object-fit: cover; width: 100%; height: 100%; border: none;">
+                        <source src="${channel.localUrl}" type="video/mp4">
+                        Tu navegador no soporta el reproductor de video local.
+                    </video>
+                `;
+            } else {
+                mediaContent.innerHTML = `
+                    <iframe class="video-iframe" id="video-iframe-player" 
+                        src="https://www.youtube.com/embed/${channel.videoUrl}?autoplay=1&mute=1&rel=0&origin=${window.location.origin}" 
+                        allow="autoplay; fullscreen" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+                        style="object-fit: cover; width: 100%; height: 100%; border: none;">
+                    </iframe>
+                `;
+            }
+        }
+
         function cambiarCanal(id) {
             // Detener temporizador previo
             if (chatInterval) clearInterval(chatInterval);
@@ -1046,10 +1169,8 @@
             const activeCard = document.getElementById(`channel-card-${id}`);
             if (activeCard) activeCard.classList.add('active');
 
-            // Cargar Video Nativo (.mp4)
-            const player = document.getElementById('video-iframe-player');
-            player.src = channel.videoUrl;
-            player.play().catch(err => console.log("Autoplay bloqueado:", err));
+            // Renderizar el reproductor adecuado
+            actualizarReproductor();
 
             // Efecto flash dorado temporal al borde del reproductor
             const wrapper = document.getElementById('video-player-container');
@@ -1084,7 +1205,7 @@
             chatInterval = setInterval(generarMensajeSimulado, 5000);
         }
 
-        function generarMensajeSimulado() {
+        async function generarMensajeSimulado() {
             const channel = channelsData.find(c => c.id === currentChannelId);
             if (!channel) return;
 
@@ -1094,18 +1215,51 @@
             const limitViewers = Math.max(channel.viewersMin, Math.min(channel.viewersMax, currentViewers + variation));
             document.getElementById('viewer-count-val').textContent = limitViewers;
             
-            // Actualizar el valor en la tarjeta del canal izquierdo también
             const chViewersText = document.getElementById(`ch-viewers-${channel.id}`);
             if (chViewersText) chViewersText.textContent = limitViewers;
 
-            // Elegir participante aleatorio y frase
+            // Encuesta ocasional (12% de las veces) por parte del Moderador
+            if (Math.random() < 0.12) {
+                lanzarEncuestaInteractiva();
+                return;
+            }
+
+            // Elegir participante aleatorio
             const name = channel.participants[Math.floor(Math.random() * channel.participants.length)];
-            const text = channel.phrases[Math.floor(Math.random() * channel.phrases.length)];
+            const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ";
 
-            // Insertar
-            insertarMensajeChat(name, text, false);
+            // Intentar generar respuesta con Gemini
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{
+                        role: "user",
+                        parts: [{
+                            text: `Eres un estudiante de grado 11 de un colegio en Colombia llamado ${name}. Estás viendo una clase virtual sobre "${channel.title}". Escribe un comentario corto para el chat en vivo (1 o 2 oraciones breves). Sé muy natural, usa expresiones escolares de Colombia ("profe", "bacano", "uy", "qué nota", "súper"), comenta y reacciona sobre la clase. No uses hashtags ni comillas.`
+                        }]
+                    }]
+                };
 
-            // Lanzar reacción flotante aleatoria en la pantalla (25% de probabilidad)
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    let text = data.candidates[0].content.parts[0].text.trim();
+                    insertarMensajeChat(name, text, false, false);
+                } else {
+                    const text = channel.phrases[Math.floor(Math.random() * channel.phrases.length)];
+                    insertarMensajeChat(name, text, false, false);
+                }
+            } catch (e) {
+                const text = channel.phrases[Math.floor(Math.random() * channel.phrases.length)];
+                insertarMensajeChat(name, text, false, false);
+            }
+
+            // Lanzar reacción flotante aleatoria en la pantalla (30% de probabilidad)
             if (Math.random() < 0.3) {
                 const emojis = ['👏', '❤️', '💡', '😮', '🔥'];
                 const emoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -1115,32 +1269,43 @@
 
         function insertarMensajeChat(author, text, isMod = false, isUser = false) {
             const container = document.getElementById('chat-history-container');
-            const msg = document.createElement('div');
+            const row = document.createElement('div');
+            row.style.display = "flex";
+            row.style.gap = "10px";
+            row.style.marginBottom = "8px";
+            row.style.alignItems = "flex-start";
             
             let typeClass = '';
             let authorClass = 'student-name';
             let tagHtml = '';
+            
+            let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(author)}&background=random&color=fff&bold=true`;
 
             if (isMod) {
                 typeClass = 'moderator';
                 authorClass = 'mod-name';
                 tagHtml = `<span class="chat-msg-tag tag-mod">Moderador</span>`;
+                avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(author)}&background=fbd008&color=222121&bold=true`;
             } else if (isUser) {
                 typeClass = 'student-user';
                 authorClass = 'user-name';
                 tagHtml = `<span class="chat-msg-tag tag-user">Tú</span>`;
+                row.style.flexDirection = "row-reverse";
+                avatarUrl = `https://ui-avatars.com/api/?name=Yo&background=6c53a3&color=fff&bold=true`;
             }
-
-            msg.className = `chat-msg ${typeClass}`;
-            msg.innerHTML = `
-                <div class="chat-msg-meta">
-                    <span class="chat-msg-author ${authorClass}">${author}</span>
-                    ${tagHtml}
+            
+            row.innerHTML = `
+                <img src="${avatarUrl}" style="width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" alt="Avatar">
+                <div class="chat-msg ${typeClass}" style="animation: messageFadeIn 0.3s ease; margin: 0; max-width: 85%;">
+                    <div class="chat-msg-meta">
+                        <span class="chat-msg-author ${authorClass}">${author}</span>
+                        ${tagHtml}
+                    </div>
+                    <div class="chat-msg-content" style="margin-top: 3px;">${text}</div>
                 </div>
-                <div class="chat-msg-content">${text}</div>
             `;
 
-            container.appendChild(msg);
+            container.appendChild(row);
 
             // Auto Scroll
             container.scrollTop = container.scrollHeight;
@@ -1148,7 +1313,11 @@
             // Limitar a máximo 60 mensajes en el DOM para evitar saturar memoria
             const allMsgs = container.querySelectorAll('.chat-msg');
             if (allMsgs.length > 60) {
-                allMsgs[0].remove();
+                if(allMsgs[0].parentElement.tagName.toLowerCase() === 'div' && allMsgs[0].parentElement.style.display === 'flex') {
+                    allMsgs[0].parentElement.remove();
+                } else {
+                    allMsgs[0].remove();
+                }
             }
         }
 
@@ -1178,45 +1347,69 @@
             generarRespuestaEcosistema(text);
         }
 
-        function generarRespuestaEcosistema(userText) {
+        async function generarRespuestaEcosistema(userText) {
             const channel = channelsData.find(c => c.id === currentChannelId);
             if (!channel) return;
 
+            // Decidir quién responde (70% un estudiante aleatorio, 30% el docente/moderador)
+            let responder = channel.teacher;
+            let isModResponse = true;
+            let personaPrompt = `Eres la Profesora/Moderador de Clase ${channel.teacher}. Un estudiante llamado ${studentSessionName} en el chat en vivo acaba de comentar/preguntar: "${userText}". Responde a su comentario en tono docente, cálido, motivador y claro en el contexto de tu clase virtual "${channel.title}". Sé conciso y responde en 1 o 2 frases breves. No uses hashtags ni comillas en tu respuesta.`;
+
+            if (Math.random() < 0.7) {
+                responder = channel.participants[Math.floor(Math.random() * channel.participants.length)];
+                isModResponse = false;
+                personaPrompt = `Eres un estudiante de grado 11 de un colegio en Colombia llamado ${responder}. Tu compañero de clase ${studentSessionName} acaba de escribir en el chat en vivo: "${userText}". Responde a su comentario de manera muy amigable, corta (1 frase) y natural en el contexto de la clase virtual "${channel.title}". Usa jerga escolar colombiana de forma natural y respetuosa ("uy parce", "bacano", "qué nota", "súper de acuerdo", "total"). No uses hashtags ni comillas en tu respuesta.`;
+            }
+
+            const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ";
+            
+            // Simular retraso de escritura
+            setTimeout(async () => {
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{
+                            role: "user",
+                            parts: [{ text: personaPrompt }]
+                        }]
+                    };
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        let text = data.candidates[0].content.parts[0].text.trim();
+                        insertarMensajeChat(responder, text, isModResponse, false);
+                    } else {
+                        fallbackRespuestaEcosistema(userText, responder, isModResponse);
+                    }
+                } catch (e) {
+                    fallbackRespuestaEcosistema(userText, responder, isModResponse);
+                }
+            }, 1500);
+        }
+
+        function fallbackRespuestaEcosistema(userText, responder, isModResponse) {
+            const channel = channelsData.find(c => c.id === currentChannelId);
+            if (!channel) return;
             const textLower = userText.toLowerCase();
             let responseText = "";
-            let responder = channel.teacher; // Por defecto responde el moderador
-            let isModResponse = true;
 
-            // Búsqueda de coincidencia de palabras clave
             if (textLower.includes("hola") || textLower.includes("buenas") || textLower.includes("saludos")) {
                 responseText = `¡Hola, ${studentSessionName}! Qué gusto tenerte en la transmisión. ¿Cómo va tu proyecto de Estética?`;
             } 
             else if (textLower.includes("portafolio") || textLower.includes("fase") || textLower.includes("entregable")) {
                 responseText = `Justamente estamos analizando los portafolios, ${studentSessionName}. Acuérdate que debemos enlazar la bitácora y la ficha de IAs en la entrega.`;
-                // Responde un alumno
-                responder = channel.participants[0];
-                isModResponse = false;
             } 
             else if (textLower.includes("nota") || textLower.includes("evaluar") || textLower.includes("rúbrica") || textLower.includes("criterio")) {
-                responseText = `Hola ${studentSessionName}. La evaluación es continua mediante la Bitácora Digital. Revísate la rúbrica interactiva (matriz de 5 niveles) para asegurar tu nota.`;
+                responseText = `Hola ${studentSessionName}. La evaluación es continua mediante la Bitácora Digital. Revísate la rúbrica interactiva para asegurar tu nota.`;
             } 
-            else if (textLower.includes("crochet") || textLower.includes("lana") || textLower.includes("tejido")) {
-                if (currentChannelId === 4) {
-                    responseText = `¡Gran tema, ${studentSessionName}! El crochet nos permite estructurar volúmenes orgánicos que desafían el espacio tradicional. Te sugiero explorar bocetos de texturas.`;
-                } else {
-                    responseText = `Para temas de crochet artístico te sugiero conectarte al Canal 4 del Prof. Victor Ardila, ahí se discute el arte textil a fondo.`;
-                }
-            } 
-            else if (textLower.includes("museo") || textLower.includes("3d") || textLower.includes("virtual")) {
-                responseText = `¡El Museo Digital es genial! Recuerda que debes armar un guion curatorial ordenado de tus obras antes de montar la galería virtual en 3D.`;
-                responder = "Mariana Cárdenas";
-                isModResponse = false;
-            }
-            else if (textLower.includes("duda") || textLower.includes("pregunta") || textLower.includes("ayuda") || textLower.includes("no entiendo")) {
-                responseText = `Claro ${studentSessionName}, dime cuál es tu duda específica sobre lo que muestra el video o sobre tu bitácora para ayudarte a resolverla ahora.`;
-            }
             else {
-                // Respuesta genérica contextual al canal
                 const genericResponses = [
                     `Excelente punto, ${studentSessionName}. Eso aporta muchísimo a la discusión de esta clase.`,
                     `Muy de acuerdo con lo que comentas. ¿Alguien más tiene una postura diferente en el grupo?`,
@@ -1225,11 +1418,136 @@
                 ];
                 responseText = genericResponses[Math.floor(Math.random() * genericResponses.length)];
             }
+            insertarMensajeChat(responder, responseText, isModResponse, false);
+        }
 
-            // Simular retraso de escritura de 1.5 segundos
+        // --- 7.5 SISTEMA DE ENCUESTAS INTERACTIVAS (POLLS) ---
+        function lanzarEncuestaInteractiva() {
+            const channel = channelsData.find(c => c.id === currentChannelId);
+            if (!channel) return;
+
+            const encuestas = [
+                {
+                    pregunta: "¿Qué herramienta de diseño prefieren usar para su portafolio?",
+                    opciones: ["Illustrator", "Canva", "Figma"]
+                },
+                {
+                    pregunta: "¿Cómo van con la redacción del acuerdo ético de IAs?",
+                    opciones: ["Ya lo firmé ✅", "Apenas redactando ⏳", "No sé qué es 😵"]
+                },
+                {
+                    pregunta: "¿Qué herramienta de Inteligencia Artificial les ha parecido más útil?",
+                    opciones: ["ChatGPT / Gemini 🤖", "Midjourney / DALL-E 🎨", "Suno / v0 💡"]
+                }
+            ];
+
+            const encuesta = encuestas[Math.floor(Math.random() * encuestas.length)];
+            insertarEncuestaChat(channel.teacher, encuesta.pregunta, encuesta.opciones);
+        }
+
+        function insertarEncuestaChat(author, pregunta, opciones) {
+            const container = document.getElementById('chat-history-container');
+            const row = document.createElement('div');
+            row.style.display = "flex";
+            row.style.gap = "10px";
+            row.style.marginBottom = "12px";
+            row.style.alignItems = "flex-start";
+            
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(author)}&background=fbd008&color=222121&bold=true`;
+            const pollId = 'poll-' + Date.now();
+
+            let optionsHtml = '';
+            opciones.forEach((opc, idx) => {
+                optionsHtml += `
+                    <button class="poll-opt-btn" onclick="votarEncuesta('${pollId}', ${idx})" style="width: 100%; background: rgba(255,255,255,0.06); border: 1.5px solid var(--border-color); color: #fff; border-radius: 6px; padding: 8px 10px; margin-top: 6px; text-align: left; font-size: 11.5px; cursor: pointer; transition: all 0.2s; font-family: var(--font-main); font-weight: 500;">
+                        ${opc}
+                    </button>
+                `;
+            });
+
+            row.innerHTML = `
+                <img src="${avatarUrl}" style="width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" alt="Avatar">
+                <div class="chat-msg moderator" id="${pollId}" style="animation: messageFadeIn 0.3s ease; margin: 0; max-width: 85%; background: rgba(251, 208, 8, 0.08); border-left: 3px solid var(--header-yellow); border-color: rgba(251, 208, 8, 0.15) rgba(251, 208, 8, 0.15) rgba(251, 208, 8, 0.15) var(--header-yellow); padding: 12px; width: 100%;">
+                    <div class="chat-msg-meta" style="margin-bottom: 5px;">
+                        <span class="chat-msg-author mod-name" style="color: var(--header-yellow); font-weight: 800; font-size: 11px;">${author}</span>
+                        <span class="chat-msg-tag tag-mod" style="background: var(--header-yellow); color: var(--header-dark); font-size: 8px; font-weight: 800; padding: 1.5px 5px; border-radius: 3px; text-transform: uppercase;">ENCUESTA</span>
+                    </div>
+                    <div class="chat-msg-content" style="font-size: 12.5px; font-weight: 600; color: #fff; line-height: 1.4;">${pregunta}</div>
+                    <div class="poll-options-container" style="margin-top: 5px; display: flex; flex-direction: column; gap: 4px;">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(row);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function votarEncuesta(pollId, selectedIdx) {
+            const pollBox = document.getElementById(pollId);
+            if (!pollBox) return;
+
+            const optButtons = pollBox.querySelectorAll('.poll-opt-btn');
+            
+            // Generar porcentajes ficticios que sumen 100%
+            let numOptions = optButtons.length;
+            let percentages = [];
+            let sum = 0;
+            
+            for (let i = 0; i < numOptions; i++) {
+                let randomVal = Math.floor(Math.random() * 50) + 15;
+                percentages.push(randomVal);
+                sum += randomVal;
+            }
+            
+            percentages = percentages.map(val => Math.round((val / sum) * 100));
+            let normSum = percentages.reduce((a, b) => a + b, 0);
+            if (normSum !== 100) {
+                percentages[0] += (100 - normSum);
+            }
+
+            optButtons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.onclick = null;
+                
+                const percent = percentages[idx];
+                const isSelected = (idx === selectedIdx);
+                
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.style.cursor = 'default';
+                btn.style.background = 'rgba(255, 255, 255, 0.03)';
+                if (isSelected) {
+                    btn.style.borderColor = 'var(--header-yellow)';
+                }
+                
+                btn.innerHTML = `
+                    <div class="poll-bar" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: ${isSelected ? 'rgba(251, 208, 8, 0.15)' : 'rgba(255,255,255,0.06)'}; transition: width 1s cubic-bezier(0.1, 0.8, 0.3, 1); z-index: 1;"></div>
+                    <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <span>${btn.innerText} ${isSelected ? ' 🌟' : ''}</span>
+                        <strong style="color: ${isSelected ? 'var(--header-yellow)' : '#fff'}">${percent}%</strong>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    const bar = btn.querySelector('.poll-bar');
+                    if (bar) bar.style.width = `${percent}%`;
+                }, 50);
+            });
+
             setTimeout(() => {
-                insertarMensajeChat(responder, responseText, isModResponse, false);
-            }, 1200);
+                const channel = channelsData.find(c => c.id === currentChannelId);
+                if (!channel) return;
+                
+                const commenter = channel.participants[Math.floor(Math.random() * channel.participants.length)];
+                const comments = [
+                    "¡Uy profe, yo también voté por esa opción!",
+                    "Totalmente de acuerdo con el porcentaje de la encuesta.",
+                    "¡Esa pregunta estuvo capciosa, profe! Jaja.",
+                    "Qué bien ver lo que opina la mayoría del salón."
+                ];
+                insertarMensajeChat(commenter, comments[Math.floor(Math.random() * comments.length)], false, false);
+            }, 2500);
         }
 
         // --- 8. ANIMACIÓN DE REACCIONES FLOTANTES (EMOJIS) ---
@@ -1274,6 +1592,34 @@
         function volverAlMapa() {
             window.location.href = "../index.html";
         }
+
+        // --- 10. FUNCIONES DEL MODAL DE DISEÑO DE RECURSO ---
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
+            }
+        }
     </script>
+
+    <!-- Popup Modal para desplegar diseno_recurso_capacitar.html -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body">
+                <iframe src="diseno_recurso_capacitar.html"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Instruccional - Plataforma de Capacitación</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            
+            --gold-500: #eab308;
+            --gold-600: #ca8a04;
+            
+            /* Colores de las fases ADDIE con énfasis en púrpura (Fase 2: Apropiación) */
+            --color-overview: #f4629e;      /* Rosado/Púrpura */
+            --color-overview-rgb: 244, 98, 158;
+            --color-analysis: #7c3aed;      /* Morado */
+            --color-analysis-rgb: 124, 58, 237;
+            --color-design: #0891b2;        /* Cian */
+            --color-design-rgb: 8, 145, 178;
+            --color-development: #059669;   /* Esmeralda */
+            --color-development-rgb: 5, 150, 105;
+            --color-implementation: #ea580c;/* Naranja */
+            --color-implementation-rgb: 234, 88, 12;
+            --color-evaluation: #e11d48;    /* Rosa Carmesí */
+            --color-evaluation-rgb: 225, 29, 72;
+
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--slate-100);
+            color: var(--slate-900);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- ENCABEZADO --- */
+        .dashboard-header {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            color: var(--slate-900);
+            padding: 15px 40px;
+            border-bottom: 3.5px solid var(--slate-300);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            box-sizing: border-box;
+            gap: 30px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-content-left, .header-content-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(244, 98, 158, 0.08);
+            border: 1px solid rgba(244, 98, 158, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-overview);
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(244, 98, 158, 0.05);
+        }
+
+        .header-title-wrapper h1 {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .header-title-wrapper p {
+            font-size: 12px;
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+
+        /* --- CONTENEDOR DE TRABAJO --- */
+        .workspace {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* --- MENU LATERAL DE NAVEGACION --- */
+        .sidebar {
+            width: 280px;
+            background-color: #ffffff;
+            border-right: 1.5px solid var(--slate-200);
+            display: flex;
+            flex-direction: column;
+            padding: 25px 15px;
+            gap: 8px;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: var(--slate-700);
+            font-family: var(--font-body);
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--slate-900);
+        }
+
+        .nav-btn.active {
+            background-color: #ffffff;
+            color: var(--slate-900);
+            border-left-color: var(--tab-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -1px rgba(0,0,0,0.01);
+            font-weight: 700;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .main-content-header {
+            padding: 15px 30px;
+            border-bottom: 1.5px solid var(--slate-200);
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        .active-tab-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .active-tab-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 4px;
+        }
+
+        .active-tab-info h1 {
+            font-family: var(--font-title);
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        /* Pestañas */
+        .tab-pane {
+            display: none;
+            padding: 25px 30px;
+            overflow-y: auto;
+            flex: 1;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tarjetas de Información */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 1.5px solid var(--slate-200);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1.5px solid var(--slate-100);
+            padding-bottom: 10px;
+        }
+
+        .card-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--tab-color);
+        }
+
+        .text-p {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--slate-700);
+        }
+
+        .highlight-box {
+            background-color: rgba(var(--color-overview-rgb), 0.05);
+            border-left: 4.5px solid var(--color-overview);
+            border-radius: 4px 8px 8px 4px;
+            padding: 15px 20px;
+        }
+
+        /* Acordeones */
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .accordion-item {
+            border: 1.5px solid var(--slate-200);
+            border-radius: 10px;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 16px 20px;
+            text-align: left;
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--slate-800);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: var(--slate-50);
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--slate-500);
+            transition: transform 0.2s ease;
+        }
+
+        .accordion-item.active .accordion-header::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            display: none;
+            padding: 0 20px 20px 20px;
+            border-top: 1.5px solid var(--slate-100);
+            background-color: #ffffff;
+        }
+
+        .accordion-item.active .accordion-body {
+            display: block;
+        }
+
+        /* Listas Estructuradas */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--slate-700);
+        }
+
+        .bullet-list li::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--tab-color);
+            border-radius: 50%;
+        }
+
+        /* Métrica / Estadística */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            border: 1.5px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .stat-value {
+            font-family: var(--font-title);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--slate-500);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Sistema de Valoración Estrellas */
+        .eval-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stars-container {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 24px;
+            color: var(--slate-300);
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .star:hover, .star.selected {
+            color: var(--gold-500);
+        }
+
+        .eval-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .eval-input {
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 13.5px;
+        }
+
+        .eval-input:focus {
+            outline: none;
+            border-color: var(--color-overview);
+        }
+
+        .submit-btn {
+            background-color: var(--color-overview);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            align-self: flex-start;
+        }
+
+        .submit-btn:hover {
+            background-color: #e04f8b;
+        }
+
+        .feedback-item {
+            border-bottom: 1px solid var(--slate-200);
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .feedback-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--slate-800);
+        }
+
+        .feedback-stars {
+            color: var(--gold-500);
+        }
+
+        .feedback-text {
+            font-size: 13.5px;
+            color: var(--slate-600);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DENTAL HEADER -->
+    <div class="dashboard-header">
+        <div class="header-content-left">
+            <div class="header-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+                    <path d="M23 7a2 2 0 0 0-2.45-1.45L11 8 1 5.5A2 2 0 0 0 0 7v10a2 2 0 0 0 2.45 1.45L11 16l10 2.5A2 2 0 0 0 24 17V7z"></path>
+                    <path d="M11 8v8"></path>
+                </svg>
+            </div>
+            <div class="header-title-wrapper">
+                <h1>Diseño Instruccional · Plataforma de Capacitación</h1>
+                <p>Modelo ADDIE en Acción · Portafolio Digital de Estética · Grado 11</p>
+            </div>
+        </div>
+        <div class="header-content-right">
+            <span class="active-tab-badge" style="background-color: rgba(244, 98, 158, 0.1); color: var(--color-overview);">Fase 2: Apropiación</span>
+        </div>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="workspace">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-title">Modelo ADDIE</div>
+            
+            <button class="nav-btn active" id="btn-overview" style="--tab-color: var(--color-overview);">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Generalidades
+            </button>
+            <button class="nav-btn" id="btn-analysis" style="--tab-color: var(--color-analysis);">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                1. Análisis
+            </button>
+            <button class="nav-btn" id="btn-design" style="--tab-color: var(--color-design);">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                2. Diseño
+            </button>
+            <button class="nav-btn" id="btn-development" style="--tab-color: var(--color-development);">
+                <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                3. Desarrollo
+            </button>
+            <button class="nav-btn" id="btn-implementation" style="--tab-color: var(--color-implementation);">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                4. Implementación
+            </button>
+            <button class="nav-btn" id="btn-evaluation" style="--tab-color: var(--color-evaluation);">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                5. Evaluación
+            </button>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content">
+            
+            <div class="main-content-header">
+                <div class="active-tab-info">
+                    <span class="active-tab-badge" id="active-tab-badge">General</span>
+                    <h1 id="active-tab-title">Resumen del Recurso</h1>
+                </div>
+            </div>
+
+            <!-- TAB 1: OVERVIEW -->
+            <div class="tab-pane active" id="tab-overview" style="--tab-color: var(--color-overview);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Ficha Pedagógica del Recurso
+                    </div>
+                    <div class="highlight-box">
+                        <p class="text-p" style="font-weight: 600; color: var(--slate-800);">
+                            La "Plataforma de Capacitación y Aula Virtual en Vivo" es un entorno de streaming escolar simulado que busca que los estudiantes de grado 11 se apropien de conceptos técnicos y estéticos de las diferentes disciplinas mediante la simulación de clases en vivo, la discusión y el debate interactivo apoyado por IA.
+                        </p>
+                    </div>
+                    <p class="text-p">
+                        Este recurso está diseñado bajo los lineamientos de la <strong>Fase 2: Apropiación</strong>, permitiendo a los alumnos evaluar, opinar y debatir sobre las transmisiones de sus compañeros y tutores, asimilando conceptos sobre portafolio de arte, museos tridimensionales, composición tipográfica y tejido textil en crochet.
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-entries">120</div>
+                        <div class="stat-label">Espectadores Simulados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-time">15.5m</div>
+                        <div class="stat-label">Permanencia Promedio</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-rating">4.8 ★</div>
+                        <div class="stat-label">Calificación Docente</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="submit-btn" id="simulate-entry-btn">Simular Ingreso de Estudiante</button>
+                </div>
+            </div>
+
+            <!-- TAB 2: ANALYSIS -->
+            <div class="tab-pane" id="tab-analysis" style="--tab-color: var(--color-analysis);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Fase de Análisis (ADDIE)
+                    </div>
+                    <p class="text-p">
+                        <strong>Problema Educativo:</strong> Los estudiantes suelen mostrar apatía en las clases teóricas de estética y diseño gráfico. Necesitan relacionar los conceptos abstractos (composición visual, curaduría, texturas textiles) con situaciones reales y proyectos prácticos.
+                    </p>
+                    <p class="text-p">
+                        <strong>Público Objetivo:</strong> Alumnos de grado 11 del Colegio Danilo Cifuentes, nativos digitales que disfrutan de las interfaces interactivas (tipo Twitch o YouTube Live) y están familiarizados con redes sociales.
+                    </p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Requerimientos Tecnológicos</button>
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li>Acceso web local responsivo y offline compatible.</li>
+                                    <li>Simulación interactiva de streaming de video sin dependencias obligatorias de conectividad externa compleja.</li>
+                                    <li>Ecosistema de chat simulado con avatares visuales y comportamiento realista enriquecido con modelos generativos (Gemini API) o fallback local.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: DESIGN -->
+            <div class="tab-pane" id="tab-design" style="--tab-color: var(--color-design);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        Fase de Diseño (ADDIE)
+                    </div>
+                    <p class="text-p">
+                        La interfaz del recurso fue diseñada imitando las plataformas modernas de streaming de videojuegos y capacitaciones profesionales en modo oscuro premium, lo que reduce el cansancio visual y genera mayor engagement.
+                    </p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Decisiones de Interfaz</button>
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li><strong>Barra de Canales Lateral:</strong> Facilita la navegación rápida entre transmisiones correspondientes a las técnicas de los estudiantes.</li>
+                                    <li><strong>Reproductor Central Híbrido:</strong> Capacidad de reproducir videos locales (MP4) y videos remotos (YouTube) con detección inteligente de conexión local.</li>
+                                    <li><strong>Chat Lateral en Vivo:</strong> Visualización de comentarios simulados de compañeros ficticios para fomentar la sensación de comunidad escolar.</li>
+                                    <li><strong>Encuestas Interactivas (Polls):</strong> Lanzadas de forma aleatoria por el moderador para testear y evaluar conceptos estéticos directamente en el chat.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: DEVELOPMENT -->
+            <div class="tab-pane" id="tab-development" style="--tab-color: var(--color-development);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        Fase de Desarrollo (ADDIE)
+                    </div>
+                    <p class="text-p">
+                        El desarrollo técnico del recurso involucró tecnologías web estándar para asegurar un despliegue libre de trabas, compatible con el disco de Google Drive del docente y sistemas offline.
+                    </p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Detalles del Código</button>
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li><strong>Integración con Gemini API:</strong> Uso de fetch asíncrono para comunicarse con el modelo `gemini-2.5-flash` generando comentarios realistas con modismos escolares colombianos.</li>
+                                    <li><strong>Generador de Avatares:</strong> Integración de la API de UI-Avatars para renderizar círculos con iniciales dinámicas para cada participante.</li>
+                                    <li><strong>Reproductor Híbrido:</strong> Etiqueta `<iframe>` para YouTube o `<video>` HTML5 nativo de manera transparente según la preferencia y contexto de red.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: IMPLEMENTATION -->
+            <div class="tab-pane" id="tab-implementation" style="--tab-color: var(--color-implementation);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Fase de Implementación (ADDIE)
+                    </div>
+                    <p class="text-p">
+                        El recurso es desplegado por el docente en el aula de informática. Se comparte el enlace local a `plataforma_capacitacion.html` para que cada estudiante ingrese con su respectiva ficha del portafolio.
+                    </p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Cronograma de Uso</button>
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li><strong>Semana 1:</strong> Presentación y visualización del Canal 1 (Inmersión en el proyecto).</li>
+                                    <li><strong>Semana 2:</strong> Debate grupal en base a la curaduría del Canal 2 (Museos 3D).</li>
+                                    <li><strong>Semana 3:</strong> Práctica individual y revisión de técnicas en el Canal 4 (Crochet Artístico).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: EVALUATION -->
+            <div class="tab-pane" id="tab-evaluation" style="--tab-color: var(--color-evaluation);">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Fase de Evaluación (ADDIE)
+                    </div>
+                    <p class="text-p">
+                        Para evaluar la efectividad y la satisfacción de este recurso educativo, los estudiantes y docentes califican su experiencia y dejan un comentario cualitativo.
+                    </p>
+                    
+                    <div class="eval-section">
+                        <h4>Evaluar Recurso (Estudiantes / Docentes)</h4>
+                        <div class="stars-container" id="eval-stars">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <div class="eval-input-group">
+                            <input type="text" id="eval-author" class="eval-input" placeholder="Nombre completo...">
+                            <input type="text" id="eval-comment" class="eval-input" placeholder="Comentario sobre el recurso...">
+                            <button class="submit-btn" id="submit-eval-btn" style="margin-top: 5px;">Enviar Evaluación</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <h4>Comentarios Recientes</h4>
+                        <div id="feedback-container">
+                            <div class="feedback-item">
+                                <div class="feedback-meta">
+                                    <span>Valeria Ortiz</span>
+                                    <span class="feedback-stars">★★★★★</span>
+                                </div>
+                                <div class="feedback-text">Me encantó el chat en vivo con avatares, de verdad parece que estuviéramos en directo todos participando al mismo tiempo. Muy bacano.</div>
+                            </div>
+                            <div class="feedback-item">
+                                <div class="feedback-meta">
+                                    <span>Santiago Gómez</span>
+                                    <span class="feedback-stars">★★★★★</span>
+                                </div>
+                                <div class="feedback-text">Poder alternar entre el video local y YouTube es un golazo porque en mi casa el internet falla y con el video local pude ver todo al instante.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <script>
+        const tabButtons = document.querySelectorAll('.nav-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        const activeTabTitle = document.getElementById('active-tab-title');
+        const activeTabBadge = document.getElementById('active-tab-badge');
+
+        const tabHeaders = {
+            'overview': { title: 'Resumen del Recurso', badge: 'General' },
+            'analysis': { title: '1. Fase de Análisis', badge: 'ADDIE' },
+            'design': { title: '2. Fase de Diseño', badge: 'ADDIE' },
+            'development': { title: '3. Fase de Desarrollo', badge: 'ADDIE' },
+            'implementation': { title: '4. Fase de Implementación', badge: 'ADDIE' },
+            'evaluation': { title: '5. Fase de Evaluación', badge: 'ADDIE' }
+        };
+
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            item.classList.toggle('active');
+        }
+
+        function switchTab(tabId) {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            const activePane = document.getElementById(`tab-${tabId}`);
+            
+            if (activeBtn && activePane) {
+                activeBtn.classList.add('active');
+                activePane.classList.add('active');
+
+                const headerInfo = tabHeaders[tabId];
+                if (headerInfo) {
+                    activeTabTitle.innerText = headerInfo.title;
+                    activeTabBadge.innerText = headerInfo.badge;
+
+                    const tabColor = activeBtn.style.getPropertyValue('--tab-color');
+                    activeTabBadge.style.color = tabColor;
+                    activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
+                    if (!tabColor.startsWith('rgb')) {
+                        activeTabBadge.style.color = `var(--color-${tabId})`;
+                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 244, 98, 158), 0.1)`;
+                    }
+                }
+                activePane.scrollTop = 0;
+            }
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.id.replace('btn-', '');
+                switchTab(tabId);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('overview');
+
+            // --- SIMULADOR DE INGRESO DE ESTUDIANTES ---
+            const simulateBtn = document.getElementById('simulate-entry-btn');
+            const statEntries = document.getElementById('stat-entries');
+            const statTime = document.getElementById('stat-time');
+
+            let currentEntries = 120;
+            let currentMinutes = 15.5;
+
+            simulateBtn.addEventListener('click', () => {
+                currentEntries += 1;
+                currentMinutes = parseFloat((currentMinutes + (Math.random() * 0.1 - 0.03)).toFixed(1));
+                if (currentMinutes < 5) currentMinutes = 5;
+
+                statEntries.innerText = currentEntries;
+                statTime.innerText = `${currentMinutes}m`;
+                
+                statEntries.style.transform = 'scale(1.12)';
+                statEntries.style.transition = 'transform 0.1s ease';
+                setTimeout(() => {
+                    statEntries.style.transform = 'scale(1)';
+                }, 100);
+            });
+
+            // --- SIMULADOR DE VALORACIÓN ---
+            const stars = document.querySelectorAll('#eval-stars .star');
+            let selectedRating = 0;
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.getAttribute('data-value'));
+                    selectedRating = rating;
+
+                    stars.forEach(s => {
+                        const val = parseInt(s.getAttribute('data-value'));
+                        if (val <= rating) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+
+            const submitBtn = document.getElementById('submit-eval-btn');
+            const authorInput = document.getElementById('eval-author');
+            const commentInput = document.getElementById('eval-comment');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const statAvgRating = document.getElementById('stat-avg-rating');
+
+            let totalRatingSum = (5 * 5) + (5 * 5); // Valeria (5) + Santiago (5)
+            let ratingCount = 2;
+
+            submitBtn.addEventListener('click', () => {
+                const author = authorInput.value.trim();
+                const comment = commentInput.value.trim();
+
+                if (!author || !comment) {
+                    alert("Por favor completa tu nombre y escribe un comentario.");
+                    return;
+                }
+
+                if (selectedRating === 0) {
+                    alert("Por favor selecciona una valoración con estrellas.");
+                    return;
+                }
+
+                totalRatingSum += selectedRating;
+                ratingCount += 1;
+                const newAvg = (totalRatingSum / ratingCount).toFixed(1);
+                
+                statAvgRating.innerText = `${newAvg} ★`;
+
+                const item = document.createElement('div');
+                item.className = 'feedback-item';
+                
+                let starsString = "";
+                for (let i = 1; i <= 5; i++) {
+                    starsString += i <= selectedRating ? "★" : "☆";
+                }
+
+                item.innerHTML = `
+                    <div class="feedback-meta">
+                        <span>${escapeHtml(author)}</span>
+                        <span class="feedback-stars">${starsString}</span>
+                    </div>
+                    <div class="feedback-text">${escapeHtml(comment)}</div>
+                `;
+
+                feedbackContainer.insertBefore(item, feedbackContainer.firstChild);
+
+                authorInput.value = '';
+                commentInput.value = '';
+                selectedRating = 0;
+                stars.forEach(s => s.classList.remove('selected'));
+            });
+
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+        });
+    </script>
+</body>
+</html>

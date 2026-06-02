@@ -7,34 +7,55 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-dark: #121214;
-            --panel-bg: #1e1e22;
-            --header-dark: #222121;
+            --bg-dark: #0f1015;
+            --panel-bg: #1a1b23;
+            --panel-bg-hover: #22232e;
+            --header-dark: #15161c;
             --header-green: #2e8b57;
             --header-green-hover: #246d43;
+            
             --text-white: #ffffff;
             --text-muted: #a0a0ab;
-            --border-color: #3f3f46;
+            --text-dark: #121212;
+            
+            --border-color: #2e2f38;
+            --border-light: rgba(255,255,255,0.05);
+            
+            --color-green: #10b981;
+            --color-blue: #3b82f6;
+            --color-orange: #f59e0b;
+            --color-purple: #8b5cf6;
+            --color-red: #ef4444;
+            --color-pink: #ec4899;
+
+            --bg-green-light: rgba(16, 185, 129, 0.1);
+            --bg-blue-light: rgba(59, 130, 246, 0.1);
+            --bg-orange-light: rgba(245, 158, 11, 0.1);
+            --bg-purple-light: rgba(139, 92, 246, 0.1);
+            
             --font-main: 'Montserrat', sans-serif;
             --font-labels: 'Nunito', sans-serif;
         }
 
-        body, html {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body, html {
             width: 100%;
             height: 100%;
             background-color: var(--bg-dark);
             color: var(--text-white);
-            display: flex;
-            flex-direction: column;
             font-family: var(--font-main);
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* --- BARRA SUPERIOR (TOP BAR) --- */
@@ -45,153 +66,519 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             z-index: 10;
-            border-bottom: 3px solid var(--header-green);
-            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            border-bottom: 2px solid var(--header-green);
         }
 
         .title-container h1 {
             color: #ffffff;
             font-family: var(--font-labels);
-            font-size: 22px;
-            margin: 0;
+            font-size: 20px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .title-container h1 span {
+        .title-container h1 i {
             color: var(--header-green);
         }
 
         .close-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: #ffffff;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
         }
 
         .close-btn:hover {
             background-color: #ff4d4d;
-            border-color: #ff4d4d;
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
 
         /* --- CONTENEDOR PRINCIPAL --- */
-        .main-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* --- CARD DE CONSTRUCCIÓN --- */
-        .construction-card {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
+        .main-content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
+            gap: 30px;
+        }
+
+        /* --- DASHBOARD SECTION --- */
+        .dashboard-wrapper {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 25px;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(255,255,255,0.02);
         }
 
-        .construction-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .dashboard-header h2 {
+            font-family: var(--font-labels);
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .group-select {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* --- TABLE STYLES --- */
+        .table-container {
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--header-green), #4ac9b5);
+            overflow-x: auto;
         }
 
-        .icon-container {
-            width: 100px;
-            height: 100px;
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .metrics-table th {
+            background-color: var(--header-dark);
+            color: var(--text-muted);
+            font-family: var(--font-labels);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 16px 20px;
+            border-bottom: 2px solid var(--border-color);
+            border-right: 1px solid var(--border-light);
+            white-space: nowrap;
+        }
+
+        .metrics-table th:last-child {
+            border-right: none;
+        }
+
+        .metrics-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-light);
+            vertical-align: middle;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .metrics-table td:last-child {
+            border-right: none;
+        }
+
+        .metrics-table tbody tr:hover td {
+            background-color: var(--panel-bg-hover);
+        }
+
+        .text-center { text-align: center; }
+
+        /* Phase Info Column */
+        .phase-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .phase-icon {
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background-color: rgba(46, 139, 87, 0.1);
-            border: 2px dashed var(--header-green);
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--header-green);
-            font-size: 45px;
-            animation: float 3s ease-in-out infinite;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .card-title {
+        .phase-name {
             font-family: var(--font-labels);
-            font-size: 26px;
-            font-weight: 900;
-            color: #ffffff;
-            margin: 0;
+            font-weight: 800;
+            font-size: 16px;
         }
 
-        .card-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .badge-construction {
-            background-color: rgba(226, 109, 92, 0.1);
-            color: #e26d5c;
-            border: 1px solid rgba(226, 109, 92, 0.2);
-            padding: 6px 14px;
-            border-radius: 30px;
+        .phase-sub {
             font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
-        .back-map-btn {
+        /* Lists */
+        .indicators-list, .metrics-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .indicators-list li {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #ffffff;
-            text-decoration: none;
+            background: rgba(255,255,255,0.03);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .indicators-list li i {
+            font-size: 16px;
+        }
+
+        .metrics-list li {
+            position: relative;
+            padding-left: 15px;
+            color: var(--text-muted);
+        }
+
+        .metrics-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--text-white);
+        }
+
+        /* Circular Progress */
+        .progress-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .circular-progress {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: conic-gradient(var(--track-color) 0deg, var(--border-color) 0deg);
+            transition: background 0.5s ease;
+        }
+
+        .circular-progress::before {
+            content: '';
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            background-color: var(--panel-bg);
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .metrics-table tbody tr:hover .circular-progress::before {
+            background-color: var(--panel-bg-hover);
+        }
+
+        .progress-value {
+            position: relative;
+            font-weight: 800;
+            font-family: var(--font-labels);
+            font-size: 18px;
+        }
+
+        .result-label {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* Target */
+        .target-val {
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-white);
+        }
+
+        .target-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Colors Utilities */
+        .c-green { color: var(--color-green); }
+        .c-blue { color: var(--color-blue); }
+        .c-orange { color: var(--color-orange); }
+        .c-purple { color: var(--color-purple); }
+        .c-red { color: var(--color-red); }
+
+        .bg-green { background-color: var(--bg-green-light); color: var(--color-green); }
+        .bg-blue { background-color: var(--bg-blue-light); color: var(--color-blue); }
+        .bg-orange { background-color: var(--bg-orange-light); color: var(--color-orange); }
+        .bg-purple { background-color: var(--bg-purple-light); color: var(--color-purple); }
+
+        /* DASHBOARD FOOTER */
+        .dashboard-footer {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(255,255,255,0.02);
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .global-index {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.03);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+
+        .trophy-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--bg-orange-light);
+            color: var(--color-orange);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .global-title {
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .global-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .global-value {
+            font-family: var(--font-labels);
+            font-weight: 900;
+            font-size: 28px;
+            margin-left: 10px;
+        }
+
+        .formula {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .formula-title {
+            font-family: var(--font-labels);
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .formula-items {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .formula-items span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .summary-box {
+            background-color: var(--bg-green-light);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- SATISFACTION FORM --- */
+        .satisfaction-wrapper {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .satisfaction-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .satisfaction-header h3 {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            color: var(--color-pink);
+        }
+
+        .satisfaction-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .satisfaction-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-family: var(--font-labels);
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            padding: 12px 16px;
+            border-radius: 8px;
             font-family: var(--font-main);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--color-pink);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 10px;
+            font-size: 24px;
+            color: var(--border-color);
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .star-rating i.active, .star-rating i:hover, .star-rating i:hover ~ i {
+            color: var(--color-orange);
+        }
+        
+        .star-rating i:hover ~ i {
+            color: var(--border-color); /* reset hover on next siblings */
+        }
+        
+        /* Trick for hover effect to fill left-to-right */
+        .star-rating {
+            flex-direction: row;
+        }
+
+        .submit-btn {
+            background-color: var(--color-pink);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-family: var(--font-labels);
             font-weight: 700;
             font-size: 15px;
-            background-color: var(--header-green);
-            padding: 12px 28px;
-            border-radius: 30px;
-            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(46, 139, 87, 0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             margin-top: 10px;
         }
 
-        .back-map-btn:hover {
-            background-color: var(--header-green-hover);
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(46, 139, 87, 0.5);
+        .submit-btn:hover {
+            background-color: #d93881;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Success Message */
+        .success-msg {
+            display: none;
+            background-color: var(--bg-green-light);
+            color: var(--color-green);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 1024px) {
+            .satisfaction-form {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -200,40 +587,405 @@
     <!-- TOP BAR -->
     <div class="top-bar">
         <div class="title-container">
-            <h1>Métrica de <span>Desempeño</span></h1>
+            <h1><i class="fa-solid fa-chart-pie"></i> Métrica de Desempeño</h1>
         </div>
-        <div class="actions-container">
-            <a href="../index.html" class="close-btn">
-                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
-            </a>
-        </div>
+        <a href="../index.html" class="close-btn">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+        </a>
     </div>
 
-    <!-- MAIN CONTAINER -->
-    <div class="main-container">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
         
-        <!-- CONSTRUCTION CARD -->
-        <div class="construction-card">
-            <div class="icon-container">
-                <i class="fa-solid fa-chart-simple"></i>
+        <!-- DASHBOARD PANEL -->
+        <div class="dashboard-wrapper">
+            <div class="dashboard-header">
+                <h2>Panel de Indicadores por Fase</h2>
+                <select class="group-select">
+                    <option>Grupo 2A</option>
+                    <option>Grupo 2B</option>
+                    <option>Todos los grupos</option>
+                </select>
             </div>
             
-            <div class="badge-construction">
-                <i class="fa-solid fa-screwdriver-wrench"></i> En Construcción
+            <div class="table-container">
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>FASE</th>
+                            <th>KPI PRINCIPAL</th>
+                            <th>INDICADORES INTEGRADOS</th>
+                            <th>MÉTRICAS CLAVE</th>
+                            <th class="text-center">RESULTADO EJEMPLO</th>
+                            <th class="text-center">META</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- INMERSIÓN -->
+                        <tr>
+                            <td>
+                                <div class="phase-info">
+                                    <div class="phase-icon bg-green"><i class="fa-solid fa-compass"></i></div>
+                                    <div>
+                                        <div class="phase-name c-green">Inmersión</div>
+                                        <div class="phase-sub">Contextualización</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Nivel de interacción con recursos</td>
+                            <td>
+                                <ul class="indicators-list">
+                                    <li><i class="fa-solid fa-play-circle c-green"></i> Interacción con video</li>
+                                    <li><i class="fa-solid fa-image c-green"></i> Exploración de galería</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="metrics-list">
+                                    <li>% visualización del video</li>
+                                    <li>Promedio de reproducciones</li>
+                                    <li>% acceso a galería</li>
+                                    <li>Tiempo de permanencia</li>
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <div class="progress-wrapper">
+                                    <div class="circular-progress dyn-progress" data-value="85" data-color="#10b981">
+                                        <span class="progress-value c-green dyn-text" data-suffix="%">85%</span>
+                                    </div>
+                                    <div class="result-label c-green">Alto</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="target-val"><i class="fa-solid fa-bullseye c-red"></i> 75%</div>
+                                <div class="target-label">Meta</div>
+                            </td>
+                        </tr>
+                        
+                        <!-- CONOCIMIENTO -->
+                        <tr>
+                            <td>
+                                <div class="phase-info">
+                                    <div class="phase-icon bg-blue"><i class="fa-solid fa-lightbulb"></i></div>
+                                    <div>
+                                        <div class="phase-name c-blue">Conocimiento</div>
+                                        <div class="phase-sub">Aprendizaje activo</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Exploración y uso de herramientas</td>
+                            <td>
+                                <ul class="indicators-list">
+                                    <li><i class="fa-solid fa-robot c-blue"></i> Uso del abanico de IAs</li>
+                                    <li><i class="fa-solid fa-graduation-cap c-blue"></i> Participación en formación</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="metrics-list">
+                                    <li>% herramientas exploradas</li>
+                                    <li>Tiempo de uso por herramienta</li>
+                                    <li>% finalización del curso</li>
+                                    <li>Nº interacciones en plataforma</li>
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <div class="progress-wrapper">
+                                    <div class="circular-progress dyn-progress" data-value="78" data-color="#3b82f6">
+                                        <span class="progress-value c-blue dyn-text" data-suffix="%">78%</span>
+                                    </div>
+                                    <div class="result-label c-blue">Medio Alto</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="target-val"><i class="fa-solid fa-bullseye c-red"></i> 70%</div>
+                                <div class="target-label">Meta</div>
+                            </td>
+                        </tr>
+                        
+                        <!-- DESARROLLO -->
+                        <tr>
+                            <td>
+                                <div class="phase-info">
+                                    <div class="phase-icon bg-orange"><i class="fa-solid fa-brain"></i></div>
+                                    <div>
+                                        <div class="phase-name c-orange">Desarrollo</div>
+                                        <div class="phase-sub">Interacción con IA</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Iteración + Agencia</td>
+                            <td>
+                                <ul class="indicators-list">
+                                    <li><i class="fa-solid fa-rotate c-orange"></i> Frecuencia de iteración</li>
+                                    <li><i class="fa-solid fa-head-side-virus c-orange"></i> Pensamiento crítico</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="metrics-list">
+                                    <li>Promedio de interacciones con IA</li>
+                                    <li>% sugerencias modificadas o rechazadas</li>
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <div class="progress-wrapper">
+                                    <div class="circular-progress dyn-progress" data-value="63" data-color="#f59e0b">
+                                        <span class="progress-value c-orange dyn-text" data-suffix="%">63%</span>
+                                    </div>
+                                    <div class="result-label c-orange">Medio</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="target-val"><i class="fa-solid fa-bullseye c-red"></i> 60%</div>
+                                <div class="target-label">Meta Agencia</div>
+                            </td>
+                        </tr>
+                        
+                        <!-- EVALUACIÓN -->
+                        <tr>
+                            <td>
+                                <div class="phase-info">
+                                    <div class="phase-icon bg-purple"><i class="fa-solid fa-clipboard-check"></i></div>
+                                    <div>
+                                        <div class="phase-name c-purple">Evaluación</div>
+                                        <div class="phase-sub">Cierre y reflexión</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Seguimiento del proceso</td>
+                            <td>
+                                <ul class="indicators-list">
+                                    <li><i class="fa-solid fa-book c-purple"></i> Registro en bitácora</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="metrics-list">
+                                    <li>% estudiantes con registro progresivo</li>
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <div class="progress-wrapper">
+                                    <div class="circular-progress dyn-progress" data-value="72" data-color="#8b5cf6">
+                                        <span class="progress-value c-purple dyn-text" data-suffix="%">72%</span>
+                                    </div>
+                                    <div class="result-label c-purple">Medio Alto</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="target-val"><i class="fa-solid fa-bullseye c-red"></i> 70%</div>
+                                <div class="target-label">Meta</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
-            <h2 class="card-title">Métrica de Desempeño</h2>
+            <!-- FOOTER RESUMEN -->
+            <div class="dashboard-footer">
+                <div class="global-index">
+                    <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div>
+                        <div class="global-title">ÍNDICE GLOBAL DE DESEMPEÑO (IGD)</div>
+                        <div class="global-sub">Media ponderada de las 4 fases</div>
+                    </div>
+                    <div class="global-value c-green dyn-igd">75%</div>
+                </div>
+                
+                <div class="formula">
+                    <div class="formula-title">FÓRMULA PONDERADA</div>
+                    <div class="formula-items">
+                        <span class="c-green"><i class="fa-solid fa-circle"></i> Inmersión 20%</span>
+                        <span class="c-blue"><i class="fa-solid fa-circle"></i> Conoc. 25%</span>
+                        <span class="c-orange"><i class="fa-solid fa-circle"></i> Desarr. 35%</span>
+                        <span class="c-purple"><i class="fa-solid fa-circle"></i> Eval. 20%</span>
+                    </div>
+                </div>
+                
+                <div class="summary-box">
+                    <div><i class="fa-solid fa-check-circle"></i> Resultado: <span class="val dyn-igd-txt">75%</span></div>
+                    <div>Nivel: <span class="c-green">Bueno</span></div>
+                    <div>Meta global: <span>70%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTRO DE SATISFACCIÓN -->
+        <div class="satisfaction-wrapper">
+            <div class="satisfaction-header">
+                <h3><i class="fa-solid fa-heart-circle-check"></i> Registro de Satisfacción de Recursos</h3>
+            </div>
+            <p class="satisfaction-desc">Por favor, califica tu experiencia con los recursos utilizados durante esta fase para ayudarnos a mejorar continuamente.</p>
             
-            <p class="card-text">
-                Próximamente se integrará el panel analítico y los indicadores de rendimiento. Aquí visualizarás el progreso de aprendizaje, estadísticas de interacción y el índice IAP detallado por estudiante.
-            </p>
-            
-            <a href="../index.html" class="back-map-btn">
-                <i class="fa-solid fa-compass"></i> Ir al Mapa de Aprendizaje
-            </a>
+            <form id="satisfactionForm" class="satisfaction-form">
+                <div class="form-group">
+                    <label>Selecciona el Recurso a Evaluar</label>
+                    <select class="form-control" required>
+                        <option value="">-- Elige una opción --</option>
+                        <option value="video">Video Contextualización (Inmersión)</option>
+                        <option value="galeria">Galería de Imágenes (Inmersión)</option>
+                        <option value="herramientas">Abanico de IAs (Conocimiento)</option>
+                        <option value="bitacora">Bitácora Digital (Evaluación)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nivel de Satisfacción (1 al 5)</label>
+                    <div class="star-rating" id="starRating">
+                        <i class="fa-solid fa-star" data-rating="1"></i>
+                        <i class="fa-solid fa-star" data-rating="2"></i>
+                        <i class="fa-solid fa-star" data-rating="3"></i>
+                        <i class="fa-solid fa-star" data-rating="4"></i>
+                        <i class="fa-solid fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="ratingValue" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Comentarios o Sugerencias</label>
+                    <textarea class="form-control" rows="3" placeholder="¿Qué te pareció este recurso? ¿Cómo podríamos mejorarlo?" required></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Enviar Evaluación</button>
+                </div>
+                
+                <div class="success-msg" id="successMsg">
+                    <i class="fa-solid fa-circle-check"></i> ¡Gracias! Tu evaluación ha sido registrada exitosamente.
+                </div>
+            </form>
         </div>
 
     </div>
 
+    <script>
+        // Inicializar Progress Bars
+        function initProgressBars() {
+            const progressBars = document.querySelectorAll('.dyn-progress');
+            progressBars.forEach(bar => {
+                let val = parseInt(bar.getAttribute('data-value'));
+                let color = bar.getAttribute('data-color');
+                bar.style.setProperty('--track-color', color);
+                bar.style.background = `conic-gradient(${color} ${val * 3.6}deg, var(--border-color) 0deg)`;
+            });
+        }
+
+        // Emulación de Métricas Randómicas
+        function updateRandomMetric() {
+            const progressBars = document.querySelectorAll('.dyn-progress');
+            if (progressBars.length === 0) return;
+
+            // Escoger una barra aleatoria para actualizar
+            const randomIndex = Math.floor(Math.random() * progressBars.length);
+            const bar = progressBars[randomIndex];
+            
+            // Variación aleatoria entre -3 y +4
+            let currentVal = parseInt(bar.getAttribute('data-value'));
+            let change = Math.floor(Math.random() * 8) - 3;
+            let newVal = Math.max(10, Math.min(100, currentVal + change)); // Límite entre 10% y 100%
+            
+            // Aplicar nuevo valor
+            bar.setAttribute('data-value', newVal);
+            let color = bar.getAttribute('data-color');
+            bar.style.background = `conic-gradient(${color} ${newVal * 3.6}deg, var(--border-color) 0deg)`;
+            
+            // Actualizar texto
+            const textEl = bar.querySelector('.dyn-text');
+            if (textEl) {
+                textEl.innerText = newVal + textEl.getAttribute('data-suffix');
+            }
+            
+            // Actualizar el Índice Global de Desempeño (IGD)
+            updateIGD();
+        }
+
+        function updateIGD() {
+            const progressBars = document.querySelectorAll('.dyn-progress');
+            if (progressBars.length < 4) return;
+            
+            // Valores actuales de cada fase
+            const vInmersion = parseInt(progressBars[0].getAttribute('data-value'));
+            const vConocimiento = parseInt(progressBars[1].getAttribute('data-value'));
+            const vDesarrollo = parseInt(progressBars[2].getAttribute('data-value'));
+            const vEvaluacion = parseInt(progressBars[3].getAttribute('data-value'));
+            
+            // Fórmula ponderada: Inmersión 20%, Conoc. 25%, Desarr. 35%, Eval. 20%
+            const igd = Math.round((vInmersion * 0.20) + (vConocimiento * 0.25) + (vDesarrollo * 0.35) + (vEvaluacion * 0.20));
+            
+            document.querySelector('.dyn-igd').innerText = igd + '%';
+            document.querySelector('.dyn-igd-txt').innerText = igd + '%';
+        }
+
+        // Configurar estrellas de satisfacción
+        const stars = document.querySelectorAll('.star-rating i');
+        const ratingInput = document.getElementById('ratingValue');
+
+        // Estado inicial de estrellas (grises)
+        stars.forEach(star => {
+            star.style.color = 'var(--border-color)';
+            
+            star.addEventListener('mouseover', function() {
+                const rating = this.getAttribute('data-rating');
+                highlightStars(rating);
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const currentRating = ratingInput.value;
+                highlightStars(currentRating);
+            });
+            
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-rating');
+                ratingInput.value = rating;
+                highlightStars(rating);
+            });
+        });
+
+        function highlightStars(rating) {
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-rating')) <= rating) {
+                    star.style.color = 'var(--color-orange)';
+                } else {
+                    star.style.color = 'var(--border-color)';
+                }
+            });
+        }
+
+        // Formulario de Satisfacción
+        document.getElementById('satisfactionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!ratingInput.value) {
+                alert('Por favor selecciona un nivel de satisfacción (estrellas).');
+                return;
+            }
+            
+            // Mostrar mensaje de éxito
+            const btn = this.querySelector('.submit-btn');
+            const msg = document.getElementById('successMsg');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+            btn.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                msg.style.display = 'block';
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Evaluación';
+                btn.style.opacity = '1';
+                this.reset();
+                ratingInput.value = '';
+                highlightStars(0);
+                
+                // Ocultar mensaje después de 4 segundos
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                }, 4000);
+            }, 1000);
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            initProgressBars();
+            
+            // Cambiar métricas aleatorias cada 4.5 segundos
+            setInterval(updateRandomMetric, 4500);
+        });
+    </script>
 </body>
 </html>

@@ -267,6 +267,34 @@
             background: #fbeea7;
             align-self: flex-end;
             border-right: 4px solid var(--header-yellow);
+            display: inline-block;
+        }
+
+        .chat-message-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 5px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chat-message-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+        }
+
+        .my-msg-row {
+            flex-direction: row-reverse;
         }
 
         .chat-input-area {
@@ -307,9 +335,14 @@
         <div class="title-container">
             <h1>Plataforma de <span>Capacitación</span></h1>
         </div>
-        <a href="../index.html" class="close-btn">
-            <span>&times;</span> Volver al Mapa
-        </a>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="diseno_recurso_capacitar.html" class="close-btn" style="background-color: var(--showcase-purple); border-color: var(--showcase-purple);">
+                <i class="fa-solid fa-pen-ruler"></i> Diseño de Recurso
+            </a>
+            <a href="../index.html" class="close-btn">
+                <span>&times;</span> Volver al Mapa
+            </a>
+        </div>
     </div>
 
     <div class="workspace">
@@ -460,7 +493,8 @@
                 // Si no hay iframe incrustado, construirlo usando la sintaxis de incrustación de seguridad (/embed/)
                 if (playerContainer.innerHTML === "") {
                     const embedId = cleanYoutubeId(selectedVideo.url);
-                    playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${embedId}?autoplay=1&mute=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                    // Uso de youtube-nocookie.com para intentar evadir restricciones de incrustación
+                    playerContainer.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${embedId}?autoplay=1&mute=1&rel=0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
                     appendSystemMessage(`La transmisión en vivo de "${selectedVideo.tecnica}" ha comenzado.`);
                     startVirtualChatEngine();
                 }
@@ -480,9 +514,7 @@
         }
 
         function appendSystemMessage(text) {
-            const container = document.getElementById('chat-messages');
-            container.innerHTML += `<div class="chat-bubble" style="background:#e2f0d9; color:#385723; text-align:center; max-width:100%;"><strong>Sistema:</strong> ${text}</div>`;
-            container.scrollTop = container.scrollHeight;
+            injectMessageInUI("Sistema", "Admin", text, false);
         }
 
         // --- MOTOR DE SIMULACIÓN DE CHAT (INTEGRACIÓN COGNITIVA) ---
@@ -521,7 +553,7 @@
                     contents: [{
                         role: "user",
                         parts: [{
-                            text: `Genera un comentario corto de chat de clase virtual (máximo un renglón). Quien escribe es un estudiante de grado 11 llamado ${student.nombre}, especializado en la técnica de ${student.tecnica}. El comentario debe ser sobre la clase actual de "${selectedVideo.titulo}" enfocada en la técnica de "${selectedVideo.tecnica}". Sé natural, usa español de Colombia sin exagerar, y demuestra que estás analizando los parámetros estéticos visuales del ejercicio.`
+                            text: `Eres un estudiante de grado 11 de un colegio en Colombia llamado ${student.nombre}. Te apasiona la técnica de ${student.tecnica}. Estás viendo una clase virtual sobre "${selectedVideo.titulo}" y la técnica es "${selectedVideo.tecnica}". Escribe un comentario corto para el chat en vivo (1 o 2 oraciones breves). Sé muy natural, usa expresiones colombianas juveniles pero respetuosas (ej: "uy profe", "qué nota", "está bacano", "súper interesante"), reacciona a lo que supuestamente estás viendo y demuestra que entiendes el concepto estético de la clase. NO escribas hashtags ni comillas. Solo el texto del mensaje.`
                         }]
                     }]
                 };
@@ -544,15 +576,53 @@
 
         function injectMessageInUI(name, tech, text, isMe = false) {
             const container = document.getElementById('chat-messages');
-            const bubble = document.createElement('div');
-            bubble.classList.add('chat-bubble');
-            if (isMe) bubble.classList.add('my-msg');
+            const row = document.createElement('div');
+            row.classList.add('chat-message-row');
+            if (isMe) row.classList.add('my-msg-row');
 
-            bubble.innerHTML = isMe ? 
-                `<strong>Tú:</strong> ${text}` : 
-                `<span class="student-name">${name}</span><span class="student-tech">${tech}</span><br>${text}`;
+            // Avatar URL
+            let avatarUrl = "";
+            if (isMe) {
+                avatarUrl = `https://ui-avatars.com/api/?name=Yo&background=fbd008&color=333&bold=true`;
+            } else if (name === "Sistema") {
+                avatarUrl = `https://ui-avatars.com/api/?name=S&background=385723&color=fff&bold=true`;
+            } else {
+                avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff`;
+            }
 
-            container.appendChild(bubble);
+            // HTML Estructura
+            const avatarHtml = `<img src="${avatarUrl}" class="chat-avatar" alt="Avatar">`;
+            
+            let bubbleHtml = "";
+            if (isMe) {
+                bubbleHtml = `
+                    <div class="chat-message-content" style="align-items: flex-end;">
+                        <div class="chat-bubble my-msg" style="border-radius: 12px 0px 12px 12px;">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            } else if (name === "Sistema") {
+                bubbleHtml = `
+                    <div class="chat-message-content" style="width: 100%;">
+                        <div class="chat-bubble" style="background:#e2f0d9; color:#385723; border-radius: 12px; width: 100%; text-align: center;">
+                            <strong>Sistema:</strong> ${text}
+                        </div>
+                    </div>
+                `;
+            } else {
+                bubbleHtml = `
+                    <div class="chat-message-content">
+                        <div><span class="student-name">${name}</span><span class="student-tech">${tech}</span></div>
+                        <div class="chat-bubble" style="border-radius: 0px 12px 12px 12px; margin-top: 4px;">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            }
+
+            row.innerHTML = avatarHtml + bubbleHtml;
+            container.appendChild(row);
             container.scrollTop = container.scrollHeight;
         }
 
