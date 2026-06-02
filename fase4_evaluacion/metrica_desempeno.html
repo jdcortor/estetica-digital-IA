@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas de Desempeño - Portafolios Digitales</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --header-dark: #222121;
+            --header-green: #2e8b57;
+            --header-green-hover: #246d43;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-main);
+            overflow: hidden;
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-green);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-green);
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- CARD DE CONSTRUCCIÓN --- */
+        .construction-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .construction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--header-green), #4ac9b5);
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(46, 139, 87, 0.1);
+            border: 2px dashed var(--header-green);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--header-green);
+            font-size: 45px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-family: var(--font-labels);
+            font-size: 26px;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .card-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .badge-construction {
+            background-color: rgba(226, 109, 92, 0.1);
+            color: #e26d5c;
+            border: 1px solid rgba(226, 109, 92, 0.2);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-map-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 15px;
+            background-color: var(--header-green);
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 139, 87, 0.3);
+            margin-top: 10px;
+        }
+
+        .back-map-btn:hover {
+            background-color: var(--header-green-hover);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(46, 139, 87, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Métrica de <span>Desempeño</span></h1>
+        </div>
+        <div class="actions-container">
+            <a href="../index.html" class="close-btn">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+        
+        <!-- CONSTRUCTION CARD -->
+        <div class="construction-card">
+            <div class="icon-container">
+                <i class="fa-solid fa-chart-simple"></i>
+            </div>
+            
+            <div class="badge-construction">
+                <i class="fa-solid fa-screwdriver-wrench"></i> En Construcción
+            </div>
+            
+            <h2 class="card-title">Métrica de Desempeño</h2>
+            
+            <p class="card-text">
+                Próximamente se integrará el panel analítico y los indicadores de rendimiento. Aquí visualizarás el progreso de aprendizaje, estadísticas de interacción y el índice IAP detallado por estudiante.
+            </p>
+            
+            <a href="../index.html" class="back-map-btn">
+                <i class="fa-solid fa-compass"></i> Ir al Mapa de Aprendizaje
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -220,14 +220,15 @@
         /* --- FONDOS DE COLOR INTERIOR DE LOS NODOS (PALETA PASTEL) --- */
         .node-1-bg { background: var(--showcase-purple); }
         .node-2-bg { background: var(--bulb-blue); }
-        .node-3-bg { background: var(--weebly-pink); }
-        .node-4-bg { background: var(--fresh-green); }
+        .node-3-bg { background: #e26d5c; }
+        .node-4-bg { background: var(--weebly-pink); }
         .node-5-bg { background: #f0a32f; }
         .node-6-bg { background: #2f94d9; }
-        .node-7-bg { background: var(--sway-teal); }
-        .node-8-bg { background: var(--kudos-teal); }
-        .node-9-bg { background: #5c6bc0; }
-        .node-10-bg { background: #e26d5c; }
+        .node-7-bg { background: #5c6bc0; }
+        .node-8-bg { background: var(--sway-teal); }
+        .node-9-bg { background: var(--fresh-green); }
+        .node-10-bg { background: var(--kudos-teal); }
+        .node-11-bg { background: #2e8b57; }
 
         /* Icono dentro del hexágono */
         .hexagon-icon {
@@ -277,38 +278,44 @@
             height: 224px;
         }
         .hex-5 {
+            top: 563px;
+            left: 772px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-6 {
             top: 603px;
             left: 402px;
             width: 195px;
             height: 224px;
         }
-        .hex-6 {
-            top: 438px;
-            left: 207px;
-            width: 195px;
-            height: 224px;
-        }
         .hex-7 {
-            top: 313px;
+            top: 563px;
             left: 32px;
             width: 195px;
             height: 224px;
         }
         .hex-8 {
-            top: 188px;
+            top: 438px;
             left: 207px;
             width: 195px;
             height: 224px;
         }
         .hex-9 {
-            top: 563px;
+            top: 313px;
             left: 32px;
             width: 195px;
             height: 224px;
         }
         .hex-10 {
-            top: 563px;
-            left: 772px;
+            top: 188px;
+            left: 207px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-11 {
+            top: 63px;
+            left: 32px;
             width: 195px;
             height: 224px;
         }
@@ -682,6 +689,8 @@
                         <line class="line" x1="130" y1="425" x2="130" y2="675" />
                         <line class="line" x1="695" y1="550" x2="870" y2="675" />
                         <line class="line" x1="870" y1="425" x2="870" y2="675" />
+                        <line class="line" x1="305" y1="300" x2="130" y2="175" />
+                        <line class="line" x1="130" y1="175" x2="130" y2="425" />
                     </svg>
 
                     <div class="network-container">
@@ -693,7 +702,7 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 1: CÁPSULA INTRODUCTORIA -->
+                        <!-- HEXÁGONO 1: CÁPSULA INTRO (Fase 1: Inmersión) -->
                         <div class="hexagon hex-1 node node-1" onclick="openPage('fase1_inmersion/capsula_introductoria.html')" data-tooltip="Presenta el portafolio y los objetivos">
                             <div class="hexagon-inner node-1-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
@@ -704,7 +713,7 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 2: MUSEO DIGITAL -->
+                        <!-- HEXÁGONO 2: MUSEO DIGITAL (Fase 1: Inmersión) -->
                         <div class="hexagon hex-2 node node-2" onclick="openPage('fase1_inmersion/museo_digital.html')" data-tooltip="Exhibición visual de los trabajos del alumno">
                             <div class="hexagon-inner node-2-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
@@ -719,9 +728,19 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 3: ABANICO IA -->
-                        <div class="hexagon hex-3 node node-3" onclick="openPage('fase2_apropiacion/abanico_ia.html')" data-tooltip="Integración de herramientas de Inteligencia Artificial">
+                        <!-- HEXÁGONO 3: TÉCNICAS (Fase 1: Inmersión) -->
+                        <div class="hexagon hex-3 node node-3" onclick="openPage('fase1_inmersion/contexto_tecnicas.html')" data-tooltip="Video de introducción y contexto de las técnicas artísticas del curso">
                             <div class="hexagon-inner node-3-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <path d="M50 15C30.67 15 15 30.67 15 50s15.67 35 35 35c8.28 0 15-6.72 15-15 0-3.33-1.09-6.39-2.94-8.88a1 1 0 0 1 .16-1.32C71.36 51.5 75 43.68 75 35 75 23.95 63.81 15 50 15zm-15 40c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm5-18c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15-5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15 10c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="white"/>
+                                </svg>
+                                <div class="hexagon-label">TÉCNICAS</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 4: ABANICO IA (Fase 2: Apropiación) -->
+                        <div class="hexagon hex-4 node node-4" onclick="openPage('fase2_apropiacion/abanico_ia.html')" data-tooltip="Integración de herramientas de Inteligencia Artificial">
+                            <div class="hexagon-inner node-4-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
                                     <circle cx="50" cy="80" r="10" fill="none" stroke="white" stroke-width="6" />
                                     <circle cx="20" cy="30" r="10" fill="none" stroke="white" stroke-width="6" />
@@ -735,18 +754,7 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 4: ACUERDO ÉTICO -->
-                        <div class="hexagon hex-4 node node-4" onclick="openPage('fase4_evaluacion/acuerdo_etico.html')" data-tooltip="Normas de convivencia y honestidad académica">
-                            <div class="hexagon-inner node-4-bg">
-                                <svg viewBox="0 0 100 100" class="hexagon-icon">
-                                    <path d="M 15 25 L 50 10 L 85 25 L 85 50 C 85 75 50 90 50 90 C 50 90 15 75 15 50 Z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
-                                    <path d="M 35 50 L 45 60 L 65 35" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <div class="hexagon-label">ACUERDO<br>ÉTICO</div>
-                            </div>
-                        </div>
-
-                        <!-- HEXÁGONO 5: PLATAFORMA DE CAPACITACIÓN -->
+                        <!-- HEXÁGONO 5: PLATAFORMA DE CAPACITACIÓN (Fase 2: Apropiación) -->
                         <div class="hexagon hex-5 node node-5" onclick="openPage('fase2_apropiacion/plataforma_capacitacion.html')" data-tooltip="Espacio para aprender a usar las herramientas">
                             <div class="hexagon-inner node-5-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
@@ -758,7 +766,7 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 6: AGENTE DAVINCI -->
+                        <!-- HEXÁGONO 6: AGENTE DAVINCI (Fase 3: Construcción) -->
                         <div class="hexagon hex-6 node node-6" onclick="openPage('fase3_construccion/agente_davinci.html')" data-tooltip="Tutor virtual o guía metodológica del curso">
                             <div class="hexagon-inner node-6-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
@@ -775,9 +783,19 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 7: BITÁCORA DIGITAL -->
-                        <div class="hexagon hex-7 node node-7" onclick="openPage('fase3_construccion/bitacora_digital.html')" data-tooltip="Bitácora Digital de Creación e Interacción con IA">
+                        <!-- HEXÁGONO 7: VIDEO REFLEXIÓN (Fase 3: Construcción) -->
+                        <div class="hexagon hex-7 node node-7" onclick="openPage('fase3_construccion/video_reflexion.html')" data-tooltip="Video de reflexión sobre el uso ético y práctico de IA en el arte">
                             <div class="hexagon-inner node-7-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <polygon points="30,20 30,80 80,50" fill="white" />
+                                </svg>
+                                <div class="hexagon-label">VIDEO<br>REFLEXIÓN</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 8: BITÁCORA DIGITAL (Fase 3: Construcción) -->
+                        <div class="hexagon hex-8 node node-8" onclick="openPage('fase3_construccion/bitacora_digital.html')" data-tooltip="Bitácora Digital de Creación e Interacción con IA">
+                            <div class="hexagon-inner node-8-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
                                     <rect x="30" y="15" width="45" height="70" rx="4" fill="none" stroke="white" stroke-width="8" />
                                     <line x1="20" y1="25" x2="30" y2="25" stroke="white" stroke-width="8" stroke-linecap="round" />
@@ -791,9 +809,20 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 8: RÚBRICA DE PORTAFOLIO -->
-                        <div class="hexagon hex-8 node node-8" onclick="openPage('fase4_evaluacion/rubrica_portafolio.html')" data-tooltip="Criterios de evaluación del portafolio final">
-                            <div class="hexagon-inner node-8-bg">
+                        <!-- HEXÁGONO 9: ACUERDO ÉTICO (Fase 4: Evaluación) -->
+                        <div class="hexagon hex-9 node node-9" onclick="openPage('fase4_evaluacion/acuerdo_etico.html')" data-tooltip="Normas de convivencia y honestidad académica">
+                            <div class="hexagon-inner node-9-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <path d="M 15 25 L 50 10 L 85 25 L 85 50 C 85 75 50 90 50 90 C 50 90 15 75 15 50 Z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                                    <path d="M 35 50 L 45 60 L 65 35" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="hexagon-label">ACUERDO<br>ÉTICO</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 10: RÚBRICA (Fase 4: Evaluación) -->
+                        <div class="hexagon hex-10 node node-10" onclick="openPage('fase4_evaluacion/rubrica_portafolio.html')" data-tooltip="Criterios de evaluación del portafolio final">
+                            <div class="hexagon-inner node-10-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
                                     <path d="M 15 30 L 40 30 L 50 40 L 85 40 L 85 80 L 15 80 Z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
                                     <path d="M 40 55 L 50 65 L 70 45" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
@@ -802,23 +831,16 @@
                             </div>
                         </div>
 
-                        <!-- HEXÁGONO 9: VIDEO REFLEXIÓN -->
-                        <div class="hexagon hex-9 node node-9" onclick="openPage('fase3_construccion/video_reflexion.html')" data-tooltip="Video de reflexión sobre el uso ético y práctico de IA en el arte">
-                            <div class="hexagon-inner node-9-bg">
+                        <!-- HEXÁGONO 11: MÉTRICA DE DESEMPEÑO (Fase 4: Evaluación) -->
+                        <div class="hexagon hex-11 node node-11" onclick="openPage('fase4_evaluacion/metrica_desempeno.html')" data-tooltip="Métricas e indicadores de desempeño y progreso del estudiante">
+                            <div class="hexagon-inner node-11-bg">
                                 <svg viewBox="0 0 100 100" class="hexagon-icon">
-                                    <polygon points="30,20 30,80 80,50" fill="white" />
+                                    <path d="M 20 80 L 80 80" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                                    <path d="M 30 70 L 30 50" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                                    <path d="M 50 70 L 50 30" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                                    <path d="M 70 70 L 70 20" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
                                 </svg>
-                                <div class="hexagon-label">VIDEO<br>REFLEXIÓN</div>
-                            </div>
-                        </div>
-
-                        <!-- HEXÁGONO 10: TÉCNICAS -->
-                        <div class="hexagon hex-10 node node-10" onclick="openPage('fase1_inmersion/contexto_tecnicas.html')" data-tooltip="Video de introducción y contexto de las técnicas artísticas del curso">
-                            <div class="hexagon-inner node-10-bg">
-                                <svg viewBox="0 0 100 100" class="hexagon-icon">
-                                    <path d="M50 15C30.67 15 15 30.67 15 50s15.67 35 35 35c8.28 0 15-6.72 15-15 0-3.33-1.09-6.39-2.94-8.88a1 1 0 0 1 .16-1.32C71.36 51.5 75 43.68 75 35 75 23.95 63.81 15 50 15zm-15 40c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm5-18c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15-5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15 10c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="white"/>
-                                </svg>
-                                <div class="hexagon-label">TÉCNICAS</div>
+                                <div class="hexagon-label">MÉTRICAS</div>
                             </div>
                         </div>
 
