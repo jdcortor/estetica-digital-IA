@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declaración de Uso de IA - ACRL AID Framework</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --header-dark: #222121;
+            --accent-teal: #3cb49e;
+            --accent-teal-hover: #2d9e88;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --border-light: rgba(255, 255, 255, 0.05);
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+            
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--accent-teal);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--accent-teal);
+        }
+
+        .title-container p {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: rgba(60, 180, 158, 0.2);
+            border-color: var(--accent-teal);
+            transform: scale(1.03);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- CARDS & PANELS --- */
+        .glass-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-teal), transparent);
+        }
+
+        .section-title {
+            font-family: var(--font-labels);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-desc {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* --- BUILDER FORM --- */
+        .builder-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-teal);
+        }
+
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13.5px;
+            padding: 10px 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 8px rgba(60, 180, 158, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* --- PREVIEW BOX --- */
+        .preview-box {
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1.5px dashed var(--accent-teal);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .preview-title {
+            font-family: var(--font-labels);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-content {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e4e4e7;
+            white-space: pre-wrap;
+            max-height: 350px;
+            overflow-y: auto;
+            background: #121214;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-teal);
+            color: #121214;
+            box-shadow: 0 4px 15px rgba(60, 180, 158, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-teal-hover);
+            transform: translateY(-1px);
+        }
+
+        /* --- RIGHT COLUMN: EXAMPLES --- */
+        .examples-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .example-tab {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .example-tab:hover {
+            background: rgba(60, 180, 158, 0.03);
+            border-color: rgba(60, 180, 158, 0.3);
+            transform: translateX(3px);
+        }
+
+        .example-tab.active {
+            border-color: var(--accent-teal);
+            background: rgba(60, 180, 158, 0.05);
+        }
+
+        .example-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .example-title {
+            font-family: var(--font-labels);
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .example-badge {
+            background-color: rgba(60, 180, 158, 0.2);
+            color: var(--accent-teal);
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .example-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast.show {
+            bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Declaración de <span>Uso de IA</span></h1>
+            <p>Ecosistema de Portafolios de Arte · ACRL AID Framework</p>
+        </div>
+        <button class="close-btn" onclick="window.location.href='../index.html'">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+        </button>
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="container">
+        
+        <!-- LEFT COLUMN: BUILDER -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fa-solid fa-gears"></i> Generador de Declaración (AID Framework)
+            </h2>
+            <p class="section-desc">
+                Completa los siguientes campos estructurados para dar transparencia y declarar cómo has utilizado la IA generativa en la co-creación de tus recursos o en la redacción de tus bitácoras.
+            </p>
+
+            <div class="builder-form">
+                <div class="form-group">
+                    <label for="f-tool">1. Herramienta utilizada</label>
+                    <input type="text" id="f-tool" class="form-control" placeholder="Ej. ChatGPT (GPT-4), Claude 3.5 Sonnet, Midjourney v6..." oninput="updateDisclosure()">
+                </div>
+
+                <div class="form-group">
+                    <label for="f-purpose">2. Propósito del uso</label>
+                    <textarea id="f-purpose" class="form-control" placeholder="Ej. Generar ideas de diseño, corregir gramática, traducción de prompts, estructurar la bitácora..." oninput="updateDisclosure()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-prompts">3. Prompts o instrucciones proporcionadas</label>
+                    <textarea id="f-prompts" class="form-control" placeholder="Ej. 'Crea un esquema de presentación para...', 'Corrige el estilo y ortografía de este párrafo...'" oninput="updateDisclosure()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-usage">4. Uso del contenido generado</label>
+                    <textarea id="f-usage" class="form-control" placeholder="Ej. Utilizado directamente, adaptado parcialmente por el autor, usado de referencia conceptual..." oninput="updateDisclosure()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-review">5. Revisión y edición</label>
+                    <textarea id="f-review" class="form-control" placeholder="Ej. Se verificó la veracidad de la información, se reescribió de manera crítica para encajar los objetivos..." oninput="updateDisclosure()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-ethics">6. Limitaciones y consideraciones éticas</label>
+                    <textarea id="f-ethics" class="form-control" placeholder="Ej. No se generó material fraudulento ni ideas ajenas a mi criterio. Asumo la responsabilidad total..." oninput="updateDisclosure()"></textarea>
+                </div>
+            </div>
+
+            <!-- LIVE PREVIEW -->
+            <div class="preview-box">
+                <div class="preview-title">
+                    <span>Declaración Generada (Copiar al final de tu proyecto)</span>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <div class="preview-content" id="output-text">Completa los campos de arriba para compilar tu declaración.</div>
+            </div>
+
+            <button class="btn btn-primary" onclick="copyToClipboard()">
+                <i class="fa-solid fa-copy"></i> Copiar Declaración al Portafolio
+            </button>
+        </div>
+
+        <!-- RIGHT COLUMN: EXAMPLES -->
+        <div class="examples-sidebar">
+            <h2 class="section-title" style="font-size: 18px;">
+                <i class="fa-solid fa-lightbulb"></i> Ejemplos de Referencia
+            </h2>
+            <p class="section-desc">
+                Selecciona uno de los siguientes casos de uso recomendados para cargar la plantilla y guiarte en tu redacción.
+            </p>
+
+            <!-- Example 1 -->
+            <div class="example-tab" onclick="loadExample(1)">
+                <div class="example-header">
+                    <span class="example-title">Caso 1: Corrección Estética</span>
+                    <span class="example-badge">Básico</span>
+                </div>
+                <p class="example-desc">
+                    Uso enfocado exclusivamente a la corrección ortográfica, gramatical y mejora del estilo de redacción de los textos.
+                </p>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="example-tab" onclick="loadExample(2)">
+                <div class="example-header">
+                    <span class="example-title">Caso 2: Co-Creación de Idea</span>
+                    <span class="example-badge">Avanzado</span>
+                </div>
+                <p class="example-desc">
+                    Uso interactivo con IA para lluvia de ideas inicial, conceptualización y esquematización de los recursos artísticos.
+                </p>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="example-tab" onclick="loadExample(3)">
+                <div class="example-header">
+                    <span class="example-title">Caso 3: Apoyo en Redacción</span>
+                    <span class="example-badge">Avanzado</span>
+                </div>
+                <p class="example-desc">
+                    Uso para el diseño de prompts instruccionales y redacción de borradores académicos y de reflexión de estética en inglés.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="copy-toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i> ¡Copiado con éxito en el portapapeles!
+    </div>
+
+    <script>
+        // Predefined examples from Uso declaración IA.txt
+        const examples = {
+            1: {
+                tool: "Grammarly",
+                purpose: "Se empleó para la corrección ortográfica y gramatical del texto antes de su entrega final en la bitácora.",
+                prompts: "El documento completo fue cargado en la plataforma y se aplicaron las sugerencias automáticas de mejora de claridad.",
+                usage: "Se aceptaron sugerencias automáticas relacionadas con puntuación, ortografía y reformulación de frases por claridad.",
+                review: "Todas las sugerencias gramaticales fueron revisadas manualmente una a una antes de ser aplicadas al documento final.",
+                ethics: "No se utilizó la herramienta para generar contenido nuevo, ideas externas ni para alterar el significado original de mis reflexiones."
+            },
+            2: {
+                tool: "ChatGPT (versión GPT-4, OpenAI)",
+                purpose: "Se utilizó para generar ideas iniciales, estructurar el esquema del trabajo de Estética y redactar un borrador preliminar del apartado introductorio de portafolio.",
+                prompts: "“Resume en 300 palabras el concepto de ciudadanía digital para estudiantes de secundaria.”\n“Proporciona una estructura para un ensayo académico sobre alfabetización informacional.”",
+                usage: "El contenido y la estructura propuestos por la IA fueron utilizados como punto de partida. La redacción final fue elaborada, expandida y reescrita en su totalidad por el autor, manteniendo solo algunas frases clave de la versión generada.",
+                review: "Todo el contenido generado por la IA fue revisado críticamente, contrastado con las fuentes académicas del curso y reescrito para adecuarlo a los objetivos prácticos del aula taller.",
+                ethics: "Se evitó el uso automático o literal del contenido de la IA sin previa revisión de coherencia. Se asume la responsabilidad plena sobre la autoría y la veracidad de los contenidos presentados."
+            },
+            3: {
+                tool: "ChatGPT (GPT-4, OpenAI)",
+                purpose: "La herramienta se utilizó como apoyo en la redacción preliminar de algunos fragmentos del apartado metodológico, así como para reformular ciertos pasajes del texto con el fin de mejorar la claridad expresiva en inglés académico.",
+                prompts: "“Reformulate this paragraph in academic English, suitable for a peer-reviewed article in social sciences.”\n“Generate a draft description of qualitative content analysis based on Mayring’s approach.”\n“What are typical ethical considerations in ethnographic research on family structures?”",
+                usage: "Algunas frases y formulaciones sugeridas por la herramienta fueron adaptadas y reformuladas por el autor, integrándose en secciones específicas del manuscrito. Ningún contenido fue incluido de forma literal sin revisión.",
+                review: "Todo el material generado fue verificado por el autor, contrastado con la bibliografía citada y revisado para asegurar precisión conceptual y coherencia con el marco teórico del estudio.",
+                ethics: "La herramienta no fue utilizada para generar resultados de investigación, análisis de datos ni redacción de conclusiones. Se tuvo especial cuidado en evitar cualquier forma de plagio o dependencia acrítica del contenido generado. La responsabilidad de la autoría y del contenido final recae exclusivamente en el firmante."
+            }
+        };
+
+        // Initialize with case 1 on load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExample(1);
+        });
+
+        function loadExample(id) {
+            // Remove active classes
+            const tabs = document.querySelectorAll('.example-tab');
+            tabs.forEach((tab, index) => {
+                if (index === (id - 1)) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Set inputs
+            const ex = examples[id];
+            document.getElementById('f-tool').value = ex.tool;
+            document.getElementById('f-purpose').value = ex.purpose;
+            document.getElementById('f-prompts').value = ex.prompts;
+            document.getElementById('f-usage').value = ex.usage;
+            document.getElementById('f-review').value = ex.review;
+            document.getElementById('f-ethics').value = ex.ethics;
+
+            updateDisclosure();
+        }
+
+        // Live compile the ACRL AID text format
+        function updateDisclosure() {
+            const tool = document.getElementById('f-tool').value.trim() || '---';
+            const purpose = document.getElementById('f-purpose').value.trim() || '---';
+            const prompts = document.getElementById('f-prompts').value.trim() || '---';
+            const usage = document.getElementById('f-usage').value.trim() || '---';
+            const review = document.getElementById('f-review').value.trim() || '---';
+            const ethics = document.getElementById('f-ethics').value.trim() || '---';
+
+            const formattedText = `DECLARACIÓN DE USO DE HERRAMIENTAS DE INTELIGENCIA ARTIFICIAL (AID Framework)
+
+1. Herramienta utilizada:
+${tool}
+
+2. Propósito del uso:
+${purpose}
+
+3. Prompts o instrucciones proporcionadas:
+${prompts}
+
+4. Uso del contenido generado:
+${usage}
+
+5. Revisión y edición:
+${review}
+
+6. Limitaciones y consideraciones éticas:
+${ethics}`;
+
+            document.getElementById('output-text').textContent = formattedText;
+        }
+
+        // Copy compiled disclosure text
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('output-text').textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const toast = document.getElementById('copy-toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
