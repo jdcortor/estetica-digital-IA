@@ -1127,6 +1127,116 @@
             width: 220px;
         }
 
+        /* --- POPUP MODAL --- */
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px;
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 85%;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-yellow);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .addie-modal-body {
+            flex: 1;
+            background: #525659;
+            position: relative;
+        }
+
+        .addie-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .addie-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--header-dark);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: var(--header-yellow);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(251, 208, 8, 0.3);
+        }
+
+        .addie-btn:hover {
+            background-color: var(--header-yellow-hover);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.5);
+        }
+
         /* --- STYLES EXCLUSIVOS PARA IMPRESIÓN --- */
         @media print {
             body * {
@@ -1159,6 +1269,9 @@
         </div>
         
         <div class="actions-container">
+            <button class="addie-btn" onclick="openAddieModal()" title="Ver Diseño de Recurso">
+                <i class="fa-solid fa-book-open"></i> Diseño de Recurso
+            </button>
             <button class="close-btn" onclick="volverAlMapa()">
                 <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
             </button>
@@ -1950,6 +2063,35 @@
         function volverAlMapa() {
             window.location.href = "../index.html";
         }
+
+        // --- 10. FUNCIONES DEL MODAL DE DISEÑO DE RECURSO ---
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+        window.closeAddieModal = closeAddieModal;
+
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
+            }
+        }
     </script>
+
+    <!-- Popup Modal para desplegar diseno_abanico_ia.html -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body">
+                <iframe src="diseno_abanico_ia.html"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

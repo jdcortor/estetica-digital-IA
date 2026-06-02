@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diseño Instruccional - Plataforma de Capacitación</title>
+    <title>Diseño Instruccional - Bitácora Digital</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
@@ -21,9 +21,9 @@
             --gold-500: #eab308;
             --gold-600: #ca8a04;
             
-            /* Colores de las fases ADDIE con énfasis en púrpura (Fase 2: Apropiación) */
-            --color-overview: #f4629e;      /* Rosado/Púrpura */
-            --color-overview-rgb: 244, 98, 158;
+            /* Colores de las fases ADDIE con énfasis en púrpura (Fase 3: Construcción) */
+            --color-overview: #6c53a3;      /* Púrpura Showcase */
+            --color-overview-rgb: 108, 83, 163;
             --color-analysis: #7c3aed;      /* Morado */
             --color-analysis-rgb: 124, 58, 237;
             --color-design: #0891b2;        /* Cian */
@@ -57,7 +57,7 @@
 
         /* --- ENCABEZADO --- */
         .dashboard-header {
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            background: linear-gradient(135deg, #eef2f6 0%, #f3effa 100%);
             color: var(--slate-900);
             padding: 15px 40px;
             border-bottom: 3.5px solid var(--slate-300);
@@ -82,15 +82,15 @@
         .header-icon-box {
             width: 48px;
             height: 48px;
-            background-color: rgba(244, 98, 158, 0.08);
-            border: 1px solid rgba(244, 98, 158, 0.2);
+            background-color: rgba(108, 83, 163, 0.08);
+            border: 1px solid rgba(108, 83, 163, 0.2);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-overview);
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(244, 98, 158, 0.05);
+            box-shadow: 0 0 10px rgba(108, 83, 163, 0.05);
         }
 
         .header-title-wrapper h1 {
@@ -520,7 +520,7 @@
         }
 
         .submit-btn:hover {
-            background-color: #e04f8b;
+            background-color: #553e85;
         }
 
         .feedback-item {
@@ -557,17 +557,20 @@
         <div class="header-content-left">
             <div class="header-icon-box">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
-                    <path d="M23 7a2 2 0 0 0-2.45-1.45L11 8 1 5.5A2 2 0 0 0 0 7v10a2 2 0 0 0 2.45 1.45L11 16l10 2.5A2 2 0 0 0 24 17V7z"></path>
-                    <path d="M11 8v8"></path>
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
             </div>
             <div class="header-title-wrapper">
-                <h1>Diseño Instruccional · Plataforma de Capacitación</h1>
+                <h1>Diseño Instruccional · Bitácora Digital</h1>
                 <p>Modelo ADDIE en Acción · Portafolio Digital de Estética · Grado 11</p>
             </div>
         </div>
         <div class="header-content-right">
-            <span class="active-tab-badge" style="background-color: rgba(244, 98, 158, 0.1); color: var(--color-overview);">Fase 2: Apropiación</span>
+            <span class="active-tab-badge" style="background-color: rgba(108, 83, 163, 0.1); color: var(--color-overview);">Fase 3: Construcción</span>
             <a href="#" class="close-dashboard-btn" onclick="if(window.parent && window.parent.closeAddieModal) { window.parent.closeAddieModal(); } return false;">&times;</a>
         </div>
     </header>
@@ -631,31 +634,31 @@
                     </div>
                     <div class="highlight-box">
                         <p class="text-p" style="font-weight: 600; color: var(--slate-800);">
-                            La "Plataforma de Capacitación y Aula Virtual en Vivo" es un entorno de streaming escolar simulado que busca que los estudiantes de grado 11 se apropien de conceptos técnicos y estéticos de las diferentes disciplinas mediante la simulación de clases en vivo, la discusión y el debate interactivo apoyado por IA.
+                             La "Bitácora Digital" es un diario de campo interactivo y portafolio reflexivo diseñado para que los estudiantes de grado 11 del Colegio Danilo Cifuentes documenten de forma sistemática y crítica sus procesos creativos en las técnicas artísticas, evaluando su nivel de agencia e interacción con la IA.
                         </p>
                     </div>
                     <p class="text-p">
-                        Este recurso está diseñado bajo los lineamientos de la <strong>Fase 2: Apropiación</strong>, permitiendo a los alumnos evaluar, opinar y debatir sobre las transmisiones de sus compañeros y tutores, asimilando conceptos sobre portafolio de arte, museos tridimensionales, composición tipográfica y tejido textil en crochet.
+                        Este recurso pertenece a la **Fase 3: Construcción**. En ella, el estudiante registra las entradas de su diario anotando los prompts empleados, el resultado de la IA, su autoevaluación ética y el contraste comparativo con las metodologías físicas. Un medidor interactivo calcula en tiempo real su nivel de agencia (Consumidor Pasivo, Co-creador o Editor Activo) para incentivar la redacción analítica de mayor complejidad.
                     </p>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-entries">120</div>
-                        <div class="stat-label">Espectadores Simulados</div>
+                        <div class="stat-value" id="stat-entries">14</div>
+                        <div class="stat-label">Entradas Registradas</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-time">15.5m</div>
-                        <div class="stat-label">Permanencia Promedio</div>
+                        <div class="stat-value" id="stat-time">82%</div>
+                        <div class="stat-label">Agencia Promedio</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-avg-rating">4.8 ★</div>
-                        <div class="stat-label">Calificación Docente</div>
+                        <div class="stat-value" id="stat-avg-rating">20</div>
+                        <div class="stat-label">Estudiantes Activos</div>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
-                    <button class="submit-btn" id="simulate-entry-btn">Simular Ingreso de Estudiante</button>
+                    <button class="submit-btn" id="simulate-entry-btn">Simular Registro de Entrada</button>
                 </div>
             </div>
 
@@ -667,19 +670,19 @@
                         Fase de Análisis (ADDIE)
                     </div>
                     <p class="text-p">
-                        <strong>Problema Educativo:</strong> Los estudiantes suelen mostrar apatía en las clases teóricas de estética y diseño gráfico. Necesitan relacionar los conceptos abstractos (composición visual, curaduría, texturas textiles) con situaciones reales y proyectos prácticos.
+                        <strong>Problema Educativo:</strong> Los estudiantes a menudo ven el diario de campo tradicional en papel como un ejercicio rutinario e inútil, lo que resulta en una documentación pobre o inexistente de su interacción con la IA. Esto impide hacer visible el pensamiento de diseño detrás de cada prompt y la comparación de la obra digital con la destreza manual analógica.
                     </p>
                     <p class="text-p">
-                        <strong>Público Objetivo:</strong> Alumnos de grado 11 del Colegio Danilo Cifuentes, nativos digitales que disfrutan de las interfaces interactivas (tipo Twitch o YouTube Live) y están familiarizados con redes sociales.
+                        <strong>Público Objetivo:</strong> Estudiantes de grado 11 del Colegio Danilo Cifuentes. Poseen teléfonos y laptops, pero necesitan andamiajes tecnológicos que los motiven a justificar críticamente sus decisiones de diseño en lugar de delegar todo el esfuerzo intelectual en el algoritmo.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
                             <button class="accordion-header" onclick="toggleAccordion(this)">Requerimientos Tecnológicos</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li>Acceso web local responsivo y offline compatible.</li>
-                                    <li>Simulación interactiva de streaming de video sin dependencias obligatorias de conectividad externa compleja.</li>
-                                    <li>Ecosistema de chat simulado con avatares visuales y comportamiento realista enriquecido con modelos generativos (Gemini API) o fallback local.</li>
+                                    <li>Funcionamiento local robusto y offline (usando `localStorage` del navegador para almacenamiento local por estudiante).</li>
+                                    <li>Editor de texto enriquecido estructurado por criterios instruccionales humanos.</li>
+                                    <li>Widget interactivo que muestre el cálculo inmediato del nivel de agencia del estudiante según el texto provisto.</li>
                                 </ul>
                             </div>
                         </div>
@@ -695,17 +698,26 @@
                         Fase de Diseño (ADDIE)
                     </div>
                     <p class="text-p">
-                        La interfaz del recurso fue diseñada imitando las plataformas modernas de streaming de videojuegos y capacitaciones profesionales en modo oscuro premium, lo que reduce el cansancio visual y genera mayor engagement.
+                        El diseño de la Bitácora Digital fomenta la **Agencia del Estudiante**, la cual se conceptualiza en tres niveles de interacción con la IA:
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Decisiones de Interfaz</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Nivel de Agencia Estudiantil</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Barra de Canales Lateral:</strong> Facilita la navegación rápida entre transmisiones correspondientes a las técnicas de los estudiantes.</li>
-                                    <li><strong>Reproductor Central Híbrido:</strong> Capacidad de reproducir videos locales (MP4) y videos remotos (YouTube) con detección inteligente de conexión local.</li>
-                                    <li><strong>Chat Lateral en Vivo:</strong> Visualización de comentarios simulados de compañeros ficticios para fomentar la sensación de comunidad escolar.</li>
-                                    <li><strong>Encuestas Interactivas (Polls):</strong> Lanzadas de forma aleatoria por el moderador para testear y evaluar conceptos estéticos directamente en el chat.</li>
+                                    <li><strong>Consumidor Pasivo (Baja Agencia):</strong> El alumno utiliza la IA para generar el resultado final de la obra sin reflexiones estéticas o cambios de parámetros. Se detecta si los campos de análisis tienen pocos caracteres.</li>
+                                    <li><strong>Co-creador (Media Agencia):</strong> El alumno interactúa con la IA en una lógica dialógica de ida y vuelta (iteración de prompts) y compara el resultado con su trabajo tradicional.</li>
+                                    <li><strong>Editor Activo (Alta Agencia):</strong> El estudiante domina la herramienta, analiza los sesgos, justifica la conveniencia estética y demuestra que el criterio del creador humano prevalece sobre la IA.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Estructura de la Interfaz</button>
+                            <div class="accordion-body">
+                                <ul class="bullet-list">
+                                    <li><strong>Panel Izquierdo:</strong> Perfil del estudiante, técnica seleccionada en el aula taller, y barra de rango de agencia media histórica.</li>
+                                    <li><strong>Panel Central (Editor):</strong> Formulario con 5 campos obligatorios: Prompts, Salida de IA, Comparación manual/digital, Justificación de uso y Reflexión ética.</li>
+                                    <li><strong>Panel Derecho (Historial):</strong> Lista de bitácoras pasadas con buscador de texto y pestañas de filtrado instantáneo por técnica de Estética.</li>
                                 </ul>
                             </div>
                         </div>
@@ -721,16 +733,16 @@
                         Fase de Desarrollo (ADDIE)
                     </div>
                     <p class="text-p">
-                        El desarrollo técnico del recurso involucró tecnologías web estándar para asegurar un despliegue libre de trabas, compatible con el disco de Google Drive del docente y sistemas offline.
+                        La programación de la Bitácora Digital se centra en la ligereza y portabilidad técnica para los computadores del colegio.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Detalles del Código</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Detalles Técnicos</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Integración con Gemini API:</strong> Uso de fetch asíncrono para comunicarse con el modelo `gemini-2.5-flash` generando comentarios realistas con modismos escolares colombianos.</li>
-                                    <li><strong>Generador de Avatares:</strong> Integración de la API de UI-Avatars para renderizar círculos con iniciales dinámicas para cada participante.</li>
-                                    <li><strong>Reproductor Híbrido:</strong> Etiqueta `<iframe>` para YouTube o `<video>` HTML5 nativo de manera transparente según la preferencia y contexto de red.</li>
+                                    <li><strong>Cálculo de Agencia Dinámico:</strong> Algoritmo JavaScript que evalúa en tiempo real las longitudes de los campos reflexivos. El núcleo de la ponderación reside en la **Justificación (20%)**, la **Comparación Crítica (20%)**, el **Prompt (15%)** y la **Reflexión Ética (15%)**, arrojando una escala de 0 a 100%.</li>
+                                    <li><strong>Persistencia de Sesión:</strong> Validación en base a claves personalizadas en `localStorage` (p. ej., `entries_ID_ESTUDIANTE`) para mantener bitácoras separadas en computadores de uso compartido en la sala de informática.</li>
+                                    <li><strong>Avatares Vectoriales Dinámicos:</strong> Renderización automática de un avatar geométrico SVG con la letra inicial correspondiente a la técnica de Estética de su perfil de usuario.</li>
                                 </ul>
                             </div>
                         </div>
@@ -746,16 +758,17 @@
                         Fase de Implementación (ADDIE)
                     </div>
                     <p class="text-p">
-                        El recurso es desplegado por el docente en el aula de informática. Se comparte el enlace local a `plataforma_capacitacion.html` para que cada estudiante ingrese con su respectiva ficha del portafolio.
+                        La bitácora se usa a lo largo del periodo académico en el aula-taller cada vez que se interactúa con una IA.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Cronograma de Uso</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Protocolo para el Estudiante</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Semana 1:</strong> Presentación y visualización del Canal 1 (Inmersión en el proyecto).</li>
-                                    <li><strong>Semana 2:</strong> Debate grupal en base a la curaduría del Canal 2 (Museos 3D).</li>
-                                    <li><strong>Semana 3:</strong> Práctica individual y revisión de técnicas en el Canal 4 (Crochet Artístico).</li>
+                                    <li><strong>Paso 1:</strong> Identificación en la plataforma escolar con nombre y técnica artística.</li>
+                                    <li><strong>Paso 2:</strong> Diligenciamiento de la bitácora tras cada sesión práctica de co-creación con el Agente DaVinci u otras IAs.</li>
+                                    <li><strong>Paso 3:</strong> Monitoreo del nivel de agencia en tiempo real para reescribir y profundizar los análisis cualitativos de ser necesario.</li>
+                                    <li><strong>Paso 4:</strong> Guardado de la entrada para actualizar el historial local del estudiante.</li>
                                 </ul>
                             </div>
                         </div>
@@ -771,7 +784,7 @@
                         Fase de Evaluación (ADDIE)
                     </div>
                     <p class="text-p">
-                        Para evaluar la efectividad y la satisfacción de este recurso educativo, los estudiantes y docentes califican su experiencia y dejan un comentario cualitativo.
+                        El docente evalúa el portafolio digital revisando el nivel de agencia consolidado de la Bitácora Digital, que representa el 55% de la nota final en la Fase 3: Construcción.
                     </p>
                     
                     <div class="eval-section">
@@ -785,7 +798,7 @@
                         </div>
                         <div class="eval-input-group">
                             <input type="text" id="eval-author" class="eval-input" placeholder="Nombre completo...">
-                            <input type="text" id="eval-comment" class="eval-input" placeholder="Comentario sobre el recurso...">
+                            <input type="text" id="eval-comment" class="eval-input" placeholder="Comentario sobre la Bitácora Digital...">
                             <button class="submit-btn" id="submit-eval-btn" style="margin-top: 5px;">Enviar Evaluación</button>
                         </div>
                     </div>
@@ -795,17 +808,17 @@
                         <div id="feedback-container">
                             <div class="feedback-item">
                                 <div class="feedback-meta">
-                                    <span>Valeria Ortiz</span>
+                                    <span>Mateo Aristizábal</span>
                                     <span class="feedback-stars">★★★★★</span>
                                 </div>
-                                <div class="feedback-text">Me encantó el chat en vivo con avatares, de verdad parece que estuviéramos en directo todos participando al mismo tiempo. Muy bacano.</div>
+                                <div class="feedback-text">El indicador en tiempo real de 'Rango actual' es excelente. Te exige justificar bien los prompts para poder subir de rango y no quedarte como Consumidor Pasivo.</div>
                             </div>
                             <div class="feedback-item">
                                 <div class="feedback-meta">
-                                    <span>Santiago Gómez</span>
+                                    <span>Liliana Varela (Docente)</span>
                                     <span class="feedback-stars">★★★★★</span>
                                 </div>
-                                <div class="feedback-text">Poder alternar entre el video local y YouTube es un golazo porque en mi casa el internet falla y con el video local pude ver todo al instante.</div>
+                                <div class="feedback-text">Me facilita enormemente revisar la bitácora de los alumnos de manera offline, viendo inmediatamente sus porcentajes de agencia e historial ordenado por técnicas.</div>
                             </div>
                         </div>
                     </div>
@@ -859,7 +872,7 @@
                     activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
                     if (!tabColor.startsWith('rgb')) {
                         activeTabBadge.style.color = `var(--color-${tabId})`;
-                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 244, 98, 158), 0.1)`;
+                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 108, 83, 163), 0.1)`;
                     }
                 }
                 activePane.scrollTop = 0;
@@ -883,21 +896,24 @@
 
             switchTab('overview');
 
-            // --- SIMULADOR DE INGRESO DE ESTUDIANTES ---
+            // --- SIMULADOR DE REGISTRO DE BITÁCORAS ---
             const simulateBtn = document.getElementById('simulate-entry-btn');
             const statEntries = document.getElementById('stat-entries');
             const statTime = document.getElementById('stat-time');
 
-            let currentEntries = 120;
-            let currentMinutes = 15.5;
+            let currentEntries = 14;
+            let currentAgency = 82;
 
             simulateBtn.addEventListener('click', () => {
                 currentEntries += 1;
-                currentMinutes = parseFloat((currentMinutes + (Math.random() * 0.1 - 0.03)).toFixed(1));
-                if (currentMinutes < 5) currentMinutes = 5;
-
+                if (Math.random() > 0.6) {
+                    currentAgency = Math.min(100, currentAgency + 1);
+                } else {
+                    currentAgency = Math.max(50, currentAgency - 1);
+                }
+                
                 statEntries.innerText = currentEntries;
-                statTime.innerText = `${currentMinutes}m`;
+                statTime.innerText = `${currentAgency}%`;
                 
                 statEntries.style.transform = 'scale(1.12)';
                 statEntries.style.transition = 'transform 0.1s ease';
@@ -932,7 +948,7 @@
             const feedbackContainer = document.getElementById('feedback-container');
             const statAvgRating = document.getElementById('stat-avg-rating');
 
-            let totalRatingSum = (5 * 5) + (5 * 5); // Valeria (5) + Santiago (5)
+            let totalRatingSum = (5 * 5) + (5 * 5); // Mateo (5) + Liliana (5)
             let ratingCount = 2;
 
             submitBtn.addEventListener('click', () => {

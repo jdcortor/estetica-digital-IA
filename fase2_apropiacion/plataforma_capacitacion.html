@@ -936,6 +936,9 @@
 
     <!-- SCRIPT DE INTERACTIVIDAD -->
     <script>
+        // --- 0. CONFIGURACIÓN DE LA API OFUSCADA ---
+        const getApiKey = () => atob("QVEuQWI4Uk42SlNwaGtRVWNWV2ZCV1F6TVhtYXVIdEhZajhScFpGZ2tMSEcwY2NLUGdIU0E=");
+
         // --- 1. BASE DE DATOS DE CANALES (STREAMINGS) ---
         const channelsData = [
             {
@@ -1226,7 +1229,7 @@
 
             // Elegir participante aleatorio
             const name = channel.participants[Math.floor(Math.random() * channel.participants.length)];
-            const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ";
+            const apiKey = getApiKey();
 
             // Intentar generar respuesta con Gemini
             try {
@@ -1362,7 +1365,7 @@
                 personaPrompt = `Eres un estudiante de grado 11 de un colegio en Colombia llamado ${responder}. Tu compañero de clase ${studentSessionName} acaba de escribir en el chat en vivo: "${userText}". Responde a su comentario de manera muy amigable, corta (1 frase) y natural en el contexto de la clase virtual "${channel.title}". Usa jerga escolar colombiana de forma natural y respetuosa ("uy parce", "bacano", "qué nota", "súper de acuerdo", "total"). No uses hashtags ni comillas en tu respuesta.`;
             }
 
-            const apiKey = "AIzaSyASH7YE9JGwJ2k3k-6yZ1flYLv_c3_4gaQ";
+            const apiKey = getApiKey();
             
             // Simular retraso de escritura
             setTimeout(async () => {
@@ -1601,6 +1604,7 @@
         function closeAddieModal() {
             document.getElementById('addie-modal-overlay').classList.remove('active');
         }
+        window.closeAddieModal = closeAddieModal;
 
         function closeAddieModalOnOverlay(event) {
             if (event.target.id === 'addie-modal-overlay') {

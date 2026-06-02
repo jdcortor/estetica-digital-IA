@@ -164,7 +164,9 @@
             background: radial-gradient(circle at center, #1b1b1f 0%, #0d0d0e 80%);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding: 60px 0;
+            overflow-y: auto;
             z-index: 100;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
@@ -185,6 +187,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             text-align: center;
             animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-top: -60px;
         }
 
         @keyframes slideUp {
@@ -259,6 +262,13 @@
             background: rgba(0, 0, 0, 0.5);
         }
 
+        .form-group input[readonly], .form-group select:disabled {
+            background: rgba(0, 0, 0, 0.15);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -285,6 +295,7 @@
         .dashboard {
             width: 100%;
             height: 100%;
+            min-height: 0;
             display: grid;
             grid-template-columns: 320px 1fr 380px;
             gap: 20px;
@@ -307,6 +318,7 @@
             flex-direction: column;
             overflow: hidden;
             height: 100%;
+            min-height: 0;
         }
 
         /* --- PANEL 1: USUARIO Y OPCIONES --- */
@@ -315,6 +327,7 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
+            overflow-y: auto;
         }
 
         .profile-card {
@@ -909,6 +922,43 @@
             fill: currentColor;
         }
 
+        .addie-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--header-dark);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: var(--header-yellow);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(251, 208, 8, 0.3);
+        }
+
+        .addie-btn:hover {
+            background-color: var(--header-yellow-hover);
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.5);
+        }
+
+        .addie-modal-body-iframe {
+            flex: 1;
+            background: #525659;
+            position: relative;
+        }
+
+        .addie-modal-body-iframe iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
         /* --- POPUP MODAL (RÚBRICA) --- */
         .addie-modal-overlay {
             position: fixed;
@@ -1096,8 +1146,8 @@
             <h1>Bitácora <span>Digital</span></h1>
         </div>
         <div class="actions-container">
-            <button class="action-btn" onclick="openRubricModal()" title="Ver rúbrica evaluativa del proyecto">
-                <span>📋</span> Rúbrica Evaluativa
+            <button class="addie-btn" onclick="openAddieModal()" title="Ver Diseño de Recurso">
+                <span>📖</span> Diseño de Recurso
             </button>
             <a href="../index.html" class="close-btn">
                 <span>&times;</span> Volver al Mapa
@@ -1121,21 +1171,9 @@
                 
                 <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label for="input-name">Nombre Completo</label>
-                        <input type="text" id="input-name" placeholder="Ej. Carlos Mendoza" required autocomplete="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="input-code">Usuario / Código</label>
-                        <input type="text" id="input-code" placeholder="Ej. EST-11-042" required autocomplete="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="select-technique">Técnica Seleccionada</label>
-                        <select id="select-technique" required>
-                            <option value="" disabled selected>-- Elige una técnica --</option>
-                            <option value="composición y tipografía">Diseño Visual: Composición y Tipografía</option>
-                            <option value="maquetado">Diseño Espacial: Maquetado (Mockup)</option>
-                            <option value="diario ilustrado">Cuerpo y Expresión: Diario de Campo Ilustrado</option>
-                            <option value="crochet">Diseño Artístico y Material: Crochet</option>
+                        <label for="select-student">Selecciona tu Nombre</label>
+                        <select id="select-student" required>
+                            <option value="" disabled selected>-- Selecciona tu nombre --</option>
                         </select>
                     </div>
                     <button type="submit" class="login-btn">Ingresar a mi Bitácora</button>
@@ -1320,6 +1358,19 @@
 
     </div>
 
+    <!-- Popup Modal para desplegar diseno_bitacora_digital.html -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body-iframe">
+                <iframe src="diseno_bitacora_digital.html"></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- POPUP MODAL (RÚBRICA DE BITÁCORA) -->
     <div id="rubric-modal-overlay" class="addie-modal-overlay" onclick="closeRubricModalOnOverlay(event)">
         <div class="addie-modal-container">
@@ -1450,6 +1501,30 @@
         let activeFilter = 'all';
         let isEditing = false;
 
+        // Listado de 20 estudiantes predefinidos
+        const studentsList = [
+            { name: "Carlos Mendoza", code: "EST-11-001", technique: "composición y tipografía" },
+            { name: "Diana Albarracín", code: "EST-11-002", technique: "composición y tipografía" },
+            { name: "Andrés Felipe Celis", code: "EST-11-003", technique: "composición y tipografía" },
+            { name: "Sofía Valentina Duarte", code: "EST-11-004", technique: "composición y tipografía" },
+            { name: "Juan Esteban Galán", code: "EST-11-005", technique: "composición y tipografía" },
+            { name: "Camila Andrea Gómez", code: "EST-11-006", technique: "maquetado" },
+            { name: "Mateo Aristizábal", code: "EST-11-007", technique: "maquetado" },
+            { name: "Paula Valentina Herrera", code: "EST-11-008", technique: "maquetado" },
+            { name: "Diego Alejandro Ibáñez", code: "EST-11-009", technique: "maquetado" },
+            { name: "Sebastián Jaramillo", code: "EST-11-010", technique: "maquetado" },
+            { name: "Mariana Lozano", code: "EST-11-011", technique: "diario ilustrado" },
+            { name: "Nicolás Muñoz", code: "EST-11-012", technique: "diario ilustrado" },
+            { name: "Valentina Ortiz", code: "EST-11-013", technique: "diario ilustrado" },
+            { name: "Santiago Gómez", code: "EST-11-014", technique: "diario ilustrado" },
+            { name: "Laura Daniela Pineda", code: "EST-11-015", technique: "diario ilustrado" },
+            { name: "Juan David Marín", code: "EST-11-016", technique: "crochet" },
+            { name: "Gabriela Quiroga", code: "EST-11-017", technique: "crochet" },
+            { name: "Daniel Eduardo Rincón", code: "EST-11-018", technique: "crochet" },
+            { name: "Sara Melissa Tobón", code: "EST-11-019", technique: "crochet" },
+            { name: "Kevin Alexis Urrego", code: "EST-11-020", technique: "crochet" }
+        ];
+
         // Cargar datos al iniciar
         window.addEventListener('DOMContentLoaded', () => {
             const session = localStorage.getItem('bitacora_session');
@@ -1458,6 +1533,17 @@
                 loadStudentDashboard();
             } else {
                 document.getElementById('login-overlay').classList.remove('hidden');
+            }
+
+            // Poblar el selector de estudiantes
+            const selectStudent = document.getElementById('select-student');
+            if (selectStudent) {
+                studentsList.forEach((student, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${student.name} (${student.code})`;
+                    selectStudent.appendChild(option);
+                });
             }
             
             // Poner la fecha actual por defecto en el input date
@@ -1474,13 +1560,12 @@
         // --- MANEJO DEL LOGIN ---
         function handleLogin(e) {
             e.preventDefault();
-            const name = document.getElementById('input-name').value.trim();
-            const code = document.getElementById('input-code').value.trim();
-            const technique = document.getElementById('select-technique').value;
+            const studentIdx = document.getElementById('select-student').value;
+            if (studentIdx === "") return;
+            const student = studentsList[studentIdx];
+            if (!student) return;
 
-            if (!name || !code || !technique) return;
-
-            currentStudent = { name, code, technique };
+            currentStudent = { name: student.name, code: student.code, technique: student.technique };
             localStorage.setItem('bitacora_session', JSON.stringify(currentStudent));
             
             // Transición suave
@@ -1556,9 +1641,7 @@
             document.getElementById('login-overlay').classList.remove('hidden');
             
             // Limpiar inputs de login
-            document.getElementById('input-name').value = '';
-            document.getElementById('input-code').value = '';
-            document.getElementById('select-technique').value = '';
+            document.getElementById('select-student').value = '';
         }
 
         // --- LEER DE LOCALSTORAGE ---
@@ -1945,6 +2028,22 @@
         function closeRubricModalOnOverlay(event) {
             if (event.target.id === 'rubric-modal-overlay') {
                 closeRubricModal();
+            }
+        }
+
+        // --- CONTROL DEL MODAL DE DISEÑO DE RECURSO (ADDIE) ---
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+        window.closeAddieModal = closeAddieModal;
+
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
             }
         }
     </script>

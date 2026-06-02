@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diseño Instruccional - Plataforma de Capacitación</title>
+    <title>Diseño Instruccional - Abanico de IAs</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
@@ -21,9 +21,9 @@
             --gold-500: #eab308;
             --gold-600: #ca8a04;
             
-            /* Colores de las fases ADDIE con énfasis en púrpura (Fase 2: Apropiación) */
-            --color-overview: #f4629e;      /* Rosado/Púrpura */
-            --color-overview-rgb: 244, 98, 158;
+            /* Colores de las fases ADDIE con énfasis en violeta/morado (Fase 2: Apropiación) */
+            --color-overview: #8b5cf6;      /* Violeta */
+            --color-overview-rgb: 139, 92, 246;
             --color-analysis: #7c3aed;      /* Morado */
             --color-analysis-rgb: 124, 58, 237;
             --color-design: #0891b2;        /* Cian */
@@ -32,7 +32,7 @@
             --color-development-rgb: 5, 150, 105;
             --color-implementation: #ea580c;/* Naranja */
             --color-implementation-rgb: 234, 88, 12;
-            --color-evaluation: #e11d48;    /* Rosa Carmesí */
+            --color-evaluation: #e11d48;    /* Carmesí */
             --color-evaluation-rgb: 225, 29, 72;
 
             --font-title: 'Montserrat', sans-serif;
@@ -57,7 +57,7 @@
 
         /* --- ENCABEZADO --- */
         .dashboard-header {
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
             color: var(--slate-900);
             padding: 15px 40px;
             border-bottom: 3.5px solid var(--slate-300);
@@ -82,15 +82,15 @@
         .header-icon-box {
             width: 48px;
             height: 48px;
-            background-color: rgba(244, 98, 158, 0.08);
-            border: 1px solid rgba(244, 98, 158, 0.2);
+            background-color: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--color-overview);
             flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(244, 98, 158, 0.05);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.05);
         }
 
         .header-title-wrapper h1 {
@@ -520,7 +520,7 @@
         }
 
         .submit-btn:hover {
-            background-color: #e04f8b;
+            background-color: #7c3aed;
         }
 
         .feedback-item {
@@ -557,17 +557,20 @@
         <div class="header-content-left">
             <div class="header-icon-box">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
-                    <path d="M23 7a2 2 0 0 0-2.45-1.45L11 8 1 5.5A2 2 0 0 0 0 7v10a2 2 0 0 0 2.45 1.45L11 16l10 2.5A2 2 0 0 0 24 17V7z"></path>
-                    <path d="M11 8v8"></path>
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="3" y1="15" x2="21" y2="15"></line>
                 </svg>
             </div>
             <div class="header-title-wrapper">
-                <h1>Diseño Instruccional · Plataforma de Capacitación</h1>
+                <h1>Diseño Instruccional · Abanico de IAs</h1>
                 <p>Modelo ADDIE en Acción · Portafolio Digital de Estética · Grado 11</p>
             </div>
         </div>
         <div class="header-content-right">
-            <span class="active-tab-badge" style="background-color: rgba(244, 98, 158, 0.1); color: var(--color-overview);">Fase 2: Apropiación</span>
+            <span class="active-tab-badge" style="background-color: rgba(139, 92, 246, 0.1); color: var(--color-overview);">Fase 2: Apropiación</span>
             <a href="#" class="close-dashboard-btn" onclick="if(window.parent && window.parent.closeAddieModal) { window.parent.closeAddieModal(); } return false;">&times;</a>
         </div>
     </header>
@@ -631,31 +634,31 @@
                     </div>
                     <div class="highlight-box">
                         <p class="text-p" style="font-weight: 600; color: var(--slate-800);">
-                            La "Plataforma de Capacitación y Aula Virtual en Vivo" es un entorno de streaming escolar simulado que busca que los estudiantes de grado 11 se apropien de conceptos técnicos y estéticos de las diferentes disciplinas mediante la simulación de clases en vivo, la discusión y el debate interactivo apoyado por IA.
+                             El recurso "Abanico de IAs" consiste en una Tabla Periódica Interactiva de 53 herramientas de Inteligencia Artificial catalogadas y filtrables según su uso, cruzadas con un semáforo ético y las técnicas artísticas del portafolio del grado 11.
                         </p>
                     </div>
                     <p class="text-p">
-                        Este recurso está diseñado bajo los lineamientos de la <strong>Fase 2: Apropiación</strong>, permitiendo a los alumnos evaluar, opinar y debatir sobre las transmisiones de sus compañeros y tutores, asimilando conceptos sobre portafolio de arte, museos tridimensionales, composición tipográfica y tejido textil en crochet.
+                        Este andamiaje instruccional permite que los estudiantes de grado 11 del Colegio Danilo Cifuentes dejen de usar la IA de manera impulsiva. En su lugar, el recurso proporciona un espacio estructurado donde los alumnos analizan el riesgo ético, justifican su necesidad tecnológica y definen los prompts antes de generar contenido para sus bitácoras.
                     </p>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-entries">120</div>
-                        <div class="stat-label">Espectadores Simulados</div>
+                        <div class="stat-value" id="stat-entries">53</div>
+                        <div class="stat-label">IAs Catalogadas</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-time">15.5m</div>
-                        <div class="stat-label">Permanencia Promedio</div>
+                        <div class="stat-value" id="stat-time">8</div>
+                        <div class="stat-label">Categorías de Uso</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-avg-rating">4.8 ★</div>
-                        <div class="stat-label">Calificación Docente</div>
+                        <div class="stat-value" id="stat-avg-rating">4.6 ★</div>
+                        <div class="stat-label">Semáforo Ético Promedio</div>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
-                    <button class="submit-btn" id="simulate-entry-btn">Simular Ingreso de Estudiante</button>
+                    <button class="submit-btn" id="simulate-entry-btn">Simular Consulta de Herramienta</button>
                 </div>
             </div>
 
@@ -667,19 +670,19 @@
                         Fase de Análisis (ADDIE)
                     </div>
                     <p class="text-p">
-                        <strong>Problema Educativo:</strong> Los estudiantes suelen mostrar apatía en las clases teóricas de estética y diseño gráfico. Necesitan relacionar los conceptos abstractos (composición visual, curaduría, texturas textiles) con situaciones reales y proyectos prácticos.
+                        <strong>Problema Educativo:</strong> Los estudiantes tienden a utilizar herramientas de IA de forma directa y acrítica, delegando su propia expresión artística y criterio estético en algoritmos. Esto resulta en plagio inadvertido, homogeneización de estilos visuales y pérdida del rigor pedagógico tradicional.
                     </p>
                     <p class="text-p">
-                        <strong>Público Objetivo:</strong> Alumnos de grado 11 del Colegio Danilo Cifuentes, nativos digitales que disfrutan de las interfaces interactivas (tipo Twitch o YouTube Live) y están familiarizados con redes sociales.
+                        <strong>Público Objetivo:</strong> Alumnos de 11° grado de la institución educativa Danilo Cifuentes. Aunque son hábiles buscando información digital, carecen de directrices éticas claras para justificar sus métodos o interactuar de forma segura y reflexiva con modelos de lenguaje y generadores multimedia.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
                             <button class="accordion-header" onclick="toggleAccordion(this)">Requerimientos Tecnológicos</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li>Acceso web local responsivo y offline compatible.</li>
-                                    <li>Simulación interactiva de streaming de video sin dependencias obligatorias de conectividad externa compleja.</li>
-                                    <li>Ecosistema de chat simulado con avatares visuales y comportamiento realista enriquecido con modelos generativos (Gemini API) o fallback local.</li>
+                                    <li>Acceso web local responsivo y offline (apto para aulas con conectividad limitada).</li>
+                                    <li>Rejilla periódica clasificada con filtros interactivos cruzados (técnicas de Estética y niveles del semáforo ético).</li>
+                                    <li>Un formulario integrado ("Ficha de Selección") con exportación local compatible con estilos de impresión para firma en papel.</li>
                                 </ul>
                             </div>
                         </div>
@@ -695,17 +698,17 @@
                         Fase de Diseño (ADDIE)
                     </div>
                     <p class="text-p">
-                        La interfaz del recurso fue diseñada imitando las plataformas modernas de streaming de videojuegos y capacitaciones profesionales en modo oscuro premium, lo que reduce el cansancio visual y genera mayor engagement.
+                        El diseño pedagógico se basa en el **Framework TPACK (Conocimiento Tecnológico Pedagógico del Contenido)**, mapeando herramientas de IA que actúan como socios de aprendizaje interactivo en las 4 técnicas tradicionales de Estética.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Decisiones de Interfaz</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Decisiones de Interfaz y Pedagogía</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Barra de Canales Lateral:</strong> Facilita la navegación rápida entre transmisiones correspondientes a las técnicas de los estudiantes.</li>
-                                    <li><strong>Reproductor Central Híbrido:</strong> Capacidad de reproducir videos locales (MP4) y videos remotos (YouTube) con detección inteligente de conexión local.</li>
-                                    <li><strong>Chat Lateral en Vivo:</strong> Visualización de comentarios simulados de compañeros ficticios para fomentar la sensación de comunidad escolar.</li>
-                                    <li><strong>Encuestas Interactivas (Polls):</strong> Lanzadas de forma aleatoria por el moderador para testear y evaluar conceptos estéticos directamente en el chat.</li>
+                                    <li><strong>Taxonomía de 8 Categorías:</strong> Texto/Chatbots (Tx), Consulta (Cv), Imagen (Im), Diseño (Dp), Video (Va), Audio (Au), Organización (Or) y Apoyo Técnico (At).</li>
+                                    <li><strong>Semáforo Ético Visual:</strong> Verde (Seguro, co-creación guiada), Amarillo (Supervisión docente obligatoria) y Rojo (Restringido para evaluación directa, sólo consulta de referentes).</li>
+                                    <li><strong>Vinculación a Estética:</strong> Puntos coloreados debajo de cada símbolo que relacionan la IA a Composición y Tipografía (morado), Maquetado (azul), Diario Ilustrado (rosado) y Crochet (verde).</li>
+                                    <li><strong>Ficha de Selección Imprimible:</strong> Bloque para registrar el prompt diseñado, justificar su uso estético y firmar formalmente el compromiso de originalidad.</li>
                                 </ul>
                             </div>
                         </div>
@@ -721,16 +724,17 @@
                         Fase de Desarrollo (ADDIE)
                     </div>
                     <p class="text-p">
-                        El desarrollo técnico del recurso involucró tecnologías web estándar para asegurar un despliegue libre de trabas, compatible con el disco de Google Drive del docente y sistemas offline.
+                        El recurso interactivo fue desarrollado utilizando tecnologías web frontend nativas para garantizar un rendimiento óptimo y compatibilidad sin dependencias externas.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Detalles del Código</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Detalles de Ingeniería</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Integración con Gemini API:</strong> Uso de fetch asíncrono para comunicarse con el modelo `gemini-2.5-flash` generando comentarios realistas con modismos escolares colombianos.</li>
-                                    <li><strong>Generador de Avatares:</strong> Integración de la API de UI-Avatars para renderizar círculos con iniciales dinámicas para cada participante.</li>
-                                    <li><strong>Reproductor Híbrido:</strong> Etiqueta `<iframe>` para YouTube o `<video>` HTML5 nativo de manera transparente según la preferencia y contexto de red.</li>
+                                    <li><strong>Rejilla Periódica Responsiva:</strong> Construida con CSS Grid de 18 columnas que se ajusta a pantallas de escritorio y computadores portátiles escolares.</li>
+                                    <li><strong>Lógica de Filtros JS:</strong> Funciones para agregar/quitar clases de atenuación (`.dimmed`) dinámicamente basadas en los atributos de datos `data-tec` y `data-ethic` en cada celda.</li>
+                                    <li><strong>Módulo de Exportación y CSS Print:</strong> Reglas específicas `@media print` que ocultan la tabla e interfaz interactiva para formatear la ficha de justificación como un documento académico limpio de dos columnas.</li>
+                                    <li><strong>Persistencia de Datos:</strong> Conexión con `localStorage` para recuperar la ficha guardada si el alumno cierra accidentalmente la ventana o iframe.</li>
                                 </ul>
                             </div>
                         </div>
@@ -746,16 +750,15 @@
                         Fase de Implementación (ADDIE)
                     </div>
                     <p class="text-p">
-                        El recurso es desplegado por el docente en el aula de informática. Se comparte el enlace local a `plataforma_capacitacion.html` para que cada estudiante ingrese con su respectiva ficha del portafolio.
+                        La implementación de este recurso se realiza en la sala de sistemas durante dos sesiones del aula taller de la asignatura de Estética.
                     </p>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">Cronograma de Uso</button>
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Secuencia de Uso del Recurso</button>
                             <div class="accordion-body">
                                 <ul class="bullet-list">
-                                    <li><strong>Semana 1:</strong> Presentación y visualización del Canal 1 (Inmersión en el proyecto).</li>
-                                    <li><strong>Semana 2:</strong> Debate grupal en base a la curaduría del Canal 2 (Museos 3D).</li>
-                                    <li><strong>Semana 3:</strong> Práctica individual y revisión de técnicas en el Canal 4 (Crochet Artístico).</li>
+                                    <li><strong>Sesión 1 (Exploración Pedagógica):</strong> El docente expone la tabla y el semáforo ético. Los alumnos abren el recurso, buscan herramientas afines a su proyecto artístico (p. ej., Leonardo AI para Diario Ilustrado) y completan el registro digital.</li>
+                                    <li><strong>Sesión 2 (Validación y Firma):</strong> Los estudiantes redactan la justificación, declaran el prompt de la IA y descargan el PDF del reporte imprimible. Se imprimen y firman junto al profesor antes de ejecutar los prompts en las herramientas digitales.</li>
                                 </ul>
                             </div>
                         </div>
@@ -771,7 +774,7 @@
                         Fase de Evaluación (ADDIE)
                     </div>
                     <p class="text-p">
-                        Para evaluar la efectividad y la satisfacción de este recurso educativo, los estudiantes y docentes califican su experiencia y dejan un comentario cualitativo.
+                        El impacto educativo de la Tabla Periódica se evalúa mediante la hibridación de la rúbrica institucional y la validación cualitativa provista por el docente y los estudiantes.
                     </p>
                     
                     <div class="eval-section">
@@ -785,7 +788,7 @@
                         </div>
                         <div class="eval-input-group">
                             <input type="text" id="eval-author" class="eval-input" placeholder="Nombre completo...">
-                            <input type="text" id="eval-comment" class="eval-input" placeholder="Comentario sobre el recurso...">
+                            <input type="text" id="eval-comment" class="eval-input" placeholder="Comentario sobre la Tabla Periódica de IAs...">
                             <button class="submit-btn" id="submit-eval-btn" style="margin-top: 5px;">Enviar Evaluación</button>
                         </div>
                     </div>
@@ -795,17 +798,17 @@
                         <div id="feedback-container">
                             <div class="feedback-item">
                                 <div class="feedback-meta">
-                                    <span>Valeria Ortiz</span>
+                                    <span>Juan David Marín</span>
                                     <span class="feedback-stars">★★★★★</span>
                                 </div>
-                                <div class="feedback-text">Me encantó el chat en vivo con avatares, de verdad parece que estuviéramos en directo todos participando al mismo tiempo. Muy bacano.</div>
+                                <div class="feedback-text">El abanico de IAs me facilitó encontrar una herramienta específica de tipografía para mi maquetado. Además, el semáforo ético me ayudó a entender qué IAs requieren más cuidado.</div>
                             </div>
                             <div class="feedback-item">
                                 <div class="feedback-meta">
-                                    <span>Santiago Gómez</span>
+                                    <span>Sandra Milena Rojas (Docente)</span>
                                     <span class="feedback-stars">★★★★★</span>
                                 </div>
-                                <div class="feedback-text">Poder alternar entre el video local y YouTube es un golazo porque en mi casa el internet falla y con el video local pude ver todo al instante.</div>
+                                <div class="feedback-text">La ficha imprimible integrada es fantástica. Los estudiantes se ven obligados a pensar en la justificación y los prompts antes de generar imágenes, lo cual estimula su pensamiento crítico.</div>
                             </div>
                         </div>
                     </div>
@@ -859,7 +862,7 @@
                     activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
                     if (!tabColor.startsWith('rgb')) {
                         activeTabBadge.style.color = `var(--color-${tabId})`;
-                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 244, 98, 158), 0.1)`;
+                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 139, 92, 246), 0.1)`;
                     }
                 }
                 activePane.scrollTop = 0;
@@ -883,21 +886,22 @@
 
             switchTab('overview');
 
-            // --- SIMULADOR DE INGRESO DE ESTUDIANTES ---
+            // --- SIMULADOR DE CONSULTA DE IA ---
             const simulateBtn = document.getElementById('simulate-entry-btn');
             const statEntries = document.getElementById('stat-entries');
             const statTime = document.getElementById('stat-time');
 
-            let currentEntries = 120;
-            let currentMinutes = 15.5;
+            let currentEntries = 53;
+            let currentMinutes = 8;
 
             simulateBtn.addEventListener('click', () => {
                 currentEntries += 1;
-                currentMinutes = parseFloat((currentMinutes + (Math.random() * 0.1 - 0.03)).toFixed(1));
-                if (currentMinutes < 5) currentMinutes = 5;
-
+                if (Math.random() > 0.7) {
+                    currentMinutes += 1;
+                }
+                
                 statEntries.innerText = currentEntries;
-                statTime.innerText = `${currentMinutes}m`;
+                statTime.innerText = currentMinutes;
                 
                 statEntries.style.transform = 'scale(1.12)';
                 statEntries.style.transition = 'transform 0.1s ease';
@@ -932,7 +936,7 @@
             const feedbackContainer = document.getElementById('feedback-container');
             const statAvgRating = document.getElementById('stat-avg-rating');
 
-            let totalRatingSum = (5 * 5) + (5 * 5); // Valeria (5) + Santiago (5)
+            let totalRatingSum = (5 * 5) + (5 * 5); // Juan David (5) + Sandra (5)
             let ratingCount = 2;
 
             submitBtn.addEventListener('click', () => {

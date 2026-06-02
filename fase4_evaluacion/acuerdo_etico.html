@@ -250,7 +250,7 @@
             color: var(--accent-gold);
         }
 
-        .form-field input {
+        .form-field input, .form-field select {
             background-color: rgba(0, 0, 0, 0.3);
             border: 1.5px solid var(--border-color);
             border-radius: 8px;
@@ -260,11 +260,24 @@
             padding: 10px 14px;
             outline: none;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
-        .form-field input:focus {
+        .form-field input:focus, .form-field select:focus {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 8px rgba(251, 208, 8, 0.2);
+            box-shadow: 0 0 8px rgba(251, 208, 8, 0.25);
+        }
+
+        .form-field input[readonly], .form-field select:disabled {
+            background-color: rgba(0, 0, 0, 0.15);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-field select option {
+            background-color: var(--panel-bg);
+            color: #ffffff;
         }
 
         .canvas-wrapper {
@@ -541,11 +554,13 @@
                 <div class="input-row">
                     <div class="form-field">
                         <label for="student-name">Nombre del Estudiante</label>
-                        <input type="text" id="student-name" placeholder="Ej. Camila Vargas" oninput="updateForm()">
+                        <select id="student-name" onchange="handleStudentSelect()">
+                            <option value="" disabled selected>-- Selecciona tu nombre --</option>
+                        </select>
                     </div>
                     <div class="form-field">
                         <label for="student-code">Código de Alumno</label>
-                        <input type="text" id="student-code" placeholder="Ej. EST-1104" oninput="updateForm()">
+                        <input type="text" id="student-code" placeholder="Código de alumno" readonly>
                     </div>
                 </div>
 
@@ -626,8 +641,54 @@
             clearSig();
         }
 
+        // Listado de 20 estudiantes predefinidos
+        const studentsList = [
+            { name: "Carlos Mendoza", code: "EST-11-001", technique: "composición y tipografía" },
+            { name: "Diana Albarracín", code: "EST-11-002", technique: "composición y tipografía" },
+            { name: "Andrés Felipe Celis", code: "EST-11-003", technique: "composición y tipografía" },
+            { name: "Sofía Valentina Duarte", code: "EST-11-004", technique: "composición y tipografía" },
+            { name: "Juan Esteban Galán", code: "EST-11-005", technique: "composición y tipografía" },
+            { name: "Camila Andrea Gómez", code: "EST-11-006", technique: "maquetado" },
+            { name: "Mateo Aristizábal", code: "EST-11-007", technique: "maquetado" },
+            { name: "Paula Valentina Herrera", code: "EST-11-008", technique: "maquetado" },
+            { name: "Diego Alejandro Ibáñez", code: "EST-11-009", technique: "maquetado" },
+            { name: "Sebastián Jaramillo", code: "EST-11-010", technique: "maquetado" },
+            { name: "Mariana Lozano", code: "EST-11-011", technique: "diario ilustrado" },
+            { name: "Nicolás Muñoz", code: "EST-11-012", technique: "diario ilustrado" },
+            { name: "Valentina Ortiz", code: "EST-11-013", technique: "diario ilustrado" },
+            { name: "Santiago Gómez", code: "EST-11-014", technique: "diario ilustrado" },
+            { name: "Laura Daniela Pineda", code: "EST-11-015", technique: "diario ilustrado" },
+            { name: "Juan David Marín", code: "EST-11-016", technique: "crochet" },
+            { name: "Gabriela Quiroga", code: "EST-11-017", technique: "crochet" },
+            { name: "Daniel Eduardo Rincón", code: "EST-11-018", technique: "crochet" },
+            { name: "Sara Melissa Tobón", code: "EST-11-019", technique: "crochet" },
+            { name: "Kevin Alexis Urrego", code: "EST-11-020", technique: "crochet" }
+        ];
+
+        function handleStudentSelect() {
+            const select = document.getElementById('student-name');
+            const selectedName = select.value;
+            const student = studentsList.find(s => s.name === selectedName);
+            if (student) {
+                document.getElementById('student-code').value = student.code;
+            } else {
+                document.getElementById('student-code').value = '';
+            }
+            updateForm();
+        }
+
         window.addEventListener('resize', resizeCanvas);
         document.addEventListener('DOMContentLoaded', () => {
+            // Poblar el selector de estudiantes
+            const selectStudent = document.getElementById('student-name');
+            if (selectStudent) {
+                studentsList.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.name;
+                    option.textContent = `${student.name} (${student.code})`;
+                    selectStudent.appendChild(option);
+                });
+            }
             resizeCanvas();
             loadExistingSession();
         });
