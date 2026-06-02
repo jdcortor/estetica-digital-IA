@@ -619,7 +619,7 @@
                 <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
             </div>
             <div class="addie-modal-body">
-                <iframe src="diseno_recurso.html"></iframe>
+                <iframe src="diseno_capsula_introductoria.html"></iframe>
             </div>
         </div>
     </div>
@@ -2459,11 +2459,7 @@
         function openAddieModal() {
             const iframe = document.querySelector('.addie-modal-body iframe');
             if (iframe) {
-                if (currentStep === 0) {
-                    iframe.src = `diseno_capsula_introductoria.html`;
-                } else {
-                    iframe.src = `diseno_recurso.html?id=${currentStep}`;
-                }
+                iframe.src = `diseno_capsula_introductoria.html`;
             }
             document.getElementById('addie-modal-overlay').classList.add('active');
         }
