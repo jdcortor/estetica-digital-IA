@@ -227,6 +227,7 @@
         .node-7-bg { background: var(--sway-teal); }
         .node-8-bg { background: var(--kudos-teal); }
         .node-9-bg { background: #5c6bc0; }
+        .node-10-bg { background: #e26d5c; }
 
         /* Icono dentro del hexágono */
         .hexagon-icon {
@@ -302,6 +303,12 @@
         .hex-9 {
             top: 563px;
             left: 32px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-10 {
+            top: 563px;
+            left: 772px;
             width: 195px;
             height: 224px;
         }
@@ -673,6 +680,8 @@
                         <line class="line" x1="305" y1="550" x2="130" y2="425" />
                         <line class="line" x1="305" y1="550" x2="130" y2="675" />
                         <line class="line" x1="130" y1="425" x2="130" y2="675" />
+                        <line class="line" x1="695" y1="550" x2="870" y2="675" />
+                        <line class="line" x1="870" y1="425" x2="870" y2="675" />
                     </svg>
 
                     <div class="network-container">
@@ -800,6 +809,16 @@
                                     <polygon points="30,20 30,80 80,50" fill="white" />
                                 </svg>
                                 <div class="hexagon-label">VIDEO<br>REFLEXIÓN</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 10: TÉCNICAS -->
+                        <div class="hexagon hex-10 node node-10" onclick="openPage('fase1_inmersion/contexto_tecnicas.html')" data-tooltip="Video de introducción y contexto de las técnicas artísticas del curso">
+                            <div class="hexagon-inner node-10-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <path d="M50 15C30.67 15 15 30.67 15 50s15.67 35 35 35c8.28 0 15-6.72 15-15 0-3.33-1.09-6.39-2.94-8.88a1 1 0 0 1 .16-1.32C71.36 51.5 75 43.68 75 35 75 23.95 63.81 15 50 15zm-15 40c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm5-18c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15-5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm15 10c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="white"/>
+                                </svg>
+                                <div class="hexagon-label">TÉCNICAS</div>
                             </div>
                         </div>
 

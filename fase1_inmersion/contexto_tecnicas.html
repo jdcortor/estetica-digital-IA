@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contexto Técnicas - Portafolios Digitales</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #121214;
+            --panel-bg: #1e1e22;
+            --header-dark: #222121;
+            --header-coral: #e26d5c;
+            --header-coral-hover: #cf5b4b;
+            --text-white: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #3f3f46;
+            --showcase-purple: #6c53a3;
+            --font-main: 'Montserrat', sans-serif;
+            --font-labels: 'Nunito', sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            display: flex;
+            flex-direction: column;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- BARRA SUPERIOR (TOP BAR) --- */
+        .top-bar {
+            height: 65px;
+            background-color: var(--header-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 10;
+            border-bottom: 3px solid var(--header-coral);
+            flex-shrink: 0;
+        }
+
+        .title-container h1 {
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title-container h1 span {
+            color: var(--header-coral);
+        }
+
+        .actions-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .addie-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: var(--header-coral);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(226, 109, 92, 0.3);
+        }
+
+        .addie-btn:hover {
+            background-color: var(--header-coral-hover);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(226, 109, 92, 0.5);
+        }
+
+        .close-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .main-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px 60px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- VIDEO WRAPPER --- */
+        .video-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--showcase-purple), var(--header-coral));
+        }
+
+        .video-title {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--header-coral);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .video-player-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #2d2d30;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* --- REFLECTION SYSTEM (ACCORDION CARDS) --- */
+        .reflection-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-family: var(--font-labels);
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title i {
+            color: var(--header-coral);
+        }
+
+        .reflection-intro {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .question-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.15);
+            transition: border-color 0.3s;
+        }
+
+        .question-item:hover {
+            border-color: var(--header-coral);
+        }
+
+        .question-header {
+            padding: 16px 20px;
+            background-color: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+            user-select: none;
+        }
+
+        .question-header span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-header i.arrow-icon {
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .question-item.active .question-header i.arrow-icon {
+            transform: rotate(180deg);
+            color: var(--header-coral);
+        }
+
+        .question-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+
+        .question-content {
+            padding: 20px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: #d1d1d6;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .journal-tip {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            background-color: rgba(226, 109, 92, 0.1);
+            border-left: 3px solid var(--header-coral);
+            border-radius: 4px;
+            font-size: 13.5px;
+            color: #e4e4e7;
+            margin-top: 5px;
+        }
+
+        /* --- POPUP MODAL --- */
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px;
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 85%;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-coral);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--header-coral);
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .addie-modal-body {
+            flex: 1;
+            background: #525659;
+            position: relative;
+        }
+
+        .addie-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="title-container">
+            <h1>Contexto <span>Técnicas</span></h1>
+        </div>
+        <div class="actions-container">
+            <button class="addie-btn" onclick="openAddieModal()" title="Ver Diseño de Recurso">
+                <i class="fa-solid fa-book-open"></i> Diseño de Recurso
+            </button>
+            <a href="../index.html" class="close-btn">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+            </a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+        
+        <!-- VIDEO CARD -->
+        <div class="video-card">
+            <div class="video-title">
+                <i class="fa-solid fa-play"></i> Video Contexto: Las 8 Técnicas Artísticas del Aula Taller
+            </div>
+            <div class="video-player-container">
+                <video controls preload="metadata">
+                    <source src="contexto_tecnicas.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video HTML5. Por favor actualízalo o abre el archivo multimedia localmente.
+                </video>
+            </div>
+        </div>
+
+        <!-- REFLECTIONS AND QUESTIONS -->
+        <div class="reflection-card">
+            <h2 class="section-title">
+                <i class="fa-solid fa-lightbulb"></i> Preguntas de Análisis Técnico-Estético
+            </h2>
+            <p class="reflection-intro">
+                Tras observar el video introductorio de técnicas, reflexiona en torno a las siguientes preguntas y metodologías que aplicarás en tus proyectos prácticos del portafolio:
+            </p>
+
+            <div class="question-list">
+                <!-- Question 1 -->
+                <div class="question-item">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <span>
+                            <i class="fa-solid fa-hands" style="color: var(--header-coral);"></i>
+                            1. ¿Tradicional o Digital? El equilibrio del medio
+                        </span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="question-body">
+                        <div class="question-content">
+                            <p><strong>El dilema:</strong> ¿Qué aporta la experiencia física (el tacto del crochet, el trazo de la pluma caligráfica sobre papel) frente a la generación digital de imágenes con Inteligencia Artificial en segundos?</p>
+                            <p><strong>Reflexión:</strong> El video expone que el verdadero portafolio de estética de grado 11 busca una hibridación: las técnicas tradicionales desarrollan destrezas psicomotoras y sensibilidad táctil, mientras que los asistentes digitales (IA, modelado 3D) amplían la escala conceptual de tus propuestas de diseño.</p>
+                            <div class="journal-tip">
+                                <i class="fa-solid fa-pen-clip"></i>
+                                <strong>Actividad:</strong> Describe en tu bitácora física qué sensaciones te produce trabajar con materiales físicos (hilo, tinta) en contraste con interactuar con una pantalla.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-item">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <span>
+                            <i class="fa-solid fa-palette" style="color: var(--header-coral);"></i>
+                            2. Criterio Estético en el Portafolio
+                        </span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="question-body">
+                        <div class="question-content">
+                            <p><strong>El dilema:</strong> Al planear tu proyecto de aula taller, ¿cómo decides qué técnicas combinan mejor con tu concepto expresivo (bocetos analógicos, caligrafía, modelado 3D, carátulas o diseño procedural)?</p>
+                            <p><strong>Reflexión:</strong> Cada medio transmite un mensaje distinto. El tejido a crochet puede evocar tradición, conexión y calma; la caligrafía a tinta transmite formalidad e intención histórica; mientras que las imágenes de IA representan la aceleración digital. Tu labor como artista-curador es armonizar estas técnicas en tu narrativa personal.</p>
+                            <div class="journal-tip">
+                                <i class="fa-solid fa-pen-clip"></i>
+                                <strong>Actividad:</strong> Haz una lista de las 8 estaciones de técnicas del curso y anota qué emoción o concepto te gustaría explorar con cada una.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-item">
+                    <div class="question-header" onclick="toggleQuestion(this)">
+                        <span>
+                            <i class="fa-solid fa-brain" style="color: var(--header-coral);"></i>
+                            3. La Intención del Creador (Criterio Humano)
+                        </span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="question-body">
+                        <div class="question-content">
+                            <p><strong>El dilema:</strong> Aunque utilices IA o software de modelado 3D para generar piezas finales, ¿por qué el diseño conceptual e intencional sigue dependiendo enteramente del criterio artístico del estudiante?</p>
+                            <p><strong>Reflexión:</strong> Las herramientas tecnológicas solo ejecutan cálculos. La selección del tema de investigación, la iteración (cambio y mejora de prompts), la curaduría crítica de los resultados y el ensamble final en una bitácora son decisiones exclusivas del pensamiento humano y su sensibilidad estética.</p>
+                            <div class="journal-tip">
+                                <i class="fa-solid fa-pen-clip"></i>
+                                <strong>Actividad:</strong> Escribe una breve reflexión sobre cómo crees que un creador mantiene su "sello personal" cuando utiliza herramientas digitales.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal para desplegar recurso_tecnicas.html -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body">
+                <iframe src="recurso_tecnicas.html"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
+            }
+        }
+
+        function toggleQuestion(header) {
+            const item = header.parentElement;
+            const body = item.querySelector('.question-body');
+            const isActive = item.classList.contains('active');
+
+            // Close all items
+            document.querySelectorAll('.question-item').forEach(qi => {
+                qi.classList.remove('active');
+                qi.querySelector('.question-body').style.maxHeight = null;
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                body.style.maxHeight = body.scrollHeight + "px";
+            }
+        }
+        window.closeAddieModal = closeAddieModal;
+    </script>
+</body>
+</html>
