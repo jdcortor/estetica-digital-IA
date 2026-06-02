@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Instruccional - Video Reflexión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            
+            --gold-500: #eab308;
+            --gold-600: #ca8a04;
+            
+            /* Colores de las fases ADDIE (para fondos claros) con énfasis en púrpura (Fase 3: Construcción) */
+            --color-overview: #6c53a3;      /* Púrpura */
+            --color-overview-rgb: 108, 83, 163;
+            --color-analysis: #7c3aed;      /* Morado */
+            --color-analysis-rgb: 124, 58, 237;
+            --color-design: #0891b2;        /* Cian */
+            --color-design-rgb: 8, 145, 178;
+            --color-development: #059669;   /* Esmeralda */
+            --color-development-rgb: 5, 150, 105;
+            --color-implementation: #ea580c;/* Naranja */
+            --color-implementation-rgb: 234, 88, 12;
+            --color-evaluation: #e11d48;    /* Rosa Carmesí */
+            --color-evaluation-rgb: 225, 29, 72;
+
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--slate-100);
+            color: var(--slate-900);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- ENCABEZADO APAISADO / RECTANGULAR PASTEL --- */
+        .dashboard-header {
+            background: linear-gradient(135deg, #f3f0ff 0%, #e8e3f8 100%);
+            color: var(--slate-900);
+            padding: 15px 40px;
+            border-bottom: 3.5px solid var(--slate-300);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            box-sizing: border-box;
+            gap: 30px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-content-left, .header-content-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(108, 83, 163, 0.08);
+            border: 1px solid rgba(108, 83, 163, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-overview);
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(108, 83, 163, 0.05);
+        }
+
+        .header-icon-box.header-icon-user {
+            background-color: rgba(8, 145, 178, 0.08);
+            border: 1px solid rgba(8, 145, 178, 0.2);
+            color: var(--color-design);
+            box-shadow: 0 0 10px rgba(8, 145, 178, 0.05);
+        }
+
+        .header-svg-icon {
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .header-text-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-small-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--slate-500);
+            margin-bottom: 2px;
+        }
+
+        .header-main-title {
+            font-family: var(--font-title);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--slate-900);
+        }
+
+        .header-population-title {
+            font-family: var(--font-title);
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .header-sub-label {
+            font-size: 13px;
+            color: var(--slate-700);
+            font-weight: 600;
+        }
+
+        /* --- CONTENEDOR CUERPO --- */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR PASTEL) --- */
+        .sidebar {
+            width: 280px;
+            background-color: #f1f5f9;
+            color: var(--slate-800);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-right: 1.5px solid var(--slate-200);
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-brand {
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--slate-700);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-brand svg {
+            color: var(--slate-500);
+        }
+
+        /* Navegación por pestañas */
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .nav-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: var(--slate-700);
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--slate-900);
+        }
+
+        .nav-btn.active {
+            background-color: #ffffff;
+            color: var(--slate-900);
+            border-left-color: var(--tab-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -1px rgba(0,0,0,0.01);
+            font-weight: 700;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .main-content-header {
+            padding: 15px 30px;
+            border-bottom: 1.5px solid var(--slate-200);
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        .active-tab-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .active-tab-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 4px;
+        }
+
+        .active-tab-info h1 {
+            font-family: var(--font-title);
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        /* Pestañas */
+        .tab-pane {
+            display: none;
+            padding: 25px 30px;
+            overflow-y: auto;
+            flex: 1;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TARJETAS E INFORMACIÓN (LETRA MÁS GRANDE) --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid var(--slate-200);
+            padding: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--card-border-color, var(--slate-300));
+        }
+
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--slate-900);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--slate-100);
+            padding-bottom: 8px;
+        }
+
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--card-border-color, var(--slate-700));
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .text-content {
+            font-size: 16.5px;
+            line-height: 1.6;
+            color: var(--slate-700);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Ficha Técnica */
+        .tech-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tech-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            border-bottom: 1px dashed var(--slate-200);
+            padding-bottom: 8px;
+        }
+
+        .tech-item span:first-child {
+            color: var(--slate-700);
+            font-weight: 500;
+        }
+
+        .tech-item span:last-child {
+            font-weight: 650;
+            color: var(--slate-900);
+        }
+
+        /* Foto del Colegio */
+        .school-photo-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--slate-200);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            height: 100%;
+            min-height: 220px;
+            width: 100%;
+        }
+
+        .school-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .school-photo-container:hover .school-image {
+            transform: scale(1.03);
+        }
+
+        .school-overlay-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            color: #ffffff;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .school-overlay-label h4 {
+            font-family: var(--font-title);
+            font-size: 13px;
+            font-weight: 750;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--gold-500);
+        }
+
+        .school-overlay-label p {
+            font-size: 11px;
+            color: var(--slate-200);
+        }
+
+        /* Listas con Icono */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            display: flex;
+            gap: 10px;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--slate-700);
+        }
+
+        .bullet-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--card-border-color, var(--gold-600));
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Didáctica - momento */
+        .didactic-moment {
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .didactic-header {
+            background-color: var(--slate-100);
+            padding: 10px 16px;
+            font-weight: 750;
+            font-size: 15px;
+            border-bottom: 1px solid var(--slate-200);
+            display: flex;
+            justify-content: space-between;
+            color: var(--slate-900);
+        }
+
+        .didactic-body {
+            padding: 12px 16px;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: #ffffff;
+        }
+
+        /* --- EVALUACIÓN INTERACTIVA --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            border: 1px solid var(--slate-200);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+            transition: all 0.2s ease;
+        }
+
+        .stat-value {
+            font-family: var(--font-title);
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--color-evaluation);
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 750;
+            color: var(--slate-700);
+            letter-spacing: 0.5px;
+        }
+
+        .evaluator-box {
+            background-color: #ffffff;
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            font-size: 26px;
+            color: var(--slate-300);
+            cursor: pointer;
+            align-self: center;
+            margin-bottom: 2px;
+        }
+
+        .star-rating .star:hover,
+        .star-rating .star.selected {
+            color: #fbbf24;
+            transform: scale(1.15);
+        }
+
+        .star {
+            transition: all 0.2s ease;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--slate-700);
+        }
+
+        .input-group textarea,
+        .input-group input {
+            border: 1px solid var(--slate-300);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: var(--font-body);
+            font-size: 15px;
+            background-color: var(--slate-50);
+            transition: all 0.2s ease;
+        }
+
+        .input-group textarea:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--color-evaluation);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(225, 29, 114, 0.12);
+        }
+
+        .action-btn {
+            background-color: var(--color-evaluation);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+        }
+
+        .action-btn:hover {
+            background-color: #c0143c;
+            transform: translateY(-1px);
+        }
+
+        .feedback-list {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            border-top: 1px dashed var(--slate-200);
+            padding-top: 12px;
+        }
+
+        .feedback-item {
+            background-color: var(--slate-50);
+            border: 1px solid var(--slate-200);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+        }
+
+        .feedback-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--slate-700);
+        }
+
+        .feedback-stars {
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+
+        .feedback-text {
+            font-size: 15px;
+            line-height: 1.45;
+            color: var(--slate-700);
+        }
+
+        .simulate-box {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .simulate-btn {
+            background-color: var(--slate-900);
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .simulate-btn:hover {
+            background-color: var(--slate-800);
+        }
+
+        /* --- RESPONSIVIDAD --- */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                gap: 15px;
+            }
+            .dashboard-container {
+                flex-direction: column;
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--slate-800);
+                padding: 15px;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            .nav-btn {
+                width: auto;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .nav-btn.active {
+                border-bottom-color: var(--tab-color);
+            }
+            .main-content {
+                height: auto;
+                overflow: visible;
+            }
+            .tab-pane {
+                overflow-y: visible;
+                height: auto;
+                padding: 20px;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENCABEZADO APAISADO / RECTANGULAR PASTEL -->
+    <header class="dashboard-header">
+        <div class="header-content-left">
+            <div class="header-icon-box">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                    <polygon points="12 8 18 12 12 16 12 8"></polygon>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Recurso Didáctico Digital</span>
+                <h1 class="header-main-title">Video Reflexión: El Uso Ético de la IA</h1>
+            </div>
+        </div>
+        
+        <div class="header-content-right">
+            <div class="header-icon-box header-icon-user">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Población Objetivo</span>
+                <h2 class="header-population-title">Estudiantes de Grado 11</h2>
+                <span class="header-sub-label">Colegio Danilo Cifuentes</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR CON BARRA LATERAL (PESTAÑAS VERTICALES) -->
+    <div class="dashboard-container">
+        
+        <!-- BARRA LATERAL (SIDEBAR PASTEL) -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-brand">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>Modelo ADDIE</span>
+                </div>
+            </div>
+
+            <!-- Botones de Pestañas -->
+            <nav class="sidebar-nav">
+                <button class="nav-btn" id="btn-overview" style="--tab-color: var(--color-overview);">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <span>Vista General</span>
+                </button>
+                <button class="nav-btn" id="btn-analysis" style="--tab-color: var(--color-analysis);">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <span>A. Análisis</span>
+                </button>
+                <button class="nav-btn" id="btn-design" style="--tab-color: var(--color-design);">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>D. Diseño</span>
+                </button>
+                <button class="nav-btn" id="btn-development" style="--tab-color: var(--color-development);">
+                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>D. Desarrollo</span>
+                </button>
+                <button class="nav-btn" id="btn-implementation" style="--tab-color: var(--color-implementation);">
+                    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <span>I. Implementación</span>
+                </button>
+                <button class="nav-btn" id="btn-evaluation" style="--tab-color: var(--color-evaluation);">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>E. Evaluación</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <header class="main-content-header">
+                <div class="active-tab-info">
+                    <span class="active-tab-badge" id="active-tab-badge">Cargando</span>
+                    <h1 id="active-tab-title">Cargando</h1>
+                </div>
+            </header>
+
+            <!-- PANE 1: VISTA GENERAL -->
+            <div id="tab-overview" class="tab-pane">
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-overview);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            Ficha Técnica del Recurso
+                        </h3>
+                        <ul class="tech-list">
+                            <div class="tech-item">
+                                <span>Código del Recurso:</span>
+                                <span>EST-11-F3-VIDEO</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Nombre Completo:</span>
+                                <span>Video Reflexión: El Uso Ético de la IA</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Fase de la Unidad:</span>
+                                <span>Fase 3: Construcción / Eje de Reflexión Crítica</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Enfoque Didáctico:</span>
+                                <span>Aprendizaje Reflexivo y Dilemas Éticos en Co-Creación</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Formatos de Entrega:</span>
+                                <span>Video HTML5 local + Bitácora Física/Digital</span>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="--card-border-color: var(--color-overview);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Resumen Instruccional
+                        </h3>
+                        <div class="text-content">
+                            <p>Este recurso audiovisual promueve el cuestionamiento ético antes y durante la incorporación de modelos generativos de IA en el portafolio escolar de Estética.</p>
+                            <p>El estudiante visualiza un caso real y reflexiona en torno a la delgada línea entre la inspiración asistida por máquina, la co-creación guiada y el plagio automatizado.</p>
+                            <ul class="bullet-list" style="margin-top: 6px;">
+                                <li class="bullet-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <strong>Conexión con el Acuerdo Ético:</strong> Funciona como sustento crítico audiovisual para el pacto firmado en la Fase 4.
+                                </li>
+                                <li class="bullet-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <strong>Portabilidad Offline:</strong> El archivo multimedia mp4 está alojado localmente para evadir restricciones de conectividad.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 2: ANÁLISIS -->
+            <div id="tab-analysis" class="tab-pane">
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-analysis);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            Diagnóstico y Necesidad Curricular
+                        </h3>
+                        <div class="text-content">
+                            <p><strong>El problema:</strong> La irrupción masiva de herramientas de IA Generativa de imágenes (Midjourney, DALL-E) y texto en estudiantes de Grado 11 provoca dos fenómenos extremos: el rechazo tecnofóbico o la adopción irreflexiva (generar y copiar sin editar ni aportar criterio artístico), resultando en pérdida de originalidad.</p>
+                            <p><strong>Población dirigida:</strong> Jóvenes del Colegio Danilo Cifuentes propensos a buscar atajos en tareas estéticas. Requieren un marco normativo claro pero cercano que valore el esfuerzo cognitivo y creativo propio.</p>
+                        </div>
+                    </div>
+
+                    <div class="school-photo-container">
+                        <img src="../Colegio.png" alt="Colegio Danilo Cifuentes" class="school-image">
+                        <div class="school-overlay-label">
+                            <h4>Colegio Danilo Cifuentes</h4>
+                            <p>Ambiente de inmersión en donde se analizan los dilemas morales de las TIC en la creación artística.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-analysis);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            Perfil e Infraestructura TIC
+                        </h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Infraestructura:</strong> La reproducción de videos en streaming causa latencia y bloqueos de red en el aula. Por ello, el video se almacena de forma local e independiente en la carpeta física del proyecto.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Competencia de Entrada:</strong> Los estudiantes dominan el formato video (redes sociales), pero necesitan orientación didáctica para procesar contenidos informativos largos y reflexivos.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 3: DISEÑO -->
+            <div id="tab-design" class="tab-pane">
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-design);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            Diseño Pedagógico y Secuencia Didáctica
+                        </h3>
+                        <div class="text-content">
+                            <p><strong>Estrategia Pedagógica:</strong> Aprendizaje basado en dilemas estéticos. Se plantean interrogantes no resueltos para incitar la toma de postura ética de manera activa.</p>
+                            <p><strong>Momentos de la sesión en el aula taller:</strong></p>
+                            
+                            <div class="didactic-moment">
+                                <div class="didactic-header">
+                                    <span>Fase de Visualización (20 min)</span>
+                                    <span>Atención Focalizada</span>
+                                </div>
+                                <div class="didactic-body">
+                                    <p><strong>Estudiante:</strong> Observa el video "Video Reflexión Uso IA" y apunta en su libreta tres conceptos clave sobre co-creación y derechos de autor.</p>
+                                </div>
+                            </div>
+
+                            <div class="didactic-moment">
+                                <div class="didactic-header">
+                                    <span>Fase de Debate (50 min)</span>
+                                    <span>Análisis de Dilemas</span>
+                                </div>
+                                <div class="didactic-body">
+                                    <p><strong>Estudiante:</strong> Participa en discusiones grupales moderadas por preguntas detonantes del docente relativas al plagio con IA y la honestidad en el aula taller.</p>
+                                </div>
+                            </div>
+
+                            <div class="didactic-moment">
+                                <div class="didactic-header">
+                                    <span>Fase de Registro (30 min)</span>
+                                    <span>Consolidación en Bitácora</span>
+                                </div>
+                                <div class="didactic-body">
+                                    <p><strong>Estudiante:</strong> Registra de forma individual en su Bitácora de Campo la definición personal de co-creación ética y dibuja una infografía sobre prompts honestos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="--card-border-color: var(--color-design);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            Metas de Aprendizaje y Competencias
+                        </h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Competencia Estética Crítica:</strong> Diferencia entre el proceso de diseño conceptualizado por el humano y la mera asistencia mecánica de modelos procedurales.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Responsabilidad Digital:</strong> Declara con transparencia en su bitácora la autoría de prompts y herramientas artificiales de generación gráfica.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 4: DESARROLLO -->
+            <div id="tab-development" class="tab-pane">
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-development);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Tecnologías y Estructura del Recurso
+                        </h3>
+                        <div class="text-content">
+                            <p><strong>Reproducción offline:</strong> Integración a través de la etiqueta nativa de HTML5 <code>&lt;video&gt;</code> con formato MP4 de compresión H.264 para garantizar reproducción a 1080p sin latencia en dispositivos móviles locales.</p>
+                            <p><strong>Interfaz de Usuario Responsiva:</strong> Contenedores fluidos CSS Flexbox que enmarcan la pantalla de video y las preguntas reflexivas, adaptándose al ancho exacto del visor sin recortes laterales.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="--card-border-color: var(--color-development);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Pruebas de Integridad
+                        </h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Prueba de Códec:</strong> Decodificación por hardware probada en navegadores Chrome, Firefox y Safari bajo protocolo <code>file:///</code>.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Carga de iframe Modal:</strong> Inicialización suave del iframe de diseño pedagógico sin solapar botones de control del video padre.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 5: IMPLEMENTACIÓN -->
+            <div id="tab-implementation" class="tab-pane">
+                <div class="card-grid">
+                    <div class="card" style="--card-border-color: var(--color-implementation);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            Guía para la Facilitación del Docente
+                        </h3>
+                        <div class="text-content">
+                            <p><strong>1. Introducción al dilema (10 min):</strong> Antes del video, formule al grupo la pregunta: <em>"Si una IA dibuja mi idea tal y como se la pedí, ¿el artista soy yo o es el programador del software?"</em>.</p>
+                            <p><strong>2. Reproducción guiada (20 min):</strong> Indique a los alumnos centrar la atención en la noción de 'curaduría humana' descrita en el video.</p>
+                            <p><strong>3. Cierre Plenario (15 min):</strong> Recoja las posturas en el pizarrón escolar para guiar la posterior firma del acuerdo de honestidad en el aula taller.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="--card-border-color: var(--color-implementation);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            Recomendaciones Técnicas
+                        </h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Uso de Audífonos:</strong> Recomiende el uso de auriculares si los estudiantes observan el recurso en smartphones de forma individual en el taller.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Seguridad de Archivos:</strong> Evite cambiar el nombre del archivo MP4 en la carpeta para no romper las referencias de ruta en el código HTML.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANE 6: EVALUACIÓN -->
+            <div id="tab-evaluation" class="tab-pane">
+                <div class="simulate-box">
+                    <button class="simulate-btn" id="simulate-entry-btn">
+                        <span>⚡</span> Simular Ingreso de Estudiante
+                    </button>
+                    <p style="font-size: 12.5px; color: var(--slate-700); font-weight: 500;">Presiona para simular ingresos adicionales a la plataforma en tiempo real.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-entries">98</div>
+                        <div class="stat-label">Ingresos Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-time">12.3m</div>
+                        <div class="stat-label">Tiempo de Reproducción</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-visited">100%</div>
+                        <div class="stat-label">Video Completado</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-rating">4.9 ★</div>
+                        <div class="stat-label">Valoración Recurso</div>
+                    </div>
+                </div>
+
+                <div class="evaluator-box" style="margin-top: 15px;">
+                    <h3 style="font-family: var(--font-title); font-size: 13.5px; font-weight: 800; border-bottom: 1px solid var(--slate-100); padding-bottom: 8px; color: var(--slate-900);">
+                        Evaluar el Recurso (Simulador de Estudiante)
+                    </h3>
+                    
+                    <div class="star-rating" id="eval-stars">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="eval-author">Nombre / Pseudónimo del Estudiante:</label>
+                        <input type="text" id="eval-author" placeholder="Ej. Camila Vargas (11-B)" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="eval-comment">Comentarios sobre el Recurso:</label>
+                        <textarea id="eval-comment" rows="3" placeholder="¿Cómo te parecieron las preguntas de reflexión y los ejemplos del video?" required></textarea>
+                    </div>
+
+                    <button class="action-btn" id="submit-eval-btn">Enviar Valoración</button>
+
+                    <div class="feedback-list" id="feedback-container">
+                        <div class="feedback-item">
+                            <div class="feedback-meta">
+                                <span>Mateo Gómez (11-B)</span>
+                                <span class="feedback-stars">★★★★★</span>
+                            </div>
+                            <div class="feedback-text">El video explica muy bien que no es solo pedirle cosas a la IA, sino tener criterio para seleccionar y mejorar los bocetos que hacemos.</div>
+                        </div>
+                        <div class="feedback-item">
+                            <div class="feedback-meta">
+                                <span>Valeria Rojas (11-A)</span>
+                                <span class="feedback-stars">★★★★★</span>
+                            </div>
+                            <div class="feedback-text">Me ayudó a entender la diferencia entre plagio y co-creación antes de firmar el acuerdo de honestidad. Los ejemplos son claros.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PROGRAMACIÓN DINÁMICA -->
+    <script>
+        const tabButtons = document.querySelectorAll('.nav-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        const activeTabTitle = document.getElementById('active-tab-title');
+        const activeTabBadge = document.getElementById('active-tab-badge');
+
+        const tabHeaders = {
+            'overview': { title: 'Resumen Instruccional del Recurso', badge: 'Vista General' },
+            'analysis': { title: 'Fase A: Diagnóstico y Requerimientos de Aula', badge: 'Análisis' },
+            'design': { title: 'Fase D: Metas de Aprendizaje y Secuencia Didáctica', badge: 'Diseño' },
+            'development': { title: 'Fase D: Tecnologías y Pruebas del Video', badge: 'Desarrollo' },
+            'implementation': { title: 'Fase I: Guía Docente y Facilitación', badge: 'Implementación' },
+            'evaluation': { title: 'Fase E: Estadísticas y Coevaluación del Estudiante', badge: 'Evaluación' }
+        };
+
+        function switchTab(tabId) {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            const activePane = document.getElementById(`tab-${tabId}`);
+            
+            if (activeBtn && activePane) {
+                activeBtn.classList.add('active');
+                activePane.classList.add('active');
+
+                const headerInfo = tabHeaders[tabId];
+                if (headerInfo) {
+                    activeTabTitle.innerText = headerInfo.title;
+                    activeTabBadge.innerText = headerInfo.badge;
+
+                    const tabColor = activeBtn.style.getPropertyValue('--tab-color');
+                    activeTabBadge.style.color = tabColor;
+                    activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
+                    if (!tabColor.startsWith('rgb')) {
+                        activeTabBadge.style.color = `var(--color-${tabId})`;
+                        activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId}-rgb, 108, 83, 163), 0.1)`;
+                    }
+                }
+                activePane.scrollTop = 0;
+            }
+        }
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.id.replace('btn-', '');
+                switchTab(tabId);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('overview');
+
+            // --- SIMULADOR DE INGRESO DE ESTUDIANTES (ESTADÍSTICAS) ---
+            const simulateBtn = document.getElementById('simulate-entry-btn');
+            const statEntries = document.getElementById('stat-entries');
+            const statTime = document.getElementById('stat-time');
+
+            let currentEntries = 98;
+            let currentMinutes = 12.3;
+
+            simulateBtn.addEventListener('click', () => {
+                currentEntries += 1;
+                currentMinutes = parseFloat((currentMinutes + (Math.random() * 0.1 - 0.03)).toFixed(1));
+                if (currentMinutes < 5) currentMinutes = 5;
+
+                statEntries.innerText = currentEntries;
+                statTime.innerText = `${currentMinutes}m`;
+                
+                statEntries.style.transform = 'scale(1.12)';
+                statEntries.style.transition = 'transform 0.1s ease';
+                setTimeout(() => {
+                    statEntries.style.transform = 'scale(1)';
+                }, 100);
+            });
+
+            // --- SIMULADOR DE VALORACIÓN ---
+            const stars = document.querySelectorAll('#eval-stars .star');
+            let selectedRating = 0;
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.getAttribute('data-value'));
+                    selectedRating = rating;
+
+                    stars.forEach(s => {
+                        const val = parseInt(s.getAttribute('data-value'));
+                        if (val <= rating) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+
+            const submitBtn = document.getElementById('submit-eval-btn');
+            const authorInput = document.getElementById('eval-author');
+            const commentInput = document.getElementById('eval-comment');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const statAvgRating = document.getElementById('stat-avg-rating');
+
+            let totalRatingSum = (5 * 5) + (5 * 5); // Mateo (5) + Valeria (5)
+            let ratingCount = 2;
+
+            submitBtn.addEventListener('click', () => {
+                const author = authorInput.value.trim();
+                const comment = commentInput.value.trim();
+
+                if (!author || !comment) {
+                    alert("Por favor completa tu nombre y escribe un comentario.");
+                    return;
+                }
+
+                if (selectedRating === 0) {
+                    alert("Por favor selecciona una valoración con estrellas.");
+                    return;
+                }
+
+                totalRatingSum += selectedRating;
+                ratingCount += 1;
+                const newAvg = (totalRatingSum / ratingCount).toFixed(1);
+                
+                statAvgRating.innerText = `${newAvg} ★`;
+
+                const item = document.createElement('div');
+                item.className = 'feedback-item';
+                
+                let starsString = "";
+                for (let i = 1; i <= 5; i++) {
+                    starsString += i <= selectedRating ? "★" : "☆";
+                }
+
+                item.innerHTML = `
+                    <div class="feedback-meta">
+                        <span>${escapeHtml(author)}</span>
+                        <span class="feedback-stars">${starsString}</span>
+                    </div>
+                    <div class="feedback-text">${escapeHtml(comment)}</div>
+                `;
+
+                feedbackContainer.insertBefore(item, feedbackContainer.firstChild);
+
+                authorInput.value = '';
+                commentInput.value = '';
+                selectedRating = 0;
+                stars.forEach(s => s.classList.remove('selected'));
+            });
+
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+        });
+    </script>
+</body>
+</html>

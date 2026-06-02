@@ -226,6 +226,7 @@
         .node-6-bg { background: #2f94d9; }
         .node-7-bg { background: var(--sway-teal); }
         .node-8-bg { background: var(--kudos-teal); }
+        .node-9-bg { background: #5c6bc0; }
 
         /* Icono dentro del hexágono */
         .hexagon-icon {
@@ -295,6 +296,12 @@
         .hex-8 {
             top: 188px;
             left: 207px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-9 {
+            top: 563px;
+            left: 32px;
             width: 195px;
             height: 224px;
         }
@@ -664,6 +671,8 @@
                         <line class="line" x1="695" y1="550" x2="870" y2="425" />
                         <line class="line" x1="305" y1="300" x2="130" y2="425" />
                         <line class="line" x1="305" y1="550" x2="130" y2="425" />
+                        <line class="line" x1="305" y1="550" x2="130" y2="675" />
+                        <line class="line" x1="130" y1="425" x2="130" y2="675" />
                     </svg>
 
                     <div class="network-container">
@@ -781,6 +790,16 @@
                                     <path d="M 40 55 L 50 65 L 70 45" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="hexagon-label">RÚBRICA</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 9: VIDEO REFLEXIÓN -->
+                        <div class="hexagon hex-9 node node-9" onclick="openPage('fase3_construccion/video_reflexion.html')" data-tooltip="Video de reflexión sobre el uso ético y práctico de IA en el arte">
+                            <div class="hexagon-inner node-9-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <polygon points="30,20 30,80 80,50" fill="white" />
+                                </svg>
+                                <div class="hexagon-label">VIDEO<br>REFLEXIÓN</div>
                             </div>
                         </div>
 
