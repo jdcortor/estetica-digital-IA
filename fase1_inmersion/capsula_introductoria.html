@@ -87,60 +87,58 @@
             transform: scale(1.05);
         }
 
-        /* PANTALLA DE INICIO (BIENVENIDA) */
-        #welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            z-index: 100;
+        /* MAPA DE NAVEGACIÓN RÁPIDA (ROADMAP) */
+        #quick-navigation-map {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: opacity 1s ease, visibility 1s;
-        }
-        #welcome-box {
-            text-align: center;
-            max-width: 500px;
-            padding: 40px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-        #welcome-box h1 {
-            margin: 0 0 15px 0;
-            font-size: 32px;
-            color: #111827;
-            font-weight: 700;
-            font-family: var(--font-labels);
-        }
-        #welcome-box p {
-            color: #6b7280;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        #start-btn {
-            padding: 16px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            background-color: #111827;
-            color: white;
-            border: none;
+            gap: 10px;
+            background: rgba(34, 33, 33, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 20px;
             border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(17, 24, 39, 0.2);
-            transition: all 0.3s ease;
-            font-family: var(--font-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            z-index: 100;
         }
-        #start-btn:hover {
-            background-color: #374151;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(17, 24, 39, 0.3);
+        .map-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-family: var(--font-labels);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .map-btn[data-index="0"] {
+            width: auto;
+            padding: 0 15px;
+            border-radius: 20px;
+        }
+        .map-btn:hover {
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 10px rgba(251, 208, 8, 0.5);
+            transform: scale(1.1);
+        }
+        .map-btn.active {
+            background: var(--header-yellow);
+            color: var(--header-dark);
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 15px rgba(251, 208, 8, 0.8);
+            transform: scale(1.05);
         }
 
         /* INTERFAZ DEL TOUR */
@@ -191,7 +189,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             border: 1px solid rgba(0,0,0,0.05);
             z-index: 10;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 1s ease;
         }
         h2 { margin: 0 0 10px 0; font-size: 22px; color: #111827; font-weight: 700; font-family: var(--font-labels); }
@@ -308,56 +306,79 @@
             border: none;
         }
 
-        /* --- TARJETA DE INSPECCIÓN INTERACTIVA --- */
-        #inspect-card {
+        /* --- BOCADILLO DE DIÁLOGO INTERACTIVO (COMIC STYLE) --- */
+        #speech-bubble {
             position: absolute;
             bottom: 40px;
             right: 40px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: #ffffff;
+            border: 3px solid #222121;
             color: #1f2937;
-            padding: 30px;
-            border-radius: 24px;
+            padding: 25px;
+            border-radius: 20px;
             width: 380px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.18);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform: translateY(30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+            transform: translateY(20px) scale(0.95);
             box-sizing: border-box;
         }
-        #inspect-card.active {
+        #speech-bubble.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
-        #close-inspect-btn {
+        #speech-bubble::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 15px 15px 15px 0;
+            border-style: solid;
+            border-color: transparent #222121 transparent transparent;
+            display: block;
+            width: 0;
+        }
+        #speech-bubble::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 13px 13px 13px 0;
+            border-style: solid;
+            border-color: transparent #ffffff transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+        #close-speech-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: rgba(0, 0, 0, 0.05);
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            font-size: 20px;
-            line-height: 30px;
+            font-size: 18px;
             cursor: pointer;
-            color: #4b5563;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #4b5563;
             transition: all 0.2s ease;
+            line-height: 1;
         }
-        #close-inspect-btn:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: #111827;
+        #close-speech-btn:hover {
+            background: #ff4d4d;
+            color: white;
             transform: scale(1.05);
         }
-        #inspect-category {
+        #speech-category {
             font-size: 10px;
             color: #222121;
             background: #fbd008;
@@ -365,23 +386,114 @@
             border-radius: 20px;
             text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-family: var(--font-labels);
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        #inspect-title {
-            margin: 0 0 10px 0;
-            font-size: 20px;
-            font-weight: 700;
-            color: #111827;
-            font-family: var(--font-labels);
+        #speech-title {
+            display: none;
         }
-        #inspect-desc {
+        #speech-text {
             margin: 0;
             line-height: 1.6;
             color: #4b5563;
             font-size: 14.5px;
+            min-height: 80px;
+        }
+        #speech-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .speech-action-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #d1d5db;
+            background: white;
+            color: #374151;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-main);
+        }
+        .speech-action-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        .speech-action-btn.highlighted {
+            background: #222121;
+            color: #ffffff;
+            border-color: #222121;
+        }
+        .speech-action-btn.highlighted:hover {
+            background: #fbd008;
+            color: #222121;
+            border-color: #fbd008;
+            box-shadow: 0 0 10px rgba(251, 208, 8, 0.4);
+        }
+        #quiz-container {
+            margin-top: 15px;
+            border-top: 1px dashed #e5e7eb;
+            padding-top: 15px;
+        }
+        #quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .quiz-option-btn {
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #f9fafb;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-family: var(--font-main);
+        }
+        .quiz-option-btn:hover:not(:disabled) {
+            background: var(--header-yellow);
+            border-color: var(--header-yellow);
+            color: var(--header-dark);
+            transform: translateX(4px);
+        }
+        .quiz-option-btn.correct {
+            background: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+        .quiz-option-btn.incorrect {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+            text-decoration: line-through;
+        }
+        #quiz-feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-family: var(--font-labels);
+            font-weight: 700;
+            font-size: 14px;
+            animation: popReveal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .feedback-correct {
+            background: #ecfdf5;
+            border: 2px dashed #10b981;
+            color: #065f46;
+        }
+        .feedback-incorrect {
+            background: #fef2f2;
+            border: 2px dashed #ef4444;
+            color: #991b1b;
         }
         .inspect-instruction {
             font-size: 11px;
@@ -396,11 +508,66 @@
             justify-content: center;
             gap: 6px;
         }
+        @keyframes popReveal {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        var debugLogs = [];
+        function logToOverlay(type, args) {
+            var msg = Array.prototype.slice.call(args).map(function(arg) {
+                if (arg instanceof Error) return arg.message + "\n" + arg.stack;
+                return typeof arg === 'object' ? JSON.stringify(arg) : arg;
+            }).join(' ');
+            debugLogs.push('[' + type + '] ' + msg);
+            var logDiv = document.getElementById('debug-log-console');
+            if (logDiv) {
+                logDiv.style.display = 'block';
+                logDiv.innerHTML += '<div class="log-' + type + '" style="margin-bottom: 5px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 3px; color: ' + (type === 'error' ? '#db2777' : (type === 'warn' ? '#d97706' : '#1f2937')) + ';">[' + type.toUpperCase() + '] ' + msg + '</div>';
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
+        }
+        
+        // Hijack console
+        var _log = console.log;
+        var _error = console.error;
+        var _warn = console.warn;
+        
+        console.log = function() {
+            logToOverlay('log', arguments);
+            _log.apply(console, arguments);
+        };
+        console.error = function() {
+            logToOverlay('error', arguments);
+            _error.apply(console, arguments);
+        };
+        console.warn = function() {
+            logToOverlay('warn', arguments);
+            _warn.apply(console, arguments);
+        };
+        
+        window.onerror = function(message, source, lineno, colno, error) {
+            var errorMsg = message + " en " + (source ? source.split('/').pop() : 'desconocido') + ":" + lineno;
+            logToOverlay('error', [errorMsg]);
+            if (error && error.stack) {
+                logToOverlay('error', [error.stack]);
+            }
+            return false;
+        };
+    </script>
 </head>
 <body>
+
+    <!-- Consola de depuración en pantalla -->
+    <div id="debug-log-console" style="display: none; position: fixed; bottom: 20px; left: 20px; width: 380px; height: 220px; background: rgba(255, 255, 255, 0.95); border: 3px solid #222121; border-radius: 12px; z-index: 99999; font-family: monospace; font-size: 11px; overflow-y: scroll; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: left;">
+        <div style="font-weight: bold; border-bottom: 2px solid #222121; padding-bottom: 6px; margin-bottom: 6px; display: flex; justify-content: space-between; font-size: 12px; color: #222121;">
+            <span>🐞 CONSOLA DE DEPURACIÓN (LOGS)</span>
+            <button onclick="document.getElementById('debug-log-console').style.display='none'" style="border: none; background: none; cursor: pointer; font-weight: bold; font-size: 14px; color: #ff4d4d;">✕</button>
+        </div>
+    </div>
 
     <!-- Barra Superior -->
     <div class="top-bar">
@@ -417,12 +584,17 @@
         </div>
     </div>
 
-    <div id="welcome-overlay">
-        <div id="welcome-box">
-            <h1>Galería Metropolitana</h1>
-            <p>Te damos la bienvenida a la exhibición permanente de arte contemporáneo. Haz clic abajo para abrir las puertas e iniciar el recorrido guiado.</p>
-            <button id="start-btn">Entrar a la exhibición</button>
-        </div>
+    <!-- Mapa de Navegación Rápida -->
+    <div id="quick-navigation-map">
+        <button class="map-btn" data-index="0" onclick="jumpToStation(0)" title="Vestíbulo Principal">Vestíbulo</button>
+        <button class="map-btn" data-index="1" onclick="jumpToStation(1)" title="1: Composición y Estructura">1</button>
+        <button class="map-btn" data-index="2" onclick="jumpToStation(2)" title="2: Maquetación con IA">2</button>
+        <button class="map-btn" data-index="3" onclick="jumpToStation(3)" title="3: Diario de Campo Tradicional">3</button>
+        <button class="map-btn" data-index="4" onclick="jumpToStation(4)" title="4: Crochet Lineal">4</button>
+        <button class="map-btn" data-index="5" onclick="jumpToStation(5)" title="5: Crochet Radial">5</button>
+        <button class="map-btn" data-index="6" onclick="jumpToStation(6)" title="6: Diseño de Portada">6</button>
+        <button class="map-btn" data-index="7" onclick="jumpToStation(7)" title="7: Caligrafía con Pluma">7</button>
+        <button class="map-btn" data-index="8" onclick="jumpToStation(8)" title="8: Diario de Campo Digital">8</button>
     </div>
 
     <div id="info-panel">
@@ -447,22 +619,40 @@
                 <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
             </div>
             <div class="addie-modal-body">
-                <iframe src="../museo.pdf"></iframe>
+                <iframe src="diseno_recurso.html"></iframe>
             </div>
         </div>
     </div>
 
-    <!-- Tarjeta de Inspección Interactiva -->
-    <div id="inspect-card">
-        <button id="close-inspect-btn">&times;</button>
-        <span id="inspect-category">CATEGORÍA</span>
-        <h2 id="inspect-title">Título de la Obra</h2>
-        <p id="inspect-desc">Descripción detallada de la historia del objeto...</p>
+    <!-- Bocadillo de Diálogo (Contador de Historias) -->
+    <div id="speech-bubble">
+        <button id="close-speech-btn">&times;</button>
+        <span id="speech-category">CATEGORÍA</span>
+        <h2 id="speech-title">Título de la Obra</h2>
+        
+        <div id="speech-text-container">
+            <p id="speech-text"></p>
+        </div>
+        
+        <div id="speech-actions">
+            <button id="skip-speech-btn" class="speech-action-btn">Omitir Animación</button>
+            <button id="reveal-technique-btn" class="speech-action-btn highlighted" style="display: none;">¿Quién soy?</button>
+        </div>
+        
+        <!-- Opciones de respuesta para el estudiante -->
+        <div id="quiz-container" style="display: none;">
+            <p style="font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #374151;">¿Qué técnica pedagógica represento?</p>
+            <div id="quiz-options"></div>
+        </div>
+        
+        <!-- Retroalimentación del Quiz -->
+        <div id="quiz-feedback" style="display: none;"></div>
+
         <div class="inspect-instruction">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
                 <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
             </svg>
-            Arrastra para rotar el modelo en 3D
+            Arrastra el objeto para rotarlo libremente
         </div>
     </div>
 
@@ -493,7 +683,7 @@
 
                 ctx.strokeStyle = '#dfd2bd';
                 ctx.lineWidth = 1;
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < 3; i++) {
                     ctx.beginPath();
                     ctx.moveTo(0, y + Math.random() * rowHeight);
                     ctx.bezierCurveTo(
@@ -645,12 +835,14 @@
 
         // --- 4. EXPOSICIÓN DE LAS 6 OBRAS DE ARTE CON MARCOS ---
         const artData = [
-            { id: 1, x: -29.8, y: 5, z: 15,  rotY: Math.PI / 2,  color: 0xde3a49 }, 
-            { id: 2, x: -29.8, y: 5, z: -10, rotY: Math.PI / 2,  color: 0xf4a261 }, 
-            { id: 3, x: -12,   y: 5, z: -29.8, rotY: 0,           color: 0x2a9d8f }, 
-            { id: 4, x: 12,    y: 5, z: -29.8, rotY: 0,           color: 0xe9c46a }, 
-            { id: 5, x: 29.8,  y: 5, z: -10, rotY: -Math.PI / 2, color: 0x457b9d }, 
-            { id: 6, x: 29.8,  y: 5, z: 15,  rotY: -Math.PI / 2, color: 0x6d597a }  
+            { id: 1, x: -29.8, y: 5, z: 20,  rotY: Math.PI / 2,  color: 0xde3a49 }, 
+            { id: 2, x: -29.8, y: 5, z: 0,   rotY: Math.PI / 2,  color: 0xf4a261 }, 
+            { id: 3, x: -29.8, y: 5, z: -20, rotY: Math.PI / 2,  color: 0x2a9d8f }, 
+            { id: 4, x: -12,   y: 5, z: -29.8, rotY: 0,           color: 0xe9c46a }, 
+            { id: 5, x: 12,    y: 5, z: -29.8, rotY: 0,           color: 0x6d597a }, 
+            { id: 6, x: 29.8,  y: 5, z: -20, rotY: -Math.PI / 2, color: 0x457b9d }, 
+            { id: 7, x: 29.8,  y: 5, z: 0,   rotY: -Math.PI / 2, color: 0x3d314a }, 
+            { id: 8, x: 29.8,  y: 5, z: 20,  rotY: -Math.PI / 2, color: 0xff7b90 }  
         ];
 
         artData.forEach((data) => {
@@ -685,7 +877,7 @@
             const spotLight = new THREE.SpotLight(0xfff3e0, 2.5, 25, Math.PI / 4, 0.6, 1);
             spotLight.position.set(data.x * 0.86, 13, data.z * 0.86);
             spotLight.target = painting;
-            spotLight.castShadow = true;
+            spotLight.castShadow = false;
             spotLight.shadow.mapSize.width = 1024;
             spotLight.shadow.mapSize.height = 1024;
             spotLight.shadow.bias = -0.001;
@@ -734,306 +926,912 @@
             scene.add(pedestalGroup);
         }
 
-        function createOpenBookModel() {
+        function createGeometricCompositionModel() {
             const group = new THREE.Group();
-            const coverMat = new THREE.MeshStandardMaterial({ color: 0x1a2e40, roughness: 0.4 });
             
-            const coverL = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.2, 0.05), coverMat);
-            coverL.position.set(-0.39, 0, -0.03);
-            coverL.rotation.y = 0.25;
-            coverL.castShadow = true;
-            group.add(coverL);
+            // Base de obsidiana pulida (octágono chato)
+            const baseMat = new THREE.MeshStandardMaterial({ 
+                color: 0x111115, 
+                roughness: 0.1, 
+                metalness: 0.9 
+            });
+            const baseObj = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.75, 0.15, 8), baseMat);
+            baseObj.position.y = -0.55;
+            baseObj.castShadow = true;
+            baseObj.receiveShadow = true;
+            group.add(baseObj);
             
-            const coverR = coverL.clone();
-            coverR.position.x = 0.39;
-            coverR.rotation.y = -0.25;
-            group.add(coverR);
+            // Bordes dorados de la base
+            const goldMat = new THREE.MeshStandardMaterial({ 
+                color: 0xd4af37, 
+                roughness: 0.15, 
+                metalness: 0.9 
+            });
+            const baseRing = new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.02, 8, 8), goldMat);
+            baseRing.position.y = -0.48;
+            baseRing.rotation.x = Math.PI / 2;
+            group.add(baseRing);
+
+            // Núcleo brillante central (Emisivo cian)
+            const coreMat = new THREE.MeshStandardMaterial({ 
+                color: 0x00ffff, 
+                emissive: 0x00ffff, 
+                emissiveIntensity: 2.0 
+            });
+            const core = new THREE.Mesh(new THREE.SphereGeometry(0.2, 16, 16), coreMat);
+            core.position.y = 0;
+            group.add(core);
+
+            // Armazón alámbrico exterior en forma de icosaedro dorado
+            const wireMat = new THREE.MeshStandardMaterial({ 
+                color: 0xd4af37, 
+                roughness: 0.2, 
+                metalness: 0.9, 
+                wireframe: true 
+            });
+            const outerShell = new THREE.Mesh(new THREE.IcosahedronGeometry(0.38, 1), wireMat);
+            outerShell.position.y = 0;
+            group.add(outerShell);
+
+            // Giroscopio: Dos anillos concéntricos
+            // Anillo exterior de oro
+            const ring1 = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.025, 8, 48), goldMat);
+            group.add(ring1);
             
-            const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 1.2, 8), coverMat);
-            spine.position.set(0, 0, -0.06);
-            spine.castShadow = true;
-            group.add(spine);
+            // Anillo interior de metal cian
+            const tealMat = new THREE.MeshStandardMaterial({ 
+                color: 0x2a9d8f, 
+                roughness: 0.1, 
+                metalness: 0.8 
+            });
+            const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.02, 8, 48), tealMat);
+            ring2.rotation.x = Math.PI / 2;
+            group.add(ring2);
+
+            // Shards Flotantes: Pequeños prismas flotantes alrededor
+            const shardsGroup = new THREE.Group();
+            const shardGeo = new THREE.ConeGeometry(0.04, 0.12, 4);
+            for (let i = 0; i < 6; i++) {
+                const angle = (i / 6) * Math.PI * 2;
+                const shard = new THREE.Mesh(shardGeo, goldMat);
+                shard.position.set(Math.cos(angle) * 0.75, 0.1 + Math.sin(angle * 2) * 0.15, Math.sin(angle) * 0.75);
+                shard.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+                shard.castShadow = true;
+                shardsGroup.add(shard);
+            }
+            group.add(shardsGroup);
+
+            // Guardar referencias para animación
+            group.ring1 = ring1;
+            group.ring2 = ring2;
+            group.shards = shardsGroup;
+            group.core = core;
+            group.outerShell = outerShell;
             
-            const pageMat = new THREE.MeshStandardMaterial({ color: 0xfffdf0, roughness: 0.8 });
-            const pageL = new THREE.Mesh(new THREE.BoxGeometry(0.74, 1.12, 0.03), pageMat);
-            pageL.position.set(-0.35, 0.02, 0);
-            pageL.rotation.y = 0.22;
-            pageL.castShadow = true;
-            group.add(pageL);
+            // Establecer animSub para compatibilidad
+            group.animSub = core; 
             
-            const pageR = pageL.clone();
-            pageR.position.x = 0.35;
-            pageR.rotation.y = -0.22;
-            group.add(pageR);
-            
-            const charMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.2, metalness: 0.8 });
-            const letterA = new THREE.Group();
-            const bar1 = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.55, 0.06), charMat);
-            bar1.position.set(-0.09, 0, 0);
-            bar1.rotation.z = -0.2;
-            const bar2 = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.55, 0.06), charMat);
-            bar2.position.set(0.09, 0, 0);
-            bar2.rotation.z = 0.2;
-            const cross = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.06), charMat);
-            cross.position.set(0, -0.03, 0);
-            letterA.add(bar1, bar2, cross);
-            
-            letterA.position.set(0, 0.9, 0);
-            letterA.castShadow = true;
-            group.add(letterA);
-            
-            group.animSub = letterA;
             return group;
         }
 
         function createRobotHeadModel() {
             const group = new THREE.Group();
-            const metalMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.1, metalness: 0.95 });
             
-            const head = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.85, 0.85), metalMat);
-            head.castShadow = true;
-            group.add(head);
-            
-            const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.3, 8), metalMat);
-            neck.position.y = -0.55;
-            neck.castShadow = true;
-            group.add(neck);
-            
-            const earGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.15, 8);
-            earGeo.rotateZ(Math.PI/2);
-            const earL = new THREE.Mesh(earGeo, metalMat);
-            earL.position.set(-0.56, 0, 0);
-            earL.castShadow = true;
-            const earR = earL.clone();
-            earR.position.x = 0.56;
-            group.add(earL, earR);
-            
-            const eyeMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00d2ff, emissiveIntensity: 2.0 });
-            const eyeL = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 16), eyeMat);
-            eyeL.position.set(-0.25, 0.12, 0.41);
-            const eyeR = eyeL.clone();
-            eyeR.position.x = 0.25;
-            group.add(eyeL, eyeR);
-            
-            const antBase = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.5, 8), metalMat);
-            antBase.position.y = 0.65;
-            antBase.castShadow = true;
-            const antTip = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), new THREE.MeshStandardMaterial({ color: 0xff3b30, emissive: 0xff3b30, emissiveIntensity: 1.5 }));
-            antTip.position.y = 0.9;
-            group.add(antBase, antTip);
-            
-            return group;
-        }
-
-        function createPaletteModel() {
-            const group = new THREE.Group();
-            const woodMat = new THREE.MeshStandardMaterial({ color: 0xc69c6d, roughness: 0.6 });
-            
-            const palette = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.05, 24), woodMat);
-            palette.scale.set(1, 1, 0.75);
-            palette.rotation.x = Math.PI / 6;
-            palette.castShadow = true;
-            group.add(palette);
-            
-            const colors = [0xde3a49, 0xfbd008, 0x30a0e0, 0x5cc472, 0x9b72cb];
-            const angles = [0, Math.PI/2, Math.PI, -Math.PI/2, Math.PI/4];
-            const dists = [0.55, 0.5, 0.55, 0.45, 0.6];
-            
-            colors.forEach((col, idx) => {
-                const blobMat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.2 });
-                const blob = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 8), blobMat);
-                blob.scale.set(1.1, 0.3, 1.1);
-                
-                const localX = Math.cos(angles[idx]) * dists[idx];
-                const localZ = Math.sin(angles[idx]) * dists[idx];
-                
-                blob.position.set(localX, 0.03, localZ);
-                blob.position.applyAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 6);
-                group.add(blob);
-            });
-            
-            const brushGroup = new THREE.Group();
-            const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.6, 8), new THREE.MeshStandardMaterial({ color: 0x5c4033, roughness: 0.7 }));
-            handle.position.y = 0.3;
-            const ferrule = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.15, 8), new THREE.MeshStandardMaterial({ color: 0xcccccc, metalness: 0.8, roughness: 0.2 }));
-            ferrule.position.y = 1.1;
-            const hair = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.22, 8), new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.9 }));
-            hair.position.y = 1.25;
-            
-            brushGroup.add(handle, ferrule, hair);
-            brushGroup.rotation.set(0.4, 0.2, -0.6);
-            brushGroup.position.set(0.15, -0.15, 0.2);
-            brushGroup.castShadow = true;
-            group.add(brushGroup);
-            
-            return group;
-        }
-
-        function createYarnBallModel() {
-            const group = new THREE.Group();
-            const yarnColor = 0xff7b90;
-            const yarnMat = new THREE.MeshStandardMaterial({ color: yarnColor, roughness: 0.95 });
-            
-            const ball = new THREE.Mesh(new THREE.SphereGeometry(0.7, 24, 24), yarnMat);
-            ball.castShadow = true;
-            group.add(ball);
-            
-            const threadMat = new THREE.MeshStandardMaterial({ color: yarnColor - 0x111111, roughness: 0.95 });
-            for(let i=0; i<6; i++) {
-                const ring = new THREE.Mesh(new THREE.TorusGeometry(0.71, 0.035, 6, 32), threadMat);
-                ring.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                group.add(ring);
-            }
-            
-            const needleGroup = new THREE.Group();
-            const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.7, 8), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.2 }));
-            shaft.position.y = 0.75;
-            shaft.castShadow = true;
-            
-            const hook = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.022, 6, 16, Math.PI * 1.2), new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.2 }));
-            hook.position.set(-0.02, 1.6, 0);
-            hook.rotation.z = -0.5;
-            
-            needleGroup.add(shaft, hook);
-            needleGroup.position.set(-0.15, -0.45, 0);
-            needleGroup.rotation.set(0.5, 0, -0.7);
-            group.add(needleGroup);
-            
-            return group;
-        }
-
-        function createGeminiSparkModel() {
-            const group = new THREE.Group();
-            
-            const innerMat = new THREE.MeshStandardMaterial({ 
-                color: 0x9b72cb, 
-                emissive: 0x52307c, 
-                emissiveIntensity: 0.8,
-                roughness: 0.1, 
-                metalness: 0.9 
-            });
-            const outerMat = new THREE.MeshStandardMaterial({ 
-                color: 0x4285f4, 
-                emissive: 0x1a73e8, 
-                emissiveIntensity: 0.5,
-                transparent: true, 
-                opacity: 0.6, 
+            // Materiales
+            const chromeMat = new THREE.MeshStandardMaterial({ 
+                color: 0xd1d5db, 
                 roughness: 0.05, 
                 metalness: 0.95 
             });
+            const darkMetalMat = new THREE.MeshStandardMaterial({ 
+                color: 0x374151, 
+                roughness: 0.2, 
+                metalness: 0.8 
+            });
+            const copperMat = new THREE.MeshStandardMaterial({ 
+                color: 0xb45309, 
+                roughness: 0.15, 
+                metalness: 0.9 
+            });
+            const visorMat = new THREE.MeshStandardMaterial({ 
+                color: 0xff0055, 
+                emissive: 0xff0055, 
+                emissiveIntensity: 2.5 
+            });
+            const antTipMat = new THREE.MeshStandardMaterial({ 
+                color: 0x00ffcc, 
+                emissive: 0x00ffcc, 
+                emissiveIntensity: 2.0 
+            });
             
-            const sparkInner = new THREE.Mesh(new THREE.OctahedronGeometry(0.6), innerMat);
-            sparkInner.scale.set(0.6, 1.3, 0.6);
-            sparkInner.castShadow = true;
-            group.add(sparkInner);
+            // Neck (Cuello mecánico articulado - 3 anillos de cromo apilados)
+            const neckGroup = new THREE.Group();
+            const ringGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.06, 16);
+            for (let i = 0; i < 3; i++) {
+                const r = new THREE.Mesh(ringGeo, chromeMat);
+                r.position.y = -0.55 + i * 0.09;
+                r.castShadow = true;
+                neckGroup.add(r);
+            }
+            // Eje central del cuello
+            const neckAxis = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.3, 16), darkMetalMat);
+            neckAxis.position.y = -0.46;
+            neckGroup.add(neckAxis);
+            group.add(neckGroup);
             
-            const sparkOuter = new THREE.Mesh(new THREE.OctahedronGeometry(0.72), outerMat);
-            sparkOuter.scale.set(0.6, 1.3, 0.6);
-            sparkOuter.rotation.y = Math.PI / 4;
-            group.add(sparkOuter);
+            // Cabeza - Núcleo central (Caja oscura)
+            const headCore = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.8, 0.8), darkMetalMat);
+            headCore.castShadow = true;
+            group.add(headCore);
             
-            const smallSparkMat = new THREE.MeshStandardMaterial({ color: 0xfbd008, emissive: 0xfbd008, emissiveIntensity: 1.5 });
-            const s1 = new THREE.Mesh(new THREE.OctahedronGeometry(0.12), smallSparkMat);
-            s1.position.set(0.7, 0.35, -0.3);
-            const s2 = s1.clone();
-            s2.position.set(-0.7, -0.35, 0.3);
-            group.add(s1, s2);
+            // Placas de armadura exteriores (Capa de cromo)
+            // Placa izquierda
+            const plateL = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.74, 0.74), chromeMat);
+            plateL.position.set(-0.44, 0, 0);
+            plateL.castShadow = true;
+            // Placa derecha
+            const plateR = plateL.clone();
+            plateR.position.x = 0.44;
+            // Placa trasera
+            const plateB = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.74, 0.04), chromeMat);
+            plateB.position.set(0, 0, -0.42);
+            plateB.castShadow = true;
+            // Placa superior (Casco)
+            const plateT = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.04, 0.78), chromeMat);
+            plateT.position.set(0, 0.42, 0);
+            plateT.castShadow = true;
+            group.add(plateL, plateR, plateB, plateT);
             
-            group.s1 = s1;
-            group.s2 = s2;
+            // Placa frontal (Negra mate con visor)
+            const facePlate = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.74, 0.04), new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.9 }));
+            facePlate.position.set(0, 0, 0.4);
+            group.add(facePlate);
+            
+            // Visor de escaneo horizontal
+            const visor = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.1, 0.02), visorMat);
+            visor.position.set(0, 0.12, 0.425);
+            group.add(visor);
+            
+            // Detalle de tornillos decorativos en placas laterales
+            const boltGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.02, 8);
+            boltGeo.rotateZ(Math.PI / 2);
+            for (let zVal of [-0.2, 0.2]) {
+                for (let yVal of [-0.2, 0.2]) {
+                    const boltL = new THREE.Mesh(boltGeo, copperMat);
+                    boltL.position.set(-0.47, yVal, zVal);
+                    const boltR = boltL.clone();
+                    boltR.position.x = 0.47;
+                    group.add(boltL, boltR);
+                }
+            }
+            
+            // Oídos (Cojinetes cilíndricos con ranura)
+            const earGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.08, 12);
+            earGeo.rotateZ(Math.PI / 2);
+            const earL = new THREE.Mesh(earGeo, chromeMat);
+            earL.position.set(-0.48, 0, 0);
+            const earLInner = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.1, 12), copperMat);
+            earLInner.geometry.rotateZ(Math.PI / 2);
+            earLInner.position.set(-0.49, 0, 0);
+            
+            const earR = earL.clone();
+            earR.position.x = 0.48;
+            const earRInner = earLInner.clone();
+            earRInner.position.x = 0.49;
+            
+            group.add(earL, earLInner, earR, earRInner);
+            
+            // Antena con bobina de cobre y punta emisiva
+            const antBase = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.06, 8), chromeMat);
+            antBase.position.set(0, 0.45, 0);
+            const antCoil = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.12, 8), copperMat);
+            antCoil.position.set(0, 0.53, 0);
+            const antRod = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.35, 8), chromeMat);
+            antRod.position.set(0, 0.72, 0);
+            
+            const antTip = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), antTipMat);
+            antTip.position.set(0, 0.9, 0);
+            
+            group.add(antBase, antCoil, antRod, antTip);
+            
+            // Guardar referencias para animación
+            group.visor = visor;
+            group.antTip = antTip;
+            
             return group;
         }
 
-        function createTrophyModel() {
+        function createPaperSketchModel() {
             const group = new THREE.Group();
-            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.95, roughness: 0.08 });
             
-            const base = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.6, 0.25, 12), new THREE.MeshStandardMaterial({ color: 0x1f1f21, roughness: 0.5 }));
-            base.position.y = -0.5;
-            base.castShadow = true;
-            group.add(base);
+            const leatherMat = new THREE.MeshStandardMaterial({ color: 0x5c2c16, roughness: 0.8 });
+            const pageMat = new THREE.MeshStandardMaterial({ color: 0xfef3c7, roughness: 0.9 });
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.15, metalness: 0.95 });
+            const ribbonMat = new THREE.MeshStandardMaterial({ color: 0xb91c1c, roughness: 0.3 });
+            const sketchMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.9 });
+            const neonLineMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, emissive: 0x0ea5e9, emissiveIntensity: 1.5 });
             
-            const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 0.45, 12), goldMat);
-            stem.position.y = -0.2;
-            stem.castShadow = true;
-            group.add(stem);
+            // Libro abierto inclinado
+            const bookGroup = new THREE.Group();
             
-            const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.22, 0.75, 12), goldMat);
-            cup.position.y = 0.35;
-            cup.castShadow = true;
-            group.add(cup);
+            // Tapas de cuero (izquierda y derecha con ángulo tipo libro abierto)
+            const coverL = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.05, 1.05), leatherMat);
+            coverL.position.set(-0.355, -0.04, 0);
+            coverL.rotation.z = 0.08;
+            coverL.castShadow = true;
             
-            const handleGeo = new THREE.TorusGeometry(0.26, 0.06, 8, 16, Math.PI);
-            const handleL = new THREE.Mesh(handleGeo, goldMat);
-            handleL.position.set(-0.45, 0.4, 0);
-            handleL.rotation.z = Math.PI / 2;
-            handleL.castShadow = true;
+            const coverR = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.05, 1.05), leatherMat);
+            coverR.position.set(0.355, -0.04, 0);
+            coverR.rotation.z = -0.08;
+            coverR.castShadow = true;
             
-            const handleR = handleL.clone();
-            handleR.position.x = 0.45;
-            handleR.rotation.z = -Math.PI / 2;
-            group.add(handleL, handleR);
+            // Lomo del libro
+            const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.05, 12, 1, false, -Math.PI/2, Math.PI), leatherMat);
+            spine.rotation.x = Math.PI / 2;
+            spine.position.set(0, -0.06, 0);
             
-            const star = new THREE.Mesh(new THREE.OctahedronGeometry(0.18), new THREE.MeshStandardMaterial({ color: 0xffd700, emissive: 0xffd700, emissiveIntensity: 1.0 }));
-            star.scale.set(0.7, 1.2, 0.7);
-            star.position.y = 1.0;
-            group.add(star);
+            bookGroup.add(coverL, coverR, spine);
             
-            group.star = star;
+            // Cantoneras de oro (esquineras) para las tapas
+            const cornerGeo = new THREE.BoxGeometry(0.08, 0.052, 0.08);
+            const cornerL1 = new THREE.Mesh(cornerGeo, goldMat);
+            cornerL1.position.set(-0.68, -0.04, 0.5);
+            cornerL1.rotation.z = 0.08;
+            
+            const cornerL2 = cornerL1.clone();
+            cornerL2.position.z = -0.5;
+            
+            const cornerR1 = new THREE.Mesh(cornerGeo, goldMat);
+            cornerR1.position.set(0.68, -0.04, 0.5);
+            cornerR1.rotation.z = -0.08;
+            
+            const cornerR2 = cornerR1.clone();
+            cornerR2.position.z = -0.5;
+            
+            bookGroup.add(cornerL1, cornerL2, cornerR1, cornerR2);
+            
+            // Bloque de páginas (páginas gruesas acumuladas)
+            const pageBlockL = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.05, 0.95), pageMat);
+            pageBlockL.position.set(-0.33, 0.005, 0);
+            pageBlockL.rotation.z = 0.08;
+            pageBlockL.castShadow = true;
+            
+            const pageBlockR = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.05, 0.95), pageMat);
+            pageBlockR.position.set(0.33, 0.005, 0);
+            pageBlockR.rotation.z = -0.08;
+            pageBlockR.castShadow = true;
+            
+            bookGroup.add(pageBlockL, pageBlockR);
+            
+            // Cinta marcadora roja (Bookmark ribbon colgando del lomo)
+            const ribbonSegment1 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.01, 0.3), ribbonMat);
+            ribbonSegment1.position.set(0, -0.01, 0.53);
+            ribbonSegment1.rotation.x = 0.2;
+            
+            const ribbonSegment2 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.01, 0.35), ribbonMat);
+            ribbonSegment2.position.set(0, -0.1, 0.8);
+            ribbonSegment2.rotation.x = 0.4;
+            
+            bookGroup.add(ribbonSegment1, ribbonSegment2);
+            
+            // Agregar el libro al grupo principal con inclinación hacia el visitante
+            bookGroup.rotation.x = Math.PI / 8;
+            bookGroup.position.y = -0.15;
+            group.add(bookGroup);
+            
+            // Bocetos 3D elevados (Líneas flotando encima del libro)
+            const sketchGroup = new THREE.Group();
+            
+            // Círculo constructivo holográfico flotante
+            const sketchCircle = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.008, 4, 32), neonLineMat);
+            sketchCircle.rotation.x = -Math.PI / 2.5;
+            sketchCircle.position.set(-0.25, 0.25, 0);
+            sketchGroup.add(sketchCircle);
+            
+            // Ejes del círculo
+            const axisH = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.006, 0.006), sketchMat);
+            axisH.position.copy(sketchCircle.position);
+            axisH.rotation.copy(sketchCircle.rotation);
+            const axisV = new THREE.Mesh(new THREE.BoxGeometry(0.006, 0.48, 0.006), sketchMat);
+            axisV.position.copy(sketchCircle.position);
+            axisV.rotation.copy(sketchCircle.rotation);
+            sketchGroup.add(axisH, axisV);
+            
+            // Boceto de dibujo de flor/hoja flotando a la derecha
+            const leafGroup = new THREE.Group();
+            const stemObj = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.35, 8), sketchMat);
+            stemObj.rotation.z = -0.5;
+            leafGroup.add(stemObj);
+            
+            for (let j = 0; j < 3; j++) {
+                const petal = new THREE.Mesh(new THREE.TorusGeometry(0.08, 0.006, 4, 16, Math.PI * 1.5), neonLineMat);
+                petal.position.set(0.1 + j * 0.05, 0.1 + j * 0.02, 0);
+                petal.rotation.z = j * 0.5;
+                leafGroup.add(petal);
+            }
+            leafGroup.position.set(0.25, 0.25, 0);
+            leafGroup.rotation.x = -Math.PI / 2.5;
+            sketchGroup.add(leafGroup);
+            
+            group.add(sketchGroup);
+            
+            // Guardar referencias para animación
+            group.sketchGroup = sketchGroup;
+            group.ribbon = ribbonSegment2;
+            group.animSub = sketchGroup; // Para compatibilidad
+            
+            return group;
+        }
+
+        function createCrochetLinealModel() {
+            const group = new THREE.Group();
+            
+            const woolColor = 0xe9c46a;
+            const woolMat = new THREE.MeshStandardMaterial({ color: woolColor, roughness: 0.95 });
+            const woodMat = new THREE.MeshStandardMaterial({ color: 0x854d0e, roughness: 0.8 });
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.1, metalness: 0.9 });
+            const needleMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.1, metalness: 0.95 });
+            
+            // 1. Ovillo de lana en la esquina de la base del pedestal
+            const yarnBallGroup = new THREE.Group();
+            const ballCore = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), woolMat);
+            ballCore.castShadow = true;
+            yarnBallGroup.add(ballCore);
+            
+            // Hilos cruzados envolviendo el ovillo para realismo
+            for (let i = 0; i < 6; i++) {
+                const strand = new THREE.Mesh(new THREE.TorusGeometry(0.305, 0.015, 6, 24), woolMat);
+                strand.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+                yarnBallGroup.add(strand);
+            }
+            yarnBallGroup.position.set(-0.45, -0.35, -0.4);
+            group.add(yarnBallGroup);
+            
+            // 2. Cadena de Crochet Lineal (Eslabones complejos)
+            const chainGroup = new THREE.Group();
+            const loopDistance = 0.28;
+            const numLoops = 6;
+            for (let i = 0; i < numLoops; i++) {
+                const loopHolder = new THREE.Group();
+                
+                // Eslabón base
+                const ring = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.045, 8, 24), woolMat);
+                ring.rotation.y = (i % 2 === 0) ? 0.25 : -0.25;
+                ring.castShadow = true;
+                loopHolder.add(ring);
+                
+                // Nudo pequeño en el enlace
+                const knot = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.035, 6, 12), woolMat);
+                knot.position.set(0, 0, 0.12);
+                knot.rotation.x = Math.PI / 2;
+                loopHolder.add(knot);
+                
+                loopHolder.position.set(0, -0.15, -0.7 + i * loopDistance);
+                chainGroup.add(loopHolder);
+            }
+            group.add(chainGroup);
+            
+            // Hebra de lana que va del ovillo al inicio de la cadena
+            const threadMat = woolMat;
+            const threadJoint = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.8, 8), threadMat);
+            threadJoint.rotation.set(0.4, 0, -0.8);
+            threadJoint.position.set(-0.25, -0.25, -0.5);
+            group.add(threadJoint);
+            
+            // 3. Aguja de Crochet con Mango Ergonomico de Madera y punta de latón
+            const needleGroup = new THREE.Group();
+            
+            // Mango de madera tallada
+            const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.7, 12), woodMat);
+            handle.position.y = -0.3;
+            handle.castShadow = true;
+            needleGroup.add(handle);
+            
+            // Junta de metal (Collar dorado)
+            const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.08, 12), goldMat);
+            collar.position.y = 0.08;
+            needleGroup.add(collar);
+            
+            // Eje metálico
+            const metalShaft = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.7, 12), needleMat);
+            metalShaft.position.y = 0.43;
+            metalShaft.castShadow = true;
+            needleGroup.add(metalShaft);
+            
+            // Gancho de punta detallada
+            const hookTip = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.02, 6, 12, Math.PI * 1.2), needleMat);
+            hookTip.position.set(-0.02, 0.76, 0);
+            hookTip.rotation.z = -0.4;
+            needleGroup.add(hookTip);
+            
+            const hookBack = new THREE.Mesh(new THREE.ConeGeometry(0.02, 0.05, 8), needleMat);
+            hookBack.position.set(-0.015, 0.78, 0);
+            needleGroup.add(hookBack);
+            
+            needleGroup.position.set(-0.1, 0.1, 0.35);
+            needleGroup.rotation.set(0.65, 0.2, -0.75);
+            group.add(needleGroup);
+            
+            group.needle = needleGroup;
+            group.chain = chainGroup;
+            
+            return group;
+        }
+
+        function createCrochetRadialModel() {
+            const group = new THREE.Group();
+            
+            const woolColor = 0x6d597a;
+            const woolMat = new THREE.MeshStandardMaterial({ color: woolColor, roughness: 0.95 });
+            const woolAccentMat = new THREE.MeshStandardMaterial({ color: 0xe5989b, roughness: 0.95 });
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.1, metalness: 0.95 });
+            const beadMat = new THREE.MeshStandardMaterial({ color: 0xb5838d, roughness: 0.8 });
+            
+            // 1. Ovillo de lana en el pedestal
+            const yarnBall = new THREE.Group();
+            const ballCore = new THREE.Mesh(new THREE.SphereGeometry(0.28, 16, 16), woolAccentMat);
+            ballCore.castShadow = true;
+            yarnBall.add(ballCore);
+            for (let i = 0; i < 6; i++) {
+                const strand = new THREE.Mesh(new THREE.TorusGeometry(0.285, 0.012, 6, 24), woolAccentMat);
+                strand.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+                yarnBall.add(strand);
+            }
+            yarnBall.position.set(-0.48, -0.38, -0.4);
+            group.add(yarnBall);
+            
+            // 2. Disco de Crochet Radial (Mandala Intrincado)
+            const discGroup = new THREE.Group();
+            
+            // Anillos concéntricos tejidos
+            for (let i = 0; i < 5; i++) {
+                const useColor = (i % 2 === 0) ? woolMat : woolAccentMat;
+                const ring = new THREE.Mesh(new THREE.TorusGeometry(0.12 + i * 0.15, 0.038, 8, 48), useColor);
+                ring.rotation.x = Math.PI / 2;
+                ring.castShadow = true;
+                discGroup.add(ring);
+            }
+            
+            // Radios radiales (12 radios)
+            const numSpokes = 12;
+            for (let i = 0; i < numSpokes; i++) {
+                const spokeAngle = (i * Math.PI * 2) / numSpokes;
+                const spoke = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.4, 8), woolMat);
+                spoke.rotation.x = Math.PI / 2;
+                spoke.rotation.z = spokeAngle;
+                spoke.castShadow = true;
+                discGroup.add(spoke);
+                
+                // Agregar cuenta de madera esférica ensartada
+                const bead = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 8), beadMat);
+                bead.position.set(Math.cos(spokeAngle) * 0.45, 0, Math.sin(spokeAngle) * 0.45);
+                discGroup.add(bead);
+            }
+            
+            // Estructura de flor central tejida
+            const centerFlower = new THREE.Mesh(new THREE.TorusKnotGeometry(0.08, 0.024, 24, 6, 3, 4), woolAccentMat);
+            centerFlower.rotation.x = Math.PI / 2;
+            discGroup.add(centerFlower);
+            
+            discGroup.position.y = -0.1;
+            group.add(discGroup);
+            
+            // Hebra de lana tensa conectando
+            const thread = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.65, 8), woolAccentMat);
+            thread.rotation.set(0.6, 0.2, -0.9);
+            thread.position.set(-0.25, -0.22, -0.25);
+            group.add(thread);
+            
+            // 3. Aguja de Crochet Dorada Profesional
+            const needleGroup = new THREE.Group();
+            const handleGeo = new THREE.BoxGeometry(0.06, 0.022, 0.4);
+            const handle = new THREE.Mesh(handleGeo, goldMat);
+            handle.position.y = 0.2;
+            needleGroup.add(handle);
+            
+            const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 1.1, 8), goldMat);
+            shaft.position.y = 0.6;
+            shaft.castShadow = true;
+            needleGroup.add(shaft);
+            
+            const hook = new THREE.Mesh(new THREE.TorusGeometry(0.038, 0.018, 6, 12, Math.PI * 1.1), goldMat);
+            hook.position.set(-0.018, 1.15, 0);
+            hook.rotation.z = -0.4;
+            needleGroup.add(hook);
+            
+            needleGroup.position.set(0, 0, 0.15);
+            needleGroup.rotation.set(0.65, 0, -0.4);
+            group.add(needleGroup);
+            
+            group.needle = needleGroup;
+            group.disc = discGroup;
+            
+            return group;
+        }
+
+        function createCoverLayersModel() {
+            const group = new THREE.Group();
+            
+            const bookMat = new THREE.MeshStandardMaterial({ color: 0x1d3557, roughness: 0.75 }); 
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.15, metalness: 0.95 });
+            const bgMat = new THREE.MeshStandardMaterial({ color: 0x457b9d, roughness: 0.5, transparent: true, opacity: 0.85 });
+            const metalPlateMat = new THREE.MeshStandardMaterial({ color: 0xf1faee, roughness: 0.9 });
+            
+            const flowerCenterMat = new THREE.MeshStandardMaterial({ color: 0xf4a261, roughness: 0.4 });
+            const flowerPetalMat = new THREE.MeshStandardMaterial({ color: 0xe76f51, roughness: 0.3 });
+            const leafMat = new THREE.MeshStandardMaterial({ color: 0x2a9d8f, roughness: 0.6 });
+            
+            // 1. Libro base cerrado
+            const bookBase = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.45, 0.16), bookMat);
+            bookBase.castShadow = true;
+            bookBase.receiveShadow = true;
+            group.add(bookBase);
+            
+            // Esquineras doradas
+            const cornerGeo = new THREE.BoxGeometry(0.08, 0.165, 0.08);
+            const cornerL1 = new THREE.Mesh(cornerGeo, goldMat);
+            cornerL1.position.set(-0.5, 0, 0.725);
+            const cornerL2 = cornerL1.clone();
+            cornerL2.position.set(-0.5, 0, -0.725);
+            const cornerR1 = cornerL1.clone();
+            cornerR1.position.set(0.5, 0, 0.725);
+            const cornerR2 = cornerL1.clone();
+            cornerR2.position.set(0.5, 0, -0.725);
+            group.add(cornerL1, cornerL2, cornerR1, cornerR2);
+            
+            // 2. Capa 1: Fondo de Paisaje Grabado (Flotante)
+            const layerBG = new THREE.Group();
+            const bgPlate = new THREE.Mesh(new THREE.PlaneGeometry(0.85, 1.25), bgMat);
+            layerBG.add(bgPlate);
+            
+            const mountain1 = new THREE.Mesh(new THREE.ConeGeometry(0.24, 0.4, 4), new THREE.MeshStandardMaterial({ color: 0x1d3557, roughness: 0.8 }));
+            mountain1.position.set(-0.16, -0.22, 0.02);
+            mountain1.rotation.y = Math.PI / 4;
+            const mountain2 = new THREE.Mesh(new THREE.ConeGeometry(0.18, 0.3, 4), new THREE.MeshStandardMaterial({ color: 0x457b9d, roughness: 0.8 }));
+            mountain2.position.set(0.16, -0.28, 0.03);
+            mountain2.rotation.y = Math.PI / 4;
+            layerBG.add(mountain1, mountain2);
+            
+            const crescentMoon = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), new THREE.MeshStandardMaterial({ color: 0xfbd008, emissive: 0xfbd008, emissiveIntensity: 0.8 }));
+            crescentMoon.position.set(0.2, 0.35, 0.05);
+            layerBG.add(crescentMoon);
+            
+            layerBG.position.z = 0.12;
+            group.add(layerBG);
+            
+            // 3. Capa 2: Flor Tridimensional de Origami (Flotante en medio)
+            const layerFlower = new THREE.Group();
+            
+            const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.45, 8), leafMat);
+            stem.position.set(0, -0.15, 0.01);
+            const leafL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.16, 0.01), leafMat);
+            leafL.position.set(-0.08, -0.18, 0.02);
+            leafL.rotation.z = 0.6;
+            const leafR = leafL.clone();
+            leafR.position.x = 0.08;
+            leafR.rotation.z = -0.6;
+            layerFlower.add(stem, leafL, leafR);
+            
+            const flowerCenter = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), flowerCenterMat);
+            flowerCenter.position.set(0, 0.12, 0.03);
+            layerFlower.add(flowerCenter);
+            
+            const numPetals = 8;
+            for (let i = 0; i < numPetals; i++) {
+                const petalAngle = (i * Math.PI * 2) / numPetals;
+                const petal = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.16, 4), flowerPetalMat);
+                petal.position.set(Math.cos(petalAngle) * 0.14, 0.12 + Math.sin(petalAngle) * 0.14, 0.03);
+                petal.rotation.z = petalAngle - Math.PI / 2;
+                layerFlower.add(petal);
+            }
+            
+            layerFlower.position.z = 0.32;
+            group.add(layerFlower);
+            
+            // 4. Capa 3: Placa de Título con Letras Simuladas (Frente)
+            const layerTitle = new THREE.Group();
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.18, 0.03), goldMat);
+            layerTitle.add(frame);
+            const plate = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.12, 0.032), metalPlateMat);
+            layerTitle.add(plate);
+            
+            const lineMat = new THREE.MeshStandardMaterial({ color: 0x1f2937 });
+            const textLine1 = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.015, 0.034), lineMat);
+            textLine1.position.set(0, 0.02, 0.01);
+            const textLine2 = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.015, 0.034), lineMat);
+            textLine2.position.set(0, -0.02, 0.01);
+            layerTitle.add(textLine1, textLine2);
+            
+            layerTitle.position.set(0, -0.4, 0.52);
+            group.add(layerTitle);
+            
+            group.layerBG = layerBG;
+            group.layerFlower = layerFlower;
+            group.layerTitle = layerTitle;
+            
+            return group;
+        }
+
+        function createQuillPenModel() {
+            const group = new THREE.Group();
+            
+            const crystalMat = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff, 
+                transparent: true, 
+                opacity: 0.35, 
+                roughness: 0.05,
+                metalness: 0.9
+            });
+            const inkMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.1 });
+            const goldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.12, metalness: 0.95 });
+            const paperMat = new THREE.MeshStandardMaterial({ color: 0xfef3c7, roughness: 0.9, side: THREE.DoubleSide });
+            
+            // 1. Tintero facetado octagonal
+            const inkwellGroup = new THREE.Group();
+            const glassBody = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.26, 0.34, 8), crystalMat);
+            glassBody.castShadow = true;
+            inkwellGroup.add(glassBody);
+            
+            const inkBody = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.21, 0.25, 8), inkMat);
+            inkBody.position.y = -0.04;
+            inkwellGroup.add(inkBody);
+            
+            const neckRing = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.06, 12), goldMat);
+            neckRing.position.y = 0.2;
+            inkwellGroup.add(neckRing);
+            
+            inkwellGroup.position.set(-0.48, -0.32, -0.1);
+            group.add(inkwellGroup);
+            
+            // 2. Pergamino antiguo enrollado
+            const scrollGroup = new THREE.Group();
+            const scrollSheet = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.8), paperMat);
+            scrollSheet.receiveShadow = true;
+            scrollGroup.add(scrollSheet);
+            
+            const rollTop = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.9, 12, 1, true), paperMat);
+            rollTop.rotation.z = Math.PI / 2;
+            rollTop.position.set(0, 0.425, -0.02);
+            const rollBottom = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.9, 12, 1, true), paperMat);
+            rollBottom.rotation.z = Math.PI / 2;
+            rollBottom.position.set(0, -0.425, -0.02);
+            
+            scrollGroup.add(rollTop, rollBottom);
+            
+            scrollGroup.rotation.x = -Math.PI / 3;
+            scrollGroup.position.set(0.12, -0.26, 0.15);
+            group.add(scrollGroup);
+            
+            // 3. Pluma Caligráfica de Lujo (Con barbas de pluma detalladas)
+            const quillGroup = new THREE.Group();
+            
+            const nib = new THREE.Mesh(new THREE.ConeGeometry(0.022, 0.08, 4), goldMat);
+            nib.rotation.x = Math.PI;
+            nib.position.y = -0.48;
+            quillGroup.add(nib);
+            
+            const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.014, 0.8, 8), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 }));
+            stem.position.y = -0.1;
+            quillGroup.add(stem);
+            
+            const featherGroup = new THREE.Group();
+            const featherBase = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.7, 0.008), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.9 }));
+            featherBase.position.y = 0.28;
+            featherGroup.add(featherBase);
+            
+            const barbGeo = new THREE.BoxGeometry(0.06, 0.008, 0.006);
+            for (let k = 0; k < 12; k++) {
+                const yPos = 0.05 + k * 0.045;
+                const barbL = new THREE.Mesh(barbGeo, new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.9 }));
+                barbL.position.set(-0.06, yPos, 0);
+                barbL.rotation.z = 0.35;
+                const barbR = new THREE.Mesh(barbGeo, new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.9 }));
+                barbR.position.set(0.06, yPos, 0);
+                barbR.rotation.z = -0.35;
+                
+                featherGroup.add(barbL, barbR);
+            }
+            quillGroup.add(featherGroup);
+            
+            quillGroup.position.set(0.12, 0.32, 0.2);
+            quillGroup.rotation.set(-0.25, 0.15, -0.45);
+            group.add(quillGroup);
+            
+            // 4. Letras de caligrafía mágicas flotando
+            const inkWritings = new THREE.Group();
+            const neonTextMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, emissive: 0xd4af37, emissiveIntensity: 1.8 });
+            
+            const stroke1 = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.01, 4, 16, Math.PI * 1.5), neonTextMat);
+            stroke1.position.set(0.08, -0.1, 0.15);
+            stroke1.rotation.set(-Math.PI/3, 0, 0);
+            
+            const stroke2 = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.008, 4, 16, Math.PI * 1.8), neonTextMat);
+            stroke2.position.set(0.2, -0.06, 0.22);
+            stroke2.rotation.set(-Math.PI/3, 0, 0.2);
+            
+            inkWritings.add(stroke1, stroke2);
+            group.add(inkWritings);
+            
+            group.quill = quillGroup;
+            group.writings = inkWritings;
+            
+            return group;
+        }
+
+        function createDigitalJournalModel() {
+            const group = new THREE.Group();
+            
+            const phoneBodyMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.15, metalness: 0.9 });
+            const screenMat = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1 });
+            const metalEdgeMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.08, metalness: 0.95 });
+            
+            const glassMat = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff, 
+                transparent: true, 
+                opacity: 0.22, 
+                roughness: 0.05, 
+                metalness: 0.9 
+            });
+            const labelMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.5 });
+            const tapeMat = new THREE.MeshStandardMaterial({ color: 0x7c2d12, roughness: 0.8 }); 
+            const reelMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+            
+            const ledGreen = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 2.0 });
+            const ledBlue = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x3b82f6, emissiveIntensity: 2.0 });
+            const waveMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, emissive: 0xf43f5e, emissiveIntensity: 1.5, transparent: true, opacity: 0.8 });
+            
+            // 1. Smartphone Moderno
+            const phoneGroup = new THREE.Group();
+            const phoneBumper = new THREE.Mesh(new THREE.BoxGeometry(0.85, 1.5, 0.08), metalEdgeMat);
+            phoneBumper.castShadow = true;
+            phoneGroup.add(phoneBumper);
+            
+            const phoneBody = new THREE.Mesh(new THREE.BoxGeometry(0.82, 1.47, 0.076), phoneBodyMat);
+            phoneGroup.add(phoneBody);
+            
+            const phoneScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.78, 1.41), screenMat);
+            phoneScreen.position.set(0, 0, 0.042);
+            phoneGroup.add(phoneScreen);
+            
+            const cameraNotch = new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.024, 0.01, 8), phoneBodyMat);
+            cameraNotch.rotation.x = Math.PI / 2;
+            cameraNotch.position.set(0, 0.65, 0.043);
+            phoneGroup.add(cameraNotch);
+            
+            const camBumps = new THREE.Group();
+            const plate = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.34, 0.012), phoneBodyMat);
+            plate.position.set(0.2, 0.44, -0.043);
+            camBumps.add(plate);
+            for (let i = 0; i < 3; i++) {
+                const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.01, 12), metalEdgeMat);
+                lens.rotation.x = Math.PI / 2;
+                lens.position.set(0.2, 0.52 - i * 0.09, -0.049);
+                camBumps.add(lens);
+            }
+            phoneGroup.add(camBumps);
+            
+            // 2. Ecualizador LED
+            const visualizer = new THREE.Group();
+            const barWidth = 0.06;
+            const numBars = 8;
+            const barsList = [];
+            for (let i = 0; i < numBars; i++) {
+                const xPos = -0.28 + i * 0.08;
+                const barMat = (i % 2 === 0) ? ledGreen : ledBlue;
+                const bar = new THREE.Mesh(new THREE.BoxGeometry(barWidth, 0.4, 0.008), barMat);
+                bar.position.set(xPos, -0.4, 0.045);
+                visualizer.add(bar);
+                barsList.push(bar);
+            }
+            phoneGroup.add(visualizer);
+            
+            phoneGroup.rotation.x = Math.PI / 8;
+            phoneGroup.position.set(0, -0.15, 0);
+            group.add(phoneGroup);
+            
+            // 3. Cinta de Casete Retro Flotante
+            const cassetteGroup = new THREE.Group();
+            
+            const caseBack = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.44, 0.07), glassMat);
+            caseBack.castShadow = true;
+            cassetteGroup.add(caseBack);
+            
+            const label = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.24, 0.072), labelMat);
+            cassetteGroup.add(label);
+            
+            const labelWindow = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.09, 0.074), screenMat);
+            cassetteGroup.add(labelWindow);
+            
+            const reelL = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.075, 12), reelMat);
+            reelL.position.set(-0.16, 0, 0);
+            reelL.rotation.x = Math.PI / 2;
+            const reelR = reelL.clone();
+            reelR.position.x = 0.16;
+            cassetteGroup.add(reelL, reelR);
+            
+            const tapeL = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.065, 16), tapeMat);
+            tapeL.position.set(-0.16, 0, 0);
+            tapeL.rotation.x = Math.PI / 2;
+            const tapeR = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.065, 16), tapeMat);
+            tapeR.position.set(0.16, 0, 0);
+            tapeR.rotation.x = Math.PI / 2;
+            cassetteGroup.add(tapeL, tapeR);
+            
+            cassetteGroup.position.set(0, 0.25, 0.28);
+            cassetteGroup.rotation.x = Math.PI / 8;
+            group.add(cassetteGroup);
+            
+            // 4. Ondas Holográficas
+            const wavesGroup = new THREE.Group();
+            for (let i = 0; i < 3; i++) {
+                const wave = new THREE.Mesh(new THREE.TorusGeometry(0.22 + i * 0.14, 0.016, 4, 24, Math.PI), waveMat);
+                wave.position.set(0, -0.4, 0.08);
+                wave.rotation.z = -Math.PI / 2;
+                wavesGroup.add(wave);
+            }
+            group.add(wavesGroup);
+            
+            group.cassette = cassetteGroup;
+            group.reelL = reelL;
+            group.reelR = reelR;
+            group.visualizerBars = barsList;
+            group.waves = wavesGroup;
+            
             return group;
         }
 
         function crearEsculturasYPedestales() {
             const coords = [
-                { id: 1, x: -25, y: 0, z: 15,  rotY: Math.PI / 2 }, 
-                { id: 2, x: -25, y: 0, z: -10, rotY: Math.PI / 2 }, 
-                { id: 3, x: -12, y: 0, z: -25, rotY: 0 }, 
-                { id: 4, x: 12,  y: 0, z: -25, rotY: 0 }, 
-                { id: 5, x: 25,  y: 0, z: -10, rotY: -Math.PI / 2 }, 
-                { id: 6, x: 25,  y: 0, z: 15,  rotY: -Math.PI / 2 }  
+                { id: 1, x: -24, y: 0, z: 20,  rotY: Math.PI / 2 }, 
+                { id: 2, x: -24, y: 0, z: 0,   rotY: Math.PI / 2 }, 
+                { id: 3, x: -24, y: 0, z: -20, rotY: Math.PI / 2 }, 
+                { id: 4, x: -12, y: 0, z: -24, rotY: 0 }, 
+                { id: 5, x: 12,  y: 0, z: -24, rotY: 0 }, 
+                { id: 6, x: 24,  y: 0, z: -20, rotY: -Math.PI / 2 }, 
+                { id: 7, x: 24,  y: 0, z: 0,   rotY: -Math.PI / 2 }, 
+                { id: 8, x: 24,  y: 0, z: 20,  rotY: -Math.PI / 2 }  
             ];
             
             coords.forEach(c => {
                 createPedestal(c.x, c.z);
                 
-                let model;
-                if (c.id === 1) model = createOpenBookModel();
-                else if (c.id === 2) model = createRobotHeadModel();
-                else if (c.id === 3) model = createPaletteModel();
-                else if (c.id === 4) model = createYarnBallModel();
-                else if (c.id === 5) model = createGeminiSparkModel();
-                else if (c.id === 6) model = createTrophyModel();
-                
-                if (model) {
-                    model.id = c.id;
-                    let customBaseY = 2.7;
-                    if (c.id === 1) customBaseY = 2.9;
-                    else if (c.id === 2) customBaseY = 3.0;
-                    else if (c.id === 3) customBaseY = 2.9;
-                    else if (c.id === 4) customBaseY = 2.9;
-                    else if (c.id === 5) customBaseY = 3.0;
-                    else if (c.id === 6) customBaseY = 3.0;
+                try {
+                    let model;
+                    if (c.id === 1) model = createGeometricCompositionModel();
+                    else if (c.id === 2) model = createRobotHeadModel();
+                    else if (c.id === 3) model = createPaperSketchModel();
+                    else if (c.id === 4) model = createCrochetLinealModel();
+                    else if (c.id === 5) model = createCrochetRadialModel();
+                    else if (c.id === 6) model = createCoverLayersModel();
+                    else if (c.id === 7) model = createQuillPenModel();
+                    else if (c.id === 8) model = createDigitalJournalModel();
                     
-                    model.position.set(c.x, customBaseY, c.z);
-                    model.rotation.y = c.rotY;
-                    model.baseY = customBaseY;
-                    model.floatPhase = c.id * 1.5;
-                    
-                    model.originalRotX = model.rotation.x;
-                    model.originalRotY = model.rotation.y;
-                    model.originalRotZ = model.rotation.z;
-                    
-                    scene.add(model);
-                    animatingObjects.push(model);
-                    
-                    const scLight = new THREE.PointLight(0xffffff, 0.6, 8);
-                    scLight.position.set(c.x, 4.2, c.z);
-                    scLight.castShadow = true;
-                    scene.add(scLight);
+                    if (model) {
+                        model.id = c.id;
+                        let customBaseY = 2.9;
+                        if (c.id === 2 || c.id === 6) customBaseY = 3.0;
+                        
+                        model.position.set(c.x, customBaseY, c.z);
+                        model.rotation.y = c.rotY;
+                        model.scale.set(1.25, 1.25, 1.25); // Escalar a 1.25x para mejor proporcionalidad
+                        model.baseY = customBaseY;
+                        model.floatPhase = c.id * 1.5;
+                        
+                        model.originalRotX = model.rotation.x;
+                        model.originalRotY = model.rotation.y;
+                        model.originalRotZ = model.rotation.z;
+                        
+                        scene.add(model);
+                        animatingObjects.push(model);
+                        
+                        const scLight = new THREE.PointLight(0xffffff, 0.6, 8);
+                        scLight.position.set(c.x, 4.2, c.z);
+                        scLight.castShadow = false;
+                        scene.add(scLight);
+                    }
+                } catch (err) {
+                    console.error("Error creating model " + c.id + ":", err);
+                    showVisualError("Error en modelo " + c.id + ": " + err.message);
                 }
             });
         }
@@ -1045,51 +1843,65 @@
             {
                 stepLabel: "Inicio",
                 title: "Gran Sala de Exhibición",
-                desc: "Estás en el centro del ala moderna. Explora las seis obras seleccionadas caminando a través de la arquitectura minimalista.",
+                desc: "Estás en el centro del ala moderna. Explora las ocho obras seleccionadas caminando a través de la arquitectura minimalista.",
                 cameraPos: { x: 0, y: 4, z: 26 },
                 lookAt: { x: 0, y: 4.5, z: -5 }
             },
             {
-                stepLabel: "Sala 1 de 6",
-                title: "Exhibición 1: Expresión Escarlata (Composición)",
-                desc: "Representa las bases del lenguaje de diseño visual. Explora la simetría y el contraste de colores primarios en un espacio tridimensional.",
-                cameraPos: { x: -16, y: 4.2, z: 15 },
-                lookAt: { x: -29.8, y: 5, z: 15 }
+                stepLabel: "Sala 1 de 8",
+                title: "Exhibición 1: Composición y Estructura",
+                desc: "Representa los principios de jerarquía, escala y equilibrio en el diseño visual de interfaces.",
+                cameraPos: { x: -16, y: 4.2, z: 20 },
+                lookAt: { x: -29.8, y: 5, z: 20 }
             },
             {
-                stepLabel: "Sala 2 de 6",
-                title: "Exhibición 2: Desierto de Otoño (Maquetación)",
-                desc: "Una composición inspirada en la estructuración de rejillas y la retícula áurea. Define la jerarquía y el ritmo de los elementos del portafolio.",
-                cameraPos: { x: -16, y: 4.2, z: -10 },
-                lookAt: { x: -29.8, y: 5, z: -10 }
+                stepLabel: "Sala 2 de 8",
+                title: "Exhibición 2: Maquetación con Inteligencia Artificial",
+                desc: "Simboliza la co-creación estética estructurando layouts digitales en colaboración con modelos generativos de IA.",
+                cameraPos: { x: -16, y: 4.2, z: 0 },
+                lookAt: { x: -29.8, y: 5, z: 0 }
             },
             {
-                stepLabel: "Sala 3 de 6",
-                title: "Exhibición 3: Abismo Esmeralda (Diario)",
-                desc: "Representa el diario ilustrado y los bocetos iniciales de diseño de recursos. Pigmentos orgánicos que evocan el flujo de ideas creativas.",
+                stepLabel: "Sala 3 de 8",
+                title: "Exhibición 3: Diario de Campo Tradicional",
+                desc: "El registro físico de ideas, bocetos libres y reflexiones antes del desarrollo definitivo de las piezas de diseño.",
+                cameraPos: { x: -16, y: 4.2, z: -20 },
+                lookAt: { x: -29.8, y: 5, z: -20 }
+            },
+            {
+                stepLabel: "Sala 4 de 8",
+                title: "Exhibición 4: Crochet Lineal (Punto de Cadena)",
+                desc: "El entrelazamiento básico de hilos que estructuran de forma continua los primeros prototipos físicos.",
                 cameraPos: { x: -12, y: 4.2, z: -16 },
                 lookAt: { x: -12, y: 5, z: -29.8 }
             },
             {
-                stepLabel: "Sala 4 de 6",
-                title: "Exhibición 4: El Oro del Mañana (Crochet)",
-                desc: "Una analogía del tejido manual y el maquetado web en crochet. El entrelazamiento de hilos que estructuran un concepto sólido.",
+                stepLabel: "Sala 5 de 8",
+                title: "Exhibición 5: Crochet Radial (Tejido Circular)",
+                desc: "La estructuración avanzada de tejido en espiral o círculos concéntricos como mapeo conceptual analógico.",
                 cameraPos: { x: 12, y: 4.2, z: -16 },
                 lookAt: { x: 12, y: 5, z: -29.8 }
             },
             {
-                stepLabel: "Sala 5 de 6",
-                title: "Exhibición 5: Calma Índigo (Agente DaVinci)",
-                desc: "Refleja el rol integrador de la Inteligencia Artificial generativa. Un catalizador para la resolución crítica de problemas visuales.",
-                cameraPos: { x: 16, y: 4.2, z: -10 },
-                lookAt: { x: 29.8, y: 5, z: -10 }
+                stepLabel: "Sala 6 de 8",
+                title: "Exhibición 6: Diseño de Portada",
+                desc: "El arte de organizar fondos, ilustraciones y títulos en capas físicas tridimensionales para la carátula de tu diario.",
+                cameraPos: { x: 16, y: 4.2, z: -20 },
+                lookAt: { x: 29.8, y: 5, z: -20 }
             },
             {
-                stepLabel: "Sala 6 de 6",
-                title: "Exhibición 6: Crepúsculo Urbano (Evaluación)",
-                desc: "La última obra representa la rúbrica de evaluación final. El análisis conclusivo y la madurez estética lograda a lo largo del curso.",
-                cameraPos: { x: 16, y: 4.2, z: 15 },
-                lookAt: { x: 29.8, y: 5, z: 15 }
+                stepLabel: "Sala 7 de 8",
+                title: "Exhibición 7: Caligrafía con Pluma",
+                desc: "El diseño tipográfico tradicional utilizando trazos caligráficos manuales con tinta húmeda sobre papel.",
+                cameraPos: { x: 16, y: 4.2, z: 0 },
+                lookAt: { x: 29.8, y: 5, z: 0 }
+            },
+            {
+                stepLabel: "Sala 8 de 8",
+                title: "Exhibición 8: Diario de Campo Digital",
+                desc: "El registro estructurado en dispositivos móviles mediante bitácoras de voz y plantillas dinámicas.",
+                cameraPos: { x: 16, y: 4.2, z: 20 },
+                lookAt: { x: 29.8, y: 5, z: 20 }
             }
         ];
 
@@ -1108,34 +1920,60 @@
         // Información de historia y contenidos para cada modelo 3D
         const sculptureInfo = {
             1: {
-                category: "Fase 1: Inmersión - Composición",
-                title: "El Libro de la Composición",
-                desc: "Esta pieza representa las bases de la comunicación visual y la tipografía en el portafolio digital. Durante la fase de inmersión, estructuramos las rejillas y el flujo tipográfico para garantizar una jerarquía estética de los contenidos."
+                category: "Fase 1: Inmersión",
+                title: "Composición y Estructura",
+                desc: "Esta pieza representa las bases de la comunicación visual, el equilibrio de pesos, la simetría y la escala de los elementos. Permite estructurar la jerarquía visual inicial en el portafolio digital.",
+                technique: "Composición",
+                options: ["Composición", "Diario de Campo", "Bitácora Digital"]
             },
             2: {
-                category: "Fase 2: Apropiación - Inteligencia Artificial",
-                title: "La Mente de la IA",
-                desc: "Simboliza la incorporación crítica del aprendizaje automático y el procesamiento de lenguaje natural en el portafolio. Representa el maquetado guiado y la exploración ética de la Inteligencia Artificial generativa."
+                category: "Fase 2: Apropiación",
+                title: "Maquetación con Inteligencia Artificial",
+                desc: "Simboliza la incorporación crítica del aprendizaje automático y modelos generativos en el diseño. Ayuda a estructurar layouts y proponer retículas digitales mediante prompts interactivos.",
+                technique: "Maquetación con IA",
+                options: ["Maquetación con IA", "Crochet Radial", "Diseño de Portada"]
             },
             3: {
-                category: "Fase 2: Apropiación - Bitácora Creativa",
-                title: "La Paleta del Diseñador",
-                desc: "Representa el diario ilustrado y la bitácora física-digital del estudiante. Simboliza la experimentación libre con colores, bocetos y texturas antes del desarrollo definitivo de las piezas de diseño."
+                category: "Fase 2: Apropiación",
+                title: "Diario de Campo Tradicional",
+                desc: "Representa el diario físico de bocetos y anotaciones libres del estudiante. Es la bitácora analógica donde se registran las ideas, experimentos y la bitácora del proceso creativo antes de su digitalización.",
+                technique: "Diario de Campo",
+                options: ["Diario de Campo", "Crochet Lineal", "Tipografía con Pluma"]
             },
             4: {
-                category: "Fase 2: Apropiación - Capacitación",
-                title: "El Ovillo de la Formación",
-                desc: "Simboliza el tejido continuo del aprendizaje paso a paso en la plataforma de capacitación. Así como un ovillo se desenvuelve para tejer piezas estéticas complejas en crochet, los conceptos formativos se articulan para dar vida a habilidades reales."
+                category: "Fase 2: Apropiación",
+                title: "Crochet Lineal (Punto de Cadena)",
+                desc: "Simboliza el tejido analógico básico. El entrelazamiento continuo de puntos en una cadena lineal que estructura físicamente conceptos estéticos iniciales en la formación.",
+                technique: "Crochet Lineal",
+                options: ["Crochet Lineal", "Diseño de Portada", "Bitácora Digital"]
             },
             5: {
-                category: "Fase 3: Construcción - Tutoría Inteligente",
-                title: "La Chispa de DaVinci (Gemini Spark)",
-                desc: "Representa el Agente DaVinci, nuestro tutor inteligente interactivo. Es el catalizador tecnológico en la fase de construcción, guiando al estudiante a través de preguntas críticas para afinar y pulir sus obras de arte."
+                category: "Fase 2: Apropiación",
+                title: "Crochet Radial (Tejido Circular)",
+                desc: "Representa el tejido concéntrico y circular en espiral. Una analogía analógica más compleja de cómo expandir radialmente las ideas y mapear conceptos de diseño en crochet radial.",
+                technique: "Crochet Radial",
+                options: ["Crochet Radial", "Maquetado Estructural", "Caligrafía con Pluma"]
             },
             6: {
-                category: "Fase 4: Evaluación - Calidad y Logros",
-                title: "El Trofeo del Portafolio",
-                desc: "Representa la rúbrica final del portafolio y los logros pedagógicos alcanzados. Simboliza la culminación de la estrategia de aprendizaje, midiendo la calidad, el rigor conceptual y el Índice de Apropiación Pedagógica."
+                category: "Fase 2: Apropiación",
+                title: "Diseño de Portada",
+                desc: "Consiste en la composición de capas estéticas (fondos abstractos, ilustraciones centrales y títulos tipográficos) para dar vida e identidad a la carátula del diario de campo.",
+                technique: "Diseño de Portada",
+                options: ["Diseño de Portada", "Diario de Campo", "Maquetado Estructural"]
+            },
+            7: {
+                category: "Fase 2: Apropiación",
+                title: "Caligrafía con Pluma",
+                desc: "Es el arte tipográfico tradicional. El trazado manual de letras y caracteres artísticos usando una pluma de ganso tradicional y tinta húmeda sobre papel, conectando la escritura clásica con la estética visual.",
+                technique: "Caligrafía con Pluma",
+                options: ["Caligrafía con Pluma", "Crochet Radial", "Maquetación con IA"]
+            },
+            8: {
+                category: "Fase 3: Construcción",
+                title: "Diario de Campo Digital",
+                desc: "Representa la bitácora en dispositivos móviles. Integra registros de audio y notas de voz con plantillas estructuradas digitales para almacenar el diario del proceso de co-creación de forma interactiva.",
+                technique: "Bitácora Digital",
+                options: ["Bitácora Digital", "Diseño de Portada", "Composición"]
             }
         };
 
@@ -1170,8 +2008,8 @@
             const clickDuration = Date.now() - pointerDownTime;
             const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
             
-            // Si el puntero se levantó rápido y casi no se movió, es un clic válido en la escena
-            if (clickDuration < 250 && dist < 5) {
+            // Si el puntero se levantó rápido y casi no se movió, es un clic válido en la escena (mayor tolerancia)
+            if (clickDuration < 500 && dist < 15) {
                 handleCanvasClick(e);
             }
         });
@@ -1179,10 +2017,11 @@
         function handleCanvasClick(event) {
             // Evitar raycasting si se hace clic en elementos de la interfaz DOM
             if (event.target.tagName === 'BUTTON' || 
-                event.target.closest('#inspect-card') || 
+                event.target.closest('#speech-bubble') || 
                 event.target.closest('.top-bar') ||
                 event.target.closest('#ui-container') ||
-                event.target.closest('#addie-modal-overlay')) {
+                event.target.closest('#addie-modal-overlay') ||
+                event.target.closest('#quick-navigation-map')) {
                 return;
             }
 
@@ -1222,6 +2061,110 @@
                 if (inspectedObject) {
                     exitInspection();
                 }
+            }
+        }
+
+        let typewriterInterval = null;
+        let currentStoryText = "";
+
+        function typeText(element, text, speed, onComplete) {
+            element.innerHTML = '';
+            let index = 0;
+            clearInterval(typewriterInterval);
+            typewriterInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(typewriterInterval);
+                    if (onComplete) onComplete();
+                }
+            }, speed);
+        }
+
+        function startStorytelling(info) {
+            currentStoryText = info.desc;
+            const textElement = document.getElementById('speech-text');
+            const skipBtn = document.getElementById('skip-speech-btn');
+            const revealBtn = document.getElementById('reveal-technique-btn');
+            
+            // Reset bubble UI
+            skipBtn.style.display = 'inline-block';
+            revealBtn.style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('quiz-feedback').style.display = 'none';
+            textElement.innerHTML = '';
+            
+            typeText(textElement, currentStoryText, 25, () => {
+                skipBtn.style.display = 'none';
+                revealBtn.style.display = 'inline-block';
+            });
+        }
+
+        function skipStorytelling() {
+            clearInterval(typewriterInterval);
+            document.getElementById('speech-text').innerText = currentStoryText;
+            document.getElementById('skip-speech-btn').style.display = 'none';
+            document.getElementById('reveal-technique-btn').style.display = 'inline-block';
+        }
+
+        function showQuiz() {
+            let sculptureId = null;
+            if (inspectedObject) {
+                sculptureId = inspectedObject.id;
+            } else if (currentStep > 0) {
+                sculptureId = currentStep;
+            } else {
+                return;
+            }
+            
+            const info = sculptureInfo[sculptureId];
+            if (!info) return;
+            
+            document.getElementById('reveal-technique-btn').style.display = 'none';
+            
+            const quizContainer = document.getElementById('quiz-container');
+            const quizOptions = document.getElementById('quiz-options');
+            const quizFeedback = document.getElementById('quiz-feedback');
+            
+            quizFeedback.style.display = 'none';
+            quizFeedback.innerHTML = '';
+            quizOptions.innerHTML = '';
+            
+            // Clonar y ordenar de manera aleatoria las opciones
+            const shuffledOptions = [...info.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt;
+                btn.addEventListener('click', () => submitAnswer(btn, opt, info.technique));
+                quizOptions.appendChild(btn);
+            });
+            
+            quizContainer.style.display = 'block';
+        }
+
+        function submitAnswer(clickedBtn, selectedOption, correctOption) {
+            const quizFeedback = document.getElementById('quiz-feedback');
+            const btns = document.querySelectorAll('.quiz-option-btn');
+            
+            if (selectedOption === correctOption) {
+                clickedBtn.classList.add('correct');
+                clickedBtn.classList.remove('incorrect');
+                
+                btns.forEach(b => b.disabled = true);
+                
+                quizFeedback.className = 'feedback-correct';
+                quizFeedback.innerHTML = '🎉 😊 ¡Excelente! ¡Respuesta Correcta! Soy la técnica de <strong>' + correctOption + '</strong>.';
+                quizFeedback.style.display = 'block';
+            } else {
+                clickedBtn.classList.add('incorrect');
+                clickedBtn.disabled = true;
+                
+                quizFeedback.className = 'feedback-incorrect';
+                quizFeedback.innerHTML = '😢 ❌ ¡Oh, no es esa! Inténtalo de nuevo...';
+                quizFeedback.style.display = 'block';
             }
         }
 
@@ -1273,17 +2216,22 @@
         function showInspectionCard(id) {
             const info = sculptureInfo[id];
             if (info) {
-                document.getElementById('inspect-category').innerText = info.category;
-                document.getElementById('inspect-title').innerText = info.title;
-                document.getElementById('inspect-desc').innerText = info.desc;
-                document.getElementById('inspect-card').classList.add('active');
+                document.getElementById('speech-category').innerText = info.category;
+                document.getElementById('speech-title').innerText = info.title;
+                document.getElementById('speech-bubble').classList.add('active');
+                startStorytelling(info);
             }
         }
 
         function exitInspection() {
-            if (!inspectedObject) return;
+            if (!inspectedObject) {
+                clearInterval(typewriterInterval);
+                document.getElementById('speech-bubble').classList.remove('active');
+                return;
+            }
             
-            document.getElementById('inspect-card').classList.remove('active');
+            clearInterval(typewriterInterval);
+            document.getElementById('speech-bubble').classList.remove('active');
             
             const obj = inspectedObject;
             inspectedObject = null;
@@ -1298,50 +2246,50 @@
             
             // Reactivar panel del tour e ir al paso actual
             infoPanel.style.opacity = '1';
-            updateTour(currentStep, 1.5);
+            updateTour(currentStep, 1.5, false); // autoShowBubble is false so it doesn't reopen
         }
 
-        document.getElementById('close-inspect-btn').addEventListener('click', exitInspection);
+        document.getElementById('close-speech-btn').addEventListener('click', exitInspection);
+        document.getElementById('skip-speech-btn').addEventListener('click', skipStorytelling);
+        document.getElementById('reveal-technique-btn').addEventListener('click', showQuiz);
 
         // Estado animado de la cámara controlado por GSAP y copiado en el bucle 'animate'
         const animState = {
             camX: 0,
-            camY: 35,
-            camZ: 55,
+            camY: 4,
+            camZ: 26,
             lookX: 0,
-            lookY: 0,
-            lookZ: 0
+            lookY: 4.5,
+            lookZ: -5
         };
 
         // --- 7. CONFIGURACIÓN DE BOTONES E INTERFAZ ---
         const prevBtn = document.getElementById('prev-btn');
         const homeBtn = document.getElementById('home-btn');
         const nextBtn = document.getElementById('next-btn');
-        const welcomeOverlay = document.getElementById('welcome-overlay');
         const infoPanel = document.getElementById('info-panel');
 
-        // Seteamos la cámara a su estado inicial antes de entrar
+        // Seteamos la cámara a su estado inicial
         camera.position.set(animState.camX, animState.camY, animState.camZ);
-        camera.lookAt(animState.lookX, animState.lookY, animState.lookZ);
+        camera.lookAt(new THREE.Vector3(animState.lookX, animState.lookY, animState.lookZ));
 
-        // Evento del botón de Entrada de Bienvenida
-        document.getElementById('start-btn').addEventListener('click', () => {
-            try {
-                // Ocultar pantalla de bienvenida
-                welcomeOverlay.style.opacity = '0';
-                setTimeout(() => { welcomeOverlay.style.visibility = 'hidden'; }, 1000);
-                
-                // Mostrar panel de información
-                infoPanel.style.opacity = '1';
-                
-                // Activar la animación hacia el paso inicial (Paso 0) con transición fluida
-                updateTour(0, 3.5);
-            } catch (err) {
-                alert("Error al iniciar el recorrido:\n" + err.message);
-            }
-        });
+        function updateActiveMapNode(index) {
+            const btns = document.querySelectorAll('.map-btn');
+            btns.forEach(btn => {
+                if (parseInt(btn.getAttribute('data-index')) === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
 
-        function updateTour(index, customDuration = 2.5) {
+        function jumpToStation(index) {
+            currentStep = index;
+            updateTour(currentStep, 2.0);
+        }
+
+        function updateTour(index, customDuration = 2.5, autoShowBubble = true) {
             const step = tourSteps[index];
 
             // Actualizar interfaz de usuario
@@ -1352,6 +2300,40 @@
             prevBtn.disabled = index === 0;
             homeBtn.disabled = index === 0;
             nextBtn.disabled = index === tourSteps.length - 1;
+
+            // Sincronizar el nodo activo en el mapa de navegación
+            updateActiveMapNode(index);
+
+            // Si el índice es mayor a 0, mostramos automáticamente el bocadillo de diálogo de la obra actual.
+            // Si el índice es 0, ocultamos el bocadillo de diálogo.
+            if (index === 0) {
+                clearInterval(typewriterInterval);
+                document.getElementById('speech-bubble').classList.remove('active');
+                if (inspectedObject) {
+                    const prevObj = inspectedObject;
+                    inspectedObject = null;
+                    gsap.to(prevObj.rotation, {
+                        x: prevObj.originalRotX || 0,
+                        y: prevObj.originalRotY || 0,
+                        z: prevObj.originalRotZ || 0,
+                        duration: 0.8
+                    });
+                }
+            } else {
+                if (inspectedObject && inspectedObject.id !== index) {
+                    const prevObj = inspectedObject;
+                    inspectedObject = null;
+                    gsap.to(prevObj.rotation, {
+                        x: prevObj.originalRotX || 0,
+                        y: prevObj.originalRotY || 0,
+                        z: prevObj.originalRotZ || 0,
+                        duration: 0.8
+                    });
+                }
+                if (autoShowBubble) {
+                    showInspectionCard(index);
+                }
+            }
 
             // Animamos las propiedades de animState en lugar del objeto THREE directamente.
             // Esto es 100% inmune a las restricciones de inicialización del renderer de Three.js y es compatible con cualquier navegador local.
@@ -1395,7 +2377,7 @@
             // Sincronización continua de la cámara con el estado animado por GSAP
             if (typeof camera !== 'undefined') {
                 camera.position.set(animState.camX, animState.camY, animState.camZ);
-                camera.lookAt(animState.lookX, animState.lookY, animState.lookZ);
+                camera.lookAt(new THREE.Vector3(animState.lookX, animState.lookY, animState.lookZ));
             }
             
             // Animación de las esculturas 3D flotantes y giratorias
@@ -1407,22 +2389,62 @@
                     obj.position.y = obj.baseY + Math.sin(time + obj.floatPhase) * 0.1;
                 }
                 
-                // Sub-animaciones internas de las esculturas
-                if (obj.animSub) {
-                    obj.animSub.position.y = 0.9 + Math.sin(time * 2) * 0.08;
-                    obj.animSub.rotation.y += 0.015;
+                // Sub-animaciones internas detalladas por tipo de escultura
+                if (obj.id === 1 && obj.ring1 && obj.ring2 && obj.outerShell && obj.shards) {
+                    obj.ring1.rotation.y += 0.02;
+                    obj.ring2.rotation.z += 0.03;
+                    obj.outerShell.rotation.y -= 0.01;
+                    obj.outerShell.rotation.x += 0.005;
+                    obj.shards.rotation.y += 0.008;
+                    obj.shards.position.y = Math.sin(time * 2) * 0.06;
                 }
-                if (obj.s1 && obj.s2) {
-                    obj.s1.position.x = Math.cos(time * 2) * 0.7;
-                    obj.s1.position.z = Math.sin(time * 2) * 0.7;
-                    obj.s2.position.x = -Math.cos(time * 2) * 0.7;
-                    obj.s2.position.z = -Math.sin(time * 2) * 0.7;
-                    obj.s1.rotation.y += 0.02;
-                    obj.s2.rotation.x += 0.02;
+                if (obj.id === 2 && obj.visor && obj.antTip) {
+                    obj.visor.material.emissiveIntensity = 2.0 + Math.sin(time * 5) * 0.6;
+                    obj.antTip.material.emissiveIntensity = 1.5 + Math.sin(time * 10) * 0.8;
                 }
-                if (obj.star) {
-                    obj.star.rotation.y += 0.025;
-                    obj.star.position.y = 1.0 + Math.sin(time * 3) * 0.05;
+                if (obj.id === 3 && obj.sketchGroup && obj.ribbon) {
+                    obj.sketchGroup.position.y = 0.25 + Math.sin(time * 2) * 0.06;
+                    obj.sketchGroup.rotation.y += 0.012;
+                    obj.ribbon.rotation.x = 0.4 + Math.sin(time * 1.5) * 0.05;
+                }
+                if (obj.id === 4 && obj.needle && obj.chain) {
+                    obj.needle.position.y = 0.1 + Math.sin(time * 2.5) * 0.12;
+                    obj.needle.rotation.x = 0.65 + Math.cos(time * 2.5) * 0.08;
+                    obj.chain.position.z = -0.1 + Math.sin(time * 0.5) * 0.02;
+                }
+                if (obj.id === 5 && obj.disc && obj.needle) {
+                    obj.disc.rotation.y += 0.005;
+                    obj.needle.position.x = Math.cos(time * 1.5) * 0.38;
+                    obj.needle.position.z = 0.15 + Math.sin(time * 1.5) * 0.38;
+                    obj.needle.rotation.y = -time * 1.5;
+                }
+                if (obj.id === 6 && obj.layerBG && obj.layerFlower && obj.layerTitle) {
+                    obj.layerBG.position.z = 0.12 + Math.sin(time * 1.2) * 0.04;
+                    obj.layerFlower.position.z = 0.32 + Math.sin(time * 1.2) * 0.08;
+                    obj.layerTitle.position.z = 0.52 + Math.sin(time * 1.2) * 0.12;
+                    obj.layerFlower.rotation.y += 0.015;
+                }
+                if (obj.id === 7 && obj.quill && obj.writings) {
+                    const writePhase = time * 3;
+                    obj.quill.position.x = 0.12 + Math.sin(writePhase) * 0.12;
+                    obj.quill.position.y = 0.32 + Math.cos(writePhase * 2) * 0.05;
+                    obj.quill.rotation.z = -0.45 + Math.sin(writePhase) * 0.08;
+                    obj.writings.children.forEach((stroke, idx) => {
+                        if (stroke.material) {
+                            stroke.material.emissiveIntensity = 1.5 + Math.sin(time * 4 - idx) * 0.4;
+                        }
+                    });
+                }
+                if (obj.id === 8 && obj.cassette && obj.reelL && obj.reelR && obj.waves && obj.visualizerBars) {
+                    obj.reelL.rotation.y += 0.03;
+                    obj.reelR.rotation.y += 0.03;
+                    obj.waves.children.forEach((wave, idx) => {
+                        wave.scale.setScalar(1.0 + Math.sin(time * 4 - idx * 0.8) * 0.15);
+                    });
+                    obj.visualizerBars.forEach((bar, idx) => {
+                        const scaleY = 0.3 + Math.sin(time * 6 + idx * 1.2) * 0.7;
+                        bar.scale.y = Math.max(0.1, scaleY);
+                    });
                 }
             });
             
@@ -1430,8 +2452,19 @@
         }
         animate();
 
+        // Inicializar el recorrido directamente en el Paso 0 (Gran Sala de Exhibición)
+        updateTour(0, 0);
+
         // --- FUNCIONES DEL MODAL DE DISEÑO DE RECURSO ---
         function openAddieModal() {
+            const iframe = document.querySelector('.addie-modal-body iframe');
+            if (iframe) {
+                if (currentStep === 0) {
+                    iframe.src = `diseno_capsula_introductoria.html`;
+                } else {
+                    iframe.src = `diseno_recurso.html?id=${currentStep}`;
+                }
+            }
             document.getElementById('addie-modal-overlay').classList.add('active');
         }
 

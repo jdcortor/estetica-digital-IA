@@ -60,7 +60,7 @@
 
         .header-title-container {
             position: absolute;
-            top: -5px;
+            top: 22px; /* Centrado vertical para el texto más compacto */
             right: 40px;
             text-align: right;
             font-family: var(--font-main);
@@ -69,7 +69,7 @@
 
         .header-title-1 {
             color: #ffffff;
-            font-size: 76px;
+            font-size: 58px; /* Encabezado achicado */
             font-weight: 300;
             letter-spacing: 1px;
             margin: 0;
@@ -78,219 +78,225 @@
 
         .header-title-2 {
             color: var(--header-yellow);
-            font-size: 94px;
+            font-size: 72px; /* Encabezado achicado */
             font-weight: 600;
             margin: 0;
             letter-spacing: 0.5px;
             line-height: 1.1;
         }
 
-        /* --- CARRUSEL DE PROFESORES --- */
-        .teachers-carousel {
+        /* --- REJILLA PRINCIPAL DE DOS COLUMNAS VERTICALES --- */
+        .main-grid {
             position: absolute;
-            top: 780px;
-            left: 1250px;
-            width: 300px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(5px);
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-left: 5px solid var(--showcase-purple);
-            overflow: hidden;
-            z-index: 30;
-            display: flex;
-            align-items: center;
-        }
-
-        .carousel-track {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 10px 40px 10px 15px;
-            box-sizing: border-box;
-            gap: 15px;
-        }
-
-        .teacher-avatar {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            background: var(--bg-light);
-            border: 3px solid var(--header-yellow);
-            flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .teacher-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .teacher-info h4 {
-            margin: 0 0 4px 0;
-            font-family: var(--font-labels);
-            font-size: 16px;
-            color: var(--header-dark);
-            line-height: 1.1;
-        }
-
-        .teacher-info p {
-            margin: 0;
-            font-family: var(--font-main);
-            font-size: 12px;
-            color: var(--center-gray);
-            line-height: 1.3;
-        }
-
-        .carousel-nav-btn {
-            position: absolute;
-            top: 150%;
-            transform: translateY(-150%);
-            background: var(--header-dark);
-            color: var(--header-yellow);
-            border: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            z-index: 35;
-            opacity: 0.8;
-            transition: opacity 0.2s, background 0.2s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .carousel-nav-btn:hover {
-            opacity: 1;
-            background: #000;
-        }
-
-        .carousel-nav-btn.prev {
-            left: -13px;
-            display: none;
-        }
-
-        .carousel-nav-btn.next {
-            right: 8px;
-        }
-
-        .carousel-nav-btn.prev-internal {
-            left: 8px;
-        }
-
-        /* --- CENTER CONTENT WRAPPER --- */
-        .center-content {
-            position: absolute;
-            top: 120px;
-            left: 54%;
-            transform: translateX(-50%) scale(0.82);
-            transform-origin: top center;
-            width: 1000px;
-            height: 800px;
-            z-index: 5;
-        }
-
-        /* --- CONNECTIONS --- */
-        .svg-connections {
-            position: absolute;
-            top: -40px;
+            top: 170px; /* Justo debajo del cabezal */
             left: 0;
             width: 100%;
-            height: 1000px;
+            height: 730px; /* Ocupa el espacio vertical restante */
+            display: grid;
+            grid-template-columns: 1200px 400px;
+            box-sizing: border-box;
+            z-index: 15;
+        }
+
+        .main-column {
+            height: 100%;
+            position: relative;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideUpFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes slideUpFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- COLUMNA IZQUIERDA (PANAL DE HEXÁGONOS) --- */
+        .column-diamonds {
+            animation-delay: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-content-embedded {
+            position: absolute;
+            top: 50%; /* Centrado vertical perfecto */
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.88);
+            transform-origin: center center;
+            width: 1000px;
+            height: 850px;
+        }
+
+        /* --- CONNECTIONS VECTORIALES DEL PANAL --- */
+        .svg-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
+            z-index: 2;
         }
 
         /* --- GRAPHIC NETWORK --- */
         .network-container {
             position: absolute;
-            top: 240px;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 550px;
-        }
-
-        .diamond {
-            position: absolute;
-            transform: rotate(45deg);
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-        }
-
-        .diamond-content {
-            transform: rotate(-45deg);
-            width: 100%;
             height: 100%;
+            z-index: 5;
+        }
+
+        /* Estilo base de los hexágonos con truco de bordes recortados */
+        .hexagon {
+            position: absolute;
+            background: #ffffff; /* Color de borde por defecto */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        /* Center */
-        .center-node {
-            width: 270px;
-            height: 270px;
-            background: var(--center-gray);
-            top: 140px;
-            left: 365px;
-            border-radius: 20px;
-            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.5);
-            border: 3px solid #fff;
-            z-index: 50;
-        }
-
-        .center-node .diamond-content {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .center-node h2 {
-            color: white;
-            font-family: var(--font-labels);
-            font-size: 36px;
-            font-weight: 900;
-            line-height: 1.1;
-            margin: 0;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Outer Nodes Setup */
-        .node {
-            width: 162px;
-            height: 162px;
-            border: 3px solid #fff;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s, background-color 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            z-index: 10;
         }
 
-        .node:not(.center-node):hover {
-            transform: rotate(45deg) scale(1.15);
-            box-shadow: 0 0 35px rgba(251, 208, 8, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.3);
-            border-color: var(--header-yellow);
+        .hexagon-inner {
+            width: calc(100% - 10px); /* 5px de borde a cada lado */
+            height: calc(100% - 10px);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            transition: background 0.3s ease;
+        }
+
+        /* Hover general para nodos */
+        .hexagon.node:hover {
+            transform: scale(1.12);
+            background: var(--header-yellow); /* El borde se ilumina amarillo */
             z-index: 60;
+        }
+
+        /* Nodo central ("PORTAFOLIOS DIGITALES" - Siempre el más grande) */
+        .hex-center {
+            top: 259px;
+            left: 355px;
+            width: 290px;
+            height: 332px;
+            background: #ffffff; /* Borde blanco */
+            z-index: 50;
+            cursor: default;
+        }
+
+        .hex-center .hexagon-inner {
+            background: var(--center-gray); /* Color central */
+            width: calc(100% - 12px); /* Borde un poco más grueso */
+            height: calc(100% - 12px);
+            padding: 20px;
+        }
+
+        .center-title {
+            font-family: var(--font-labels);
+            font-weight: 900;
+            font-size: 28px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.15;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+
+        /* --- FONDOS DE COLOR INTERIOR DE LOS NODOS (PALETA PASTEL) --- */
+        .node-1-bg { background: var(--showcase-purple); }
+        .node-2-bg { background: var(--bulb-blue); }
+        .node-3-bg { background: var(--weebly-pink); }
+        .node-4-bg { background: var(--fresh-green); }
+        .node-5-bg { background: #f0a32f; }
+        .node-6-bg { background: #2f94d9; }
+        .node-7-bg { background: var(--sway-teal); }
+        .node-8-bg { background: var(--kudos-teal); }
+
+        /* Icono dentro del hexágono */
+        .hexagon-icon {
+            width: 75px;
+            height: 75px;
+            margin-bottom: 4px;
+            flex-shrink: 0;
+        }
+
+        /* Texto integrado en el hexágono */
+        .hexagon-label {
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 17px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.2;
+            text-transform: uppercase;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Coordenadas específicas para armar la colmena extendida */
+        .hex-1 {
+            top: 23px;
+            left: 402px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-2 {
+            top: 188px;
+            left: 597px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-3 {
+            top: 313px;
+            left: 772px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-4 {
+            top: 438px;
+            left: 597px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-5 {
+            top: 603px;
+            left: 402px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-6 {
+            top: 438px;
+            left: 207px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-7 {
+            top: 313px;
+            left: 32px;
+            width: 195px;
+            height: 224px;
+        }
+        .hex-8 {
+            top: 188px;
+            left: 207px;
+            width: 195px;
+            height: 224px;
         }
 
         /* Tooltip Global (Globo de texto) */
@@ -301,7 +307,7 @@
             padding: 12px 20px;
             border-radius: 8px;
             font-family: var(--font-main);
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             text-align: center;
             pointer-events: none;
@@ -318,7 +324,7 @@
         #global-tooltip.show {
             opacity: 1;
             visibility: visible;
-            transform: translate(-50%, -25px);
+            transform: translate(-50%, -20px);
         }
 
         #global-tooltip::after {
@@ -332,403 +338,235 @@
             border-color: var(--header-yellow) transparent transparent transparent;
         }
 
-        /* Specific Nodes */
-        .node-1 {
-            top: -56px;
-            left: 419px;
-            background: var(--showcase-purple);
+        /* --- COLUMNA DERECHA (PROFESORES EN GRAN TAMAÑO) --- */
+        .column-teachers {
+            animation-delay: 0.6s;
+            padding: 25px 20px;
+            border-left: 2px dashed rgba(34, 33, 33, 0.12);
         }
 
-        .node-2 {
-            top: 18px;
-            left: 595px;
-            background: var(--bulb-blue);
-        }
-
-        .node-3 {
-            top: 194px;
-            left: 669px;
-            background: var(--weebly-pink);
-        }
-
-        .node-4 {
-            top: 370px;
-            left: 595px;
-            background: var(--fresh-green);
-        }
-
-        .node-5 {
-            top: 444px;
-            left: 419px;
-            background: #f0a32f;
-        }
-
-        .node-6 {
-            top: 370px;
-            left: 243px;
-            background: #2f94d9;
-        }
-
-        .node-7 {
-            top: 194px;
-            left: 169px;
-            background: var(--sway-teal);
-        }
-
-        .node-8 {
-            top: 18px;
-            left: 243px;
-            background: var(--kudos-teal);
-        }
-
-        /* Labels */
-        .label {
-            position: absolute;
-            font-family: var(--font-labels);
-            font-size: 26px;
-            font-weight: 900;
-            color: #000;
-            letter-spacing: 0px;
-            z-index: 20;
-            line-height: 1.1;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-
-        .lbl-1 {
-            top: -130px;
-            left: 500px;
-            text-align: center;
-            transform: translate(-50%, -50%);
-        }
-
-        .lbl-2 {
-            top: 6px;
-            left: 764px;
-            text-align: left;
-            transform: translate(0, -50%);
-        }
-
-        .lbl-3 {
-            top: 275px;
-            left: 900px;
-            text-align: left;
-            transform: translate(0, -50%);
-        }
-
-        .lbl-4 {
-            top: 544px;
-            left: 764px;
-            text-align: left;
-            transform: translate(0, -50%);
-        }
-
-        .lbl-5 {
-            top: 660px;
-            left: 500px;
-            text-align: center;
-            transform: translate(-50%, -50%);
-        }
-
-        .lbl-6 {
-            top: 544px;
-            left: 236px;
-            text-align: right;
-            transform: translate(-100%, -50%);
-        }
-
-        .lbl-7 {
-            top: 275px;
-            left: 100px;
-            text-align: right;
-            transform: translate(-100%, -50%);
-        }
-
-        .lbl-8 {
-            top: 6px;
-            left: 236px;
-            text-align: right;
-            transform: translate(-100%, -50%);
-        }
-
-        /* --- FOOTER --- */
-        .footer {
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            z-index: 20;
-        }
-
-        .teacher-container {
-            position: absolute;
-            bottom: 0px;
-            left: 40px;
-            width: 180px;
-            height: 280px;
-            z-index: 30;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .teacher-container:hover {
-            transform: scale(1.08) translateY(-5px);
-        }
-
-        .teacher-illustration {
-            width: 100%;
+        .teachers-embedded-panel {
             height: 100%;
-        }
-
-        .gemini-spark {
-            animation: floatGemini 3s ease-in-out infinite;
-        }
-
-        @keyframes floatGemini {
-            0% {
-                transform: translate(140px, 30px) scale(0.7);
-            }
-
-            50% {
-                transform: translate(140px, 20px) scale(0.7);
-            }
-
-            100% {
-                transform: translate(140px, 30px) scale(0.7);
-            }
-        }
-
-        /* --- AI MODAL CHAT INTERFACE --- */
-        .ai-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            justify-content: space-between;
+        }
+
+        .teachers-panel-header {
+            margin-bottom: 10px;
+        }
+
+        .teachers-panel-title {
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--header-dark);
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .teachers-panel-subtitle {
+            font-family: var(--font-main);
+            font-size: 12px;
+            color: var(--center-gray);
+            margin: 4px 0 0 0;
+        }
+
+        .teachers-slides-container {
+            flex: 1;
+            position: relative;
+            display: flex;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .teacher-large-slide-embedded {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            gap: 15px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         }
 
-        .ai-modal-overlay.active {
+        .teacher-large-slide-embedded.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .ai-chat-panel {
-            width: 500px;
-            height: 600px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .teacher-photo-container-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--header-yellow);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            background: var(--bg-light);
+            flex-shrink: 0;
         }
 
-        .ai-modal-overlay.active .ai-chat-panel {
-            transform: scale(1);
+        .teacher-photo-container-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .ai-chat-header {
-            background: var(--header-dark);
-            color: var(--header-yellow);
-            padding: 20px;
+        .teacher-photo-fallback-large {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--showcase-purple) 0%, var(--bulb-blue) 100%);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 4px solid var(--showcase-purple);
-        }
-
-        .ai-chat-header h3 {
-            margin: 0;
+            color: #ffffff;
             font-family: var(--font-labels);
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 900;
+            font-size: 42px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close-btn:hover {
-            color: #ff4d4d;
-        }
-
-        .ai-chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f5f6f8;
+        .teacher-large-info-vertical {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            font-family: var(--font-main);
+            align-items: center;
         }
 
-        .msg-bubble {
-            max-width: 80%;
-            padding: 12px 18px;
-            border-radius: 15px;
-            font-size: 14px;
-            line-height: 1.5;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .msg-ai {
-            background: white;
-            color: #333;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--fresh-green);
-        }
-
-        .msg-user {
+        .teacher-role-badge-large {
             background: var(--showcase-purple);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .ai-chat-input {
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #ddd;
-            display: flex;
-            gap: 10px;
-        }
-
-        .ai-chat-input input {
-            flex: 1;
-            padding: 12px 20px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            font-family: var(--font-main);
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .ai-chat-input input:focus {
-            border-color: var(--showcase-purple);
-        }
-
-        .ai-chat-input button {
-            background: var(--header-yellow);
-            color: var(--header-dark);
-            border: none;
-            border-radius: 25px;
-            padding: 0 25px;
+            color: #ffffff;
             font-family: var(--font-labels);
             font-weight: 800;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            font-size: 9px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            width: max-content;
         }
 
-        .ai-chat-input button:hover {
-            transform: scale(1.05);
-            background: #e5bd00;
+        .teacher-name-large {
+            margin: 0 0 6px 0;
+            font-family: var(--font-labels);
+            font-size: 24px; /* Nombre grande */
+            color: var(--header-dark);
+            font-weight: 800;
+            line-height: 1.1;
         }
 
-        .ai-chat-input button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
+        .teacher-legend-large {
+            margin: 0;
+            font-family: var(--font-main);
+            font-size: 12px; /* Leyenda pequeña */
+            color: var(--center-gray);
+            line-height: 1.5;
+            max-width: 95%;
         }
 
-        .loading-dots {
-            display: inline-flex;
-            gap: 4px;
+        .teachers-panel-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
-        .loading-dots span {
-            width: 6px;
-            height: 6px;
-            background-color: var(--center-gray);
+        .carousel-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .carousel-btn-large {
+            background: var(--header-dark);
+            color: var(--header-yellow);
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-        .loading-dots span:nth-child(1) {
-            animation-delay: -0.32s;
+        .carousel-btn-large:hover {
+            background: #000000;
+            transform: scale(1.08);
         }
 
-        .loading-dots span:nth-child(2) {
-            animation-delay: -0.16s;
+        /* Carousel Dots */
+        .carousel-dots {
+            display: flex;
+            gap: 8px;
         }
 
-        @keyframes bounce {
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
 
-            0%,
-            80%,
-            100% {
-                transform: scale(0);
-            }
+        .carousel-dot:hover {
+            background: var(--center-gray);
+        }
 
-            40% {
-                transform: scale(1);
-            }
+        .carousel-dot.active {
+            background: var(--showcase-purple);
+            transform: scale(1.25);
         }
 
         /* --- ESTILOS LOGOTIPO COLEGIO --- */
         .school-logo-container {
             position: absolute;
-            top: 25px;
-            left: 35px;
-            width: 145px;
-            height: 90px;
+            top: 8px; /* Ajustado para el nuevo tamaño */
+            left: 30px;
+            width: 250px; /* Agrandado */
+            height: 155px; /* Agrandado */
             z-index: 25;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(34, 33, 33, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--header-yellow);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: transparent; /* Fondo transparente */
+            border: none;
+            border-radius: 12px;
+            box-shadow: none;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .school-logo-container:hover {
-            transform: scale(1.05);
-            border-color: #ffffff;
-            box-shadow: 0 6px 20px rgba(251, 208, 8, 0.4);
+            transform: scale(1.08);
+            filter: drop-shadow(0 4px 12px rgba(251, 208, 8, 0.6));
         }
 
         .school-logo-container img {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
 
@@ -740,15 +578,27 @@
             align-items: center;
             justify-content: center;
             color: var(--header-yellow);
-            font-size: 10px;
+            font-size: 14px; /* Letra ajustada al nuevo tamaño del logo */
             font-family: var(--font-labels);
             font-weight: 800;
             text-transform: uppercase;
             text-align: center;
-            gap: 6px;
+            gap: 8px;
             padding: 5px;
         }
     </style>
+    <script>
+        // Definido en el head para que esté disponible de inmediato cuando carguen las imágenes
+        function handleTeacherImageError(imgElem, initials) {
+            imgElem.onerror = null; // Previene bucles infinitos
+            const parent = imgElem.parentNode;
+            parent.innerHTML = `
+                <div class="teacher-photo-fallback-large" title="Foto no encontrada. Mostrando avatar de respaldo.">
+                    <span>${initials}</span>
+                </div>
+            `;
+        }
+    </script>
 </head>
 
 <body>
@@ -759,7 +609,7 @@
         <div class="school-logo-container">
             <img src="Colegio.png" alt="Colegio Danilo Cifuentes" onerror="this.style.display='none'; document.getElementById('school-logo-fallback').style.display='flex';">
             <div id="school-logo-fallback" class="school-logo-fallback" style="display: none;">
-                <svg viewBox="0 0 100 100" width="30" height="30" fill="currentColor">
+                <svg viewBox="0 0 100 100" width="45" height="45" fill="currentColor">
                     <path d="M50,15 L10,38 L15,41 L15,75 C15,77 17,79 19,79 L81,79 C83,79 85,77 85,75 L85,41 L90,38 L50,15 Z M50,22 L80,39 L80,41 L50,24 L20,41 L20,39 L50,22 Z M23,45 L42,45 L42,72 L23,72 L23,45 Z M58,45 L77,45 L77,72 L58,72 L58,45 Z M47,55 L53,55 L53,72 L47,72 L47,55 Z" />
                 </svg>
                 <span>Colegio D.C.</span>
@@ -782,347 +632,235 @@
         </div>
 
         <!-- ======================================================== -->
-        <!-- CARRUSEL DE PROFESORES -->
+        <!-- REJILLA PRINCIPAL DE DOS COLUMNAS VERTICALES COMPLETAS   -->
         <!-- ======================================================== -->
-        <div class="teachers-carousel">
-            <button class="carousel-nav-btn prev-internal" onclick="moverCarrusel(-1)">&#10094;</button>
-            <div class="carousel-track" id="carouselTrack">
-                <!-- Slide 1 -->
-                <div class="carousel-slide">
-                    <div class="teacher-avatar">
-                        <svg viewBox="0 0 100 100" width="100%" height="100%">
-                            <circle cx="50" cy="40" r="20" fill="#fcd0b4" />
-                            <path d="M 20 100 C 20 65, 80 65, 80 100" fill="#30a0e0" />
-                            <path d="M 35 25 C 35 10, 65 10, 65 25 C 65 20, 35 20, 35 25" fill="#222" />
-                            <circle cx="43" cy="38" r="3" fill="#222" />
-                            <circle cx="57" cy="38" r="3" fill="#222" />
-                        </svg>
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Laura Villanueva</h4>
-                        <p>Especialista en integración de rúbricas formativas y metodologías ágiles en entornos
-                            digitales.</p>
-                    </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="carousel-slide">
-                    <div class="teacher-avatar">
-                        <svg viewBox="0 0 100 100" width="100%" height="100%">
-                            <circle cx="50" cy="40" r="20" fill="#e8b89c" />
-                            <path d="M 20 100 C 20 65, 80 65, 80 100" fill="#5cc472" />
-                            <path d="M 32 35 C 32 15, 68 15, 68 35" fill="#4a4a4a" />
-                            <path d="M 40 55 C 45 65, 55 65, 60 55" fill="#4a4a4a" />
-                            <rect x="38" y="36" width="10" height="4" fill="#222" />
-                            <rect x="52" y="36" width="10" height="4" fill="#222" />
-                        </svg>
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Maria Isabel Alfonso</h4>
-                        <p>Asesor en Inteligencia Artificial y curaduría de museos virtuales para el aprendizaje
-                            autónomo.</p>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="carousel-slide">
-                    <div class="teacher-avatar">
-                        <svg viewBox="0 0 100 100" width="100%" height="100%">
-                            <circle cx="50" cy="40" r="20" fill="#f4d5c4" />
-                            <path d="M 20 100 C 20 65, 80 65, 80 100" fill="#f4629e" />
-                            <circle cx="35" cy="30" r="12" fill="#881a8f" />
-                            <circle cx="65" cy="30" r="12" fill="#881a8f" />
-                            <circle cx="50" cy="20" r="15" fill="#881a8f" />
-                            <circle cx="43" cy="40" r="2.5" fill="#222" />
-                            <circle cx="57" cy="40" r="2.5" fill="#222" />
-                        </svg>
-                    </div>
-                    <div class="teacher-info">
-                        <h4>Victor Ardila</h4>
-                        <p>Diseñadora instruccional enfocada en la creación de cápsulas introductorias y acuerdos
-                            éticos.</p>
-                    </div>
-                </div>
-                <!-- Slide 4 -->
-                <div class="carousel-slide">
-                    <div class="teacher-avatar">
-                        <svg viewBox="0 0 100 100" width="100%" height="100%">
-                            <circle cx="50" cy="40" r="20" fill="#fcd0b4" />
-                            <path d="M 20 100 C 20 65, 80 65, 80 100" fill="#881a8f" />
-                            <path d="M 35 25 C 35 15, 65 15, 65 25" fill="#222" />
-                            <circle cx="43" cy="40" r="3" fill="#222" />
-                            <circle cx="57" cy="40" r="3" fill="#222" />
-                        </svg>
-                    </div>
-                    <div class="teacher-info">
-                        <h4>José David Cortés</h4>
-                        <p>Especialista en diseño de interfaces inclusivas y evaluación continua mediante bitácoras.</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-nav-btn next" onclick="moverCarrusel(1)">&#10095;</button>
-        </div>
-        <!-- ======================================================== -->
-
-        <!-- CONTENEDOR CENTRALIZADO -->
-        <div class="center-content">
-            <svg class="svg-connections" viewBox="0 0 1000 1000">
-                <style>
-                    .line {
-                        fill: none;
-                        stroke: black;
-                        stroke-width: 2.5;
-                        stroke-dasharray: 4, 4;
-                    }
-                </style>
-                <polyline class="line" points="500,405 500,325" />
-                <circle cx="500" cy="405" r="3" fill="black" />
-                <circle cx="500" cy="325" r="3" fill="black" />
-
-                <polyline class="line" points="606,449 662,393" />
-                <circle cx="606" cy="449" r="3" fill="black" />
-                <circle cx="662" cy="393" r="3" fill="black" />
-
-                <polyline class="line" points="650,555 730,555" />
-                <circle cx="650" cy="555" r="3" fill="black" />
-                <circle cx="730" cy="555" r="3" fill="black" />
-
-                <polyline class="line" points="606,661 662,717" />
-                <circle cx="606" cy="661" r="3" fill="black" />
-                <circle cx="662" cy="717" r="3" fill="black" />
-
-                <polyline class="line" points="500,705 500,785" />
-                <circle cx="500" cy="705" r="3" fill="black" />
-                <circle cx="500" cy="785" r="3" fill="black" />
-
-                <polyline class="line" points="394,661 338,717" />
-                <circle cx="394" cy="661" r="3" fill="black" />
-                <circle cx="338" cy="717" r="3" fill="black" />
-
-                <polyline class="line" points="350,555 270,555" />
-                <circle cx="350" cy="555" r="3" fill="black" />
-                <circle cx="270" cy="555" r="3" fill="black" />
-
-                <polyline class="line" points="394,449 338,393" />
-                <circle cx="394" cy="449" r="3" fill="black" />
-                <circle cx="338" cy="393" r="3" fill="black" />
-            </svg>
-
-            <div class="network-container">
-                <div class="label lbl-1" onclick="openPage('fase1_inmersion/capsula_introductoria.html')">CÁPSULA<br>INTRODUCTORIA</div>
-                <div class="label lbl-2" onclick="openPage('fase1_inmersion/museo_digital.html')">MUSEO<br>DIGITAL</div>
-                <div class="label lbl-3" onclick="openPage('fase2_apropiacion/abanico_ia.html')">ABANICO IA</div>
-                <div class="label lbl-4" onclick="openPage('fase2_apropiacion/acuerdo_etico.html')">ACUERDO<br>ÉTICO</div>
-                <div class="label lbl-5" onclick="openPage('fase2_apropiacion/plataforma_capacitacion.html')">PLATAFORMA
-                    DE<br>CAPACITACIÓN</div>
-                <div class="label lbl-6" onclick="openPage('fase3_construccion/agente_davinci.html')">AGENTE<br>DAVINCI</div>
-                <div class="label lbl-7" onclick="openPage('fase3_construccion/bitacora_digital.html')">BITÁCORA<br>DIGITAL</div>
-                <div class="label lbl-8" onclick="openPage('fase4_evaluacion/rubrica_portafolio.html')">RÚBRICA DE<br>PORTAFOLIO</div>
-
-                <div class="diamond center-node">
-                    <div class="diamond-content">
-                        <h2>PORTAFOLIOS<br>DIGITALES</h2>
-                    </div>
-                </div>
-
-                <div class="diamond node node-1" data-tooltip="Presenta el portafolio y los objetivos"
-                    onclick="openPage('fase1_inmersion/capsula_introductoria.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:60%; height:60%;">
-                            <rect x="25" y="15" width="50" height="70" rx="25" fill="none" stroke="white"
-                                stroke-width="8" />
-                            <polygon points="43,35 43,65 65,50" fill="white" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-2" data-tooltip="Exhibición visual de los trabajos del alumno"
-                    onclick="openPage('fase1_inmersion/museo_digital.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:65%; height:65%;">
-                            <polygon points="10,40 50,10 90,40" fill="none" stroke="white" stroke-width="8"
-                                stroke-linejoin="round" />
-                            <rect x="15" y="45" width="70" height="8" fill="white" />
-                            <rect x="25" y="55" width="10" height="30" fill="white" />
-                            <rect x="45" y="55" width="10" height="30" fill="white" />
-                            <rect x="65" y="55" width="10" height="30" fill="white" />
-                            <rect x="10" y="85" width="80" height="8" fill="white" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-3" data-tooltip="Integración de herramientas de Inteligencia Artificial"
-                    onclick="openPage('fase2_apropiacion/abanico_ia.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:65%; height:65%;">
-                            <circle cx="50" cy="80" r="10" fill="none" stroke="white" stroke-width="6" />
-                            <circle cx="20" cy="30" r="10" fill="none" stroke="white" stroke-width="6" />
-                            <circle cx="50" cy="20" r="10" fill="none" stroke="white" stroke-width="6" />
-                            <circle cx="80" cy="30" r="10" fill="none" stroke="white" stroke-width="6" />
-                            <line x1="44" y1="72" x2="26" y2="38" stroke="white" stroke-width="6" />
-                            <line x1="50" y1="70" x2="50" y2="30" stroke="white" stroke-width="6" />
-                            <line x1="56" y1="72" x2="74" y2="38" stroke="white" stroke-width="6" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-4" data-tooltip="Normas de convivencia y honestidad académica"
-                    onclick="openPage('fase2_apropiacion/acuerdo_etico.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:60%; height:60%;">
-                            <path d="M 15 25 L 50 10 L 85 25 L 85 50 C 85 75 50 90 50 90 C 50 90 15 75 15 50 Z"
-                                fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
-                            <path d="M 35 50 L 45 60 L 65 35" fill="none" stroke="white" stroke-width="8"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-5" data-tooltip="Espacio para aprender a usar las herramientas"
-                    onclick="openPage('fase2_apropiacion/plataforma_capacitacion.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:65%; height:65%;">
-                            <rect x="20" y="25" width="60" height="40" rx="4" fill="none" stroke="white"
-                                stroke-width="8" />
-                            <polygon points="10,75 90,75 80,65 20,65" fill="none" stroke="white" stroke-width="8"
-                                stroke-linejoin="round" />
-                            <polygon points="45,35 45,55 60,45" fill="white" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-6" data-tooltip="Tutor virtual o guía metodológica del curso"
-                    onclick="openPage('fase3_construccion/agente_davinci.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:60%; height:60%;">
-                            <rect x="25" y="30" width="50" height="45" rx="10" fill="none" stroke="white"
-                                stroke-width="8" />
-                            <line x1="50" y1="15" x2="50" y2="30" stroke="white" stroke-width="8" />
-                            <circle cx="50" cy="10" r="5" fill="white" />
-                            <circle cx="40" cy="48" r="6" fill="white" />
-                            <circle cx="60" cy="48" r="6" fill="white" />
-                            <path d="M 40 65 Q 50 70 60 65" fill="none" stroke="white" stroke-width="5"
-                                stroke-linecap="round" />
-                            <line x1="15" y1="50" x2="25" y2="50" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                            <line x1="75" y1="50" x2="85" y2="50" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-7" data-tooltip="Bitácora Digital de Creación e Interacción con IA"
-                    onclick="openPage('fase3_construccion/bitacora_digital.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:65%; height:65%;">
-                            <rect x="30" y="15" width="45" height="70" rx="4" fill="none" stroke="white"
-                                stroke-width="8" />
-                            <line x1="20" y1="25" x2="30" y2="25" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                            <line x1="20" y1="40" x2="30" y2="40" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                            <line x1="20" y1="55" x2="30" y2="55" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                            <line x1="20" y1="70" x2="30" y2="70" stroke="white" stroke-width="8"
-                                stroke-linecap="round" />
-                            <line x1="45" y1="35" x2="60" y2="35" stroke="white" stroke-width="6"
-                                stroke-linecap="round" />
-                            <line x1="45" y1="55" x2="60" y2="55" stroke="white" stroke-width="6"
-                                stroke-linecap="round" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="diamond node node-8" data-tooltip="Criterios de evaluación del proyecto final"
-                    onclick="openPage('fase4_evaluacion/rubrica_portafolio.html')">
-                    <div class="diamond-content">
-                        <svg viewBox="0 0 100 100" style="width:65%; height:65%;">
-                            <path d="M 15 30 L 40 30 L 50 40 L 85 40 L 85 80 L 15 80 Z" fill="none" stroke="white"
-                                stroke-width="8" stroke-linejoin="round" />
-                            <path d="M 40 55 L 50 65 L 70 45" fill="none" stroke="white" stroke-width="8"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            <div class="teacher-container" onclick="openAIChat()" title="¡Chatea con Gemini!">
-                <div class="teacher-illustration">
-                    <svg viewBox="0 0 200 350" style="width:100%; height:100%;">
-                        <defs>
-                            <linearGradient id="gemini-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#4285f4" />
-                                <stop offset="50%" stop-color="#9b72cb" />
-                                <stop offset="100%" stop-color="#d96570" />
-                            </linearGradient>
-                            <filter id="glow">
-                                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-
-                        <path d="M 130 180 L 160 140 L 170 120" fill="none" stroke="#fcd0b4" stroke-width="10"
-                            stroke-linecap="round" />
-                        <path d="M 165 115 L 180 90" fill="none" stroke="#444" stroke-width="3" />
-
-                        <path d="M 60 70 C 40 90, 30 150, 60 160 C 100 160, 140 140, 130 80" fill="#111" />
-
-                        <path d="M 60 150 L 120 150 L 130 250 L 50 250 Z" fill="#fff" />
-                        <path d="M 60 150 L 90 200 L 120 150 L 130 250 L 50 250 Z" fill="#4a4a4a" />
-                        <path d="M 85 150 L 90 180 L 95 150 Z" fill="#fcd0b4" />
-
-                        <circle cx="90" cy="100" r="35" fill="#fcd0b4" />
-                        <path d="M 50 100 C 50 50, 130 50, 130 100 C 130 70, 50 70, 50 100" fill="#111" />
-                        <path d="M 80 65 C 100 65, 120 80, 120 110 C 120 90, 100 80, 80 65" fill="#111" />
-                        <circle cx="75" cy="95" r="10" fill="none" stroke="#111" stroke-width="3" />
-                        <circle cx="105" cy="95" r="10" fill="none" stroke="#111" stroke-width="3" />
-                        <line x1="85" y1="95" x2="95" y2="95" stroke="#111" stroke-width="3" />
-                        <circle cx="75" cy="95" r="2" fill="#111" />
-                        <circle cx="105" cy="95" r="2" fill="#111" />
-                        <path d="M 85 115 Q 90 120 95 115" fill="none" stroke="#c45" stroke-width="3"
-                            stroke-linecap="round" />
-
-                        <path d="M 60 160 L 40 220 L 70 230" fill="none" stroke="#fff" stroke-width="18"
-                            stroke-linecap="round" />
-                        <rect x="50" y="210" width="60" height="40" rx="3" fill="#881a8f"
-                            transform="rotate(-15 80 230)" />
-                        <rect x="55" y="215" width="50" height="30" rx="2" fill="#bc3bc4"
-                            transform="rotate(-15 80 230)" />
-                        <circle cx="80" cy="230" r="5" fill="#fff" transform="rotate(-15 80 230)" />
-
-                        <g class="gemini-spark" filter="url(#glow)">
-                            <path
-                                d="M 50 0 C 50 25 75 50 100 50 C 75 50 50 75 50 100 C 50 75 25 50 0 50 C 25 50 50 25 50 0 Z"
-                                fill="url(#gemini-grad)" />
-                        </g>
+        <div class="main-grid">
+            
+            <!-- COLUMNA 1: RED CENTRAL EN FORMATO COLMENA (HEXÁGONOS) -->
+            <div class="main-column column-diamonds">
+                <div class="center-content-embedded">
+                    
+                    <!-- CONEXIONES DEL PANAL -->
+                    <svg class="svg-connections" viewBox="0 0 1000 1000">
+                        <style>
+                            .line {
+                                fill: none;
+                                stroke: #222121;
+                                stroke-width: 3;
+                                stroke-dasharray: 6, 6;
+                                opacity: 0.6;
+                            }
+                        </style>
+                        <!-- Centro a Nodos del anillo interior -->
+                        <line class="line" x1="500" y1="425" x2="500" y2="135" />
+                        <line class="line" x1="500" y1="425" x2="500" y2="715" />
+                        <line class="line" x1="500" y1="425" x2="695" y2="300" />
+                        <line class="line" x1="500" y1="425" x2="305" y2="300" />
+                        <line class="line" x1="500" y1="425" x2="695" y2="550" />
+                        <line class="line" x1="500" y1="425" x2="305" y2="550" />
+                        
+                        <!-- Nodos del anillo a los extremos horizontales -->
+                        <line class="line" x1="695" y1="300" x2="870" y2="425" />
+                        <line class="line" x1="695" y1="550" x2="870" y2="425" />
+                        <line class="line" x1="305" y1="300" x2="130" y2="425" />
+                        <line class="line" x1="305" y1="550" x2="130" y2="425" />
                     </svg>
-                </div>
-            </div>
-        </div>
 
-        <!-- ======================================================== -->
-        <!-- MODAL DEL ASISTENTE DE IA (GEMINI API) -->
-        <!-- ======================================================== -->
-        <div id="ai-modal-overlay" class="ai-modal-overlay">
-            <div class="ai-chat-panel">
-                <div class="ai-chat-header">
-                    <h3>✨ Asistente Gemini</h3>
-                    <button class="close-btn" onclick="closeAIChat()">×</button>
-                </div>
-                <div class="ai-chat-messages" id="ai-chat-messages">
-                    <div class="msg-bubble msg-ai">¡Hola! Soy Gemini. ¿Sobre qué elemento de los Portafolios Digitales
-                        te gustaría aprender más hoy? (Ej. Rúbricas, Acuerdos Éticos, Museos Digitales...)</div>
-                </div>
-                <div class="ai-chat-input">
-                    <input type="text" id="ai-user-input" placeholder="Escribe tu consulta..."
-                        onkeypress="handleEnter(event)" />
-                    <button id="ai-send-btn" onclick="sendAIMessage()">Enviar</button>
+                    <div class="network-container">
+                        
+                        <!-- HEXÁGONO CENTRAL (El más grande) -->
+                        <div class="hexagon hex-center">
+                            <div class="hexagon-inner">
+                                <h2 class="center-title">PORTAFOLIOS<br>DIGITALES</h2>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 1: CÁPSULA INTRODUCTORIA -->
+                        <div class="hexagon hex-1 node node-1" onclick="openPage('fase1_inmersion/capsula_introductoria.html')" data-tooltip="Presenta el portafolio y los objetivos">
+                            <div class="hexagon-inner node-1-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <rect x="25" y="15" width="50" height="70" rx="25" fill="none" stroke="white" stroke-width="8" />
+                                    <polygon points="43,35 43,65 65,50" fill="white" />
+                                </svg>
+                                <div class="hexagon-label">CÁPSULA<br>INTRO</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 2: MUSEO DIGITAL -->
+                        <div class="hexagon hex-2 node node-2" onclick="openPage('fase1_inmersion/museo_digital.html')" data-tooltip="Exhibición visual de los trabajos del alumno">
+                            <div class="hexagon-inner node-2-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <polygon points="10,40 50,10 90,40" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                                    <rect x="15" y="45" width="70" height="8" fill="white" />
+                                    <rect x="25" y="55" width="10" height="30" fill="white" />
+                                    <rect x="45" y="55" width="10" height="30" fill="white" />
+                                    <rect x="65" y="55" width="10" height="30" fill="white" />
+                                    <rect x="10" y="85" width="80" height="8" fill="white" />
+                                </svg>
+                                <div class="hexagon-label">MUSEO<br>DIGITAL</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 3: ABANICO IA -->
+                        <div class="hexagon hex-3 node node-3" onclick="openPage('fase2_apropiacion/abanico_ia.html')" data-tooltip="Integración de herramientas de Inteligencia Artificial">
+                            <div class="hexagon-inner node-3-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <circle cx="50" cy="80" r="10" fill="none" stroke="white" stroke-width="6" />
+                                    <circle cx="20" cy="30" r="10" fill="none" stroke="white" stroke-width="6" />
+                                    <circle cx="50" cy="20" r="10" fill="none" stroke="white" stroke-width="6" />
+                                    <circle cx="80" cy="30" r="10" fill="none" stroke="white" stroke-width="6" />
+                                    <line x1="44" y1="72" x2="26" y2="38" stroke="white" stroke-width="6" />
+                                    <line x1="50" y1="70" x2="50" y2="30" stroke="white" stroke-width="6" />
+                                    <line x1="56" y1="72" x2="74" y2="38" stroke="white" stroke-width="6" />
+                                </svg>
+                                <div class="hexagon-label">ABANICO IA</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 4: ACUERDO ÉTICO -->
+                        <div class="hexagon hex-4 node node-4" onclick="openPage('fase2_apropiacion/acuerdo_etico.html')" data-tooltip="Normas de convivencia y honestidad académica">
+                            <div class="hexagon-inner node-4-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <path d="M 15 25 L 50 10 L 85 25 L 85 50 C 85 75 50 90 50 90 C 50 90 15 75 15 50 Z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                                    <path d="M 35 50 L 45 60 L 65 35" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="hexagon-label">ACUERDO<br>ÉTICO</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 5: PLATAFORMA DE CAPACITACIÓN -->
+                        <div class="hexagon hex-5 node node-5" onclick="openPage('fase2_apropiacion/plataforma_capacitacion.html')" data-tooltip="Espacio para aprender a usar las herramientas">
+                            <div class="hexagon-inner node-5-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <rect x="20" y="25" width="60" height="40" rx="4" fill="none" stroke="white" stroke-width="8" />
+                                    <polygon points="10,75 90,75 80,65 20,65" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                                    <polygon points="45,35 45,55 60,45" fill="white" />
+                                </svg>
+                                <div class="hexagon-label">CAPACITAR</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 6: AGENTE DAVINCI -->
+                        <div class="hexagon hex-6 node node-6" onclick="openPage('fase3_construccion/agente_davinci.html')" data-tooltip="Tutor virtual o guía metodológica del curso">
+                            <div class="hexagon-inner node-6-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <rect x="25" y="30" width="50" height="45" rx="10" fill="none" stroke="white" stroke-width="8" />
+                                    <line x1="50" y1="15" x2="50" y2="30" stroke="white" stroke-width="8" />
+                                    <circle cx="50" cy="10" r="5" fill="white" />
+                                    <circle cx="40" cy="48" r="6" fill="white" />
+                                    <circle cx="60" cy="48" r="6" fill="white" />
+                                    <path d="M 40 65 Q 50 70 60 65" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" />
+                                    <line x1="15" y1="50" x2="25" y2="50" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                    <line x1="75" y1="50" x2="85" y2="50" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                </svg>
+                                <div class="hexagon-label">AGENTE<br>DAVINCI</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 7: BITÁCORA DIGITAL -->
+                        <div class="hexagon hex-7 node node-7" onclick="openPage('fase3_construccion/bitacora_digital.html')" data-tooltip="Bitácora Digital de Creación e Interacción con IA">
+                            <div class="hexagon-inner node-7-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <rect x="30" y="15" width="45" height="70" rx="4" fill="none" stroke="white" stroke-width="8" />
+                                    <line x1="20" y1="25" x2="30" y2="25" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                    <line x1="20" y1="40" x2="30" y2="40" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                    <line x1="20" y1="55" x2="30" y2="55" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                    <line x1="20" y1="70" x2="30" y2="70" stroke="white" stroke-width="8" stroke-linecap="round" />
+                                    <line x1="45" y1="35" x2="60" y2="35" stroke="white" stroke-width="6" stroke-linecap="round" />
+                                    <line x1="45" y1="55" x2="60" y2="55" stroke="white" stroke-width="6" stroke-linecap="round" />
+                                </svg>
+                                <div class="hexagon-label">BITÁCORA</div>
+                            </div>
+                        </div>
+
+                        <!-- HEXÁGONO 8: RÚBRICA DE PORTAFOLIO -->
+                        <div class="hexagon hex-8 node node-8" onclick="openPage('fase4_evaluacion/rubrica_portafolio.html')" data-tooltip="Criterios de evaluación del portafolio final">
+                            <div class="hexagon-inner node-8-bg">
+                                <svg viewBox="0 0 100 100" class="hexagon-icon">
+                                    <path d="M 15 30 L 40 30 L 50 40 L 85 40 L 85 80 L 15 80 Z" fill="none" stroke="white" stroke-width="8" stroke-linejoin="round" />
+                                    <path d="M 40 55 L 50 65 L 70 45" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="hexagon-label">RÚBRICA</div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
+            <!-- COLUMNA 2: EQUIPO DOCENTE -->
+            <div class="main-column column-teachers">
+                <div class="teachers-embedded-panel">
+                    <div class="teachers-panel-header">
+                        <h3 class="teachers-panel-title">Equipo Docente</h3>
+                        <p class="teachers-panel-subtitle">Portafolios con Gemini</p>
+                    </div>
+
+                    <div class="teachers-slides-container">
+                        <!-- Docente 1 -->
+                        <div class="teacher-large-slide-embedded active" id="teacher-slide-0">
+                            <div class="teacher-photo-container-large">
+                                <img src="profe1.jpeg" alt="Laura Villanueva" onerror="handleTeacherImageError(this, 'LV')">
+                            </div>
+                            <div class="teacher-large-info-vertical">
+                                <span class="teacher-role-badge-large">DISEÑO Y RÚBRICAS</span>
+                                <h4 class="teacher-name-large">Laura Villanueva</h4>
+                                <p class="teacher-legend-large">Especialista en integración de rúbricas formativas y metodologías ágiles en entornos digitales.</p>
+                            </div>
+                        </div>
+
+                        <!-- Docente 2 -->
+                        <div class="teacher-large-slide-embedded" id="teacher-slide-1">
+                            <div class="teacher-photo-container-large">
+                                <img src="profe2.jpeg" alt="Maria Isabel Alfonso" onerror="handleTeacherImageError(this, 'MA')">
+                            </div>
+                            <div class="teacher-large-info-vertical">
+                                <span class="teacher-role-badge-large">INTELIGENCIA ARTIFICIAL</span>
+                                <h4 class="teacher-name-large">Maria Isabel Alfonso</h4>
+                                <p class="teacher-legend-large">Asesor en Inteligencia Artificial y curaduría de museos virtuales para el aprendizaje autónomo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Docente 3 -->
+                        <div class="teacher-large-slide-embedded" id="teacher-slide-2">
+                            <div class="teacher-photo-container-large">
+                                <img src="profe3.jpeg" alt="Victor Ardila" onerror="handleTeacherImageError(this, 'VA')">
+                            </div>
+                            <div class="teacher-large-info-vertical">
+                                <span class="teacher-role-badge-large">DISEÑO INSTRUCCIONAL</span>
+                                <h4 class="teacher-name-large">Victor Ardila</h4>
+                                <p class="teacher-legend-large">Diseñador instruccional enfocado en la creación de cápsulas introductorias y acuerdos éticos.</p>
+                            </div>
+                        </div>
+
+                        <!-- Docente 4 -->
+                        <div class="teacher-large-slide-embedded" id="teacher-slide-3">
+                            <div class="teacher-photo-container-large">
+                                <img src="profe4.jpg" alt="José David Cortés" onerror="handleTeacherImageError(this, 'JC')">
+                            </div>
+                            <div class="teacher-large-info-vertical">
+                                <span class="teacher-role-badge-large">DESARROLLO DE INTERFACES</span>
+                                <h4 class="teacher-name-large">José David Cortés</h4>
+                                <p class="teacher-legend-large">Especialista en diseño de interfaces inclusivas y evaluación continua mediante bitácoras.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="teachers-panel-footer">
+                        <div class="carousel-controls-row">
+                            <button class="carousel-btn-large" onclick="moveTeacher(-1)" title="Anterior">&#10094;</button>
+                            <div class="carousel-dots">
+                                <span class="carousel-dot active" onclick="showTeacher(0)"></span>
+                                <span class="carousel-dot" onclick="showTeacher(1)"></span>
+                                <span class="carousel-dot" onclick="showTeacher(2)"></span>
+                                <span class="carousel-dot" onclick="showTeacher(3)"></span>
+                            </div>
+                            <button class="carousel-btn-large" onclick="moveTeacher(1)" title="Siguiente">&#10095;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
     </div>
@@ -1140,66 +878,75 @@
         window.addEventListener('DOMContentLoaded', escalarComoPresentacion);
         escalarComoPresentacion();
 
-        // --- 2. Lógica del Carrusel de Profesores ---
-        let slideIndex = 0;
-        let intervaloCarrusel;
+        // --- 2. Lógica del Carrusel de Profesores Grandes ---
+        let currentTeacherIndex = 0;
+        let teacherInterval;
 
-        function moverCarrusel(direccion) {
-            const track = document.getElementById('carouselTrack');
-            const slides = document.querySelectorAll('.carousel-slide');
-            const totalSlides = slides.length;
+        function showTeacher(index) {
+            const slides = document.querySelectorAll('.teacher-large-slide-embedded');
+            const dots = document.querySelectorAll('.carousel-dot');
+            if (slides.length === 0) return;
 
-            slideIndex += direccion;
+            // Oculta el slide actual y desactiva el indicador
+            slides[currentTeacherIndex].classList.remove('active');
+            dots[currentTeacherIndex].classList.remove('active');
 
-            if (slideIndex < 0) {
-                slideIndex = totalSlides - 1;
-            } else if (slideIndex >= totalSlides) {
-                slideIndex = 0;
+            // Actualiza índice
+            currentTeacherIndex = index;
+            if (currentTeacherIndex < 0) {
+                currentTeacherIndex = slides.length - 1;
+            } else if (currentTeacherIndex >= slides.length) {
+                currentTeacherIndex = 0;
             }
 
-            const desplazamiento = -(slideIndex * 100);
-            track.style.transform = `translateX(${desplazamiento}%)`;
+            // Muestra el nuevo slide e indicador
+            slides[currentTeacherIndex].classList.add('active');
+            dots[currentTeacherIndex].classList.add('active');
         }
 
-        function iniciarCarruselAutomatico() {
-            intervaloCarrusel = setInterval(() => {
-                moverCarrusel(1);
-            }, 4000); // Rotación programada cada 4 segundos
+        // --- Lógica del Tooltip en Rombos/Hexágonos del centro ---
+        function moveTeacher(direction) {
+            showTeacher(currentTeacherIndex + direction);
         }
 
-        // --- 3. Lógica del Tooltip en Rombos y eventos del carrusel ---
+        function startTeacherRotation() {
+            teacherInterval = setInterval(() => {
+                moveTeacher(1);
+            }, 5000); // Cambia cada 5 segundos
+        }
+
+        function stopTeacherRotation() {
+            clearInterval(teacherInterval);
+        }
+
+        // --- 3. Lógica del Tooltip en Rombos/Hexágonos del centro ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicialización de la automatización del carrusel
-            const carousel = document.querySelector('.teachers-carousel');
-            if (carousel) {
-                carousel.addEventListener('mouseenter', () => clearInterval(intervaloCarrusel));
-                carousel.addEventListener('mouseleave', iniciarCarruselAutomatico);
+            // Inicialización de la rotación del carrusel de profesores
+            const teachersCol = document.querySelector('.column-teachers');
+            if (teachersCol) {
+                teachersCol.addEventListener('mouseenter', stopTeacherRotation);
+                teachersCol.addEventListener('mouseleave', startTeacherRotation);
             }
-            iniciarCarruselAutomatico();
+            startTeacherRotation();
 
-            // Configuración del tooltip para los rombos
+            // Configuración del tooltip dinámico robusto para los hexágonos
             const tooltip = document.createElement('div');
             tooltip.id = 'global-tooltip';
             document.querySelector('.network-container').appendChild(tooltip);
 
-            const nodes = document.querySelectorAll('.node:not(.center-node)');
+            const nodes = document.querySelectorAll('.node:not(.hex-center)');
 
             nodes.forEach(node => {
                 node.addEventListener('mouseenter', () => {
                     const text = node.getAttribute('data-tooltip');
                     if (text) {
                         tooltip.innerHTML = text;
-                        const topStr = node.style.top || getComputedStyle(node).top;
-                        const leftStr = node.style.left || getComputedStyle(node).left;
-                        const top = parseFloat(topStr);
-                        const left = parseFloat(leftStr);
-
-                        const size = 162;
-                        const centerX = left + (size / 2);
-                        const topVertexY = top + (size / 2) - (size * Math.SQRT2 / 2);
-
-                        tooltip.style.left = centerX + 'px';
-                        tooltip.style.top = topVertexY + 'px';
+                        const left = node.offsetLeft;
+                        const top = node.offsetTop;
+                        const width = node.offsetWidth;
+                        
+                        tooltip.style.left = (left + width / 2) + 'px';
+                        tooltip.style.top = (top - 10) + 'px'; // 10px arriba del hexágono
                         tooltip.classList.add('show');
                     }
                 });
@@ -1213,123 +960,6 @@
         // --- 4. LÓGICA DE NAVEGACIÓN A MÓDULOS HTML ---
         function openPage(pageUrl) {
             window.location.href = pageUrl;
-        }
-
-        // --- 5. LÓGICA DE LA API DE GEMINI (ASISTENTE IA) ---
-        const apiKey = ""; // API Key proveída por el entorno
-
-        let chatHistory = [];
-
-        function openAIChat() {
-            document.getElementById('ai-modal-overlay').classList.add('active');
-            setTimeout(() => document.getElementById('ai-user-input').focus(), 300);
-        }
-
-        function closeAIChat() {
-            document.getElementById('ai-modal-overlay').classList.remove('active');
-        }
-
-        function handleEnter(event) {
-            if (event.key === 'Enter') {
-                sendAIMessage();
-            }
-        }
-
-        function addMessageToUI(text, sender) {
-            const msgContainer = document.getElementById('ai-chat-messages');
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('msg-bubble', sender === 'user' ? 'msg-user' : 'msg-ai');
-
-            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            msgDiv.innerHTML = formattedText;
-
-            msgContainer.appendChild(msgDiv);
-            msgContainer.scrollTop = msgContainer.scrollHeight;
-        }
-
-        function addLoadingIndicator() {
-            const msgContainer = document.getElementById('ai-chat-messages');
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('msg-bubble', 'msg-ai');
-            msgDiv.id = 'ai-loading';
-            msgDiv.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
-            msgContainer.appendChild(msgDiv);
-            msgContainer.scrollTop = msgContainer.scrollHeight;
-        }
-
-        function removeLoadingIndicator() {
-            const loading = document.getElementById('ai-loading');
-            if (loading) loading.remove();
-        }
-
-        async function fetchWithRetry(url, options, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(res => setTimeout(res, delays[i]));
-                }
-            }
-        }
-
-        async function sendAIMessage() {
-            const inputField = document.getElementById('ai-user-input');
-            const sendBtn = document.getElementById('ai-send-btn');
-            const text = inputField.value.trim();
-
-            if (!text) return;
-
-            inputField.value = '';
-            inputField.disabled = true;
-            sendBtn.disabled = true;
-
-            addMessageToUI(text, 'user');
-            chatHistory.push({ role: "user", parts: [{ text: text }] });
-
-            addLoadingIndicator();
-
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-                const systemPrompt = `Eres Gemini, asistiendo como un experto en pedagogía y portafolios digitales representados en esta infografía interactiva. 
-                Ayudas a los profesores a entender cómo crear y utilizar los 8 elementos del modelo: Cápsula Introductoria, Museo Digital, Abanico IA, Acuerdo Ético, Plataforma de Capacitación, Agente DaVinci, Rúbrica de Bitácora, y Rúbrica de Portafolio. 
-                Tus respuestas deben ser detalladas, formales, directas y sin recurrir a halagos innecesarios, manteniéndote siempre en idioma español.`;
-
-                const payload = {
-                    contents: chatHistory,
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                const result = await fetchWithRetry(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                removeLoadingIndicator();
-
-                if (result.candidates && result.candidates[0] && result.candidates[0].content) {
-                    const botResponse = result.candidates[0].content.parts[0].text;
-                    addMessageToUI(botResponse, 'model');
-                    chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
-                } else {
-                    throw new Error("No candidates returned");
-                }
-
-            } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                removeLoadingIndicator();
-                addMessageToUI("Lo siento, tuve un problema conectándome a la red neuronal. Por favor, intenta preguntar de nuevo.", 'model');
-                chatHistory.pop();
-            } finally {
-                inputField.disabled = false;
-                sendBtn.disabled = false;
-                inputField.focus();
-            }
         }
     </script>
 </body>
