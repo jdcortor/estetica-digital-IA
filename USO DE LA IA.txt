@@ -1,0 +1,30 @@
+USO DE LA IA: abanico  
+
+Para el desarrollo del recurso interactivo “Abanico Digital de IAs para Estética” se emplearon herramientas de inteligencia artificial generativa como apoyo al diseño pedagógico, la estructuración del contenido y la programación del material en formato HTML. Inicialmente, se solicita a ChatGPT la construcción de un prompt general orientado a crear una tabla interactiva de herramientas de IA para estudiantes de grado once, articulada con la fase de selección del proyecto, las técnicas de Estética, Composición y Tipografía, Maquetado, Diario Ilustrado y Crochet, los filtros por técnica, las categorías de uso, los enlaces a cada plataforma, el semáforo ético, la ficha de selección responsable y la declaración de uso en bitácora. 
+Un prompt empleado inicialmente fue: “Actúa como diseñador pedagógico, experto en IA educativa y desarrollador front-end. y crea un recurso interactivo en HTML, CSS y JavaScript titulado ‘Abanico Digital de IAs para Estética’, dirigido a estudiantes de grado 11. El recurso debe organizar herramientas de inteligencia artificial por categorías, incluir filtros por técnica, enlaces reales a cada IA, un panel de detalle con función pedagógica, técnicas que apoya, uso permitido y advertencia ética. Debe permitir que los estudiantes seleccionen máximo dos herramientas pertinentes para su proyecto y registren su uso en la bitácora. El diseño debe verse como una tabla visual interactiva, clara, estética y funcional, no como una página web convencional”. 
+ 	Luego, este prompt fue ajustado y utilizado en Claude para generar el código base del recurso, realizando iteraciones sucesivas sobre diseño visual, organización de categorías, interactividad, enlaces, filtros y criterios éticos hasta llegar a la versión final publicada. El contenido generado por IA fue revisado, curado y editado por el equipo autor, asegurando coherencia con la metodología ADDIE, el enfoque IA-TPACK, los objetivos de la asignatura de Estética y los principios de transparencia, autoría, trazabilidad y uso responsable de IA. En ese sentido, la IA se utilizó como apoyo para la ideación, estructuración técnica y programación del recurso y por medio de las diferentes decisiones pedagógicas, la selección final de herramientas, la validación del contenido y la responsabilidad sobre el producto final corresponden al grupo del proyecto.
+
+
+USO DE LA IA EN: GALERUA DIGITAL, VIDEO DE USO ETICO DE LA IA Y RUBRICA DE EVALUACIÓN
+1. Herramienta utilizada: Notebooklm, iaCanva, ChatGPT
+2. Propósito del uso: Generación del guion de dialogo, audio y videos para la generación de recursos (galeria digital, video de uso ético de la IA y rubrica de evaluación), en la conceptualización sobre las diferentes tecnicas de estetica y uso responsable de la IA. 
+3. Uso del contenido generado: uso directo con leves modificaciones. 
+4. Revisión y edición: Se realizo la revisión del contenido generado por la IA para identificar las propiedades del contenido y su practicidad. 
+
+
+USO DE LA IA EN: TÉCNICAS DE ESTÉTICA
+1. Herramienta utilizada: notebooklm 
+2. Propósito del uso: Generación de una herramienta audiovisual, de conceptualización sobre las diferentes tecnicas de estetica. 
+3. Prompts o instrucciones proporcionadas: Actúa como un experto en Pedagogía de las Artes y Diseño Instruccional. Objetivo: Diseñar un guion narrativo y técnico para un video educativo de 5 a 10 minutos dirigido a estudiantes de grado 11 del Colegio Danilo Cifuentes. Explicar cómo la Inteligencia Artificial actúa como un apoyo en la fase de análisis visual, planificación y bocetación, permitiendo al estudiante mantener su autonomía creativa mientras potencia sus ideas iniciales
+4. Uso del contenido generado: uso directo sin modificaciones. 
+5. Revisión y edición: Se realizo la revisión del contenido generado por la IA para identificar las propiedades del contenido y su practicidad. 
+6. Limitaciones y consideraciones éticas: El video se genero de una estructura literiaria recopilada propia para la asignatura de estetica y los linemientos de la materia, se genero un video desde un guión dando como resultado un video tipo presentación.
+
+USO DE LA IA EN: DISEÑO DE PLATAFORMA DE CAPACITACIÓN, BITÁCORA DIGITAL, MÉTRICAS
+1. HERRAMIENTA UTLZIADA: ANTIGRAVITY, CODIFIGICACIÓN PYTHON, LIBRERIAS DE PROGRAMACIÓN
+PROPOSITO: DISEÑO DE LA PLATAFORMA COMPLETA PARA EL PORTAFCOLIO Y ALOJAMIENTO DE RECURSOS.
+3. PROMPTS. CONVERSACIÓN EN LENGUAJE NATURAL SOBRE BASE DE DISEÑO DE PORTAFOLIO, IDEAS GENERALES E ITERACIONES SOBRE LOS ASPECTOS PROPOIOS DEL DISEÑO
+4. USO DEL CONTENIDO GENERADO: USO 
+5. REVISIÓN. AL SER UN PRODCUTO DE USO FINAL SE IBA REVISANDO EL RESULTADO FINAL HASTA LOGRAR EL EFECTO DESEADO.
+6. LIMITACIONES: DEBIDO A LIMITACIONES DE INFRAESTRUCTURA NO SE DESPLEGO DE FORMA COMPLETA SI NO MUCHOSDE LOS RECURSOS SON EMULACIONES DE UNA POTENCIAL PLATAFORMA DE RECURSOS DISEÑADOS.
+ 

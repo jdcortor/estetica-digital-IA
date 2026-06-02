@@ -13,17 +13,22 @@
     
     <style>
         :root {
-            --bg-dark: #121214;
-            --panel-bg: #1e1e22;
-            --header-dark: #222121;
+            --bg-dark: #0f0f12;
+            --panel-bg: rgba(30, 30, 35, 0.6);
+            --header-dark: #16161a;
             --accent-teal: #3cb49e;
             --accent-teal-hover: #2d9e88;
             --text-white: #ffffff;
             --text-muted: #a0a0ab;
-            --border-color: #3f3f46;
-            --border-light: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.08);
             --font-main: 'Montserrat', sans-serif;
             --font-labels: 'Nunito', sans-serif;
+            
+            /* Colores de las Fases */
+            --fase1-purple: #6c53a3;
+            --fase2-pink: #f4629e;
+            --fase3-blue: #30a0e0;
+            --fase4-teal: #3cb49e;
             
             --success-color: #10b981;
         }
@@ -42,6 +47,9 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 83, 163, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(60, 180, 158, 0.08) 0%, transparent 40%);
         }
 
         /* --- BARRA SUPERIOR (TOP BAR) --- */
@@ -85,10 +93,10 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
             padding: 8px 16px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -101,38 +109,28 @@
 
         /* --- MAIN LAYOUT --- */
         .container {
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px 50px 20px;
             flex-grow: 1;
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 30px;
-            align-items: start;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* --- CARDS & PANELS --- */
-        .glass-card {
+        /* --- PANEL DE ESTRUCTURA (TEORÍA) --- */
+        .structure-panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             position: relative;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
         }
 
-        .glass-card::before {
+        .structure-panel::before {
             content: '';
             position: absolute;
             top: 0;
@@ -142,9 +140,13 @@
             background: linear-gradient(90deg, var(--accent-teal), transparent);
         }
 
+        .section-header {
+            margin-bottom: 20px;
+        }
+
         .section-title {
             font-family: var(--font-labels);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
             color: var(--accent-teal);
             text-transform: uppercase;
@@ -152,6 +154,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 8px;
         }
 
         .section-desc {
@@ -160,168 +163,428 @@
             color: var(--text-muted);
         }
 
-        /* --- BUILDER FORM --- */
-        .builder-form {
-            display: flex;
-            flex-direction: column;
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
+            margin-top: 15px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        @media (max-width: 900px) {
+            .framework-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .framework-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .form-group label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--accent-teal);
-        }
-
-        .form-control {
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            color: #ffffff;
-            font-family: var(--font-main);
-            font-size: 13.5px;
-            padding: 10px 14px;
-            outline: none;
+        .framework-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
             transition: all 0.3s ease;
         }
 
-        .form-control:focus {
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 8px rgba(60, 180, 158, 0.2);
+        .framework-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(60, 180, 158, 0.2);
+            transform: translateY(-2px);
         }
 
-        textarea.form-control {
-            resize: vertical;
-            min-height: 70px;
-        }
-
-        /* --- PREVIEW BOX --- */
-        .preview-box {
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1.5px dashed var(--accent-teal);
-            border-radius: 12px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .preview-title {
+        .framework-num {
             font-family: var(--font-labels);
-            font-size: 12px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 900;
             color: var(--accent-teal);
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             letter-spacing: 1px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
 
-        .preview-content {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #e4e4e7;
-            white-space: pre-wrap;
-            max-height: 350px;
-            overflow-y: auto;
-            background: #121214;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+        .framework-num i {
+            font-size: 12px;
         }
 
-        .btn {
-            padding: 12px 20px;
-            font-family: var(--font-labels);
-            font-weight: 800;
+        .framework-title {
             font-size: 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
         }
 
-        .btn-primary {
-            background-color: var(--accent-teal);
-            color: #121214;
-            box-shadow: 0 4px 15px rgba(60, 180, 158, 0.25);
+        .framework-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
-        .btn-primary:hover {
-            background-color: var(--accent-teal-hover);
-            transform: translateY(-1px);
-        }
-
-        /* --- RIGHT COLUMN: EXAMPLES --- */
-        .examples-sidebar {
+        /* --- MOSAICO GRID (PRACTICA) --- */
+        .mosaic-section {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        .example-tab {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.25s ease;
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .mosaic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .mosaic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- MOSAICO TILE (CARD) --- */
+        .tile-card {
+            background-color: var(--panel-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            padding: 22px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .example-tab:hover {
-            background: rgba(60, 180, 158, 0.03);
-            border-color: rgba(60, 180, 158, 0.3);
-            transform: translateX(3px);
+        .tile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--card-accent);
+            transition: width 0.3s ease;
         }
 
-        .example-tab.active {
-            border-color: var(--accent-teal);
-            background: rgba(60, 180, 158, 0.05);
+        .tile-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--card-accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--card-accent-alpha);
         }
 
-        .example-header {
+        .tile-card:hover::before {
+            width: 8px;
+        }
+
+        .tile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            margin-bottom: 12px;
+            padding-left: 5px;
+        }
+
+        .phase-badge {
+            font-family: var(--font-labels);
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            background-color: var(--card-accent-alpha);
+            color: var(--card-accent-light);
+            border: 1.5px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tile-icon {
+            font-size: 22px;
+            color: var(--card-accent);
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        .tile-card:hover .tile-icon {
+            transform: scale(1.15) rotate(5deg);
+            opacity: 1;
+        }
+
+        .tile-body {
+            padding-left: 5px;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tile-title {
+            font-family: var(--font-labels);
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.35;
+            margin-bottom: 6px;
+        }
+
+        .tile-subtitle {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .tile-footer {
+            padding-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--card-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile-card:hover .tile-footer {
+            opacity: 1;
+        }
+
+        /* --- MODAL OVERLAY --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background-color: #16161a;
+            border: 2.5px solid var(--modal-accent);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 850px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px var(--modal-accent-alpha);
+            position: relative;
+            transform: scale(0.92);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1.5px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            background-color: rgba(255, 255, 255, 0.01);
         }
 
-        .example-title {
+        .modal-header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .modal-header-title {
             font-family: var(--font-labels);
-            font-size: 15px;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 900;
             color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .example-badge {
-            background-color: rgba(60, 180, 158, 0.2);
-            color: var(--accent-teal);
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+        .modal-header-title i {
+            color: var(--modal-accent);
         }
 
-        .example-desc {
-            font-size: 12.5px;
+        .modal-close-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
             color: var(--text-muted);
-            line-height: 1.5;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Custom Scrollbar for Modal */
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: var(--modal-accent);
+        }
+
+        /* --- DETALLES DE DECLARACIÓN POR PUNTOS --- */
+        .aid-details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .aid-detail-item {
+            display: flex;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1.5px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 18px 22px;
+            transition: background-color 0.2s ease;
+        }
+
+        .aid-detail-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-color);
+        }
+
+        .aid-detail-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background-color: var(--modal-accent-alpha);
+            color: var(--modal-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .aid-detail-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .aid-detail-label {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--modal-accent);
+            letter-spacing: 0.8px;
+        }
+
+        .aid-detail-value {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: #e4e4e7;
+        }
+
+        .aid-detail-value.prompt-block {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            white-space: pre-wrap;
+            font-size: 12.5px;
+            color: #dcdcdc;
+            margin-top: 4px;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1.5px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-btn-copy {
+            background-color: var(--modal-accent);
+            color: #121214;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-labels);
+            font-weight: 900;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--modal-accent-alpha);
+        }
+
+        .modal-btn-copy:hover {
+            background-color: var(--modal-accent-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--modal-accent-alpha);
         }
 
         /* Toast notification */
@@ -337,7 +600,7 @@
             font-family: var(--font-labels);
             font-weight: 800;
             font-size: 14px;
-            z-index: 1000;
+            z-index: 2000;
             box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
             display: flex;
             align-items: center;
@@ -366,102 +629,277 @@
     <!-- MAIN GRID CONTAINER -->
     <div class="container">
         
-        <!-- LEFT COLUMN: BUILDER -->
-        <div class="glass-card">
-            <h2 class="section-title">
-                <i class="fa-solid fa-gears"></i> Generador de Declaración (AID Framework)
-            </h2>
-            <p class="section-desc">
-                Completa los siguientes campos estructurados para dar transparencia y declarar cómo has utilizado la IA generativa en la co-creación de tus recursos o en la redacción de tus bitácoras.
-            </p>
-
-            <div class="builder-form">
-                <div class="form-group">
-                    <label for="f-tool">1. Herramienta utilizada</label>
-                    <input type="text" id="f-tool" class="form-control" placeholder="Ej. ChatGPT (GPT-4), Claude 3.5 Sonnet, Midjourney v6..." oninput="updateDisclosure()">
-                </div>
-
-                <div class="form-group">
-                    <label for="f-purpose">2. Propósito del uso</label>
-                    <textarea id="f-purpose" class="form-control" placeholder="Ej. Generar ideas de diseño, corregir gramática, traducción de prompts, estructurar la bitácora..." oninput="updateDisclosure()"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="f-prompts">3. Prompts o instrucciones proporcionadas</label>
-                    <textarea id="f-prompts" class="form-control" placeholder="Ej. 'Crea un esquema de presentación para...', 'Corrige el estilo y ortografía de este párrafo...'" oninput="updateDisclosure()"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="f-usage">4. Uso del contenido generado</label>
-                    <textarea id="f-usage" class="form-control" placeholder="Ej. Utilizado directamente, adaptado parcialmente por el autor, usado de referencia conceptual..." oninput="updateDisclosure()"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="f-review">5. Revisión y edición</label>
-                    <textarea id="f-review" class="form-control" placeholder="Ej. Se verificó la veracidad de la información, se reescribió de manera crítica para encajar los objetivos..." oninput="updateDisclosure()"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="f-ethics">6. Limitaciones y consideraciones éticas</label>
-                    <textarea id="f-ethics" class="form-control" placeholder="Ej. No se generó material fraudulento ni ideas ajenas a mi criterio. Asumo la responsabilidad total..." oninput="updateDisclosure()"></textarea>
-                </div>
+        <!-- PANEL DE ESTRUCTURA (TEORÍA) -->
+        <div class="structure-panel">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-graduation-cap"></i> El Marco de Declaración (AID Framework)
+                </h2>
+                <p class="section-desc">
+                    La <strong>ACRL (Association of College and Research Libraries)</strong> propone el <em>Artificial Intelligence Disclosure (AID) Framework</em>. Se trata de un estándar ético y de honestidad intelectual estructurado en **6 apartados específicos**. Sirve para documentar de forma clara cómo y con qué propósito se integraron modelos procedurales y generativos en la elaboración de un proyecto creativo o académico.
+                </p>
             </div>
 
-            <!-- LIVE PREVIEW -->
-            <div class="preview-box">
-                <div class="preview-title">
-                    <span>Declaración Generada (Copiar al final de tu proyecto)</span>
-                    <i class="fa-solid fa-eye"></i>
+            <div class="framework-grid">
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-robot"></i> 1. Herramienta</div>
+                    <div class="framework-title">Identificación del Modelo</div>
+                    <div class="framework-text">Indicar el nombre del motor y su versión (ej. ChatGPT GPT-4, Claude 3.5 Sonnet, Midjourney v6).</div>
                 </div>
-                <div class="preview-content" id="output-text">Completa los campos de arriba para compilar tu declaración.</div>
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-bullseye"></i> 2. Propósito</div>
+                    <div class="framework-title">Intención de Uso</div>
+                    <div class="framework-text">Explicar la tarea para la cual se requirió (lluvia de ideas, codificación, depuración, traducción).</div>
+                </div>
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-terminal"></i> 3. Prompts</div>
+                    <div class="framework-title">Comandos e Instrucciones</div>
+                    <div class="framework-text">Mostrar las instrucciones o diálogos exactos ingresados para guiar el resultado de la IA.</div>
+                </div>
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-file-code"></i> 4. Integración</div>
+                    <div class="framework-title">Uso del Contenido</div>
+                    <div class="framework-text">Detallar si el código/texto generado se usó directamente, se modificó o sirvió de referencia.</div>
+                </div>
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-signature"></i> 5. Curaduría</div>
+                    <div class="framework-title">Revisión y Edición</div>
+                    <div class="framework-text">Explicar el proceso crítico de revisión humana, comprobando datos y adaptando el producto final.</div>
+                </div>
+                <div class="framework-item">
+                    <div class="framework-num"><i class="fa-solid fa-shield-halved"></i> 6. Ética</div>
+                    <div class="framework-title">Limitaciones y Honestidad</div>
+                    <div class="framework-text">Declarar los límites del uso para asegurar la transparencia, originalidad y autoría del estudiante.</div>
+                </div>
             </div>
-
-            <button class="btn btn-primary" onclick="copyToClipboard()">
-                <i class="fa-solid fa-copy"></i> Copiar Declaración al Portafolio
-            </button>
         </div>
 
-        <!-- RIGHT COLUMN: EXAMPLES -->
-        <div class="examples-sidebar">
-            <h2 class="section-title" style="font-size: 18px;">
-                <i class="fa-solid fa-lightbulb"></i> Ejemplos de Referencia
+        <!-- MOSAICO GRID (PRÁCTICA) -->
+        <div class="mosaic-section">
+            <h2 class="section-title" style="font-size: 20px;">
+                <i class="fa-solid fa-cubes"></i> Mosaico de Uso de IA en el Proyecto
             </h2>
-            <p class="section-desc">
-                Selecciona uno de los siguientes casos de uso recomendados para cargar la plantilla y guiarte en tu redacción.
+            <p class="section-desc" style="margin-top: -10px; margin-bottom: 10px;">
+                Haz clic sobre cualquiera de los **8 recursos del portafolio** para desplegar el cuadro estructurado del AID Framework de ese recurso, explicando en detalle las herramientas empleadas, los prompts de desarrollo y la justificación metodológica.
             </p>
 
-            <!-- Example 1 -->
-            <div class="example-tab" onclick="loadExample(1)">
-                <div class="example-header">
-                    <span class="example-title">Caso 1: Corrección Estética</span>
-                    <span class="example-badge">Básico</span>
+            <div class="mosaic-grid">
+                
+                <!-- Tarjeta 1: Cápsula Introductoria -->
+                <div class="tile-card" onclick="openDetails(1)" 
+                     style="--card-accent: var(--fase1-purple); --card-accent-alpha: rgba(108, 83, 163, 0.15); --card-accent-light: #c4b5fd;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 1: Inmersión</span>
+                        <i class="fa-solid fa-compass tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Cápsula Introductoria</h3>
+                        <p class="tile-subtitle">Presentación adaptativa del portafolio de Estética y los objetivos instruccionales.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
                 </div>
-                <p class="example-desc">
-                    Uso enfocado exclusivamente a la corrección ortográfica, gramatical y mejora del estilo de redacción de los textos.
-                </p>
+
+                <!-- Tarjeta 2: Museo Digital -->
+                <div class="tile-card" onclick="openDetails(2)" 
+                     style="--card-accent: var(--fase1-purple); --card-accent-alpha: rgba(108, 83, 163, 0.15); --card-accent-light: #c4b5fd;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 1: Inmersión</span>
+                        <i class="fa-solid fa-images tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Museo Digital</h3>
+                        <p class="tile-subtitle">Galería virtual expositiva de los referentes técnicos y artísticos de los estudiantes.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Técnicas de Estética -->
+                <div class="tile-card" onclick="openDetails(3)" 
+                     style="--card-accent: var(--fase1-purple); --card-accent-alpha: rgba(108, 83, 163, 0.15); --card-accent-light: #c4b5fd;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 1: Inmersión</span>
+                        <i class="fa-solid fa-palette tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Técnicas de Estética</h3>
+                        <p class="tile-subtitle">Video e infografía explicativa sobre Composición, Maquetado, Diario Ilustrado y Crochet.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4: Abanico de IAs -->
+                <div class="tile-card" onclick="openDetails(4)" 
+                     style="--card-accent: var(--fase2-pink); --card-accent-alpha: rgba(244, 98, 158, 0.15); --card-accent-light: #fbcfe8;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 2: Apropiación</span>
+                        <i class="fa-solid fa-table-cells-large tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Abanico de IAs</h3>
+                        <p class="tile-subtitle">Tabla periódica interactiva de 53 herramientas clasificadas por técnicas y semáforo ético.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 5: Plataforma de Capacitación -->
+                <div class="tile-card" onclick="openDetails(5)" 
+                     style="--card-accent: var(--fase2-pink); --card-accent-alpha: rgba(244, 98, 158, 0.15); --card-accent-light: #fbcfe8;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 2: Apropiación</span>
+                        <i class="fa-solid fa-laptop-code tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Plataforma de Capacitación</h3>
+                        <p class="tile-subtitle">Simulador modular de lecciones y autoaprendizaje de los conceptos procedimentales.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 6: Agente DaVinci -->
+                <div class="tile-card" onclick="openDetails(6)" 
+                     style="--card-accent: var(--fase3-blue); --card-accent-alpha: rgba(48, 160, 224, 0.15); --card-accent-light: #bae6fd;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 3: Construcción</span>
+                        <i class="fa-solid fa-comment-nodes tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Agente DaVinci</h3>
+                        <p class="tile-subtitle">Tutor conversacional reflexivo en IA para la guía estética de los prototipos artísticos.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 7: Bitácora Digital -->
+                <div class="tile-card" onclick="openDetails(7)" 
+                     style="--card-accent: var(--fase3-blue); --card-accent-alpha: rgba(48, 160, 224, 0.15); --card-accent-light: #bae6fd;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 3: Construcción</span>
+                        <i class="fa-solid fa-book-open tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Bitácora Digital</h3>
+                        <p class="tile-subtitle">Diario de campo dinámico con medidor de nivel de agencia del estudiante en tiempo real.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 8: Evaluación Ética -->
+                <div class="tile-card" onclick="openDetails(8)" 
+                     style="--card-accent: var(--fase4-teal); --card-accent-alpha: rgba(60, 180, 158, 0.15); --card-accent-light: #4ac9b5;">
+                    <div class="tile-header">
+                        <span class="phase-badge">Fase 4: Evaluación</span>
+                        <i class="fa-solid fa-shield-heart tile-icon"></i>
+                    </div>
+                    <div class="tile-body">
+                        <h3 class="tile-title">Evaluación Ética</h3>
+                        <p class="tile-subtitle">Acuerdo de Honestidad, Rúbrica Integradora y Video Reflexión sobre el Plagio.</p>
+                    </div>
+                    <div class="tile-footer">
+                        Ver Detalles <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DETAILS MODAL -->
+    <div id="details-modal" class="modal-overlay" onclick="closeOnOverlay(event)">
+        <div class="modal-card" id="modal-card">
+            
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <span class="phase-badge" id="modal-badge">Fase</span>
+                    <h2 class="modal-header-title" id="modal-title">
+                        <i class="fa-solid fa-cube"></i> Título del Recurso
+                    </h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <!-- Example 2 -->
-            <div class="example-tab" onclick="loadExample(2)">
-                <div class="example-header">
-                    <span class="example-title">Caso 2: Co-Creación de Idea</span>
-                    <span class="example-badge">Avanzado</span>
+            <div class="modal-body">
+                <div class="aid-details-list">
+                    
+                    <!-- 1. Herramienta -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-robot"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">1. Herramienta utilizada</span>
+                            <span class="aid-detail-value" id="detail-tool">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Propósito -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-bullseye"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">2. Propósito del uso</span>
+                            <span class="aid-detail-value" id="detail-purpose">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Prompts -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-terminal"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">3. Prompts o instrucciones proporcionadas</span>
+                            <div class="aid-detail-value prompt-block" id="detail-prompts">Cargando...</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Integración -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-file-code"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">4. Uso del contenido generado</span>
+                            <span class="aid-detail-value" id="detail-usage">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. Curaduría -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-signature"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">5. Revisión y edición (Curaduría Humana)</span>
+                            <span class="aid-detail-value" id="detail-review">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. Ética -->
+                    <div class="aid-detail-item">
+                        <div class="aid-detail-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="aid-detail-content">
+                            <span class="aid-detail-label">6. Limitaciones y consideraciones éticas</span>
+                            <span class="aid-detail-value" id="detail-ethics">Cargando...</span>
+                        </div>
+                    </div>
+
                 </div>
-                <p class="example-desc">
-                    Uso interactivo con IA para lluvia de ideas inicial, conceptualización y esquematización de los recursos artísticos.
-                </p>
             </div>
 
-            <!-- Example 3 -->
-            <div class="example-tab" onclick="loadExample(3)">
-                <div class="example-header">
-                    <span class="example-title">Caso 3: Apoyo en Redacción</span>
-                    <span class="example-badge">Avanzado</span>
-                </div>
-                <p class="example-desc">
-                    Uso para el diseño de prompts instruccionales y redacción de borradores académicos y de reflexión de estética en inglés.
-                </p>
+            <div class="modal-footer">
+                <span style="font-size: 11px; color: var(--text-muted);">Ecosistema de Portafolios de Arte · Colegio Danilo Cifuentes</span>
+                <button class="modal-btn-copy" onclick="copyModalToClipboard()">
+                    <i class="fa-solid fa-copy"></i> Copiar Declaración (AID)
+                </button>
             </div>
+
         </div>
     </div>
 
@@ -470,98 +908,184 @@
         <i class="fa-solid fa-circle-check"></i> ¡Copiado con éxito en el portapapeles!
     </div>
 
+    <!-- DATASET & LOGIC -->
     <script>
-        // Predefined examples from Uso declaración IA.txt
-        const examples = {
+        // Dataset of the 8 resources and their corresponding AID disclosure details
+        const resourceDisclosures = {
             1: {
-                tool: "Grammarly",
-                purpose: "Se empleó para la corrección ortográfica y gramatical del texto antes de su entrega final en la bitácora.",
-                prompts: "El documento completo fue cargado en la plataforma y se aplicaron las sugerencias automáticas de mejora de claridad.",
-                usage: "Se aceptaron sugerencias automáticas relacionadas con puntuación, ortografía y reformulación de frases por claridad.",
-                review: "Todas las sugerencias gramaticales fueron revisadas manualmente una a una antes de ser aplicadas al documento final.",
-                ethics: "No se utilizó la herramienta para generar contenido nuevo, ideas externas ni para alterar el significado original de mis reflexiones."
+                title: "Cápsula Introductoria",
+                phase: "Fase 1: Inmersión",
+                accent: "var(--fase1-purple)",
+                accentAlpha: "rgba(108, 83, 163, 0.15)",
+                tool: "ChatGPT (versión GPT-4, OpenAI) y Antigravity",
+                purpose: "Apoyo en el diseño instruccional, redacción estructurada de objetivos del portafolio y andamiaje del diseño de interfaz.",
+                prompts: "“Actúa como diseñador tecnopedagógico. Genera la estructura de presentación para el portafolio de Estética de grado 11, detallando los objetivos de las cuatro fases del modelo ADDIE de manera que resulte motivadora para estudiantes de secundaria.”",
+                usage: "El guion instruccional y los esquemas textuales propuestos por la IA se adoptaron como base de referencia. El código de la página fue desarrollado y ajustado de forma iterativa por el equipo.",
+                review: "Se verificó la claridad de la redacción y se adaptaron los textos para que encajaran perfectamente en los cuadros informativos del portal.",
+                ethics: "El uso de la herramienta se acotó a la ideación inicial del diseño. La autoría sobre los objetivos pedagógicos de la unidad pertenece exclusivamente a los investigadores del curso."
             },
             2: {
-                tool: "ChatGPT (versión GPT-4, OpenAI)",
-                purpose: "Se utilizó para generar ideas iniciales, estructurar el esquema del trabajo de Estética y redactar un borrador preliminar del apartado introductorio de portafolio.",
-                prompts: "“Resume en 300 palabras el concepto de ciudadanía digital para estudiantes de secundaria.”\n“Proporciona una estructura para un ensayo académico sobre alfabetización informacional.”",
-                usage: "El contenido y la estructura propuestos por la IA fueron utilizados como punto de partida. La redacción final fue elaborada, expandida y reescrita en su totalidad por el autor, manteniendo solo algunas frases clave de la versión generada.",
-                review: "Todo el contenido generado por la IA fue revisado críticamente, contrastado con las fuentes académicas del curso y reescrito para adecuarlo a los objetivos prácticos del aula taller.",
-                ethics: "Se evitó el uso automático o literal del contenido de la IA sin previa revisión de coherencia. Se asume la responsabilidad plena sobre la autoría y la veracidad de los contenidos presentados."
+                title: "Museo Digital",
+                phase: "Fase 1: Inmersión",
+                accent: "var(--fase1-purple)",
+                accentAlpha: "rgba(108, 83, 163, 0.15)",
+                tool: "NotebookLM (Google), iaCanva y ChatGPT",
+                purpose: "Generación de ideas para la curaduría virtual, bosquejo de la narrativa del recorrido y redacción de descripciones para las salas de las técnicas artísticas.",
+                prompts: "“Genera una descripción literaria para una sala de exposición virtual dedicada a la técnica de composición y tipografía, resaltando el valor de la tipografía como forma artística.”",
+                usage: "Las descripciones textuales y guiones propuestos por la IA sirvieron como plantilla y punto de partida, integrándolas al código HTML de la interfaz.",
+                review: "El contenido fue corregido, depurado y editado minuciosamente por los desarrolladores para asegurar coherencia con las obras analógicas descritas y las fotos cargadas.",
+                ethics: "Las producciones artísticas y bocetos mostrados corresponden íntegramente a trabajos reales de los alumnos del Colegio Danilo Cifuentes; la IA solo facilitó la redacción del texto introductorio."
             },
             3: {
-                tool: "ChatGPT (GPT-4, OpenAI)",
-                purpose: "La herramienta se utilizó como apoyo en la redacción preliminar de algunos fragmentos del apartado metodológico, así como para reformular ciertos pasajes del texto con el fin de mejorar la claridad expresiva en inglés académico.",
-                prompts: "“Reformulate this paragraph in academic English, suitable for a peer-reviewed article in social sciences.”\n“Generate a draft description of qualitative content analysis based on Mayring’s approach.”\n“What are typical ethical considerations in ethnographic research on family structures?”",
-                usage: "Algunas frases y formulaciones sugeridas por la herramienta fueron adaptadas y reformuladas por el autor, integrándose en secciones específicas del manuscrito. Ningún contenido fue incluido de forma literal sin revisión.",
-                review: "Todo el material generado fue verificado por el autor, contrastado con la bibliografía citada y revisado para asegurar precisión conceptual y coherencia con el marco teórico del estudio.",
-                ethics: "La herramienta no fue utilizada para generar resultados de investigación, análisis de datos ni redacción de conclusiones. Se tuvo especial cuidado en evitar cualquier forma de plagio o dependencia acrítica del contenido generado. La responsabilidad de la autoría y del contenido final recae exclusivamente en el firmante."
+                title: "Técnicas de Estética",
+                phase: "Fase 1: Inmersión",
+                accent: "var(--fase1-purple)",
+                accentAlpha: "rgba(108, 83, 163, 0.15)",
+                tool: "NotebookLM (Google) y ChatGPT",
+                purpose: "Creación del guion narrativo-pedagógico del video introductorio de técnicas y conversión a formato de audio interactivo (podcast educativo).",
+                prompts: "“Actúa como un experto en Pedagogía de las Artes y Diseño Instruccional. Objetivo: Diseñar un guion narrativo y técnico para un video educativo de 5 a 10 minutos dirigido a estudiantes de grado 11 del Colegio Danilo Cifuentes. Explicar cómo la Inteligencia Artificial actúa como un apoyo en la fase de análisis visual, planificación y bocetación, permitiendo al estudiante mantener su autonomía creativa...”",
+                usage: "El guion técnico sugerido se empleó directamente para la generación de la pista de voz con IA (conversión de texto a audio), la cual fue añadida a la presentación audiovisual final.",
+                review: "Se validaron los diálogos y se contrastó la información con el programa curricular del aula taller de Estética antes de proceder a compilar la animación.",
+                ethics: "El video se generó a partir de una estructura recopilada y redactada previamente por los docentes. La IA actuó como herramienta de asistencia técnica multimedia."
+            },
+            4: {
+                title: "Abanico de IAs",
+                phase: "Fase 2: Apropiación",
+                accent: "var(--fase2-pink)",
+                accentAlpha: "rgba(244, 98, 158, 0.15)",
+                tool: "ChatGPT (GPT-4) y Claude 3.5 Sonnet (Anthropic)",
+                purpose: "Lluvia de ideas conceptual, clasificación de 53 herramientas de IA en base a funciones (texto, imagen, audio, video) y programación de la interfaz interactiva.",
+                prompts: "“Actúa como diseñador pedagógico, experto en IA educativa y desarrollador front-end. y crea un recurso interactivo en HTML, CSS y JavaScript titulado ‘Abanico Digital de IAs para Estética’, dirigido a estudiantes de grado 11. El recurso debe organizar herramientas de inteligencia artificial por categorías, incluir filtros por técnica, enlaces reales a cada IA, un panel de detalle con función pedagógica, técnicas que apoya, uso permitido y advertencia ética...”",
+                usage: "ChatGPT generó el prompt de sistema y la clasificación de herramientas. Claude desarrolló la lógica de código (JS/CSS) de la tabla interactiva y filtros en múltiples iteraciones.",
+                review: "Se realizó una curaduría manual exhaustiva de cada una de las 53 fichas de herramientas de IA, comprobando sus enlaces activos, nivel de autorización y advertencias éticas de uso.",
+                ethics: "El abanico se diseñó de manera transparente para que los alumnos entiendan que el uso de IA debe ser crítico y autorregulado, delimitado a través de un semáforo ético."
+            },
+            5: {
+                title: "Plataforma de Capacitación",
+                phase: "Fase 2: Apropiación",
+                accent: "var(--fase2-pink)",
+                accentAlpha: "rgba(244, 98, 158, 0.15)",
+                tool: "Antigravity (motor de código) y ChatGPT",
+                purpose: "Programación del portal adaptativo offline de autoaprendizaje, flujo de las lecciones modulares y emulación de las pruebas del estudiante.",
+                prompts: "“Diseña una interfaz web modular para una plataforma de autoaprendizaje con temas específicos de Composición, Maquetado, Diario Ilustrado y Crochet, que permita simular respuestas de retroalimentación.”",
+                usage: "El código de diseño (HTML y CSS) y la lógica de avance por pestañas fueron generados por IA y refinados en el entorno de desarrollo.",
+                review: "Se probó el almacenamiento en `localStorage` de manera manual para asegurar que los progresos simulados y retroalimentaciones operen sin depender de un servidor externo.",
+                ethics: "Dado que el entorno escolar real cuenta con limitaciones de red, el recurso funciona localmente mediante emulaciones para garantizar equidad en el aprendizaje."
+            },
+            6: {
+                title: "Agente DaVinci",
+                phase: "Fase 3: Construcción",
+                accent: "var(--fase3-blue)",
+                accentAlpha: "rgba(48, 160, 224, 0.15)",
+                tool: "ChatGPT (GPT-4) y Antigravity",
+                purpose: "Diseño instruccional y calibración del prompt de sistema (rol del chatbot) y codificación del componente de chat dinámico en tiempo real.",
+                prompts: "“Tu nombre es DaVinci. Actúa como asesor estético. Acompaña a estudiantes de grado 11 a retroalimentar sus prototipos artísticos de dibujo/maquetado/crochet. No decidas por ellos. Plantea preguntas reflexivas. Estructura tu respuesta en: 1) Reconocimiento, 2) Fortalezas, 3) Ajustes sugeridos y 4) Preguntas orientadoras.”",
+                usage: "El prompt del sistema fue incorporado en el script del chatbot web. La IA estructuró la maquetación visual del flujo de chats en la interfaz del estudiante.",
+                review: "Se ensayaron diferentes consultas de estudiantes para garantizar que el tutor guíe mediante preguntas detonantes y evite escribir o sugerir obras finales de manera acrítica.",
+                ethics: "El chatbot tiene límites definidos para preservar el rol protagónico y la toma de decisiones estéticas autónomas por parte de los estudiantes."
+            },
+            7: {
+                title: "Bitácora Digital",
+                phase: "Fase 3: Construcción",
+                accent: "var(--fase3-blue)",
+                accentAlpha: "rgba(48, 160, 224, 0.15)",
+                tool: "Antigravity (motor de código)",
+                purpose: "Estructuración de la base de datos de entradas en localstorage y programación del algoritmo del indicador de nivel de agencia en tiempo real.",
+                prompts: "“Escribe una función de JavaScript que calcule el nivel de agencia del estudiante (de 0 a 100) analizando la longitud del texto y la presencia de términos reflexivos en los campos de justificación y ética.”",
+                usage: "Se implementó el código JS sugerido para procesar en vivo los caracteres digitados por el alumno en los campos de 'Comparación', 'Justificación' y 'Honestidad'.",
+                review: "Se ajustaron manualmente las ponderaciones del algoritmo para incentivar una redacción reflexiva, analítica y crítica por parte de los estudiantes.",
+                ethics: "El medidor de agencia busca penalizar la copia simple sin justificación, fomentando que los estudiantes asuman un papel de curadores de sus prompts de IA."
+            },
+            8: {
+                title: "Evaluación Ética",
+                phase: "Fase 4: Evaluación",
+                accent: "var(--fase4-teal)",
+                accentAlpha: "rgba(60, 180, 158, 0.15)",
+                tool: "NotebookLM, iaCanva y ChatGPT",
+                purpose: "Redacción del Compromiso Ético de co-creación, guion del video sobre dilemas y plagio con IA, y matriz de la rúbrica interactiva.",
+                prompts: "“Genera un texto formal para un acuerdo ético de grado undécimo sobre el uso de tecnologías generativas que incluya compromisos contra el plagio automático y la suplantación de autoría.”",
+                usage: "Los contenidos propuestos por la IA se integraron de forma directa en el texto oficial del acuerdo, la rúbrica interactiva y la secuencia de video explicativo.",
+                review: "El texto final fue ajustado para adaptarlo a la normativa académica institucional y estructurado en una cuadrícula CSS responsiva con firma de lienzo.",
+                ethics: "La rúbrica integral mide directamente la autonomía e iteración reflexiva del alumno, permitiendo verificar si la IA fue un apoyo o un suplantador creativo."
             }
         };
 
-        // Initialize with case 1 on load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadExample(1);
-        });
+        let currentActiveId = null;
 
-        function loadExample(id) {
-            // Remove active classes
-            const tabs = document.querySelectorAll('.example-tab');
-            tabs.forEach((tab, index) => {
-                if (index === (id - 1)) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
+        // Open modal and populate details
+        function openDetails(id) {
+            const data = resourceDisclosures[id];
+            if (!data) return;
 
-            // Set inputs
-            const ex = examples[id];
-            document.getElementById('f-tool').value = ex.tool;
-            document.getElementById('f-purpose').value = ex.purpose;
-            document.getElementById('f-prompts').value = ex.prompts;
-            document.getElementById('f-usage').value = ex.usage;
-            document.getElementById('f-review').value = ex.review;
-            document.getElementById('f-ethics').value = ex.ethics;
+            currentActiveId = id;
 
-            updateDisclosure();
+            // Set content
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-cube"></i> ${data.title}`;
+            
+            const badge = document.getElementById('modal-badge');
+            badge.innerText = data.phase;
+            
+            // Set styles dynamically based on the phase color
+            badge.style.backgroundColor = data.accentAlpha;
+            badge.style.color = data.accent;
+            badge.style.borderColor = `rgba(255, 255, 255, 0.05)`;
+            
+            document.getElementById('modal-card').style.setProperty('--modal-accent', data.accent);
+            document.getElementById('modal-card').style.setProperty('--modal-accent-alpha', data.accentAlpha);
+            
+            // Populate AID items
+            document.getElementById('detail-tool').innerText = data.tool;
+            document.getElementById('detail-purpose').innerText = data.purpose;
+            document.getElementById('detail-prompts').innerText = data.prompts;
+            document.getElementById('detail-usage').innerText = data.usage;
+            document.getElementById('detail-review').innerText = data.review;
+            document.getElementById('detail-ethics').innerText = data.ethics;
+
+            // Open overlay
+            document.getElementById('details-modal').classList.add('active');
         }
 
-        // Live compile the ACRL AID text format
-        function updateDisclosure() {
-            const tool = document.getElementById('f-tool').value.trim() || '---';
-            const purpose = document.getElementById('f-purpose').value.trim() || '---';
-            const prompts = document.getElementById('f-prompts').value.trim() || '---';
-            const usage = document.getElementById('f-usage').value.trim() || '---';
-            const review = document.getElementById('f-review').value.trim() || '---';
-            const ethics = document.getElementById('f-ethics').value.trim() || '---';
+        // Close modal
+        function closeModal() {
+            document.getElementById('details-modal').classList.remove('active');
+            currentActiveId = null;
+        }
 
-            const formattedText = `DECLARACIÓN DE USO DE HERRAMIENTAS DE INTELIGENCIA ARTIFICIAL (AID Framework)
+        // Close on clicking outside
+        function closeOnOverlay(e) {
+            if (e.target.id === 'details-modal') {
+                closeModal();
+            }
+        }
+
+        // Compile and copy the exact AID framework markdown to the clipboard
+        function copyModalToClipboard() {
+            if (!currentActiveId) return;
+            const data = resourceDisclosures[currentActiveId];
+            if (!data) return;
+
+            const textToCopy = `DECLARACIÓN DE USO DE INTELIGENCIA ARTIFICIAL (AID Framework)
+Recurso: ${data.title}
+Fase: ${data.phase}
 
 1. Herramienta utilizada:
-${tool}
+${data.tool}
 
 2. Propósito del uso:
-${purpose}
+${data.purpose}
 
 3. Prompts o instrucciones proporcionadas:
-${prompts}
+${data.prompts}
 
 4. Uso del contenido generado:
-${usage}
+${data.usage}
 
-5. Revisión y edición:
-${review}
+5. Revisión y edición (Curaduría Humana):
+${data.review}
 
 6. Limitaciones y consideraciones éticas:
-${ethics}`;
+${data.ethics}`;
 
-            document.getElementById('output-text').textContent = formattedText;
-        }
-
-        // Copy compiled disclosure text
-        function copyToClipboard() {
-            const textToCopy = document.getElementById('output-text').textContent;
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const toast = document.getElementById('copy-toast');
                 toast.classList.add('show');
