@@ -508,6 +508,46 @@
         .session-info strong {
             color: #ffffff;
         }
+
+        /* --- SELECTOR DE ESTUDIANTES --- */
+        .student-select-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .student-select-field label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--header-yellow);
+        }
+
+        .student-select-field select {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-main);
+            font-size: 13.5px;
+            padding: 10px 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .student-select-field select:focus {
+            border-color: var(--header-yellow);
+            box-shadow: 0 0 8px rgba(251, 208, 8, 0.25);
+        }
+
+        .student-select-field select option {
+            background-color: var(--panel-bg);
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -641,6 +681,14 @@
                 📊 Calculadora de IAP
             </div>
 
+            <!-- SELECCIONADOR DE ESTUDIANTE -->
+            <div class="student-select-field">
+                <label for="select-student">Estudiante a Evaluar</label>
+                <select id="select-student" onchange="handleStudentSelectChange()">
+                    <option value="">-- Modo Invitado --</option>
+                </select>
+            </div>
+
             <div class="score-display-container">
                 <div class="circular-gauge">
                     <svg>
@@ -690,6 +738,30 @@
 
     <!-- SCRIPTS LÓGICOS -->
     <script>
+        // Listado de 20 estudiantes predefinidos
+        const studentsList = [
+            { name: "Carlos Mendoza", code: "EST-11-001", technique: "composición y tipografía" },
+            { name: "Diana Albarracín", code: "EST-11-002", technique: "composición y tipografía" },
+            { name: "Andrés Felipe Celis", code: "EST-11-003", technique: "composición y tipografía" },
+            { name: "Sofía Valentina Duarte", code: "EST-11-004", technique: "composición y tipografía" },
+            { name: "Juan Esteban Galán", code: "EST-11-005", technique: "composición y tipografía" },
+            { name: "Camila Andrea Gómez", code: "EST-11-006", technique: "maquetado" },
+            { name: "Mateo Aristizábal", code: "EST-11-007", technique: "maquetado" },
+            { name: "Paula Valentina Herrera", code: "EST-11-008", technique: "maquetado" },
+            { name: "Diego Alejandro Ibáñez", code: "EST-11-009", technique: "maquetado" },
+            { name: "Sebastián Jaramillo", code: "EST-11-010", technique: "maquetado" },
+            { name: "Mariana Lozano", code: "EST-11-011", technique: "diario ilustrado" },
+            { name: "Nicolás Muñoz", code: "EST-11-012", technique: "diario ilustrado" },
+            { name: "Valentina Ortiz", code: "EST-11-013", technique: "diario ilustrado" },
+            { name: "Santiago Gómez", code: "EST-11-014", technique: "diario ilustrado" },
+            { name: "Laura Daniela Pineda", code: "EST-11-015", technique: "diario ilustrado" },
+            { name: "Juan David Marín", code: "EST-11-016", technique: "crochet" },
+            { name: "Gabriela Quiroga", code: "EST-11-017", technique: "crochet" },
+            { name: "Daniel Eduardo Rincón", code: "EST-11-018", technique: "crochet" },
+            { name: "Sara Melissa Tobón", code: "EST-11-019", technique: "crochet" },
+            { name: "Kevin Alexis Urrego", code: "EST-11-020", technique: "crochet" }
+        ];
+
         // --- VARIABLES DE EVALUACIÓN ---
         let scores = {
             inmersion: 0,
@@ -701,7 +773,18 @@
 
         // Cargar sesión del estudiante desde localStorage (de acuerdo_etico o bitacora_session)
         window.addEventListener('DOMContentLoaded', () => {
-            // Revisar acuerdo ético primero
+            // Poblar el selector de estudiantes
+            const selectEl = document.getElementById('select-student');
+            if (selectEl) {
+                studentsList.forEach(student => {
+                    const opt = document.createElement('option');
+                    opt.value = student.code;
+                    opt.textContent = `${student.name} (${student.code})`;
+                    selectEl.appendChild(opt);
+                });
+            }
+
+            // Revisar acuerdo ético primero o sesión de bitácora
             const pactSession = localStorage.getItem('estetica_ficha_responsable');
             const bitacoraSession = localStorage.getItem('bitacora_session');
             
@@ -711,26 +794,59 @@
                 activeStudent = JSON.parse(bitacoraSession);
             }
 
+            // Pre-seleccionar si hay sesión activa
+            if (activeStudent && selectEl) {
+                selectEl.value = activeStudent.code;
+            }
+
+            updateSessionDisplay();
+            loadStudentScores();
+        });
+
+        // Manejar cambio de estudiante en el selector
+        function handleStudentSelectChange() {
+            const selectEl = document.getElementById('select-student');
+            const selectedCode = selectEl.value;
+            
+            if (selectedCode) {
+                const student = studentsList.find(s => s.code === selectedCode);
+                activeStudent = student;
+            } else {
+                activeStudent = null;
+            }
+            
+            updateSessionDisplay();
+            loadStudentScores();
+        }
+
+        // Actualizar la visualización de la sesión
+        function updateSessionDisplay() {
             const sessionDisplay = document.getElementById('session-display');
             if (activeStudent) {
                 sessionDisplay.innerHTML = `Estudiante: <strong>${activeStudent.name}</strong><br>Código: <strong>${activeStudent.code}</strong>`;
             } else {
-                sessionDisplay.innerHTML = `<em>No se detectó sesión de estudiante. Registra tus datos en el Acuerdo Ético o la Bitácora.</em>`;
+                sessionDisplay.innerHTML = `<em>Modo Invitado. Selecciona un estudiante para calificar.</em>`;
             }
+        }
 
-            // Seleccionar por defecto niveles iniciales en la tabla (o leer de una evaluación guardada)
-            const storedEval = localStorage.getItem(activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest');
+        // Cargar las puntuaciones del estudiante activo
+        function loadStudentScores() {
+            const key = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
+            const storedEval = localStorage.getItem(key);
+            
             if (storedEval) {
-                const loadedScores = JSON.parse(storedEval);
-                scores = loadedScores;
+                scores = JSON.parse(storedEval);
                 restoreSelectedLevels();
             } else {
-                // Seleccionar Excelente por defecto para iniciar en la visualización
-                selectLevel('inmersion', 5, document.querySelector('#row-inmersion .lvl-5'));
-                selectLevel('apropiacion', 5, document.querySelector('#row-apropiacion .lvl-5'));
-                selectLevel('construccion', 5, document.querySelector('#row-construccion .lvl-5'));
+                // Si no hay evaluación, vaciar y deseleccionar
+                scores = {
+                    inmersion: 0,
+                    apropiacion: 0,
+                    construccion: 0
+                };
+                restoreSelectedLevels();
             }
-        });
+        }
 
         // Seleccionar un nivel y deseleccionar los otros de la misma fila
         function selectLevel(criterion, val, element) {
@@ -752,6 +868,9 @@
 
         // Restaurar niveles basados en la base de datos guardada
         function restoreSelectedLevels() {
+            // Deseleccionar todas las celdas primero
+            document.querySelectorAll('.level-cell').forEach(c => c.classList.remove('selected'));
+            
             for (const key in scores) {
                 const val = scores[key];
                 if (val > 0) {
@@ -760,8 +879,11 @@
                     if (element) {
                         selectLevel(key, val, element);
                     }
+                } else {
+                    document.getElementById(`val-${key}`).innerText = '--';
                 }
             }
+            calculateIAP();
         }
 
         // Calcular el Índice de Aprobación del Proceso
@@ -838,7 +960,8 @@
 
             localStorage.setItem(activeStudent ? `iap_score_${activeStudent.code}` : 'iap_score_guest', iap.toFixed(2));
 
-            alert('Tu evaluación y cálculo de Índice IAP se han guardado correctamente en tu navegador.');
+            const studentName = activeStudent ? activeStudent.name : 'Invitado';
+            alert(`La evaluación y cálculo del Índice IAP para ${studentName} se han guardado correctamente.`);
         }
     </script>
 </body>
