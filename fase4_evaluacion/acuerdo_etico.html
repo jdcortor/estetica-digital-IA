@@ -496,6 +496,125 @@
             line-height: 1.5;
             margin: auto;
         }
+
+        /* --- ADDIE RESOURCE DESIGN BUTTON & MODAL --- */
+        .addie-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 14px;
+            background-color: rgba(251, 208, 8, 0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(251, 208, 8, 0.15);
+        }
+
+        .addie-btn:hover {
+            background-color: var(--accent-gold);
+            color: #121214;
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.35);
+        }
+
+        .addie-modal-body-iframe {
+            flex: 1;
+            background: #525659;
+            position: relative;
+        }
+
+        .addie-modal-body-iframe iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .addie-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            perspective: 2000px;
+        }
+
+        .addie-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .addie-modal-container {
+            width: 90%;
+            max-width: 1100px;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: rotateY(-90deg);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .addie-modal-overlay.active .addie-modal-container {
+            transform: rotateY(0deg);
+        }
+
+        .addie-modal-header {
+            background: var(--header-dark);
+            color: #ffffff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+
+        .addie-modal-header h3 {
+            margin: 0;
+            font-family: var(--font-labels);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .addie-modal-header h3 span {
+            color: var(--accent-gold);
+        }
+
+        .addie-close-x {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .addie-close-x:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -506,9 +625,14 @@
             <h1>Compromiso <span>Ético de IA</span></h1>
             <p>Ecosistema de Portafolios de Arte · Colegio Danilo Cifuentes</p>
         </div>
-        <button class="close-btn" onclick="window.location.href='../index.html'">
-            <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
-        </button>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <button class="addie-btn" onclick="openAddieModal()" title="Ver Diseño de Recurso">
+                <i class="fa-solid fa-graduation-cap"></i> Diseño de Recurso
+            </button>
+            <button class="close-btn" onclick="window.location.href='../index.html'">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Mapa
+            </button>
+        </div>
     </div>
 
     <!-- MAIN GRID CONTAINER -->
@@ -975,6 +1099,36 @@
             };
             sigImg.src = canvas.toDataURL();
         }
+
+        // --- FUNCIONES PARA POPUP ADDIE ---
+        function openAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.add('active');
+        }
+
+        function closeAddieModal() {
+            document.getElementById('addie-modal-overlay').classList.remove('active');
+        }
+
+        function closeAddieModalOnOverlay(event) {
+            if (event.target.id === 'addie-modal-overlay') {
+                closeAddieModal();
+            }
+        }
+
+        window.closeAddieModal = closeAddieModal;
     </script>
+
+    <!-- Popup Modal para desplegar diseno_acuerdo_etico.html -->
+    <div id="addie-modal-overlay" class="addie-modal-overlay" onclick="closeAddieModalOnOverlay(event)">
+        <div class="addie-modal-container">
+            <div class="addie-modal-header">
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
+                <button class="addie-close-x" onclick="closeAddieModal()">&times;</button>
+            </div>
+            <div class="addie-modal-body-iframe">
+                <iframe src="diseno_acuerdo_etico.html"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
