@@ -8,11 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         :root {
             --bg-dark: #121214;
-            --panel-bg: rgba(30, 30, 34, 0.75);
+            --panel-bg: rgba(30, 30, 34, 0.85);
             --panel-border: rgba(255, 255, 255, 0.08);
             --text-white: #ffffff;
             --text-muted: #a0a0ab;
@@ -46,6 +47,21 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Custom Scrollbars inside slides */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--header-yellow);
         }
 
         /* --- CABECERA --- */
@@ -166,6 +182,7 @@
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 15px;
+            flex-shrink: 0;
         }
 
         .slide-badge {
@@ -211,13 +228,16 @@
             flex-direction: column;
             justify-content: center;
             text-align: center;
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             gap: 20px;
+            width: 100%;
+            overflow-y: auto;
+            padding: 10px;
         }
 
         .text-block p {
-            font-size: 14px;
+            font-size: 14.5px;
             line-height: 1.6;
             color: var(--text-muted);
             margin-bottom: 15px;
@@ -227,59 +247,282 @@
             color: #ffffff;
         }
 
-        /* Tarjetas de recursos */
-        .resources-container {
+        /* --- NUEVOS COMPONENTES DIAGRAMACIÓN (TEMA OSCURO VIDRIO) --- */
+        
+        /* Layout Portada */
+        .slide-content-grid.bleed-cover {
+            grid-template-columns: 1.2fr 0.8fr;
+            padding: 0;
+            align-items: center;
+        }
+
+        .slide-content-grid.bleed-cover .cover-left {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .resource-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            gap: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .resource-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .resource-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            background: rgba(251, 208, 8, 0.1);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            color: var(--header-yellow);
-            font-size: 20px;
-            flex-shrink: 0;
+            height: 100%;
         }
 
-        .resource-info {
+        .slide-content-grid.bleed-cover .cover-right-img {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .slide-content-grid.bleed-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .intro-title {
+            font-size: 40px;
+            font-weight: 900;
+            background: linear-gradient(to right, #ffffff, var(--header-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-family: var(--font-labels);
+            line-height: 1.2;
+        }
+
+        .intro-subtitle {
+            font-size: 18px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-family: var(--font-main);
+        }
+
+        .team-members {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            border-left: 3.5px solid var(--header-yellow);
+            padding-left: 15px;
+            margin-top: 25px;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
-        .resource-title {
+        /* Dos columnas con tarjetas (tiled) */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .two-column.tiled {
+            align-items: stretch;
+        }
+
+        .two-column.tiled > div {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .two-column.tiled > div:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(251, 208, 8, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .two-column.tiled h3 {
             font-family: var(--font-labels);
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--header-yellow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .two-column.tiled h3 i {
+            color: var(--accent-blue);
+            font-size: 20px;
+        }
+
+        .two-column.tiled p {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Lista de Viñetas Estilizadas */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 28px;
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        .bullet-list li i {
+            position: absolute;
+            left: 0;
+            top: 3px;
+            color: var(--header-yellow);
+            font-size: 16px;
+        }
+
+        .bullet-list li strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Mosaico de 3 columnas (Problemática) */
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .tile {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .tile:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(251, 208, 8, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .tile .icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .tile h3 {
+            font-family: var(--font-labels);
+            font-size: 17px;
+            font-weight: 800;
             color: #ffffff;
         }
 
-        .resource-desc {
+        .tile p {
             font-size: 12.5px;
+            line-height: 1.5;
             color: var(--text-muted);
-            line-height: 1.4;
+        }
+
+        /* Tabla de Cronograma */
+        .table-layout {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--panel-border);
+            font-size: 12.5px;
+        }
+
+        th {
+            background: rgba(108, 83, 163, 0.25);
+            color: var(--header-yellow);
+            font-family: var(--font-labels);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td strong {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .badge {
+            background: rgba(48, 160, 228, 0.15);
+            border: 1px solid rgba(48, 160, 228, 0.3);
+            color: var(--accent-blue);
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Contenedores de imagen */
+        .image-wrapper {
+            width: 100%;
+            height: 100%;
+            max-height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-contain img {
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
         }
 
         /* Tarjeta de Rúbrica Alada */
@@ -333,56 +576,7 @@
             max-height: 110px;
             overflow-y: auto;
             border-left: 3px solid var(--accent-blue);
-        }
-
-        /* --- DIAPOSITIVA 1: PORTADA --- */
-        .cover-subtitle {
-            font-family: var(--font-labels);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--header-yellow);
-            letter-spacing: 0.5px;
-        }
-
-        .cover-title {
-            font-family: var(--font-labels);
-            font-size: 34px;
-            font-weight: 900;
-            line-height: 1.25;
-            color: #ffffff;
-        }
-
-        .authors-list {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-
-        .author-tag {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 6px 15px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .author-tag strong {
-            color: #ffffff;
-        }
-
-        .cover-desc {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto;
+            text-align: left;
         }
 
         /* --- CONTROLES DE NAVEGACIÓN --- */
@@ -395,6 +589,7 @@
             justify-content: space-between;
             padding: 0 40px;
             z-index: 10;
+            flex-shrink: 0;
         }
 
         .nav-btn {
@@ -428,13 +623,13 @@
 
         .nav-dots {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
         }
 
         .nav-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.15);
             cursor: pointer;
@@ -453,7 +648,7 @@
 
         .slide-counter {
             font-family: var(--font-labels);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-muted);
         }
@@ -462,7 +657,7 @@
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
             margin-top: 15px;
         }
 
@@ -470,29 +665,29 @@
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
         }
 
         .kpi-summary-title {
             font-family: var(--font-labels);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 5px;
-        }
-
-        .kpi-summary-value {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
             margin-bottom: 4px;
         }
 
+        .kpi-summary-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
         .kpi-summary-meta {
-            font-size: 10.5px;
+            font-size: 9.5px;
             color: var(--header-yellow);
             font-weight: 600;
         }
@@ -508,214 +703,364 @@
             </div>
             <div class="header-title">Integración Pedagógica de IA en Estética</div>
         </div>
+        <button class="close-btn" onclick="closePresentation()">
+            <i class="fa-solid fa-circle-xmark"></i> Volver al Mapa
+        </button>
     </header>
 
     <!-- CONTENEDOR DE DIAPOSITIVAS -->
     <main class="slides-wrapper">
         <div class="slide-deck">
             
-            <!-- DIAPOSITIVA 1: COVER -->
+            <!-- DIAPOSITIVA 1: COVER (BLEED IMAGE RIGHT) -->
             <div class="slide active">
-                <div class="slide-content-full">
-                    <span class="cover-subtitle">PROPUESTA DE DESARROLLO CURRICULAR</span>
-                    <h1 class="cover-title">Diseño de Materiales Didácticos mediante la Integración de la IA en Estética Grado Once</h1>
-                    
-                    <div class="authors-list">
-                        <div class="author-tag">👤 <strong>Laura</strong> Villanueva-Rojas</div>
-                        <div class="author-tag">👤 <strong>Maria Isabel</strong> Alfonso-Sosa</div>
-                        <div class="author-tag">👤 <strong>Víctor</strong> Ardila-Bayona</div>
-                        <div class="author-tag">👤 <strong>José David</strong> Cortés-Torres</div>
+                <div class="slide-content-grid bleed-cover">
+                    <div class="cover-left">
+                        <div class="slide-badge" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));">IA en Educación</div>
+                        <h1 class="intro-title">Diseño de Materiales Didácticos</h1>
+                        <h2 class="intro-subtitle">En la asignatura de estética mediante inteligencia artificial</h2>
+                        <p style="font-size: 13.5px; font-weight: 500; color: var(--text-white);">Para proyectos de clase de grado once del Colegio Danilo Cifuentes</p>
+                        
+                        <div class="team-members">
+                            <span style="font-weight: 800; color: var(--header-yellow); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;">Equipo Investigador:</span>
+                            <span>Víctor Ardila-Bayona</span>
+                            <span>Isabel Alfonso-Sosa</span>
+                            <span>Laura Villanueva-Rojas</span>
+                            <span>José David Cortés-Torres</span>
+                        </div>
                     </div>
-                    
-                    <p class="cover-desc">
-                        Este proyecto fundamenta el diseño y la integración tecnopedagógica de recursos basados en Inteligencia Artificial en el aula taller de Estética del <strong>Colegio Danilo Cifuentes</strong>. Organizado en cuatro fases instruccionales bajo los modelos <strong>ADDIE</strong> e <strong>IA-TPACK</strong>, busca desarrollar la autonomía creadora, el pensamiento crítico y la ética digital del estudiante mediante un portafolio adaptativo.
+                    <div class="cover-right-img">
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/15763214561877584174" alt="IA y Educación">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 2: NATURALEZA DEL PROYECTO -->
+            <div class="slide">
+                <div class="slide-content-full">
+                    <div class="slide-badge" style="margin: 0 auto 10px; background: var(--accent-purple);">Contexto</div>
+                    <h1 class="intro-title" style="font-size: 44px; text-align: center;">Naturaleza del Proyecto</h1>
+                    <p class="text-p" style="font-size: 18px; max-width: 800px; margin: 15px auto; line-height: 1.6; color: var(--text-muted);">
+                        Desarrollo de un repositorio que integra el uso de la inteligencia artificial como herramienta de apoyo en la creación de materiales didácticos.
                     </p>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 2: CRITERIO 1 -->
+            <!-- DIAPOSITIVA 3: INTRODUCCIÓN Y JUSTIFICACIÓN -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f1">Criterio 1: Inmersión (20%)</div>
-                    <h2 class="slide-title">Fase 1: <span>Inmersión y Contextualización</span></h2>
+                    <div class="slide-badge b-f1">Introducción</div>
+                    <h2 class="slide-title">Introducción y <span>Justificación</span></h2>
                 </div>
                 <div class="slide-content-grid">
                     <div class="text-block">
-                        <p>
-                            El objetivo de la fase de <strong>Inmersión</strong> es sensibilizar y contextualizar al estudiante sobre las diversas técnicas artísticas disponibles en el aula taller, sirviendo como una inducción guiada a través de experiencias inmersivas analíticas y sensoriales.
-                        </p>
-                        <p><strong>Recursos Pedagógicos Diseñados:</strong></p>
-                        <div class="resources-container">
-                            <div class="resource-card">
-                                <div class="resource-icon">📹</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Video de Contextualización Multimodal</div>
-                                    <div class="resource-desc">Introduce las 4 líneas artísticas: Composición/Tipografía, Maquetado, Diario Ilustrado y Crochet. Fomenta un equilibrio entre creación analógica y digital.</div>
-                                </div>
-                            </div>
-                            <div class="resource-card">
-                                <div class="resource-icon">🏛️</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Museo Digital de Técnicas</div>
-                                    <div class="resource-desc">Galería virtual interactiva en 3D (Three.js/Genially) que permite explorar de forma autónoma ejemplos, pasos de ejecución y ventajas/límites de cada técnica.</div>
-                                </div>
-                            </div>
-                        </div>
+                        <ul class="bullet-list">
+                            <li><i class="fa-solid fa-lightbulb"></i> <strong>Naturaleza:</strong> Transformar una problemática observada en el salón de clase en una oportunidad de integrar el uso de la IA en un proceso guiado. El diseño y creación de recursos en el contexto actual.</li>
+                            <li><i class="fa-solid fa-rotate"></i> <strong>Propuesta:</strong> Replantear el uso de las tecnologías dentro del espacio de clase.</li>
+                            <li><i class="fa-solid fa-magnifying-glass-chart"></i> <strong>Análisis:</strong> Se analizan los criterios de diseño, implementación y regulación del uso de la IA en el contexto escolar, orientados a las necesidades formativas.</li>
+                            <li><i class="fa-solid fa-rocket"></i> <strong>Implementación:</strong> Materiales diseñados para integrar la IA en el proyecto de aula mediante el desarrollo de estrategias pedagógicas orientadas al uso responsable.</li>
+                        </ul>
                     </div>
-                    <div class="resources-container">
-                        <div class="rubric-info-card">
-                            <div class="rubric-card-title">📋 Criterio de Rúbrica Alado</div>
-                            <p class="rubric-level-desc">
-                                "Explora activamente todos los entornos 3D, interactúa críticamente con los elementos y responde con profundidad a los estímulos iniciales."
-                            </p>
-                            <span class="rubric-weight">Nivel de Desempeño: Excelente (5.0) | Peso: 20%</span>
+                    <div class="image-wrapper image-contain">
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/15774143041670414533" alt="Estudiante y tecnología">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 4: PROBLEMÁTICA IDENTIFICADA -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f2">Diagnóstico</div>
+                    <h2 class="slide-title">Problemática <span>Identificada</span></h2>
+                </div>
+                <div class="slide-content-full">
+                    <p style="text-align: center; margin-bottom: 25px; font-size: 15px; color: var(--text-muted);">Identificada por docentes y estudiantes en tres pilares principales:</p>
+                    <div class="tiled-content">
+                        <div class="tile">
+                            <div class="icon" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <h3>01. Uso Irresponsable</h3>
+                            <p>Uso poco responsable de las herramientas de Inteligencia Artificial en el desarrollo de actividades escolares.</p>
                         </div>
-                        <div class="resource-title" style="font-size: 12px; margin-top: 5px;">Guion Narrativo (Prompt Gemini):</div>
-                        <div class="prompt-box">
-"Actúa como un experto en Pedagogía de las Artes. Diseña el guion para un video educativo de 4-5 min para grado 11. El video debe contextualizar 4 técnicas: Composición/Tipografía, Maquetado, Diario Ilustrado, Crochet. Argumenta que la 'mejor' técnica es aquella que mejor se alinee con su sensibilidad y su problema a resolver."
+                        <div class="tile">
+                            <div class="icon" style="background-color: rgba(249, 115, 22, 0.15); color: #f97316;"><i class="fa-solid fa-link"></i></div>
+                            <h3>02. Dependencia</h3>
+                            <p>Fuerte dependencia tecnológica que limita el desarrollo de habilidades fundamentales en el estudiante.</p>
+                        </div>
+                        <div class="tile">
+                            <div class="icon" style="background-color: rgba(168, 85, 247, 0.15); color: #a855f7;"><i class="fa-solid fa-eraser"></i></div>
+                            <h3>03. Pérdida de Autonomía</h3>
+                            <p>Pérdida de la creación autónoma, plagio, poca originalidad y reducción de la autoría en procesos creativos.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 3: CRITERIO 2 -->
+            <!-- DIAPOSITIVA 5: FUNDAMENTACIÓN TEÓRICA -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f2">Criterio 2: Apropiación (25%)</div>
-                    <h2 class="slide-title">Fase 2: <span>Apropiación del Conocimiento</span></h2>
+                    <div class="slide-badge b-f3">Teoría</div>
+                    <h2 class="slide-title">Fundamentación <span>Teórica</span></h2>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="text-block">
-                        <p>
-                            La fase de <strong>Apropiación</strong> busca consolidar los saberes técnicos e instrumentales del estudiante sobre la IA generativa. Se promueve el uso selectivo y responsable de las herramientas y la delimitación ética del rol de la tecnología.
-                        </p>
-                        <p><strong>Recursos Pedagógicos Diseñados:</strong></p>
-                        <div class="resources-container">
-                            <div class="resource-card">
-                                <div class="resource-icon">🪭</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Abanico Digital de IAs</div>
-                                    <div class="resource-desc">Clasificador visual interactivo inspirado en una tabla periódica. Categoriza herramientas de IA por función y establece pautas éticas claras.</div>
-                                </div>
-                            </div>
-                            <div class="resource-card">
-                                <div class="resource-icon">💻</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Aula de Capacitación Virtual</div>
-                                    <div class="resource-desc">Módulos de formación independientes para cada técnica, acompañados de avatares de IA para micro-learning y encuestas interactivas de coevaluación.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="resources-container">
-                        <div class="rubric-info-card">
-                            <div class="rubric-card-title">📋 Criterio de Rúbrica Alado</div>
-                            <p class="rubric-level-desc">
-                                "Comprende rigurosamente el abanico de IAs y demuestra honestidad académica firmando y aplicando el Acuerdo Ético en su práctica."
+                <div class="slide-content-full">
+                    <div class="two-column tiled">
+                        <div>
+                            <h3><i class="fa-solid fa-scale-balanced"></i> Diseño Responsable y Formativo</h3>
+                            <p>
+                                <strong>Gobernanza y Protocolos:</strong> Propone una Gobernanza Ética que organiza responsabilidades y protocolos de uso escolar de la IA.
                             </p>
-                            <span class="rubric-weight">Nivel de Desempeño: Excelente (5.0) | Peso: 25%</span>
+                            <p>
+                                <strong>Enfoque Humano:</strong> Defiende que la IA debe ser un apoyo para la ideación visual y exploración, no un sustituto de la autoría.
+                            </p>
+                            <p>
+                                <strong>Ética y Autoría:</strong> Establece las bases contractuales de honestidad intelectual reguladas a través de acuerdos interactivos.
+                            </p>
                         </div>
-                        <div class="resource-title" style="font-size: 12px; margin-top: 5px;">Generador de Abanico (Prompt Claude):</div>
-                        <div class="prompt-box">
-"Crea un archivo HTML autónomo para el 'Abanico Digital de IAs para Estética'. Debe clasificar herramientas de IA por categorías para grado 11. Cada herramienta debe mostrar su nombre, función principal, técnica apoyada, uso permitido y advertencia ética de honestidad intelectual."
+                        <div>
+                            <h3><i class="fa-solid fa-chalkboard-user"></i> IA en Educación</h3>
+                            <p>
+                                <strong>Mediación Pedagógica:</strong> Exploración y andamiaje de la IA como un agente tecnológico que transforma la didáctica clásica.
+                            </p>
+                            <p>
+                                <strong>Modelo TPACK:</strong> Redefinición del rol docente y reestructuración curricular cruzando el contenido tecnológico, pedagógico y temático (IA-TPACK).
+                            </p>
+                            <p>
+                                <strong>Balance de Riesgos:</strong> Análisis equilibrado entre el potencial de co-creación y las necesidades reflexivas de los estudiantes de grado once.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 4: CRITERIO 3 -->
+            <!-- DIAPOSITIVA 6: OBJETIVOS Y METAS (I) -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f3">Criterio 3: Construcción (55%)</div>
-                    <h2 class="slide-title">Fase 3: <span>Iteración y Creación Activa</span></h2>
+                    <div class="slide-badge b-f1">Objetivos</div>
+                    <h2 class="slide-title">Objetivos Específicos y <span>Metas (I)</span></h2>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="text-block">
-                        <p>
-                            La fase de <strong>Construcción</strong> representa el núcleo del proceso creativo de los estudiantes. Aquí se ejecuta la co-creación iterativa con IA, guiando al estudiante a asumir un rol de editor y curador crítico en vez de consumidor pasivo.
-                        </p>
-                        <p><strong>Recursos Pedagógicos Diseñados:</strong></p>
-                        <div class="resources-container">
-                            <div class="resource-card">
-                                <div class="resource-icon">🤖</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Tutor IA "DaVinci"</div>
-                                    <div class="resource-desc">Asistente conversacional interactivo (Gemini API) que analiza bocetos y descripciones, proveyendo retroalimentación formativa y sugerencias de diseño.</div>
-                                </div>
-                            </div>
-                            <div class="resource-card">
-                                <div class="resource-icon">📓</div>
-                                <div class="resource-info">
-                                    <div class="resource-title">Bitácora Digital de Creación</div>
-                                    <div class="resource-desc">Cuaderno de registro interactivo donde el estudiante documenta prompts, evoluciones, justificación de decisiones y reflexiones éticas.</div>
-                                </div>
-                            </div>
+                <div class="slide-content-full">
+                    <div class="two-column tiled">
+                        <div>
+                            <h3><i class="fa-solid fa-book-open"></i> Objetivo Específico 1</h3>
+                            <p>Realizar el fundamento teórico para el diseño y la estructura de materiales didácticos mediante la metodología ADDIE en el proceso de cada proyecto de los estudiantes de grado once en el espacio académico de estética.</p>
+                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 1</div>
+                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Consolidar un marco referencial sólido y pertinente que permita el diseño de materiales que contextualicen a los estudiantes sobre los diferentes tipos de técnicas.</p>
                         </div>
-                    </div>
-                    <div class="resources-container">
-                        <div class="rubric-info-card">
-                            <div class="rubric-card-title">📋 Criterio de Rúbrica Alado</div>
-                            <p class="rubric-level-desc">
-                                "Desarrolla un prototipo estético robusto con DaVinci, justificando críticamente cada edición, y registra minuciosamente su agencia en la bitácora."
-                            </p>
-                            <span class="rubric-weight">Nivel de Desempeño: Excelente (5.0) | Peso: 55%</span>
-                        </div>
-                        <div class="resource-title" style="font-size: 12px; margin-top: 5px;">Configuración de DaVinci (Prompt System):</div>
-                        <div class="prompt-box">
-"Tu nombre es DaVinci. Actúa como asesor estético. Acompaña a estudiantes de grado 11 a retroalimentar sus prototipos artísticos de dibujo/maquetado/crochet. No decidas por ellos. Plantea preguntas reflexivas. Estructura tu respuesta en: 1) Reconocimiento, 2) Fortalezas, 3) Ajustes sugeridos y 4) Preguntas orientadoras."
+                        <div>
+                            <h3><i class="fa-solid fa-layer-group"></i> Objetivo Específico 2</h3>
+                            <p>Desarrollar un abanico de IAs y una plataforma de apoyo que permitan integrar el uso responsable de la inteligencia artificial dentro del proyecto de aula de cada estudiante, en los procesos de dibujo, diseño, creación y análisis visual.</p>
+                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 2</div>
+                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Establecer un repertorio de IAs que pueden utilizar los estudiantes para el desarrollo de su proyecto, resaltando un abordaje ético y responsable.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 5: EVALUACION E IAP -->
+            <!-- DIAPOSITIVA 7: OBJETIVOS Y METAS (II) -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f4">Trazabilidad</div>
-                    <h2 class="slide-title">Evaluación Curricular e <span>Índice IAP</span></h2>
+                    <div class="slide-badge b-f2">Objetivos</div>
+                    <h2 class="slide-title">Objetivos Específicos y <span>Metas (II)</span></h2>
+                </div>
+                <div class="slide-content-full">
+                    <div class="two-column tiled">
+                        <div>
+                            <h3><i class="fa-solid fa-chart-line"></i> Objetivo Específico 3</h3>
+                            <p>Diseñar un instrumento de seguimiento con criterios establecidos que permitan reconocer el proceso del estudiante en la ejecución de su proyecto e integración del portafolio de recursos.</p>
+                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 3</div>
+                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Que el docente y el estudiante puedan hacer un seguimiento del proceso, avance, integración y uso adecuado de la IA en el proyecto de aula en tiempo real.</p>
+                        </div>
+                        <div>
+                            <h3><i class="fa-solid fa-clipboard-check"></i> Objetivo Específico 4</h3>
+                            <p>Establecer unos criterios de evaluación que permitan reconocer la efectividad de los materiales en el proceso del estudiante, estableciendo normas de uso ético, responsable y transparente.</p>
+                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 4</div>
+                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Diseñar un instrumento evaluativo tipo rúbrica e índice IAP que permita determinar la viabilidad y eficacia del portafolio, asegurando que cumpla los objetivos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 8: CRONOGRAMA DE ACTIVIDADES -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f3">Planeación</div>
+                    <h2 class="slide-title">Cronograma de <span>Actividades</span></h2>
+                </div>
+                <div class="slide-content-full">
+                    <div class="table-layout">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Fechas</th>
+                                    <th style="width: 50%;">Fase / Actividad</th>
+                                    <th style="width: 25%;">Responsables</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge">23 - 28 MARZO</span></td>
+                                    <td><strong>Planeación del Proyecto</strong><br>Lluvia de ideas, problemática, justificación, objetivos, fundamentación, metodología.</td>
+                                    <td>Profs. Laura y José David</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">06 - 11 ABRIL</span></td>
+                                    <td><strong>Documento de Planeación</strong><br>Estructuración final del documento de diseño curricular.</td>
+                                    <td>Profs. Isabel y José David</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">13 - 18 ABRIL</span></td>
+                                    <td><strong>Elaboración de Recursos</strong><br>Inicio de creación de recursos didácticos digitales.</td>
+                                    <td>Profs. Laura y José David</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">20 ABRIL - 02 MAYO</span></td>
+                                    <td><strong>Elaboración de Plantillas y Ejecución</strong><br>Ejecución de prompts en IAs y calibración de interfaces.</td>
+                                    <td>Profs. Isabel y Víctor</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">04 - 23 MAYO</span></td>
+                                    <td><strong>Homogeneización y Ajustes</strong><br>Ajustes finales y organización estética del portafolio.</td>
+                                    <td>Equipo de Trabajo</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge">25 MAYO - 06 JUNIO</span></td>
+                                    <td><strong>Socialización y Retroalimentación</strong><br>Evaluación de recursos, sustentación y presentación en clase.</td>
+                                    <td>Equipo de Trabajo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 9: RUTA METODOLÓGICA ADDIE -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f4">Metodología</div>
+                    <h2 class="slide-title">ADDIE: Ruta <span>Metodológica</span></h2>
                 </div>
                 <div class="slide-content-grid">
                     <div class="text-block">
-                        <p>
-                            La evaluación del proyecto no mide solo el producto final, sino el recorrido interactivo, las decisiones del estudiante frente a los modelos generativos y la honestidad intelectual.
-                        </p>
-                        <p>
-                            El <strong>Índice de Aprobación del Proceso (IAP)</strong> se calcula de manera dinámica en el panel mediante una media ponderada que da prioridad a la fase de experimentación:
-                        </p>
-                        <p style="font-family: monospace; font-size: 15px; color: var(--header-yellow); background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; text-align: center; font-weight: bold;">
-                            IAP = 0.20 · Inmersión + 0.25 · Apropiación + 0.55 · Construcción
-                        </p>
-                        <p>
-                            Esto permite clasificar el desempeño estudiantil en cuatro categorías que retroalimentan su proceso: <em>Excelente (85-100), Bueno (70-84), En desarrollo (50-69) o Crítico (&lt;50)</em>.
-                        </p>
+                        <ul class="bullet-list">
+                            <li><i class="fa-solid fa-diagram-project"></i> <strong>Estructura modular</strong>: ADDIE organiza el diseño de los materiales didácticos mediante cinco fases lógicas: Análisis, Diseño, Desarrollo, Implementación y Evaluación.</li>
+                            <li><i class="fa-solid fa-bridge"></i> <strong>Puente didáctico</strong>: En este proyecto, permite pasar de la problemática institucional detectada a recursos prácticos y coherentes en el aula de Estética.</li>
+                            <li><i class="fa-solid fa-crosshairs"></i> <strong>Intencionalidad</strong>: Asegura que cada recurso tenga una intención pedagógica clara (sensibilización, exploración visual, feedback tutorado o registro analítico).</li>
+                            <li><i class="fa-solid fa-user-graduate"></i> <strong>Roles activos</strong>: El docente actúa como mediador del aprendizaje y el estudiante como creador crítico que regula su interacción con la IA.</li>
+                        </ul>
                     </div>
-                    <div class="resources-container">
-                        <div class="resource-title" style="font-size: 12px; margin-bottom: 2px;">KPIs de Trazabilidad en Tiempo Real:</div>
-                        <div class="kpi-grid">
-                            <div class="kpi-summary-card">
-                                <div class="kpi-summary-title">Inmersión</div>
-                                <div class="kpi-summary-value">85%</div>
-                                <div class="kpi-summary-meta">Meta: 75%</div>
-                            </div>
-                            <div class="kpi-summary-card">
-                                <div class="kpi-summary-title">Conocimiento</div>
-                                <div class="kpi-summary-value">78%</div>
-                                <div class="kpi-summary-meta">Meta: 70%</div>
-                            </div>
-                            <div class="kpi-summary-card">
-                                <div class="kpi-summary-title">Desarrollo</div>
-                                <div class="kpi-summary-value">4.6 it.</div>
-                                <div class="kpi-summary-meta">Meta: ≥3 it.</div>
-                            </div>
-                            <div class="kpi-summary-card">
-                                <div class="kpi-summary-title">Agencia</div>
-                                <div class="kpi-summary-value">63%</div>
-                                <div class="kpi-summary-meta">Meta: 60%</div>
-                            </div>
+                    <div class="image-wrapper image-contain">
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/14220015438257795982" alt="Diagrama del modelo instruccional ADDIE">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 10: APLICACIÓN DEL MODELO ADDIE -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f1">Metodología</div>
+                    <h2 class="slide-title">Del Diagnóstico al <span>Diseño</span></h2>
+                </div>
+                <div class="slide-content-full">
+                    <div class="bullet-list" style="width: 100%; display: grid; grid-template-columns: 1fr; gap: 10px;">
+                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-blue); position: relative;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 15px; color: var(--accent-blue);"></i>
+                            <strong>Análisis:</strong> Diagnóstico de dependencia e identificación del uso informal de IAs sin citación de prompts.
                         </div>
-                        <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4; margin-top: 10px;">
-                            Cada acción del estudiante (tiempo de reproducción, clicks en el abanico, iteraciones de bocetos y justificaciones en bitácora) genera datos trazables en el portafolio, favoreciendo la autorregulación.
-                        </p>
+                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-pink); position: relative;">
+                            <i class="fa-solid fa-pen-ruler" style="position: absolute; left: 16px; top: 15px; color: var(--accent-pink);"></i>
+                            <strong>Diseño:</strong> Estructuración de la ruta formativa de 4 fases y diseño instruccional cruzando IA y currículo artístico.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-purple); position: relative;">
+                            <i class="fa-solid fa-code" style="position: absolute; left: 16px; top: 15px; color: var(--accent-purple);"></i>
+                            <strong>Desarrollo:</strong> Programación y construcción de interfaces interactivas, tutor bot DaVinci y matrices.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-green); position: relative;">
+                            <i class="fa-solid fa-gears" style="position: absolute; left: 16px; top: 15px; color: var(--accent-green);"></i>
+                            <strong>Implementación:</strong> Estudiantes ejecutan la co-creación, firman acuerdos y documentan su bitácora digital.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--header-yellow); position: relative;">
+                            <i class="fa-solid fa-clipboard-check" style="position: absolute; left: 16px; top: 15px; color: var(--header-yellow);"></i>
+                            <strong>Evaluación:</strong> Valoración formativa del proceso basada en rúbricas, métricas de coevaluación y el cálculo del IAP.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 11: RECURSOS DEL PORTAFOLIO -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f2">Recursos</div>
+                    <h2 class="slide-title">Recursos del <span>Portafolio</span></h2>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="text-block" style="font-size: 13.5px;">
+                        <ul class="bullet-list" style="gap: 8px;">
+                            <li><strong>Cápsula Introductoria (F1: Inmersión)</strong>: Despierta interés y sitúa la problemática de la tecnología en el arte.</li>
+                            <li><strong>Museo Digital y Fichas Técnicas (F1)</strong>: Galería 3D para exploración libre y andamiaje técnico.</li>
+                            <li><strong>Abanico IA y Capacitación (F2: Apropiación)</strong>: Clasifica herramientas de IA y las regula éticamente.</li>
+                            <li><strong>Tutor DaVinci (F3: Construcción)</strong>: Genera retroalimentación adaptativa para refinar bocetos.</li>
+                            <li><strong>Bitácora y Acuerdo Ético (F3-F4)</strong>: Custodian y registran la trazabilidad y la honestidad intelectual.</li>
+                            <li><strong>Rúbrica e Índice IAP (F4: Evaluación)</strong>: Evalúan de forma cuantitativa y cualitativa el proceso.</li>
+                        </ul>
+                    </div>
+                    <div class="image-wrapper image-contain">
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/16672248714986310645" alt="Estructura de Recursos">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 12: EVALUACIÓN Y TRAZABILIDAD -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f3">Evaluación</div>
+                    <h2 class="slide-title">Evaluación del <span>Proceso</span></h2>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="text-block">
+                        <ul class="bullet-list">
+                            <li><i class="fa-solid fa-route"></i> <strong>Trazabilidad:</strong> Monitoreo progresivo de los cambios, iteraciones y justificaciones del boceto con IA en el portafolio.</li>
+                            <li><i class="fa-solid fa-book-open-reader"></i> <strong>Bitácora:</strong> Registro continuo de versiones, prompts y auto-evaluación del nivel de agencia.</li>
+                            <li><i class="fa-solid fa-robot"></i> <strong>Rol de DaVinci:</strong> Guía formativa basada en preguntas reflexivas que el estudiante decide libremente aceptar o rechazar.</li>
+                            <li><i class="fa-solid fa-award"></i> <strong>Foco Evaluativo:</strong> Desplazamiento del resultado visual de la IA hacia la justificación crítica y la curaduría humana en todo el proceso.</li>
+                        </ul>
+                    </div>
+                    <div class="image-wrapper image-contain">
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/9770903500037070758" alt="Trazabilidad y evaluación">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 13: RÚBRICAS PROYECTO Y RECURSOS -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="slide-badge b-f4">Evaluación</div>
+                    <h2 class="slide-title">Rúbricas: Proyecto y <span>Recursos</span></h2>
+                </div>
+                <div class="slide-content-full">
+                    <div class="two-column tiled">
+                        <div>
+                            <h3><i class="fa-solid fa-list-check"></i> Rúbrica del Proyecto (Formativa)</h3>
+                            <p>
+                                <strong>Desarrollo general:</strong> Evalúa el cumplimiento de los objetivos y la integración coherente del portafolio en el aula.
+                            </p>
+                            <p>
+                                <strong>Evidencias:</strong> Se basa en la trazabilidad de la bitácora digital, la calibración de prompts, y la validación del acuerdo ético.
+                            </p>
+                            <p>
+                                <strong>Foco:</strong> Prioriza la actitud reflexiva y la evolución del estudiante por encima del resultado final 100% automático.
+                            </p>
+                        </div>
+                        <div>
+                            <h3><i class="fa-solid fa-star-half-stroke"></i> Rúbrica de Recursos (Utilidad)</h3>
+                            <p>
+                                <strong>Evaluación del portafolio:</strong> Permite que los estudiantes valoren la usabilidad, claridad, accesibilidad y pertinencia didáctica de los materiales.
+                            </p>
+                            <p>
+                                <strong>Retroalimentación continua:</strong> Ayuda a los docentes a ajustar las interfaces (ej. DaVinci, abanicos) basándose en las sugerencias del aula.
+                            </p>
+                            <p>
+                                <strong>Pensamiento crítico:</strong> Promueve el rol activo y democrático del estudiante en la coconstrucción y mejora de su experiencia escolar.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -726,19 +1071,19 @@
     <!-- CONTROLES DE NAVEGACIÓN -->
     <footer class="controls-footer">
         <button id="prev-btn" class="nav-btn" onclick="changeSlide(-1)">
-            ◀ Anterior
+            <i class="fa-solid fa-chevron-left"></i> Anterior
         </button>
         
         <div class="nav-dots" id="dots-container">
-            <!-- Dots generated in JS -->
+            <!-- Dots generated dynamically -->
         </div>
         
         <div class="slide-counter" id="slide-counter-display">
-            Diapositiva 1 de 5
+            Diapositiva 1 de 13
         </div>
         
         <button id="next-btn" class="nav-btn" onclick="changeSlide(1)">
-            Siguiente ▶
+            Siguiente <i class="fa-solid fa-chevron-right"></i>
         </button>
     </footer>
 
@@ -798,18 +1143,17 @@
             try {
                 if (window.parent && typeof window.parent.closeProjectPresentation === 'function') {
                     window.parent.closeProjectPresentation();
-                    return;
+                } else {
+                    window.location.href = 'index.html';
                 }
             } catch (e) {
-                console.warn("CORS or protocol error calling closeProjectPresentation:", e);
+                window.location.href = 'index.html';
             }
-            // Redirigir directamente si falla la comunicación en iframe o se abrió directamente
-            window.location.href = 'index.html';
         }
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (e.key === 'ArrowRight') {
                 changeSlide(1);
             } else if (e.key === 'ArrowLeft') {
                 changeSlide(-1);
@@ -818,9 +1162,10 @@
             }
         });
 
-        // Initialize slideshow
-        initDots();
-        showSlide(0);
+        document.addEventListener('DOMContentLoaded', () => {
+            initDots();
+            showSlide(0);
+        });
     </script>
 </body>
 </html>
