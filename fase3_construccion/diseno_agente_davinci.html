@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Instruccional - Agente DaVinci</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            
+            --gold-500: #eab308;
+            --gold-600: #ca8a04;
+            
+            /* Colores de las fases ADDIE */
+            --color-overview: #6c53a3;      /* Púrpura Showcase */
+            --color-overview-rgb: 108, 83, 163;
+            --color-analysis: #7c3aed;      /* Morado */
+            --color-analysis-rgb: 124, 58, 237;
+            --color-design: #0891b2;        /* Cian */
+            --color-design-rgb: 8, 145, 178;
+            --color-development: #059669;   /* Esmeralda */
+            --color-development-rgb: 5, 150, 105;
+            --color-implementation: #ea580c;/* Naranja */
+            --color-implementation-rgb: 234, 88, 12;
+            --color-evaluation: #e11d48;    /* Rosa Carmesí */
+            --color-evaluation-rgb: 225, 29, 72;
+
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--slate-100);
+            color: var(--slate-900);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- ENCABEZADO APAISADO --- */
+        .dashboard-header {
+            background: linear-gradient(135deg, #eef2f6 0%, #f3effa 100%);
+            color: var(--slate-900);
+            padding: 15px 40px;
+            border-bottom: 3.5px solid var(--slate-300);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            box-sizing: border-box;
+            gap: 30px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-content-left, .header-content-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(108, 83, 163, 0.08);
+            border: 1px solid rgba(108, 83, 163, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-overview);
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(108, 83, 163, 0.05);
+        }
+
+        .header-icon-box.header-icon-user {
+            background-color: rgba(8, 145, 178, 0.08);
+            border: 1px solid rgba(8, 145, 178, 0.2);
+            color: var(--color-design);
+            box-shadow: 0 0 10px rgba(8, 145, 178, 0.05);
+        }
+
+        .header-svg-icon {
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .header-text-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-small-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--slate-500);
+            margin-bottom: 2px;
+        }
+
+        .header-main-title {
+            font-family: var(--font-title);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--slate-900);
+        }
+
+        .header-population-title {
+            font-family: var(--font-title);
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .header-sub-label {
+            font-size: 13px;
+            color: var(--slate-700);
+            font-weight: 600;
+        }
+
+        .close-dashboard-btn {
+            font-size: 18px;
+            color: var(--slate-700);
+            text-decoration: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            border: 1px solid var(--slate-200);
+            display: none; /* Activado dinámicamente en iframes */
+        }
+
+        .close-dashboard-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENEDOR CUERPO --- */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* --- BARRA LATERAL --- */
+        .sidebar {
+            width: 280px;
+            background-color: #f1f5f9;
+            color: var(--slate-800);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-right: 1.5px solid var(--slate-200);
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-brand {
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--slate-700);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-brand svg {
+            color: var(--slate-500);
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .nav-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: var(--slate-700);
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--slate-900);
+        }
+
+        .nav-btn.active {
+            background-color: #ffffff;
+            color: var(--slate-900);
+            border-left-color: var(--tab-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -1px rgba(0,0,0,0.01);
+            font-weight: 700;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .main-content-header {
+            padding: 15px 30px;
+            border-bottom: 1.5px solid var(--slate-200);
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        .active-tab-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .active-tab-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 4px;
+        }
+
+        .active-tab-info h1 {
+            font-family: var(--font-title);
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        /* Paneles */
+        .tab-pane {
+            display: none;
+            padding: 25px 30px;
+            overflow-y: auto;
+            flex: 1;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tarjetas */
+        .grid-container, .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid var(--slate-200);
+            padding: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--card-border-color, var(--slate-300));
+        }
+
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--slate-900);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--slate-100);
+            padding-bottom: 8px;
+        }
+
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--card-border-color, var(--slate-700));
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .text-content, .phase-intro {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--slate-700);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Ficha Técnica */
+        .tech-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tech-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            border-bottom: 1px dashed var(--slate-200);
+            padding-bottom: 8px;
+        }
+
+        .tech-item span:first-child {
+            color: var(--slate-700);
+            font-weight: 500;
+        }
+
+        .tech-item span:last-child {
+            font-weight: 650;
+            color: var(--slate-900);
+        }
+
+        /* Listas */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            display: flex;
+            gap: 10px;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--slate-700);
+        }
+
+        .bullet-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--card-border-color, var(--gold-600));
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        /* Tablas */
+        .custom-table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .custom-table th {
+            background-color: var(--slate-50);
+            text-align: left;
+            padding: 12px;
+            font-weight: 750;
+            color: var(--slate-700);
+            border-bottom: 1.5px solid var(--slate-200);
+        }
+
+        .custom-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--slate-100);
+            color: var(--slate-700);
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover td {
+            background-color: var(--slate-50);
+        }
+
+        @media (max-width: 768px) {
+            body { overflow: auto; height: auto; }
+            .dashboard-header { flex-direction: column; height: auto; padding: 15px; gap: 15px; }
+            .dashboard-container { flex-direction: column; height: auto; overflow: visible; }
+            .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--slate-200); padding: 15px; }
+            .sidebar-nav { flex-direction: row; overflow-x: auto; padding-bottom: 8px; }
+            .nav-btn { width: auto; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; }
+            .nav-btn.active { border-bottom-color: var(--tab-color); }
+            .main-content { height: auto; overflow: visible; }
+            .tab-pane { overflow-y: visible; height: auto; padding: 20px; }
+            .grid-container, .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENCABEZADO DENTRO DE IFRAME -->
+    <header class="dashboard-header">
+        <div class="header-content-left">
+            <div class="header-icon-box">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Recurso Didáctico Digital</span>
+                <h1 class="header-main-title">Agente DaVinci</h1>
+            </div>
+        </div>
+        
+        <div class="header-content-right">
+            <div class="header-icon-box header-icon-user">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Población Objetivo</span>
+                <h2 class="header-population-title">Estudiantes de Grado 11</h2>
+                <span class="header-sub-label">Fase 3: Construcción (Desarrollo)</span>
+            </div>
+            <button class="close-dashboard-btn" id="close-recurso-btn">✕</button>
+        </div>
+    </header>
+
+    <!-- CUERPO PRINCIPAL CON PESTAÑAS -->
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR DE NAVEGACIÓN ADDIE -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-brand">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>Modelo ADDIE</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tab="overview" style="--tab-color: var(--color-overview);">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <span>Vista General</span>
+                </button>
+                <button class="nav-btn" data-tab="analysis" style="--tab-color: var(--color-analysis);">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <span>A. Análisis</span>
+                </button>
+                <button class="nav-btn" data-tab="design" style="--tab-color: var(--color-design);">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>D. Diseño</span>
+                </button>
+                <button class="nav-btn" data-tab="development" style="--tab-color: var(--color-development);">
+                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>D. Desarrollo</span>
+                </button>
+                <button class="nav-btn" data-tab="implementation" style="--tab-color: var(--color-implementation);">
+                    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <span>I. Implementación</span>
+                </button>
+                <button class="nav-btn" data-tab="evaluation" style="--tab-color: var(--color-evaluation);">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>E. Evaluación</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- CONTENEDOR DE CONTENIDO -->
+        <main class="main-content">
+            <header class="main-content-header">
+                <div class="active-tab-info">
+                    <span class="active-tab-badge" id="active-tab-badge">Vista General</span>
+                    <h1 id="active-tab-title">Resumen Instruccional</h1>
+                </div>
+            </header>
+
+            <!-- PESTAÑA: VISTA GENERAL -->
+            <div class="tab-pane active" id="tab-overview">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-overview);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Agente DaVinci: Asesor de Retroalimentación
+                        </h3>
+                        <p class="phase-intro">Se propone la construcción de un agente de IA denominado DaVinci, concebido como un recurso de acompañamiento individual dentro del proceso de elaboración del prototipo estético o visual desarrollado a partir de una técnica específica seleccionada por el estudiante de grado 11.</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Técnica:</strong> Retroalimentación formativa y co-creación estética.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Uso de la IA:</strong> Análisis estético y espacial de imágenes en tiempo real mediante Gemini.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="--card-border-color: var(--color-overview);">
+                        <h3 class="card-title">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            Ficha Técnica
+                        </h3>
+                        <ul class="tech-list">
+                            <div class="tech-item">
+                                <span>Código del Recurso:</span>
+                                <span>EST-11-F3-DAVINCI</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Fase de la Unidad:</span>
+                                <span>Fase 3: Construcción (Iteración)</span>
+                            </div>
+                            <div class="tech-item">
+                                <span>Enfoque Activo:</span>
+                                <span>Acompañamiento individual y SAM Model</span>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA: ANÁLISIS -->
+            <div class="tab-pane" id="tab-analysis">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-analysis);">
+                        <h4 class="card-title">1. Diagnóstico del Aula</h4>
+                        <p class="phase-intro">Los estudiantes de grado 11 que se encuentran diseñando y elaborando sus prototipos físicos (bocetos, tejidos, dioramas, bitácoras) a menudo se estancan por dudas estéticas de color, perspectiva o composición. Debido a la cantidad de alumnos, el docente no puede ofrecer una retroalimentación personalizada e inmediata a cada uno en tiempo real durante la sesión de taller práctico.</p>
+                    </div>
+                    <div class="card" style="--card-border-color: var(--color-analysis);">
+                        <h4 class="card-title">2. Recursos e Infraestructura</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Dispositivos móviles personales de los estudiantes con cámara integrada.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Conexión a internet estable en el aula de artes del colegio.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Clave de API de Gemini activa ofuscada mediante codificación Base64 en el cliente.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA: DISEÑO -->
+            <div class="tab-pane" id="tab-design">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-design);">
+                        <h4 class="card-title">1. Competencias a Desarrollar</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Cognitiva:</strong> Identifica y discrimina parámetros estéticos clave (composición, forma, color, equilibrio, contraste, textura) en su propia propuesta artística.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Procedimental:</strong> Experimenta de manera iterativa con las recomendaciones, reformulando su avance y anotando su proceso de toma de decisiones.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Actitudinal:</strong> Muestra autonomía, pensamiento crítico y autogestión en su proceso creativo frente al apoyo de la IA.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card" style="--card-border-color: var(--color-design);">
+                        <h4 class="card-title">2. Secuencia Didáctica de la Sesión</h4>
+                        <div class="custom-table-container">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Momento</th>
+                                        <th>Rol del Estudiante</th>
+                                        <th>Rol del Agente (IA)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Inicio</strong></td>
+                                        <td>Sube una fotografía de su avance o boceto físico y describe brevemente su intención estética.</td>
+                                        <td>Saluda amistosamente, reconoce la técnica aplicada e identifica el estado general del avance.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Desarrollo</strong></td>
+                                        <td>Dialoga con el bot respondiendo a sus preguntas y analizando las observaciones visuales.</td>
+                                        <td>Enumera fortalezas, señala aspectos de mejora (color, composición, balance) y plantea 2 preguntas reflexivas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cierre</strong></td>
+                                        <td>Registra en su bitácora física qué sugerencias de DaVinci decide implementar y realiza los ajustes manuales.</td>
+                                        <td>Promueve la autonomía y despide al alumno motivándolo al próximo ajuste.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA: DESARROLLO -->
+            <div class="tab-pane" id="tab-development">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-development);">
+                        <h4 class="card-title">1. Tecnologías Clave</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Gemini 2.5 Flash API:</strong> Motor de inferencia multimodal rápido para entrada combinada de imagen y texto.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>HTML5 y CSS3 responsivo:</strong> Diseño premium unificado de chat apto para dispositivos móviles y de escritorio.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>FileReader API:</strong> Codificación asíncrona de archivos de imagen en Base64 para el payload JSON de la API.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card" style="--card-border-color: var(--color-development);">
+                        <h4 class="card-title">2. Lógica de Arquitectura y Seguridad</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>Ofuscación en Base64:</strong> Enmascaramiento de la API Key en el código JavaScript del cliente para evitar escaneos automáticos y revocaciones accidentales en GitHub.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <strong>System Instruction:</strong> Configuración inicial estricta que le prohíbe al modelo tomar decisiones estéticas imperativas o resolver la tarea por el alumno.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA: IMPLEMENTACIÓN -->
+            <div class="tab-pane" id="tab-implementation">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-implementation);">
+                        <h4 class="card-title">1. Dinámica del Estudiante</h4>
+                        <p class="phase-intro">Los estudiantes utilizan sus smartphones personales en el aula taller. A medida que ejecutan su proyecto práctico (ej. tejiendo crochet concéntrico o construyendo capas de cartón), toman fotografías de su trabajo y las suben a DaVinci solicitando apoyo estético. Esto les permite avanzar a su propio ritmo sin depender en exclusiva de la atención directa del profesor.</p>
+                    </div>
+                    <div class="card" style="--card-border-color: var(--color-implementation);">
+                        <h4 class="card-title">2. Acompañamiento del Docente</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Supervisar el uso responsable de la tecnología y resolver fallos de conectividad.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Guiar al alumno a tomar decisiones independientes cuando este dependa demasiado de las sugerencias del chat.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Evaluar los diarios de campo físicos validando los bocetos y las reflexiones anotadas.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA: EVALUACIÓN -->
+            <div class="tab-pane" id="tab-evaluation">
+                <div class="grid-container">
+                    <div class="card" style="--card-border-color: var(--color-evaluation);">
+                        <h4 class="card-title">1. Evidencias de Logro</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Bitácora física documentando la conversación: capturas del chat, notas de las preguntas del bot e ideas propuestas.
+                            </li>
+                            <li class="bullet-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                Prototipo físico terminado que demuestre evolución compositiva tras la interacción con el bot.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card" style="--card-border-color: var(--color-evaluation);">
+                        <h4 class="card-title">2. Ponderación IAP del Acompañamiento</h4>
+                        <div class="custom-table-container">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Componente</th>
+                                        <th>Criterio de Medida</th>
+                                        <th>Peso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Iteración Crítica</strong></td>
+                                        <td>Formulación de consultas claras al bot y análisis crítico de la retroalimentación.</td>
+                                        <td>30%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aplicación Práctica</strong></td>
+                                        <td>Calidad y precisión de las mejoras físicas en el prototipo basadas en la conversación.</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Metacognición</strong></td>
+                                        <td>Documentación y diario de campo físico que argumente las decisiones estéticas.</td>
+                                        <td>20%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- LÓGICA DE TABS Y CIERRE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.nav-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            const activeTabTitle = document.getElementById('active-tab-title');
+            const activeTabBadge = document.getElementById('active-tab-badge');
+
+            const tabHeaders = {
+                'overview': { title: 'Resumen Instruccional del Recurso', badge: 'Vista General' },
+                'analysis': { title: 'Fase A: Diagnóstico y Requerimientos de Aula', badge: 'Análisis' },
+                'design': { title: 'Fase D: Competencias y Secuencia Didáctica', badge: 'Diseño' },
+                'development': { title: 'Fase D: Arquitectura de Código y Tecnologías', badge: 'Desarrollo' },
+                'implementation': { title: 'Fase I: Dinámicas del Taller y Guía Docente', badge: 'Implementación' },
+                'evaluation': { title: 'Fase E: Criterios de Logro e Índice IAP', badge: 'Evaluación' }
+            };
+
+            function switchTab(tabId) {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                const activeBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+                const activePane = document.getElementById(`tab-${tabId}`);
+                
+                if (activeBtn && activePane) {
+                    activeBtn.classList.add('active');
+                    activePane.classList.add('active');
+
+                    const headerInfo = tabHeaders[tabId];
+                    if (headerInfo) {
+                        activeTabTitle.innerText = headerInfo.title;
+                        activeTabBadge.innerText = headerInfo.badge;
+
+                        const tabColor = activeBtn.style.getPropertyValue('--tab-color');
+                        activeTabBadge.style.color = tabColor;
+                        activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
+                        if (!tabColor.startsWith('rgb')) {
+                            activeTabBadge.style.color = `var(--color-${tabId === 'overview' ? 'overview' : tabId})`;
+                            activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId === 'overview' ? 'overview' : tabId}-rgb, 108, 83, 163), 0.1)`;
+                        }
+                    }
+                }
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+
+            // Configurar botón de cerrar (en caso de iframe)
+            const closeBtn = document.getElementById('close-recurso-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    if (window.parent && window.parent.closeAddieModal) {
+                        window.parent.closeAddieModal();
+                    } else {
+                        alert("Dashboard cerrado");
+                    }
+                });
+
+                if (window.self !== window.top) {
+                    closeBtn.style.display = 'block';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

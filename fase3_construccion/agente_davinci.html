@@ -334,8 +334,9 @@
         }
 
         .modal-content {
-            width: 800px;
-            max-height: 85vh;
+            width: 90%;
+            height: 90%;
+            max-height: 90vh;
             background: #fff;
             border-radius: 12px;
             display: flex;
@@ -362,13 +363,18 @@
         .modal-close { background: none; border: none; color: white; font-size: 30px; cursor: pointer; }
 
         .modal-body {
-            padding: 30px;
-            overflow-y: auto;
-            line-height: 1.7;
-            color: #444;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            flex: 1;
+            background: #f8fafc;
         }
         
-        .modal-body h4 { color: var(--showcase-purple); margin-top: 0; }
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
         
         /* Animación de carga */
         .loading-dots { display: inline-flex; gap: 5px; }
@@ -442,14 +448,11 @@
     <div class="modal-overlay" id="info-modal" onclick="closeInfoModalOnOutside(event)">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Fundamentación del Agente DaVinci</h3>
+                <h3>📖 Desarrollo Curricular - Diseño de Recurso</h3>
                 <button class="modal-close" onclick="closeInfoModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <h4>Fase 3: Iteración mediante Desarrollo - Agente de Retroalimentación</h4>
-                <p>Se propone la construcción de un agente de IA denominado <strong>DaVinci</strong>, concebido como un recurso de acompañamiento individual dentro del proceso de elaboración del prototipo en la técnica seleccionada por el estudiante de grado 11.</p>
-                <p>Este agente funciona como un asistente virtual con <strong>capacidades multimodales</strong>, capaz de interpretar imágenes, bocetos y descripciones. Su propósito es ofrecer retroalimentación formativa sobre parámetros de diseño (composición, proporción, equilibrio, color, manejo técnico).</p>
-                <p><strong>Enfoque Pedagógico:</strong> El propósito <em>no es reemplazar la valoración del docente</em> ni asumir decisiones creativas. A partir de la información, el agente formula observaciones y preguntas orientadoras. La construcción se fundamenta en los modelos <strong>ADDIE</strong> y <strong>SAM (Successive Approximation Model)</strong>, permitiendo una lógica iterativa y flexible donde el agente se ajusta según la experiencia del estudiante.</p>
+                <iframe src="diseno_agente_davinci.html"></iframe>
             </div>
         </div>
     </div>
@@ -610,6 +613,7 @@
         function openInfoModal() { document.getElementById('info-modal').classList.add('active'); }
         function closeInfoModal() { document.getElementById('info-modal').classList.remove('active'); }
         function closeInfoModalOnOutside(e) { if(e.target.id === 'info-modal') closeInfoModal(); }
+        window.closeAddieModal = closeInfoModal;
 
     </script>
 </body>
