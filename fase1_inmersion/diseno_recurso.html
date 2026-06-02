@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño de Recurso - Dashboard ADDIE Estética</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            
+            --gold-500: #eab308;
+            --gold-600: #ca8a04;
+            
+            /* Colores de las fases ADDIE (para fondos claros) */
+            --color-overview: #2563eb;      /* Azul */
+            --color-overview-rgb: 37, 99, 235;
+            --color-analysis: #7c3aed;      /* Morado */
+            --color-analysis-rgb: 124, 58, 237;
+            --color-design: #0891b2;        /* Cian */
+            --color-design-rgb: 8, 145, 178;
+            --color-development: #059669;   /* Esmeralda */
+            --color-development-rgb: 5, 150, 105;
+            --color-implementation: #ea580c;/* Naranja */
+            --color-implementation-rgb: 234, 88, 12;
+            --color-evaluation: #e11d48;    /* Rosa Carmesí */
+            --color-evaluation-rgb: 225, 29, 72;
+
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--slate-100);
+            color: var(--slate-900);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- ENCABEZADO APAISADO / RECTANGULAR PASTEL --- */
+        .dashboard-header {
+            background: linear-gradient(135deg, #eef2f6 0%, #e0e7ff 100%);
+            color: var(--slate-900);
+            padding: 15px 40px;
+            border-bottom: 3.5px solid var(--slate-300);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 85px;
+            box-sizing: border-box;
+            gap: 30px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .header-content-left, .header-content-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-overview);
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.05);
+        }
+
+        .header-icon-box.header-icon-user {
+            background-color: rgba(8, 145, 178, 0.08);
+            border: 1px solid rgba(8, 145, 178, 0.2);
+            color: var(--color-design);
+            box-shadow: 0 0 10px rgba(8, 145, 178, 0.05);
+        }
+
+        .header-svg-icon {
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .header-text-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-small-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--slate-500);
+            margin-bottom: 2px;
+        }
+
+        .header-main-title {
+            font-family: var(--font-title);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--slate-900);
+        }
+
+        .header-population-title {
+            font-family: var(--font-title);
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .header-sub-label {
+            font-size: 13px;
+            color: var(--slate-700);
+            font-weight: 600;
+        }
+
+        .close-dashboard-btn {
+            font-size: 18px;
+            color: var(--slate-700);
+            text-decoration: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            border: 1px solid var(--slate-200);
+            display: none; /* Se activa en iframe */
+        }
+
+        .close-dashboard-btn:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* --- CONTENEDOR CUERPO --- */
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR PASTEL) --- */
+        .sidebar {
+            width: 280px;
+            background-color: #f1f5f9;
+            color: var(--slate-800);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-right: 1.5px solid var(--slate-200);
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-brand {
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--slate-700);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-brand svg {
+            color: var(--slate-500);
+        }
+
+        /* Navegación por pestañas */
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .nav-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            color: var(--slate-700);
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            color: var(--slate-900);
+        }
+
+        .nav-btn.active {
+            background-color: #ffffff;
+            color: var(--slate-900);
+            border-left-color: var(--tab-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -1px rgba(0,0,0,0.01);
+            font-weight: 700;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .main-content-header {
+            padding: 15px 30px;
+            border-bottom: 1.5px solid var(--slate-200);
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        .active-tab-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .active-tab-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 4px;
+        }
+
+        .active-tab-info h1 {
+            font-family: var(--font-title);
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        /* Pestañas */
+        .tab-pane {
+            display: none;
+            padding: 25px 30px;
+            overflow-y: auto;
+            flex: 1;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-pane.active {
+            display: flex;
+            animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- TARJETAS E INFORMACIÓN (LETRA MÁS GRANDE) --- */
+        .grid-container, .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            border: 1px solid var(--slate-200);
+            padding: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--card-border-color, var(--slate-300));
+        }
+
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--slate-900);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--slate-100);
+            padding-bottom: 8px;
+        }
+
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--card-border-color, var(--slate-700));
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .text-content, .phase-intro {
+            font-size: 16.5px;
+            line-height: 1.6;
+            color: var(--slate-700);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Ficha Técnica */
+        .tech-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tech-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            border-bottom: 1px dashed var(--slate-200);
+            padding-bottom: 8px;
+        }
+
+        .tech-item span:first-child {
+            color: var(--slate-700);
+            font-weight: 500;
+        }
+
+        .tech-item span:last-child {
+            font-weight: 650;
+            color: var(--slate-900);
+        }
+
+        /* Listas con Icono */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            display: flex;
+            gap: 10px;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--slate-700);
+        }
+
+        .bullet-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--card-border-color, var(--gold-600));
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        /* Tablas */
+        .custom-table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .custom-table th {
+            background-color: var(--slate-50);
+            text-align: left;
+            padding: 12px;
+            font-weight: 750;
+            color: var(--slate-700);
+            border-bottom: 1.5px solid var(--slate-200);
+        }
+
+        .custom-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--slate-100);
+            color: var(--slate-700);
+        }
+
+        .custom-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .custom-table tr:hover td {
+            background-color: var(--slate-50);
+        }
+
+        /* --- RESPONSIVIDAD --- */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                gap: 15px;
+            }
+            .dashboard-container {
+                flex-direction: column;
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--slate-200);
+                padding: 15px;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            .nav-btn {
+                width: auto;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            .nav-btn.active {
+                border-bottom-color: var(--tab-color);
+            }
+            .main-content {
+                height: auto;
+                overflow: visible;
+            }
+            .tab-pane {
+                overflow-y: visible;
+                height: auto;
+                padding: 20px;
+            }
+            .grid-container, .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENCABEZADO APAISADO / RECTANGULAR PASTEL -->
+    <header class="dashboard-header">
+        <div class="header-content-left">
+            <div class="header-icon-box">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Recurso Didáctico Digital</span>
+                <h1 class="header-main-title" id="header-resource-title">Cargando...</h1>
+            </div>
+        </div>
+        
+        <div class="header-content-right">
+            <div class="header-icon-box header-icon-user">
+                <svg class="header-svg-icon" viewBox="0 0 24 24" width="22" height="22">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <div class="header-text-box">
+                <span class="header-small-label">Población Objetivo</span>
+                <h2 class="header-population-title">Estudiantes de Grado 11</h2>
+                <span class="header-sub-label" id="header-resource-phase">Cargando...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR CON BARRA LATERAL (PESTAÑAS VERTICALES) -->
+    <div class="dashboard-container">
+        
+        <!-- BARRA LATERAL (SIDEBAR PASTEL) -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-brand">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>Modelo ADDIE</span>
+                </div>
+            </div>
+
+            <!-- Botones de Pestañas -->
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" id="btn-overview" data-tab="overview" style="--tab-color: var(--color-overview);">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <span>Vista General</span>
+                </button>
+                <button class="nav-btn" id="btn-analysis" data-tab="analysis" style="--tab-color: var(--color-analysis);">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <span>A. Análisis</span>
+                </button>
+                <button class="nav-btn" id="btn-design" data-tab="design" style="--tab-color: var(--color-design);">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <span>D. Diseño</span>
+                </button>
+                <button class="nav-btn" id="btn-development" data-tab="development" style="--tab-color: var(--color-development);">
+                    <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    <span>D. Desarrollo</span>
+                </button>
+                <button class="nav-btn" id="btn-implementation" data-tab="implementation" style="--tab-color: var(--color-implementation);">
+                    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <span>I. Implementación</span>
+                </button>
+                <button class="nav-btn" id="btn-evaluation" data-tab="evaluation" style="--tab-color: var(--color-evaluation);">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>E. Evaluación</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <header class="main-content-header">
+                <div class="active-tab-info">
+                    <span class="active-tab-badge" id="active-tab-badge">Vista General</span>
+                    <h1 id="active-tab-title">Resumen Instruccional</h1>
+                </div>
+            </header>
+
+        <!-- PANEL 0: VISTA GENERAL -->
+        <div class="tab-pane active" id="tab-overview">
+            <div class="grid-container">
+                <!-- Resumen Metodológico -->
+                <div class="card" style="--card-border-color: var(--color-overview);">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        <span id="overview-title">Resumen Instruccional</span>
+                    </h3>
+                    <p class="phase-intro" id="overview-text">Cargando información del recurso...</p>
+                    <ul class="bullet-list" id="overview-bullets">
+                        <!-- Bullets cargados dinámicamente -->
+                    </ul>
+                </div>
+
+                <!-- Ficha Técnica -->
+                <div class="card" style="--card-border-color: var(--color-overview);">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        Ficha Técnica
+                    </h3>
+                    <ul class="tech-list">
+                        <div class="tech-item">
+                            <span>Código del Recurso:</span>
+                            <span id="tech-code">Cargando...</span>
+                        </div>
+                        <div class="tech-item">
+                            <span>Fase de la Unidad:</span>
+                            <span id="tech-module">Cargando...</span>
+                        </div>
+                        <div class="tech-item">
+                            <span>Enfoque Activo:</span>
+                            <span id="tech-approach">Cargando...</span>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 1: ANÁLISIS -->
+        <div class="tab-pane" id="tab-analysis">
+            <div class="grid-container">
+                <div class="card" style="--card-border-color: var(--color-analysis);">
+                    <h4 class="card-title">1. Diagnóstico del Aula</h4>
+                    <p class="phase-intro" id="analysis-diagnostic">Cargando...</p>
+                </div>
+                <div class="card" style="--card-border-color: var(--color-analysis);">
+                    <h4 class="card-title">2. Recursos e Infraestructura</h4>
+                    <ul class="bullet-list" id="analysis-resources">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 2: DISEÑO -->
+        <div class="tab-pane" id="tab-design">
+            <div class="grid-container">
+                <div class="card" style="--card-border-color: var(--color-design);">
+                    <h4 class="card-title">1. Competencias a Desarrollar</h4>
+                    <ul class="bullet-list" id="design-competencies">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+                <div class="card" style="--card-border-color: var(--color-design);">
+                    <h4 class="card-title">2. Estructura Didáctica (Sesión Tipo)</h4>
+                    <div class="custom-table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Momento</th>
+                                    <th>Rol del Estudiante</th>
+                                    <th>Rol Docente</th>
+                                </tr>
+                            </thead>
+                            <tbody id="design-table-body">
+                                <!-- Cargado dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 3: DESARROLLO -->
+        <div class="tab-pane" id="tab-development">
+            <div class="grid-container">
+                <div class="card" style="--card-border-color: var(--color-development);">
+                    <h4 class="card-title">1. Tecnologías Clave</h4>
+                    <ul class="bullet-list" id="development-tech">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+                <div class="card" style="--card-border-color: var(--color-development);">
+                    <h4 class="card-title">2. Lógica de Arquitectura</h4>
+                    <ul class="bullet-list" id="development-architecture">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 4: IMPLEMENTACIÓN -->
+        <div class="tab-pane" id="tab-implementation">
+            <div class="grid-container">
+                <div class="card" style="--card-border-color: var(--color-implementation);">
+                    <h4 class="card-title">1. Dinámica del Estudiante</h4>
+                    <p class="phase-intro" id="implementation-dynamics">Cargando...</p>
+                </div>
+                <div class="card" style="--card-border-color: var(--color-implementation);">
+                    <h4 class="card-title">2. Acompañamiento Docente</h4>
+                    <ul class="bullet-list" id="implementation-teacher">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 5: EVALUACIÓN -->
+        <div class="tab-pane" id="tab-evaluation">
+            <div class="grid-container">
+                <div class="card" style="--card-border-color: var(--color-evaluation);">
+                    <h4 class="card-title">1. Evidencias de Logro</h4>
+                    <ul class="bullet-list" id="evaluation-evidences">
+                        <!-- Cargado dinámicamente -->
+                    </ul>
+                </div>
+                <div class="card" style="--card-border-color: var(--color-evaluation);">
+                    <h4 class="card-title">2. Ponderación IAP de la Actividad</h4>
+                    <div class="custom-table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Componente</th>
+                                    <th>Criterio de Medida</th>
+                                    <th>Peso</th>
+                                </tr>
+                            </thead>
+                            <tbody id="evaluation-table-body">
+                                <!-- Cargado dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+    <!-- DATOS DE LAS ESTACIONES (BASE DE DATOS JSON) -->
+    <script>
+        const resourceData = {
+            0: {
+                title: "Diseño Instruccional General",
+                phaseName: "Fundamentación Curricular",
+                progress: 100,
+                code: "EST-11-GEN",
+                moduleName: "Estructura Global del Curso",
+                approach: "A.B.P. y Gamificación",
+                overviewTitle: "Resumen de la Metodología ADDIE Estética",
+                overviewText: "Esta guía unifica la planeación pedagógica y curricular para la asignatura de Estética de Grado 11. Cada estación del recorrido representa una técnica o fase del proyecto, permitiendo a los estudiantes interactuar con la teoría en 3D antes de la producción física en el aula taller del Colegio Danilo Cifuentes.",
+                bullets: [
+                    "<strong>Metodología:</strong> ADDIE Estética orientada al constructivismo práctico y la expresión crítica.",
+                    "<strong>Rol de la IA:</strong> Integración ética de la IA mediante TPACK y SAM para bocetación y análisis estético."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes de grado 11° del Colegio Danilo Cifuentes se encuentran en una transición crítica hacia la educación superior o técnica. Presentan vacíos en la estructuración de la perspectiva geométrica, escasez de vocabulario técnico de argumentación estética, y desconocimiento del uso ético y derechos de autor en el marco de la Inteligencia Artificial.",
+                    resources: [
+                        "Equipos de computación de la sala de tecnología e internet de banda media.",
+                        "Cuaderno de bocetos físico (bitácora de campo) y materiales tradicionales.",
+                        "Dispositivos móviles de los estudiantes para exploración 3D interactiva en tiempo real."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Analiza y comprende los principios de perspectiva, volumen, color e impacto ético de la IA en el arte.",
+                        "<strong>Procedimental:</strong> Crea prototipos estéticos (físicos/digitales) manipulando herramientas con alta destreza de motricidad fina.",
+                        "<strong>Actitudinal:</strong> Argumenta verbalmente con rigor conceptual el impacto y sentido estético de su obra artística final."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Navegación e inducción visual autónoma en el entorno virtual 3D.", docente: "Explicar los objetivos formativos, orientar las 4 líneas creativas." },
+                        { momento: "Desarrollo", estudiante: "Interactuar con modelos 3D, resolver quices de autoevaluación, dibujar.", docente: "Apoyar la comprensión teórica y guiar el conteo de puntos y escalas." },
+                        { momento: "Cierre", estudiante: "Registrar reflexiones en bitácoras físicas e integrar a portafolio digital.", docente: "Evaluar el Índice IAP y retroalimentar de forma formativa." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js y WebGL para renderizado interactivo en tiempo real compatible con navegadores de escritorio y celulares.",
+                        "GSAP (GreenSock) para animación cinemática fluida en local sin retrasos de red.",
+                        "Código procedural completo libre de dependencias o llamadas externas para evitar bloqueos por CORS en file:///"
+                    ],
+                    architecture: [
+                        "Diseño de Dashboard con acordeones CSS fluidos independientes con cálculo de scrollHeight en JS.",
+                        "Organización jerárquica del proyecto en carpetas de inmersión, apropiación, construcción y evaluación."
+                    ]
+                },
+                implementation: {
+                    dynamics: "Los estudiantes exploran de manera independiente las estaciones interactivas 3D en su móvil en el aula taller. Al terminar de leer la historia y realizar la autoevaluación, proceden a la creación en papel o lana siguiendo las guías procedimentales físicas.",
+                    teacher: [
+                        "Facilitar el debate sobre el plagio en el arte digital asistido por IA.",
+                        "Acompañar y supervisar las destrezas manuales en el aula de artes."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Registro de bitácoras físicas de campo y portafolio digital en la nube.",
+                        "Trazabilidad de respuestas y retroalimentación correctiva interactiva.",
+                        "Sustentación del prototipo final ante la comunidad (formato Pitch de 3 minutos)."
+                    ],
+                    table: [
+                        { componente: "Comprensión Estética", criterio: "Resultados de quices de estaciones del museo digital.", peso: "40%" },
+                        { componente: "Producción Crítica", criterio: "Calidad y originalidad de bocetos y anotaciones en bitácora.", peso: "40%" },
+                        { componente: "Autogestión", criterio: "Avance y exploración autónoma de módulos interactivos.", peso: "20%" }
+                    ]
+                }
+            },
+            1: {
+                title: "Exhibición 1: Composición y Estructura",
+                phaseName: "Fase 1: Inmersión",
+                progress: 20,
+                code: "EST-11-F1-S1",
+                moduleName: "Inmersión (Estación 1)",
+                approach: "Diseño Visual y Peso",
+                overviewTitle: "Composición y Estructura Visual",
+                overviewText: "Esta estación introduce al estudiante en las leyes fundamentales del diseño visual: peso de los elementos, equilibrio, jerarquía visual, contraste y asimetría dinámica. Aporta la estructura organizativa inicial para el portafolio.",
+                bullets: [
+                    "<strong>Técnica:</strong> Composición geométrica bidimensional.",
+                    "<strong>Uso de la IA:</strong> Ideación de cuadrículas compositivas basadas en el diseño suizo mediante prompts descriptivos."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes muestran dificultades para organizar elementos visuales jerárquicamente en un plano, abusando de simetrías centrales simples e infografías desordenadas.",
+                    resources: [
+                        "Lápices de grafito blandos (2B, 4B), rapidógrafos calibrados, reglas y papel durex de 180g.",
+                        "Visor 3D para examinar las fuerzas y equilibrio tridimensional de los anillos del giroscopio."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Identifica y explica los conceptos de tensión visual, leyes de composición y equilibrio dinámico.",
+                        "<strong>Procedimental:</strong> Dibuja composiciones tipográficas y visuales estructuradas sobre una retícula matemática.",
+                        "<strong>Actitudinal:</strong> Aprecia el valor estético del orden visual y la legibilidad en el diseño."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Observar la escultura 3D de Composición, analizar el equilibrio de los anillos.", docente: "Explicar los conceptos de peso visual y los distractores en la asimetría." },
+                        { momento: "Desarrollo", estudiante: "Realizar el quiz de la estación, idear una retícula en papel para su diario.", docente: "Asesorar de forma personalizada en el reparto de pesos en el lienzo." },
+                        { momento: "Cierre", estudiante: "Dibujar su primer boceto de retícula compositiva en la bitácora física.", docente: "Retroalimentar el boceto enfocándose en la jerarquía y el vacío." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de giroscopio procedural con icosaedro central cian emisivo y anillos de oro rotando en ejes opuestos.",
+                        "Materiales con propiedades metalness (0.9) y roughness (0.1) para simular acabados cromados."
+                    ],
+                    architecture: [
+                        "Integración de animaciones senoidales de flotación para simular equilibrio gravitacional.",
+                        "Lógica de render loop independiente para optimizar el giro de los anillos satélites."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante inspecciona la escultura rotatoria de anillos, reflexiona sobre el equilibrio dinámico, completa el quiz interactivo de '¿Quién soy?' y traslada la noción de orden a su boceto caligráfico de portada.",
+                    teacher: [
+                        "Demostrar cómo la colocación de un elemento fuera del eje altera la percepción del peso.",
+                        "Guía en el trazado de márgenes y grillas tipográficas."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Quiz interactivo superado con nota aprobatoria en el recorrido virtual.",
+                        "Primer boceto de la retícula de composición tipográfica dibujado en la bitácora física."
+                    ],
+                    table: [
+                        { componente: "Jerarquía Visual", criterio: "Uso correcto de escalas y pesos visuales en el boceto.", peso: "40%" },
+                        { componente: "Técnica de Trazado", criterio: "Limpieza y precisión de las líneas de la retícula compositiva.", peso: "40%" },
+                        { componente: "Fundamentación", criterio: "Explicación escrita de las decisiones compositivas tomadas.", peso: "20%" }
+                    ]
+                }
+            },
+            2: {
+                title: "Exhibición 2: Maquetación con IA",
+                phaseName: "Fase 2: Apropiación",
+                progress: 40,
+                code: "EST-11-F2-S2",
+                moduleName: "Apropiación (Estación 2)",
+                approach: "Co-creación y Sombras",
+                overviewTitle: "Simulación Lumínica y Espacial con IA",
+                overviewText: "Guía pedagógica para el uso crítico y ético de la Inteligencia Artificial Generativa de imágenes. Los estudiantes crean prompts estéticos avanzados para previsualizar sombras y comportamientos lumínicos en sólidos tridimensionales antes del corte material.",
+                bullets: [
+                    "<strong>Técnica:</strong> Prompts estéticos y simulación espacial.",
+                    "<strong>Uso de la IA:</strong> Generación de renders de maquetas conceptuales con luces contrastantes para entender la profundidad."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes usan la IA de forma superficial (búsquedas genéricas). Presentan dificultades para conceptualizar cómo incide la luz solar en un cuerpo volumétrico a diferentes ángulos.",
+                    resources: [
+                        "Acceso a herramientas de generación de imágenes por IA en la sala de cómputo.",
+                        "Modelo 3D de la cabeza de robot en la galería para comprender la iluminación direccional."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Comprende la diferencia entre luz difusa, luz dura, penumbra y cómo los sólidos bloquean y proyectan sombras.",
+                        "<strong>Procedimental:</strong> Estructura prompts de ingeniería estética integrando estilos históricos (minimalismo, constructivismo).",
+                        "<strong>Actitudinal:</strong> Valora la IA como herramienta de previsualización sin delegar la autoría intelectual de la maqueta final."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Girar la escultura mecánica 3D y observar el efecto pulsante del visor LED.", docente: "Explicar el concepto de claroscuro aplicado a volúmenes geométricos." },
+                        { momento: "Desarrollo", estudiante: "Escribir un prompt detallado para simular sombras en cubos y generar renders.", docente: "Guiar en el uso de descriptores lumínicos precisos (ej. 'luz cenital, alto contraste')." },
+                        { momento: "Cierre", estudiante: "Guardar el prompt y las imágenes en la bitácora comparando los aciertos de la IA.", docente: "Retroalimentar la coherencia discribible del prompt redactado por el alumno." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de cabeza robótica con placas superpuestas cromadas y un visor horizontal emisivo rosa/rojo.",
+                        "Programación de un loop de parpadeo de intensidad emisiva en la punta de la antena."
+                    ],
+                    architecture: [
+                        "Rotación de la cabeza robótica restringida en eje X y libre en Y en el modo inspección.",
+                        "Uso de materiales estándar con parámetros metálicos avanzados para simular brillo industrial."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante interactúa con el robot interactivo para reflexionar sobre la lógica de la inteligencia artificial. Luego, en su ordenador, diseña una simulación de volumen por IA y la plasma en su bitácora digital de co-creación.",
+                    teacher: [
+                        "Explicar los términos éticos de derechos de autor en el arte generado por IA.",
+                        "Facilitar el debate sobre la importancia de la modificación de la propuesta de la IA."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Documento del prompt final estructurado y 4 imágenes de previsualización generadas.",
+                        "Ficha de selección de la herramienta de IA firmada por el estudiante."
+                    ],
+                    table: [
+                        { componente: "Estructura del Prompt", criterio: "Uso de vocabulario estético formal y descriptores lumínicos.", peso: "45%" },
+                        { componente: "Análisis Crítico", criterio: "Evaluación escrita en bitácora de las limitaciones del render de la IA.", peso: "35%" },
+                        { componente: "Uso Ético", criterio: "Declaración explícita del uso de la herramienta y citación del prompt.", peso: "20%" }
+                    ]
+                }
+            },
+            3: {
+                title: "Exhibición 3: Diario de Campo Tradicional",
+                phaseName: "Fase 2: Apropiación",
+                progress: 50,
+                code: "EST-11-F2-S3",
+                moduleName: "Apropiación (Estación 3)",
+                approach: "Bitácora de Taller",
+                overviewTitle: "El Registro Físico de Ideas",
+                overviewText: "Esta estación define el diseño y uso de la bitácora analógica de campo. Es el soporte para que el estudiante aprenda a plasmar apuntes de taller, bocetos rápidos a mano alzada y manchas de color de su proyecto final.",
+                bullets: [
+                    "<strong>Técnica:</strong> Bitácora analógica cosida de experimentación libre.",
+                    "<strong>Uso de la IA:</strong> Escaneo de bocetos analógicos para que la IA realice análisis de composición y recomiende paletas cromáticas."
+                ],
+                analysis: {
+                    diagnostic: "Se evidencia la pérdida de la memoria del proceso creativo: los estudiantes descartan bocetos fallidos y no anotan las dificultades de taller, dificultando el aprendizaje reflexivo.",
+                    resources: [
+                        "Libretas de hojas blancas gruesas (150g o más), acuarelas, tiralíneas finos y pegamento para colajes.",
+                        "Escultura de libro abierto en 3D para inspirar la estructura del diario físico."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Comprende el diario de campo como un instrumento metacognitivo del pensamiento creativo.",
+                        "<strong>Procedimental:</strong> Combina técnicas de ilustración y registro escrito (esquemas, notas libres) de forma organizada.",
+                        "<strong>Actitudinal:</strong> Muestra persistencia y aprecio por documentar las equivocaciones y ajustes del proceso manual."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Inspeccionar el libro 3D, ver los trazos y el boceto holográfico de la flor.", docente: "Explicar cómo un diario de campo tradicional resguarda el proceso intelectual." },
+                        { momento: "Desarrollo", estudiante: "Diseñar la retícula e índice del diario físico en el aula taller.", docente: "Sugerir métodos de organización visual de apuntes (letras capitales, notas al margen)." },
+                        { momento: "Cierre", estudiante: "Escribir su primera reflexión crítica y pegar referentes en su libreta.", docente: "Revisar la bitácora validando el registro del error y del aprendizaje." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de libro inclinado con tapas de cuero y marcadores de cinta roja con doblez físico.",
+                        "Torus y cilindros delgados con propiedades de autoiluminación (emisión) para imitar los bocetos flotantes."
+                    ],
+                    architecture: [
+                        "Animación del grupo de bocetos oscilando suavemente sobre el libro con desfase armónico.",
+                        "Efecto de sombreado suave en la hendidura central de las páginas del libro."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante recorre la estación 3, comprende la metáfora del refugio de papel, realiza los primeros trazos en su libreta física de artes y realiza pruebas de color con acuarelas sobre el papel.",
+                    teacher: [
+                        "Modelar ejemplos de bitácoras de artistas famosos (Da Vinci, Frida Kahlo).",
+                        "Enseñar el pegado y secado correcto de técnicas húmedas para evitar arrugar las hojas."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Índice del diario de campo configurado y primeras 2 páginas de bocetos de ideas libres.",
+                        "Quiz interactivo superado sobre la historia de la bitácora analógica."
+                    ],
+                    table: [
+                        { componente: "Registro Metacognitivo", criterio: "Registro de aciertos, fallos y reflexiones del proceso.", peso: "40%" },
+                        { componente: "Expresión Plástica", criterio: "Uso variado de trazos a lápiz, collage y manchas de color.", peso: "40%" },
+                        { componente: "Organización", criterio: "Estructura del índice, claridad en fechas e higiene general.", peso: "20%" }
+                    ]
+                }
+            },
+            4: {
+                title: "Exhibición 4: Crochet Lineal",
+                phaseName: "Fase 2: Apropiación",
+                progress: 65,
+                code: "EST-11-F2-S4",
+                moduleName: "Apropiación (Estación 4)",
+                approach: "Codificación de Hilos",
+                overviewTitle: "Crochet Lineal y Punto de Cadena",
+                overviewText: "Esta estación introduce al estudiante en la técnica artesanal del crochet lineal. Aprenderán a tejer una cadena continua de puntos manteniendo una tensión uniforme con los dedos, entrenando la coordinación motora.",
+                bullets: [
+                    "<strong>Técnica:</strong> Crochet lineal analógico.",
+                    "<strong>Uso de la IA:</strong> Apoyo en la generación de texturas textiles 3D complejas para previsualizar el espaciado y volumen de los hilos."
+                ],
+                analysis: {
+                    diagnostic: "Dificultad en la coordinación bimanual fina en jóvenes acostumbrados a pantallas planas. Se requiere enseñar la autorregulación física y la paciencia rítmica en procesos de tejido manual.",
+                    resources: [
+                        "Aguja de tejer de metal o madera de 5.5mm, lana de fibra acrílica gruesa de color mostaza/ocre.",
+                        "Modelo 3D de aguja y cadena en la galería para ver el paso e inclinación en 360 grados."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Conoce las diferencias de los puntos básicos (cadena, punto bajo) y la codificación de patrones de tejido.",
+                        "<strong>Procedimental:</strong> Teje una cadena física continua de 50 eslabones con consistencia de tensión y tamaño de nudos.",
+                        "<strong>Actitudinal:</strong> Muestra concentración, persistencia y control de la ansiedad en tareas de repetición manual."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Inspeccionar el modelo 3D de la aguja, ver cómo entra en el bucle de lana.", docente: "Explicar el agarre de la aguja y la tensión del hilo en el dedo índice." },
+                        { momento: "Desarrollo", estudiante: "Realizar el nudo corredizo inicial y tejer la cadena lineal en el aula taller.", docente: "Corregir de forma presencial la postura de las manos y hombros del alumno." },
+                        { momento: "Cierre", estudiante: "Medir y registrar la cadena (en cm) anotando dificultades en la bitácora.", docente: "Validar que la cadena no quede floja ni demasiado ajustada." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de aguja con mango de nogal tallado, punta de metal pulido y cadena entrelazada con nudos toroidales.",
+                        "Simulación de un ovillo de lana en el pedestal usando una esfera central y 6 toros envolventes."
+                    ],
+                    architecture: [
+                        "Animación de la aguja simulando el movimiento de tejer en el render loop.",
+                        "Propiedades físicas avanzadas de roughness (0.95) en los materiales de lana para simular textura rugosa."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante sigue el tutorial físico interactivo de tejido en crochet lineal. Tras lograr regularidad en el punto de cadena, teje una trenza decorativa que servirá de marcador de páginas para su diario.",
+                    teacher: [
+                        "Demostrar la técnica del nudo de inicio y la lazada sobre la aguja.",
+                        "Organizar el espacio de taller para el trabajo en silencio rítmico."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Cadena física de crochet terminada (mínimo 50 puntos o 30 cm de largo).",
+                        "Registro fotográfico del tejido subido al portafolio digital."
+                    ],
+                    table: [
+                        { componente: "Tensión del Tejido", criterio: "Uniformidad en el tamaño de los puntos de la cadena física.", peso: "45%" },
+                        { componente: "Coordinación Fina", criterio: "Dominio de la técnica del nudo corredizo y cierre sin deshilachar.", peso: "35%" },
+                        { componente: "Persistencia", criterio: "Anotaciones en la bitácora sobre el proceso de reintento.", peso: "20%" }
+                    ]
+                }
+            },
+            5: {
+                title: "Exhibición 5: Crochet Radial",
+                phaseName: "Fase 2: Apropiación",
+                progress: 70,
+                code: "EST-11-F2-S5",
+                moduleName: "Apropiación (Estación 5)",
+                approach: "Tejido Concéntrico y Fractales",
+                overviewTitle: "Tejido en Círculos Concéntricos",
+                overviewText: "Esta estación enseña el crochet en espiral y círculos concéntricos (radial). A través de aumentos matemáticos estrictos, los estudiantes crean discos discos planos (mandalas), emulando patrones fractales del crecimiento natural.",
+                bullets: [
+                    "<strong>Técnica:</strong> Crochet radial y tejido concéntrico.",
+                    "<strong>Uso de la IA:</strong> Generación de patrones de mandalas hiperbólicos para visualizar la geometría espacial del crecimiento expansivo."
+                ],
+                analysis: {
+                    diagnostic: "El paso de crochet lineal a radial requiere comprender reglas de aumentos proporcionales. Sin la base matemática del conteo de puntos, el tejido se deforma en cuenco o se ondula excesivamente.",
+                    resources: [
+                        "Lanas acrílicas de dos colores contrastantes, agujas de crochet y marcadores de puntos de plástico.",
+                        "Espectador 3D de la galería para estudiar el mandala concéntrico procedural y la aguja de ganchillo."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Entiende los aumentos en crochet como sumas geométricas proporcionales basadas en la circunferencia.",
+                        "<strong>Procedimental:</strong> Teje un disco circular plano de 4 vueltas completas alternando colores de hilo.",
+                        "<strong>Actitudinal:</strong> Muestra concentración rigurosa en el conteo de puntos y orden procedimental."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Observar el mandala 3D rotando, analizando los radios y las cuentas.", docente: "Explicar la regla matemática de los aumentos radiales (6, 12, 18, 24 puntos)." },
+                        { momento: "Desarrollo", estudiante: "Iniciar el anillo mágico y tejer la primera y segunda vueltas de aumentos.", docente: "Monitorear el conteo de puntos y el uso de marcadores plásticos de fila." },
+                        { momento: "Cierre", estudiante: "Comprobar la planicidad del disco tejido y anotar el conteo final en el diario.", docente: "Identificar errores comunes (nudos de más o de menos que causen deformación)." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Mandala circular procedural formado por 5 toros concéntricos bicolor y 12 cilindros radiales.",
+                        "Cuentas esféricas de madera y flor central tejida procedural."
+                    ],
+                    architecture: [
+                        "Giro continuo del disco en el eje Y a velocidad constante para simular rotación mandala.",
+                        "Aguja de latón dorada orbital acompañando el contorno de la pieza."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante practica la técnica del 'anillo mágico' de inicio. Completa un disco tejido plano bicolor de 4 filas y lo decora con cuentas de madera, comprendiendo cómo se expande una retícula radial.",
+                    teacher: [
+                        "Demostrar el cruce del anillo mágico en la mano de manera ampliada.",
+                        "Facilitar patrones visuales en PDF con códigos de colores para los aumentos de puntos."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Mandala circular de crochet de 4 vueltas plano y estable al colocarse sobre la mesa.",
+                        "Cuestionario interactivo superado con respuestas correctas sobre lógica de aumentos."
+                    ],
+                    table: [
+                        { componente: "Planicidad del Tejido", criterio: "El disco debe reposar plano sobre una mesa sin ondas ni forma de copa.", peso: "45%" },
+                        { componente: "Conteo de Nudos", criterio: "Cumplimiento estricto del patrón geométrico de aumentos.", peso: "35%" },
+                        { componente: "Estética y Color", criterio: "Combinación armónica de los dos colores e integración de cuentas.", peso: "20%" }
+                    ]
+                }
+            },
+            6: {
+                title: "Exhibición 6: Diseño de Portada",
+                phaseName: "Fase 2: Apropiación",
+                progress: 80,
+                code: "EST-11-F2-S6",
+                moduleName: "Apropiación (Estación 6)",
+                approach: "Diseño en Relieve",
+                overviewTitle: "Composición Física en Relieve (Capas)",
+                overviewText: "Esta estación aborda la creación tridimensional de la portada de la bitácora física de campo. Los estudiantes diseñan y ensamblan portadas en capas físicas de cartón superpuestas para lograr un efecto de relieve visual y profundidad física.",
+                bullets: [
+                    "<strong>Técnica:</strong> Composición física tridimensional en capas cortadas.",
+                    "<strong>Uso de la IA:</strong> Generación de siluetas abstractas en capas para idear la superposición de planos en el visor digital."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes tienden a diseñar portadas bidimensionales planas en cartón, ignorando los conceptos estéticos de textura, bajorrelieve y profundidad física en el plano de la portada.",
+                    resources: [
+                        "Cartón piedra, bisturí de precisión, cinta adhesiva de doble faz espumada (para dar altura), pinturas acrílicas.",
+                        "Visor interactivo 3D para examinar cómo las capas del libro se separan en el eje Z."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Comprende la relación entre figura, fondo, planos paralelos, sombras proyectadas físicas y relieve.",
+                        "<strong>Procedimental:</strong> Corta con precisión siluetas de cartón y las ensambla con distanciadores de espuma logrando relieve.",
+                        "<strong>Actitudinal:</strong> Presta atención a los acabados, la prolijidad de los cortes y la coherencia del diseño de carátula."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Navegar por el libro de capas, separar las placas y ver la flor.", docente: "Explicar el concepto de diorama y superposición de planos paralelos." },
+                        { momento: "Desarrollo", estudiante: "Dibujar y cortar las 3 capas de cartón (fondo, silueta media, título frontal).", docente: "Supervisar las normas de seguridad del bisturí de precisión." },
+                        { momento: "Cierre", estudiante: "Pegar las capas con cinta espumada y valorar la profundidad física resultante.", docente: "Evaluar la solidez estructural y el contraste cromático de la portada." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de libro azul cerrado con cantoneras doradas metálicas y 3 capas flotantes que se desplazan en el eje Z.",
+                        "Materiales transparentes (ópticos) en la placa de paisaje y flor de origami detallada procedural en el centro."
+                    ],
+                    architecture: [
+                        "Animación armónica que aleja y acerca las capas del libro en un bucle continuo.",
+                        "Puntos de luz focalizada para proyectar sombras nítidas entre las placas flotantes."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante dibuja un diseño temático (ej. paisaje geométrico), descompone la imagen en 3 planos de corte, corta el cartón y lo ensambla usando cinta espumada gruesa, logrando un relieve de 3mm por capa.",
+                    teacher: [
+                        "Enseñar el uso seguro de la base de corte (salvamanteles) y el bisturí de precisión.",
+                        "Asistir en la mezcla de colores acrílicos para dar contraste entre planos."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Portada física de la bitácora construida en 3 capas de cartón con relieve real.",
+                        "Boceto preliminar en la libreta con la división en planos identificados (fondo, medio, frente)."
+                    ],
+                    table: [
+                        { componente: "Profundidad y Capas", criterio: "Uso eficaz de la separación de planos para generar relieve real.", peso: "40%" },
+                        { componente: "Calidad de Corte", criterio: "Cortes limpios y sin imperfecciones en los bordes del cartón.", peso: "40%" },
+                        { componente: "Coherencia de Diseño", criterio: "Coherencia estética e identidad de la portada con su proyecto.", peso: "20%" }
+                    ]
+                }
+            },
+            7: {
+                title: "Exhibición 7: Caligrafía con Pluma",
+                phaseName: "Fase 2: Apropiación",
+                progress: 90,
+                code: "EST-11-F2-S7",
+                moduleName: "Apropiación (Estación 7)",
+                approach: "Tipografía e Inclinación del Trazo",
+                overviewTitle: "La Tinta y la Pluma Caligráfica",
+                overviewText: "Esta estación introduce al estudiante en la técnica caligráfica clásica con tinta húmeda. Aprenden a manejar el ductus, controlar el flujo de tinta y la inclinación constante a 45° de la pluma para dar espesor y ritmo al texto escrito.",
+                bullets: [
+                    "<strong>Técnica:</strong> Caligrafía uncial con tinta china y plumilla de ganso.",
+                    "<strong>Uso de la IA:</strong> Generación de alfabetos tipográficos góticos y humanistas para analizar el contraste y espaciado de las letras."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes presentan posturas de escritura inadecuadas, alta rigidez en el agarre del bolígrafo (tensión muscular) y trazos caligráficos temblorosos e irregulares.",
+                    resources: [
+                        "Plumas de ganso preparadas, tintero con tinta china, papel pergamino de 120g con guías de inclinación impresas.",
+                        "Modelo 3D de tintero y pluma escribiendo para observar la inclinación y oscilación en el aire."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Conoce las familias tipográficas históricas y el funcionamiento mecánico de la plumilla calada.",
+                        "<strong>Procedimental:</strong> Realiza trazos caligráficos fluidos manteniendo el ángulo constante de 45° de la pluma.",
+                        "<strong>Actitudinal:</strong> Desarrolla paciencia, ritmo corporal de respiración y cuidado en el uso de la tinta china húmeda."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Observar el movimiento de la pluma 3D, ver cómo se desliza sobre el pergamino virtual.", docente: "Explicar el corte en bisel de la pluma y la importancia del ángulo de apoyo." },
+                        { momento: "Desarrollo", estudiante: "Realizar ejercicios de trazos caligráficos básicos (líneas, bucles, letras base).", docente: "Corregir el ángulo de inclinación de la mano del estudiante (mantener a 45°)." },
+                        { momento: "Cierre", estudiante: "Escribir su nombre en estilo uncial caligráfico sobre la bitácora física.", docente: "Valorar el contraste de trazo (fino ascendente, grueso descendente)." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de tintero de cristal octagonal facetado translúcido con tinta negra brillante.",
+                        "Pluma estilizada blanca con barbas detalladas y pergamino enrollado en los bordes en 3D."
+                    ],
+                    architecture: [
+                        "Lógica de oscilación y rotación en la pluma para simular el acto físico de escribir en el aire.",
+                        "Creación de letras de caligrafía doradas flotantes con emisividad cian/oro."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante se sienta erguido, sostiene la pluma sin tensionar los dedos, la sumerge en el tintero controlando el exceso en el borde y ejecuta trazos rítmicos sobre el pergamino siguiendo las plantillas de guía.",
+                    teacher: [
+                        "Demostrar cómo afilar o cortar la punta de la pluma orgánica.",
+                        "Supervisar el uso del secante o el tiempo de secado de la tinta china."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Plana caligráfica física terminada con los caracteres del alfabeto uncial.",
+                        "Nombre del alumno caligrafiado de forma impecable en la primera página de la bitácora."
+                    ],
+                    table: [
+                        { componente: "Ángulo del Trazo", criterio: "Mantenimiento constante de la inclinación a 45° de la pluma.", peso: "45%" },
+                        { componente: "Ductus y Ritmo", criterio: "Fluidez de los trazos sin interrupciones ni manchas de tinta excesivas.", peso: "35%" },
+                        { componente: "Postura e Higiene", criterio: "Limpieza en el pergamino físico y correcta postura corporal.", peso: "20%" }
+                    ]
+                }
+            },
+            8: {
+                title: "Exhibición 8: Diario de Campo Digital",
+                phaseName: "Fase 3: Construcción",
+                progress: 95,
+                code: "EST-11-F3-S8",
+                moduleName: "Construcción (Estación 8)",
+                approach: "Bitácora de Audio y Celular",
+                overviewTitle: "La Bitácora Móvil y Multimodal",
+                overviewText: "Esta estación define el diseño y uso de la bitácora digital interactiva en dispositivos móviles. Los estudiantes graban notas de voz semanales sobre su proceso creativo y catalogan fotos de sus bocetos e iteraciones.",
+                bullets: [
+                    "<strong>Técnica:</strong> Registro digital y bitácora de audio.",
+                    "<strong>Uso de la IA:</strong> El Agente DaVinci analiza el diario digital y las fotos de los bocetos del alumno, aportando feedback estructurado en fortalezas y aspectos a mejorar."
+                ],
+                analysis: {
+                    diagnostic: "Los estudiantes necesitan estructurar argumentativamente sus reflexiones orales. Requieren sistematizar en la nube sus avances para evitar pérdidas físicas y facilitar la coevaluación.",
+                    resources: [
+                        "Smartphone personal de los estudiantes, grabador de audio integrado, Google Drive o plataforma de portafolio.",
+                        "Modelo 3D del móvil con casete analógico flotante y visualizador LED para ilustrar la grabación sonora."
+                    ]
+                },
+                design: {
+                    competencies: [
+                        "<strong>Cognitiva:</strong> Estructura un discurso de autoevaluación crítico integrando conceptos técnicos de la asignatura.",
+                        "<strong>Procedimental:</strong> Graba audios breves (podcast de proceso), toma fotografías claras y cataloga las iteraciones.",
+                        "<strong>Actitudinal:</strong> Asume responsabilidad y honestidad intelectual al registrar el aporte exacto de la IA en su obra."
+                    ],
+                    table: [
+                        { momento: "Inicio", estudiante: "Explorar la pantalla interactiva del móvil 3D y ver el ecualizador.", docente: "Explicar los criterios de argumentación oral del diario digital de avance." },
+                        { momento: "Desarrollo", estudiante: "Grabar una bitácora de voz de 1 minuto resumiendo el trabajo semanal de taller.", docente: "Guiar en la estructuración de la bitácora de voz (Idea - Intención - Ajuste)." },
+                        { momento: "Cierre", estudiante: "Subir el audio y la foto del boceto al portafolio y dialogar con DaVinci.", docente: "Revisar los registros en la nube y calificar el índice de avance del portafolio." }
+                    ]
+                },
+                development: {
+                    tech: [
+                        "Three.js: Modelado de smartphone moderno negro con bordes metálicos brillantes y ecualizador de barras LED.",
+                        "Cinta de casete translúcida flotando encima del móvil con engranajes blancos y ondas de sonido senoidales."
+                    ],
+                    architecture: [
+                        "Animación del visualizador LED mediante escalado aleatorio de las barras en el eje Y en la función animate.",
+                        "Rotación coordinada de los engranajes de la cinta de casete (reelL y reelR) para simular reproducción."
+                    ]
+                },
+                implementation: {
+                    dynamics: "El estudiante utiliza su teléfono inteligente en clase al final de cada taller. Graba su nota de voz de avance, toma una foto de su pieza (dibujo o tejido) y la sube a la plataforma modular para recibir retroalimentación.",
+                    teacher: [
+                        "Configurar la plataforma digital de recepción de tareas (EVA / Drive).",
+                        "Enseñar técnicas básicas de captura de fotos artísticas (luz y encuadre) con móvil."
+                    ]
+                },
+                evaluation: {
+                    evidences: [
+                        "Mínimo 3 bitácoras de voz (audios de 1 min) grabadas y publicadas en el portafolio digital.",
+                        "Fotos de alta claridad que demuestren la evolución y los cambios del prototipo físico."
+                    ],
+                    table: [
+                        { componente: "Argumentación Oral", criterio: "Claridad discursiva y uso de vocabulario técnico de artes en el audio.", peso: "40%" },
+                        { componente: "Trazabilidad del Proceso", criterio: "Registro de la evolución del boceto inicial a la pieza final.", peso: "40%" },
+                        { componente: "Declaración Ética", criterio: "Claridad en el registro de prompts y marcado de la contribución de la IA.", peso: "20%" }
+                    ]
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obtener el ID del recurso de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const resourceId = parseInt(urlParams.get('id')) || 0; // Por defecto el general (0)
+
+            // Obtener datos de la base de datos JSON
+            const data = resourceData[resourceId] || resourceData[0];
+
+            // 1. Actualizar Encabezado y Sidebar
+            const resTitle = resourceId === 0 ? "Diseño Instruccional General" : data.title;
+            document.getElementById('header-resource-title').innerText = resTitle;
+            document.getElementById('header-resource-phase').innerText = data.phaseName;
+
+            // 2. Actualizar Sección de Vista General
+            document.getElementById('overview-title').innerText = data.overviewTitle || "Resumen Instruccional";
+            document.getElementById('overview-text').innerText = data.overviewText;
+
+            // Cargar bullets de Vista General
+            const overviewBulletsContainer = document.getElementById('overview-bullets');
+            overviewBulletsContainer.innerHTML = '';
+            data.bullets.forEach(bullet => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${bullet}`;
+                overviewBulletsContainer.appendChild(li);
+            });
+
+            // 3. Actualizar Ficha Técnica y Avance
+            document.getElementById('tech-code').innerText = data.code;
+            document.getElementById('tech-module').innerText = data.moduleName;
+            document.getElementById('tech-approach').innerText = data.approach;
+
+            const progressFill = document.getElementById('prog-fill');
+            const progressPercent = document.getElementById('prog-pct');
+            if (progressFill && progressPercent) {
+                progressFill.style.width = `${data.progress}%`;
+                progressPercent.innerText = `${data.progress}%`;
+            }
+
+            // 4. Actualizar Fase A: Análisis
+            document.getElementById('analysis-diagnostic').innerText = data.analysis.diagnostic;
+            const analysisResourcesContainer = document.getElementById('analysis-resources');
+            analysisResourcesContainer.innerHTML = '';
+            data.analysis.resources.forEach(res => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${res}`;
+                analysisResourcesContainer.appendChild(li);
+            });
+
+            // 5. Actualizar Fase D: Diseño
+            const designCompetenciesContainer = document.getElementById('design-competencies');
+            designCompetenciesContainer.innerHTML = '';
+            data.design.competencies.forEach(comp => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${comp}`;
+                designCompetenciesContainer.appendChild(li);
+            });
+
+            const designTableBody = document.getElementById('design-table-body');
+            designTableBody.innerHTML = '';
+            data.design.table.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row.momento}</strong></td>
+                    <td>${row.estudiante}</td>
+                    <td>${row.docente}</td>
+                `;
+                designTableBody.appendChild(tr);
+            });
+
+            // 6. Actualizar Fase D: Desarrollo
+            const developmentTechContainer = document.getElementById('development-tech');
+            developmentTechContainer.innerHTML = '';
+            data.development.tech.forEach(t => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${t}`;
+                developmentTechContainer.appendChild(li);
+            });
+
+            const developmentArchContainer = document.getElementById('development-architecture');
+            developmentArchContainer.innerHTML = '';
+            data.development.architecture.forEach(a => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${a}`;
+                developmentArchContainer.appendChild(li);
+            });
+
+            // 7. Actualizar Fase I: Implementación
+            document.getElementById('implementation-dynamics').innerText = data.implementation.dynamics;
+            const implementationTeacherContainer = document.getElementById('implementation-teacher');
+            implementationTeacherContainer.innerHTML = '';
+            data.implementation.teacher.forEach(teach => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${teach}`;
+                implementationTeacherContainer.appendChild(li);
+            });
+
+            // 8. Actualizar Fase E: Evaluación
+            const evaluationEvidencesContainer = document.getElementById('evaluation-evidences');
+            evaluationEvidencesContainer.innerHTML = '';
+            data.evaluation.evidences.forEach(ev => {
+                const li = document.createElement('li');
+                li.className = 'bullet-item';
+                li.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${ev}`;
+                evaluationEvidencesContainer.appendChild(li);
+            });
+
+            const evaluationTableBody = document.getElementById('evaluation-table-body');
+            evaluationTableBody.innerHTML = '';
+            data.evaluation.table.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row.componente}</strong></td>
+                    <td>${row.criterio}</td>
+                    <td>${row.peso}</td>
+                `;
+                evaluationTableBody.appendChild(tr);
+            });
+
+            // --- GESTIÓN DE PESTAÑAS (TABS) ---
+            const tabButtons = document.querySelectorAll('.nav-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            const activeTabTitle = document.getElementById('active-tab-title');
+            const activeTabBadge = document.getElementById('active-tab-badge');
+
+            // Nombres formales y descriptivos para la cabecera del panel principal
+            const tabHeaders = {
+                'overview': { title: 'Resumen Instruccional del Recurso', badge: 'Vista General' },
+                'analysis': { title: 'Fase A: Diagnóstico y Requerimientos de Aula', badge: 'Análisis' },
+                'design': { title: 'Fase D: Competencias y Secuencia Didáctica', badge: 'Diseño' },
+                'development': { title: 'Fase D: Arquitectura de Código y Tecnologías', badge: 'Desarrollo' },
+                'implementation': { title: 'Fase I: Dinámicas del Taller y Guía Docente', badge: 'Implementación' },
+                'evaluation': { title: 'Fase E: Criterios de Logro e Índice IAP', badge: 'Evaluación' }
+            };
+
+            function switchTab(tabId) {
+                // Desactivar todos los botones de pestaña y paneles de contenido
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                // Activar el botón de pestaña y el panel de contenido correspondiente
+                const activeBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+                const activePane = document.getElementById(`tab-${tabId}`);
+                
+                if (activeBtn && activePane) {
+                    activeBtn.classList.add('active');
+                    activePane.classList.add('active');
+
+                    // Actualizar el título y la etiqueta del panel
+                    const headerInfo = tabHeaders[tabId];
+                    if (headerInfo) {
+                        activeTabTitle.innerText = headerInfo.title;
+                        activeTabBadge.innerText = headerInfo.badge;
+
+                        // Aplicar color de fase dinámico al badge
+                        const tabColor = activeBtn.style.getPropertyValue('--tab-color');
+                        activeTabBadge.style.color = tabColor;
+                        activeTabBadge.style.backgroundColor = tabColor.replace('rgb', 'rgba').replace(')', ', 0.1)');
+                        if (!tabColor.startsWith('rgb')) {
+                            // En caso de que se lean variables de CSS directamente en algunos motores
+                            activeTabBadge.style.color = `var(--color-${tabId === 'overview' ? 'overview' : tabId})`;
+                            activeTabBadge.style.backgroundColor = `rgba(var(--color-${tabId === 'overview' ? 'overview' : tabId}-rgb, 59, 130, 246), 0.1)`;
+                        }
+                    }
+                }
+            }
+
+            // Vincular evento click a los botones de la barra lateral
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -521,7 +521,6 @@
                 <h2 class="header-population-title">Estudiantes de Grado 11</h2>
                 <span class="header-sub-label">Fase 3: Construcción (Desarrollo)</span>
             </div>
-            <button class="close-dashboard-btn" id="close-recurso-btn">✕</button>
         </div>
     </header>
 
@@ -865,21 +864,6 @@
                 });
             });
 
-            // Configurar botón de cerrar (en caso de iframe)
-            const closeBtn = document.getElementById('close-recurso-btn');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', () => {
-                    if (window.parent && window.parent.closeAddieModal) {
-                        window.parent.closeAddieModal();
-                    } else {
-                        alert("Dashboard cerrado");
-                    }
-                });
-
-                if (window.self !== window.top) {
-                    closeBtn.style.display = 'block';
-                }
-            }
         });
     </script>
 </body>
