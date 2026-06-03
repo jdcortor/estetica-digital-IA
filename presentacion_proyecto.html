@@ -745,6 +745,344 @@
             font-weight: 700;
             color: var(--text-muted);
         }
+
+        /* --- DIAPOSITIVA 10: RECURSOS DEL PORTAFOLIO --- */
+        .portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .portfolio-table th, .portfolio-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .portfolio-table th {
+            background-color: #f9fafb;
+            font-family: var(--font-labels);
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .portfolio-table td strong {
+            color: var(--primary-blue);
+            font-family: var(--font-labels);
+            font-weight: 800;
+            font-size: 13.5px;
+        }
+        .phase-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            font-family: var(--font-labels);
+            text-align: center;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .phase-analisis-diseno { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+        .phase-diseno-desarrollo { background-color: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .phase-desarrollo-impl { background-color: #fff7ed; color: #c2410c; border-color: #ffedd5; }
+        .phase-implementacion { background-color: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+        .phase-impl-eval { background-color: #fff1f2; color: #be123c; border-color: #ffe4e6; }
+        .phase-diseno-impl-eval { background-color: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
+        .phase-evaluacion { background-color: #fff7ed; color: #c2410c; border-color: #ffedd5; }
+
+        /* --- DIAPOSITIVA 11: RECORRIDO DE APRENDIZAJE --- */
+        .learning-flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+            justify-content: center;
+        }
+        .flow-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: #f9fafb;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .flow-actor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+            flex-shrink: 0;
+            width: 140px;
+        }
+        .actor-icon-wrapper {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 2px solid var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--primary-blue);
+            box-shadow: 0 4px 6px rgba(37,99,235,0.06);
+        }
+        .flow-actor:last-child .actor-icon-wrapper {
+            background: #ecfdf5;
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            box-shadow: 0 4px 6px rgba(16,185,129,0.06);
+        }
+        .actor-name {
+            font-family: var(--font-labels);
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+        .actor-name span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .flow-arrow-icon {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+        .flow-process-card {
+            flex: 1;
+            background: #fffdf5;
+            border: 2px solid #fde68a;
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .process-card-title {
+            font-family: var(--font-labels);
+            font-size: 11px;
+            font-weight: 800;
+            color: #b45309;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            border-bottom: 1px dashed #fde68a;
+            padding-bottom: 4px;
+            margin-bottom: 2px;
+        }
+        .process-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 8px;
+        }
+        .process-step {
+            background: #ffffff;
+            border: 1px solid #fcd34d;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            color: var(--text-dark);
+        }
+        .decision-options {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .decision-pill {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: var(--font-labels);
+        }
+        .dec-accept { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .dec-modify { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .dec-reject { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        
+        .flow-bottom-row {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+        .bottom-row-title {
+            font-family: var(--font-labels);
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .bottom-row-title i {
+            color: var(--primary-blue);
+        }
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .bottom-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+        .bottom-card h4 {
+            font-family: var(--font-labels);
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 4px;
+        }
+        .bottom-card p {
+            font-size: 11.5px;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        /* --- DIAPOSITIVA 12: EVALUACIÓN DE RECURSOS --- */
+        .eval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex: 1;
+            align-items: stretch;
+            margin-top: 10px;
+        }
+        .eval-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-top: 4px solid var(--primary-blue);
+        }
+        .eval-card:last-child {
+            border-top-color: var(--accent-purple);
+        }
+        .eval-card h3 {
+            font-family: var(--font-labels);
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .eval-card:last-child h3 {
+            color: var(--accent-purple);
+        }
+        .eval-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            list-style: none;
+            padding: 0;
+        }
+        .eval-list li {
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: var(--text-dark);
+            position: relative;
+            padding-left: 20px;
+        }
+        .eval-list li::before {
+            content: "•";
+            color: var(--primary-blue);
+            font-size: 18px;
+            position: absolute;
+            left: 4px;
+            top: -2px;
+            font-weight: bold;
+        }
+        .eval-card:last-child .eval-list li::before {
+            color: var(--accent-purple);
+        }
+
+        /* --- CONTROLES DE ZOOM --- */
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 20px;
+            background: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .zoom-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .zoom-btn:hover {
+            background: var(--primary-blue);
+            color: #ffffff;
+            border-color: var(--primary-blue);
+        }
+        .zoom-val {
+            font-size: 12px;
+            font-weight: 700;
+            font-family: var(--font-labels);
+            min-width: 42px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+        .zoom-reset-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: var(--font-labels);
+            padding: 2px 8px;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .zoom-reset-btn:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+        }
     </style>
 </head>
 <body>
@@ -756,6 +1094,12 @@
                 <span>🎓</span> Proyecto de Clase
             </div>
             <div class="header-title">Integración Pedagógica de IA en Estética</div>
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="adjustZoom(-10)" title="Reducir texto"><i class="fa-solid fa-minus"></i></button>
+                <span class="zoom-val" id="zoom-val">100%</span>
+                <button class="zoom-btn" onclick="adjustZoom(10)" title="Aumentar texto"><i class="fa-solid fa-plus"></i></button>
+                <button class="zoom-reset-btn" onclick="adjustZoom(0)" title="Restablecer">100%</button>
+            </div>
         </div>
         <button class="close-btn" onclick="closePresentation()">
             <i class="fa-solid fa-circle-xmark"></i> Volver al Mapa
@@ -1104,28 +1448,149 @@
             </div>
 
             <!-- DIAPOSITIVA 10: RECURSOS DEL PORTAFOLIO -->
-            <div class="slide" style="padding: 0;">
+            <div class="slide">
+                <div class="slide-title-inline">Recursos del <span>Portafolio</span></div>
                 <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_10.png" alt="Recursos del Portafolio">
-                    </div>
+                    <table class="portfolio-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Recurso del portafolio</th>
+                                <th style="width: 25%;">Fase ADDIE</th>
+                                <th style="width: 50%;">Función pedagógica</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Cápsula introductoria</strong></td>
+                                <td><span class="phase-pill phase-analisis-diseno">Análisis - Diseño</span></td>
+                                <td>Contextualiza el problema y activa el interés inicial – fase de inmersión.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Museo digital & Técnicas</strong></td>
+                                <td><span class="phase-pill phase-diseno-desarrollo">Diseño - Desarrollo</span></td>
+                                <td>Exploración de referentes y técnicas estéticas sin sesgo algorítmico previo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Abanico de IAs</strong></td>
+                                <td><span class="phase-pill phase-diseno-desarrollo">Diseño - Desarrollo</span></td>
+                                <td>Selección informada de herramientas según función, uso permitido y advertencia ética.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Capacitación modular</strong></td>
+                                <td><span class="phase-pill phase-desarrollo-impl">Desarrollo - Impl.</span></td>
+                                <td>Orienta el uso gradual y responsable de los recursos digitales del portafolio.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Agente DaVinci (IA)</strong></td>
+                                <td><span class="phase-pill phase-implementacion">Implementación</span></td>
+                                <td>Retroalimentación formativa sobre bocetos: composición, color, equilibrio visual.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bitácora digital</strong></td>
+                                <td><span class="phase-pill phase-impl-eval">Impl. - Evaluación</span></td>
+                                <td>Registro de decisiones, versiones y reflexiones – prueba de la autoría humana.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Acuerdo ético</strong></td>
+                                <td><span class="phase-pill phase-diseno-impl-eval">Diseño - Impl. - Eval.</span></td>
+                                <td>Regula el uso transparente de IA a lo largo de todo el proceso formativo.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rúbrica • KPI • IAP</strong></td>
+                                <td><span class="phase-pill phase-evaluacion">Evaluación</span></td>
+                                <td>Valora el proceso, la trazabilidad y la agencia crítica del estudiante.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- DIAPOSITIVA 11: RECORRIDO DE APRENDIZAJE -->
-            <div class="slide" style="padding: 0;">
+            <div class="slide">
+                <div class="slide-title-inline">Recorrido de <span>Aprendizaje del Estudiante</span></div>
                 <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_11.png" alt="Recorrido de Aprendizaje del Estudiante">
+                    <div class="learning-flow-container">
+                        <!-- Top Row: Flow from DaVinci to Estudiante -->
+                        <div class="flow-top-row">
+                            <div class="flow-actor">
+                                <div class="actor-icon-wrapper">
+                                    <i class="fa-solid fa-robot"></i>
+                                </div>
+                                <div class="actor-name">Agente DaVinci<br><span>(IA)</span></div>
+                            </div>
+                            
+                            <i class="fa-solid fa-chevron-right flow-arrow-icon"></i>
+                            
+                            <div class="flow-process-card">
+                                <div class="process-card-title">El Camino Mental del Estudiante</div>
+                                <div class="process-steps">
+                                    <div class="process-step">La IA sugiere</div>
+                                    <i class="fa-solid fa-chevron-right flow-arrow-icon" style="font-size: 12px;"></i>
+                                    <div class="decision-options">
+                                        <div class="decision-pill dec-accept">[ Acepta ]</div>
+                                        <div class="decision-pill dec-modify">[ Modifica ]</div>
+                                        <div class="decision-pill dec-reject">[ Rechaza ]</div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right flow-arrow-icon" style="font-size: 12px;"></i>
+                                    <div class="process-step">Justifica la decisión</div>
+                                </div>
+                            </div>
+                            
+                            <i class="fa-solid fa-chevron-right flow-arrow-icon"></i>
+                            
+                            <div class="flow-actor">
+                                <div class="actor-icon-wrapper">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <div class="actor-name">Estudiante<br><span>(Editor Activo)</span></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom Row: Bitácora Digital -->
+                        <div class="flow-bottom-row">
+                            <div class="bottom-row-title">
+                                <i class="fa-solid fa-book"></i> Bitácora Digital de Creación
+                            </div>
+                            <div class="bottom-grid">
+                                <div class="bottom-card">
+                                    <h4>Registro de Prompts</h4>
+                                    <p>Evolución desde la instrucción inicial hasta el comando refinado.</p>
+                                </div>
+                                <div class="bottom-card">
+                                    <h4>Curaduría Ética</h4>
+                                    <p>Contraste entre la versión generada y el ajuste personal.</p>
+                                </div>
+                                <div class="bottom-card">
+                                    <h4>Justificación Activa</h4>
+                                    <p>El por qué detrás de aceptar o rechazar las sugerencias de DaVinci.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- DIAPOSITIVA 12: EVALUACIÓN DE RECURSOS -->
-            <div class="slide" style="padding: 0;">
+            <div class="slide">
+                <div class="slide-title-inline">Evaluación de <span>Recursos</span></div>
                 <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_12.png" alt="Evaluación de Recursos">
+                    <div class="eval-grid">
+                        <div class="eval-card">
+                            <h3><i class="fa-solid fa-list-check"></i> Rúbrica del Proyecto</h3>
+                            <ul class="eval-list">
+                                <li>Revisa si la propuesta cumple su fundamentación, objetivos, fases, integración de IA y evaluación.</li>
+                                <li>Se apoya en el uso constante de los recursos y el seguimiento continuo.</li>
+                                <li>Considera evidencias como bitácoras, iteraciones con DaVinci, decisiones y la declaración ética de uso de IA.</li>
+                            </ul>
+                        </div>
+                        <div class="eval-card">
+                            <h3><i class="fa-solid fa-star"></i> Rúbrica de Recursos</h3>
+                            <ul class="eval-list">
+                                <li>Permite a los estudiantes valorar la claridad, utilidad, accesibilidad y pertinencia de cada recurso del portafolio.</li>
+                                <li>Evalúa si ayudaron a comprender técnicas, elegir IAs, mejorar bocetos y registrar el proceso.</li>
+                                <li>Esta doble evaluación revisa la eficacia pedagógica y promueve autonomía y pensamiento crítico.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1227,6 +1692,23 @@
                 closePresentation();
             }
         });
+
+        // Zoom functionality
+        let currentZoom = 100;
+        function adjustZoom(amount) {
+            if (amount === 0) {
+                currentZoom = 100;
+            } else {
+                currentZoom = Math.min(Math.max(currentZoom + amount, 80), 160);
+            }
+            document.getElementById('zoom-val').innerText = `${currentZoom}%`;
+            
+            // Apply zoom style to all slide-body elements
+            const slideBodies = document.querySelectorAll('.slide-body');
+            slideBodies.forEach(body => {
+                body.style.zoom = currentZoom / 100;
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initDots();
