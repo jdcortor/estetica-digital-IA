@@ -172,7 +172,7 @@
         /* --- ESTILOS DE CONTENIDO --- */
         .slide-title-inline {
             font-family: var(--font-labels);
-            font-size: 34px;
+            font-size: 30px;
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 20px;
@@ -220,17 +220,17 @@
 
         .cover-title {
             font-family: var(--font-labels);
-            font-size: 58px;
+            font-size: 44px;
             font-weight: 900;
             color: var(--text-dark);
-            line-height: 1.1;
-            letter-spacing: -0.5px;
+            line-height: 1.2;
+            max-width: 950px;
         }
 
         .cover-authors {
             font-size: 16px;
             color: var(--text-muted);
-            margin-top: 40px;
+            margin-top: 35px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -254,7 +254,52 @@
             font-size: 18px;
         }
 
-        /* Slide 2: Naturaleza del Proyecto */
+        /* Slide 2: Diagnóstico y población */
+        .diagnostico-layout {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 30px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .diagnostico-left {
+            text-align: center;
+            background: #eff6ff;
+            border: 2px dashed #bfdbfe;
+            border-radius: 12px;
+            padding: 40px 20px;
+        }
+
+        .diagnostico-left h3 {
+            font-family: var(--font-labels);
+            font-size: 20px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .diagnostico-left .poblacion-badge {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 24px;
+            font-weight: 900;
+            padding: 10px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .diagnostico-right {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-dark);
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 20px;
+        }
+
+        /* Slide 3: Naturaleza del Proyecto */
         .nature-grid {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -566,6 +611,50 @@
             display: inline-block;
         }
 
+        /* Slide 9: ADDIE List */
+        .addie-text-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .addie-text-card {
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .addie-text-card i {
+            font-size: 20px;
+            color: var(--primary-blue);
+            margin-top: 2px;
+        }
+
+        .addie-text-card:nth-child(2) i { color: var(--accent-pink); }
+        .addie-text-card:nth-child(3) i { color: var(--accent-purple); }
+        .addie-text-card:nth-child(4) i { color: var(--accent-green); }
+        .addie-text-card:nth-child(5) i { color: var(--accent-orange); }
+        .addie-text-card:nth-child(6) i { color: var(--primary-blue); }
+
+        .addie-text-card div h4 {
+            font-family: var(--font-labels);
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .addie-text-card div p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
         /* Image-Only Slide styles */
         .slide-image-container {
             width: 100%;
@@ -682,10 +771,7 @@
                 <div class="slide-body">
                     <div class="cover-layout">
                         <div class="cover-badge">Sustentación de Proyecto</div>
-                        <h1 class="cover-title">IA en Educación</h1>
-                        <h2 class="cover-subtitle" style="font-size: 20px; font-weight: 500; color: var(--text-muted); margin-top: -10px;">
-                            Desarrollo de un repositorio de materiales didácticos apoyados en inteligencia artificial
-                        </h2>
+                        <h1 class="cover-title">Diseño de Materiales didácticos en la enseñanza de la asignatura de estética mediante IA</h1>
                         
                         <div class="cover-authors">
                             <span>Víctor Ardila-Bayona</span>
@@ -697,7 +783,23 @@
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 2: NATURALEZA DEL PROYECTO -->
+            <!-- DIAPOSITIVA 2: DIAGNÓSTICO Y POBLACIÓN -->
+            <div class="slide">
+                <div class="slide-title-inline">Diagnóstico y <span>Población</span></div>
+                <div class="slide-body">
+                    <div class="diagnostico-layout">
+                        <div class="diagnostico-left">
+                            <h3>Población Objetivo</h3>
+                            <div class="poblacion-badge">ESTUDIANTES GRADO 11</div>
+                        </div>
+                        <div class="diagnostico-right">
+                            Así, la selección y articulación de dichas herramientas se realiza en función de los objetivos pedagógicos planteados, orientados por el área de Estética y las necesidades específicas del contexto curricular de grado 11, permitiendo elegir las estrategias más adecuadas para el desarrollo, implementación y evaluación.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 3: NATURALEZA DEL PROYECTO -->
             <div class="slide">
                 <div class="slide-title-inline">Naturaleza del <span>Proyecto</span></div>
                 <div class="slide-body">
@@ -727,15 +829,6 @@
                                 <p style="margin-top: 5px;"><strong>Fundamentación:</strong> Transformar una problemática observada en el salón de clase en una oportunidad de integrar el uso de la IA en un proceso guiado.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DIAPOSITIVA 3: ANÁLISIS SITUACIONAL -->
-            <div class="slide" style="padding: 0;">
-                <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_3.png" alt="Análisis Situacional">
                     </div>
                 </div>
             </div>
@@ -959,56 +1052,80 @@
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 9: RUTA METODOLÓGICA I -->
-            <div class="slide" style="padding: 0;">
+            <!-- DIAPOSITIVA 9: ADDIE: RUTA METODOLÓGICA -->
+            <div class="slide">
+                <div class="slide-title-inline">ADDIE: Ruta Metodológica para el <span>Diseño Instruccional</span></div>
                 <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_9.png" alt="ADDIE Hacia la ruta metodológica (I)">
+                    <div class="addie-text-grid">
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-list-check"></i>
+                            <div>
+                                <h4>Estructura en Fases</h4>
+                                <p>ADDIE organiza el diseño de materiales educativos mediante cinco fases: Análisis, Diseño, Desarrollo, Implementación y Evaluación.</p>
+                            </div>
+                        </div>
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-bridge"></i>
+                            <div>
+                                <h4>Puente Pedagógico</h4>
+                                <p>En este proyecto, permite pasar de una problemática institucional a una propuesta pedagógica concreta para la asignatura de Estética.</p>
+                            </div>
+                        </div>
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-compass"></i>
+                            <div>
+                                <h4>Definición de Necesidades</h4>
+                                <p>Ayuda a definir qué necesita el estudiante, qué recursos crear, cómo implementarlos y evaluarlos en el transcurso del proyecto.</p>
+                            </div>
+                        </div>
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-link"></i>
+                            <div>
+                                <h4>Coherencia Curricular</h4>
+                                <p>Asegura la coherencia lógica entre la problemática inicial, los objetivos planteados, los materiales y el uso guiado de la IA.</p>
+                            </div>
+                        </div>
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-lightbulb"></i>
+                            <div>
+                                <h4>Intencionalidad de la IA</h4>
+                                <p>Permite que la IA tenga una intención pedagógica clara (exploración visual, retroalimentación formativa y desarrollo de autonomía).</p>
+                            </div>
+                        </div>
+                        <div class="addie-text-card">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            <div>
+                                <h4>Roles del Docente y Estudiante</h4>
+                                <p>El docente asume el rol de diseñador y mediador del aprendizaje, mientras que el estudiante actúa como usuario crítico registrando su proceso.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 10: RUTA METODOLÓGICA II -->
+            <!-- DIAPOSITIVA 10: RECURSOS DEL PORTAFOLIO -->
             <div class="slide" style="padding: 0;">
                 <div class="slide-body">
                     <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_10.png" alt="ADDIE Hacia la ruta metodológica (II)">
+                        <img src="sustentacion_export/slide_10.png" alt="Recursos del Portafolio">
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 11: RECURSOS -->
+            <!-- DIAPOSITIVA 11: RECORRIDO DE APRENDIZAJE -->
             <div class="slide" style="padding: 0;">
                 <div class="slide-body">
                     <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_11.png" alt="Recursos del Portafolio">
+                        <img src="sustentacion_export/slide_11.png" alt="Recorrido de Aprendizaje del Estudiante">
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 12: EVALUACIÓN Y TRAZABILIDAD -->
+            <!-- DIAPOSITIVA 12: EVALUACIÓN DE RECURSOS -->
             <div class="slide" style="padding: 0;">
                 <div class="slide-body">
                     <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_12.png" alt="Evaluación del Proceso y Trazabilidad">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DIAPOSITIVA 13: RÚBRICAS -->
-            <div class="slide" style="padding: 0;">
-                <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_13.png" alt="Rúbricas del Portafolio y Coevaluación">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DIAPOSITIVA 14: CIERRE -->
-            <div class="slide" style="padding: 0;">
-                <div class="slide-body">
-                    <div class="slide-image-container" style="border: none; background: transparent;">
-                        <img src="sustentacion_export/slide_14.png" alt="Cierre del Proyecto">
+                        <img src="sustentacion_export/slide_12.png" alt="Evaluación de Recursos">
                     </div>
                 </div>
             </div>
@@ -1027,7 +1144,7 @@
         </div>
         
         <div class="slide-counter" id="slide-counter-display">
-            Diapositiva 1 de 14
+            Diapositiva 1 de 12
         </div>
         
         <button id="next-btn" class="nav-btn" onclick="changeSlide(1)">
@@ -1082,6 +1199,7 @@
             nextBtn.disabled = index === slides.length - 1;
         }
 
+        // Keyboard and message controls for slide deck navigation
         function changeSlide(direction) {
             const nextIdx = currentSlideIndex + direction;
             showSlide(nextIdx);
