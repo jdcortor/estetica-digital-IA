@@ -668,6 +668,36 @@
             color: #ff4d4d;
             transform: scale(1.1);
         }
+
+        /* --- RUBRIC TOGGLE BUTTONS --- */
+        .rubric-toggle-btn {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rubric-toggle-btn.active {
+            background-color: var(--header-yellow) !important;
+            color: var(--header-dark) !important;
+            border-color: var(--header-yellow) !important;
+            box-shadow: 0 0 12px rgba(251, 208, 8, 0.3);
+        }
+
+        .rubric-toggle-btn:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-white);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -691,116 +721,287 @@
     <div class="main-container">
         
         <!-- MATRIZ DE RÚBRICA (IZQUIERDA) -->
-        <div class="rubric-panel">
-            <div class="panel-title">
-                <span>📋</span> Matriz de Desempeño
+        <div class="ru            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+                <div class="panel-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+                    <span>📋</span> Matriz de Desempeño
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="rubric-toggle-btn active" id="btn-toggle-student" onclick="switchRubric('estudiante')">
+                        <i class="fa-solid fa-user-graduate"></i> Estudiante (Proceso IAP)
+                    </button>
+                    <button class="rubric-toggle-btn" id="btn-toggle-teacher" onclick="switchRubric('profesor')">
+                        <i class="fa-solid fa-chalkboard-user"></i> Profesor (Proyecto)
+                    </button>
+                </div>
             </div>
-            <p class="rubric-description">
+            <p class="rubric-description" id="rubric-desc-text">
                 Esta rúbrica interactiva te permite evaluar el avance de tu portafolio digital y tus niveles de apropiación tecnológica y co-creación con IA en cada una de las fases del proyecto. <strong>Haz clic sobre el nivel obtenido en cada fila</strong> para calcular dinámicamente tu Índice de Aprobación del Proceso (IAP).
             </p>
 
-            <table class="rubric-table">
-                <thead>
-                    <tr>
-                        <th style="width: 170px;">Fase / Criterio</th>
-                        <th>5 - Excelente</th>
-                        <th>4 - Bueno</th>
-                        <th>3 - En Desarrollo</th>
-                        <th>2 - Crítico</th>
-                        <th>1 - Inicial</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- FILA 1: INMERSIÓN -->
-                    <tr class="rubric-row" id="row-inmersion">
-                        <td class="criterion-cell">
-                            <div class="criterion-title">Fase 1: Inmersión</div>
-                            <div class="criterion-weight">Ponderación: 20%</div>
-                        </td>
-                        <td class="level-cell lvl-5" onclick="selectLevel('inmersion', 5, this)">
-                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
-                            <div class="level-text">Explora activamente todos los entornos 3D, interactúa críticamente con los elementos y responde con profundidad a los estímulos iniciales.</div>
-                        </td>
-                        <td class="level-cell lvl-4" onclick="selectLevel('inmersion', 4, this)">
-                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
-                            <div class="level-text">Recorre la mayoría de los entornos 3D de inmersión y responde de forma completa a las actividades iniciales.</div>
-                        </td>
-                        <td class="level-cell lvl-3" onclick="selectLevel('inmersion', 3, this)">
-                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
-                            <div class="level-text">Realiza un recorrido parcial de los espacios tridimensionales y sus respuestas son descriptivas pero poco profundas.</div>
-                        </td>
-                        <td class="level-cell lvl-2" onclick="selectLevel('inmersion', 2, this)">
-                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
-                            <div class="level-text">Presenta dificultades para interactuar con los entornos inmersivos y sus reflexiones son mínimas o fragmentadas.</div>
-                        </td>
-                        <td class="level-cell lvl-1" onclick="selectLevel('inmersion', 1, this)">
-                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
-                            <div class="level-text">No realiza el recorrido inmersivo ni participa de las actividades de inducción y sensibilización.</div>
-                        </td>
-                    </tr>
+            <!-- TABLA DE RÚBRICA DEL ESTUDIANTE (PROCESO) -->
+            <div id="table-container-student">
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 170px;">Fase / Criterio</th>
+                            <th>5 - Excelente</th>
+                            <th>4 - Bueno</th>
+                            <th>3 - En Desarrollo</th>
+                            <th>2 - Crítico</th>
+                            <th>1 - Inicial</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- FILA 1: INMERSIÓN -->
+                        <tr class="rubric-row" id="row-inmersion">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Fase 1: Inmersión</div>
+                                <div class="criterion-weight">Ponderación: 20%</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('inmersion', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Explora activamente todos los entornos 3D, interactúa críticamente con los elementos y responde con profundidad a los estímulos iniciales.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('inmersion', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Recorre la mayoría de los entornos 3D de inmersión y responde de forma completa a las actividades iniciales.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('inmersion', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Realiza un recorrido parcial de los espacios tridimensionales y sus respuestas son descriptivas pero poco profundas.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('inmersion', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">Presenta dificultades para interactuar con los entornos inmersivos y sus reflexiones son mínimas o fragmentadas.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('inmersion', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">No realiza el recorrido inmersivo ni participa de las actividades de inducción y sensibilización.</div>
+                            </td>
+                        </tr>
 
-                    <!-- FILA 2: APROPIACIÓN -->
-                    <tr class="rubric-row" id="row-apropiacion">
-                        <td class="criterion-cell">
-                            <div class="criterion-title">Fase 2: Apropiación</div>
-                            <div class="criterion-weight">Ponderación: 25%</div>
-                        </td>
-                        <td class="level-cell lvl-5" onclick="selectLevel('apropiacion', 5, this)">
-                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
-                            <div class="level-text">Comprende rigurosamente el abanico de IAs y demuestra honestidad académica firmando y aplicando el Acuerdo Ético en su práctica.</div>
-                        </td>
-                        <td class="level-cell lvl-4" onclick="selectLevel('apropiacion', 4, this)">
-                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
-                            <div class="level-text">Identifica de forma clara las herramientas de IA y completa el Acuerdo Ético con compromisos válidos de uso responsable.</div>
-                        </td>
-                        <td class="level-cell lvl-3" onclick="selectLevel('apropiacion', 3, this)">
-                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
-                            <div class="level-text">Conoce superficialmente las herramientas de IA disponibles y suscribe el pacto ético de forma automática o incompleta.</div>
-                        </td>
-                        <td class="level-cell lvl-2" onclick="selectLevel('apropiacion', 2, this)">
-                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
-                            <div class="level-text">Muestra confusión sobre las herramientas de IA y no asume compromisos claros de honestidad intelectual.</div>
-                        </td>
-                        <td class="level-cell lvl-1" onclick="selectLevel('apropiacion', 1, this)">
-                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
-                            <div class="level-text">Evade el uso de los recursos de capacitación y no completa el Acuerdo Ético obligatorio.</div>
-                        </td>
-                    </tr>
+                        <!-- FILA 2: APROPIACIÓN -->
+                        <tr class="rubric-row" id="row-apropiacion">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Fase 2: Apropiación</div>
+                                <div class="criterion-weight">Ponderación: 25%</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('apropiacion', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Comprende rigurosamente el abanico de IAs y demuestra honestidad académica firmando y aplicando el Acuerdo Ético en su práctica.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('apropiacion', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Identifica de forma clara las herramientas de IA y completa el Acuerdo Ético con compromisos válidos de uso responsable.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('apropiacion', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Conoce superficialmente las herramientas de IA disponibles y suscribe el pacto ético de forma automática o incompleta.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('apropiacion', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">Muestra confusión sobre las herramientas de IA y no asume compromisos claros de honestidad intelectual.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('apropiacion', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">Evade el uso de los recursos de capacitación y no completa el Acuerdo Ético obligatorio.</div>
+                            </td>
+                        </tr>
 
-                    <!-- FILA 3: CONSTRUCCIÓN -->
-                    <tr class="rubric-row" id="row-construccion">
-                        <td class="criterion-cell">
-                            <div class="criterion-title">Fase 3: Construcción</div>
-                            <div class="criterion-weight">Ponderación: 55%</div>
-                        </td>
-                        <td class="level-cell lvl-5" onclick="selectLevel('construccion', 5, this)">
-                            <div class="level-header">Excelente <span class="level-score">5.0</span></div>
-                            <div class="level-text">Desarrolla un prototipo estético robusto con DaVinci, justificando críticamente cada edición, y registra minuciosamente su agencia en la bitácora.</div>
-                        </td>
-                        <td class="level-cell lvl-4" onclick="selectLevel('construccion', 4, this)">
-                            <div class="level-header">Bueno <span class="level-score">4.0</span></div>
-                            <div class="level-text">Construye un prototipo funcional con ayuda de DaVinci y documenta adecuadamente las variaciones y decisiones en la bitácora.</div>
-                        </td>
-                        <td class="level-cell lvl-3" onclick="selectLevel('construccion', 3, this)">
-                            <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
-                            <div class="level-text">El prototipo tiene un avance básico con IA, pero la documentación en la bitácora carece de justificaciones reflexivas detalladas.</div>
-                        </td>
-                        <td class="level-cell lvl-2" onclick="selectLevel('construccion', 2, this)">
-                            <div class="level-header">Crítico <span class="level-score">2.0</span></div>
-                            <div class="level-text">El prototipo presenta fallos técnicos notables o se limita a copiar la salida de la IA sin registrar el proceso de curaduría.</div>
-                        </td>
-                        <td class="level-cell lvl-1" onclick="selectLevel('construccion', 1, this)">
-                            <div class="level-header">Inicial <span class="level-score">1.0</span></div>
-                            <div class="level-text">No presenta avances del prototipo de la técnica seleccionada ni registra entradas coherentes en su bitácora digital.</div>
-                        </td>
-                    </tr>
+                        <!-- FILA 3: CONSTRUCCIÓN -->
+                        <tr class="rubric-row" id="row-construccion">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Fase 3: Construcción</div>
+                                <div class="criterion-weight">Ponderación: 55%</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('construccion', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Desarrolla un prototipo estético robusto con DaVinci, justificando críticamente cada edición, y registra minuciosamente su agencia en la bitácora.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('construccion', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Construye un prototipo funcional con ayuda de DaVinci y documenta adecuadamente las variaciones y decisiones en la bitácora.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('construccion', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">El prototipo tiene un avance básico con IA, pero la documentación en la bitácora carece de justificaciones reflexivas detalladas.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('construccion', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">El prototipo presenta fallos técnicos notables o se limita a copiar la salida de la IA sin registrar el proceso de curaduría.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('construccion', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">No presenta avances del prototipo de la técnica seleccionada ni registra entradas coherentes en su bitácora digital.</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TABLA DE RÚBRICA DEL PROFESOR (PROYECTO) -->
+            <div id="table-container-teacher" style="display: none;">
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 170px;">Criterio de Evaluación</th>
+                            <th>5 - Excelente</th>
+                            <th>4 - Bueno</th>
+                            <th>3 - En Desarrollo</th>
+                            <th>2 - Crítico</th>
+                            <th>1 - Inicial</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- FILA 1: NATURALEZA -->
+                        <tr class="rubric-row" id="row-naturaleza">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Naturaleza del Proyecto</div>
+                                <div class="criterion-weight">Justificación y Fundamentación</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('naturaleza', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Justifica la problemática con un diagnóstico claro y detallado. El fundamento teórico es sólido, actualizado y articula conceptos como IA-TPACK y mediación pedagógica.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('naturaleza', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Presenta un diagnóstico claro y casi todas las razones de importancia. La fundamentación es pertinente pero con menor profundidad teórica.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('naturaleza', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Presenta pocas razones de peso en la justificación. El fundamento teórico es básico o tiene vacíos conceptuales.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('naturaleza', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">No presenta razones de peso para la realización del proyecto. El fundamento teórico es nulo o irrelevante.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('naturaleza', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">No presenta diagnóstico ni fundamentación teórica que sustente la propuesta.</div>
+                            </td>
+                        </tr>
+
+                        <!-- FILA 2: OBJETIVOS -->
+                        <tr class="rubric-row" id="row-objetivos">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Objetivos y Metas</div>
+                                <div class="criterion-weight">Metas del Proyecto</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('objetivos', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Los objetivos están correctamente planteados y desagregados. Las metas cumplen con calidad, cantidad y tiempo y están alineadas con la finalidad del proyecto.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('objetivos', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Los objetivos están bien planteados pero la desagregación es parcial. Las metas cumplen solo con dos de los tres elementos (calidad, cantidad, tiempo).</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('objetivos', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Los objetivos tienen errores de planteamiento. Las metas consideran solo uno de los tres elementos requeridos.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('objetivos', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">Los objetivos no están bien planteados ni desagregados. Las metas no consideran calidad, cantidad ni tiempo.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('objetivos', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">Ausencia de objetivos y metas formuladas en el documento.</div>
+                            </td>
+                        </tr>
+
+                        <!-- FILA 3: PLANIFICACIÓN METODOLÓGICA -->
+                        <tr class="rubric-row" id="row-metodologia">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Planificación Metodológica</div>
+                                <div class="criterion-weight">Fases del Proyecto (ADDIE)</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('metodologia', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Identifica el desarrollo de todas las fases (ADDIE) con responsables y productos claros. Existe completa coherencia entre fases y actividades.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('metodologia', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Identifica las fases de desarrollo pero algunos responsables o productos son vagos. Hay coherencia general pero con errores menores.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('metodologia', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Las fases están descritas superficialmente. Existe poca coherencia entre las fases planteadas y los recursos destinados.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('metodologia', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">No se comprende el desarrollo de las fases ni la metodología aplicada. No hay coherencia entre actividades y recursos.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('metodologia', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">No se define una metodología ni se estructuran las fases del proyecto.</div>
+                            </td>
+                        </tr>
+
+                        <!-- FILA 4: INTEGRACIÓN DE IA -->
+                        <tr class="rubric-row" id="row-integracion">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Integración de la IA</div>
+                                <div class="criterion-weight">Calidad de Recursos</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('integracion', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Identifica materiales innovadores (ej. Agente DaVinci, Abanico de IA). Demuestra un uso ético, pedagógico y transparente en todo el portafolio.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('integracion', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">Los materiales integran IA de forma adecuada pero falta profundidad en el uso pedagógico. La declaración ética es general.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('integracion', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Se integran herramientas de IA de forma elemental (ej. solo generación de texto) sin una curaduría profunda.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('integracion', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">El uso de la IA es poco claro o no se evidencia su integración en los materiales desarrollados.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('integracion', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">No existe integración de IA en los materiales ni se considera el uso ético en la propuesta.</div>
+                            </td>
+                        </tr>
+
+                        <!-- FILA 5: CRONOGRAMA Y EVALUACIÓN -->
+                        <tr class="rubric-row" id="row-cronograma">
+                            <td class="criterion-cell">
+                                <div class="criterion-title">Cronograma y Evaluación</div>
+                                <div class="criterion-weight">Plan de Trabajo y Rúbrica</div>
+                            </td>
+                            <td class="level-cell lvl-5" onclick="selectLevel('cronograma', 5, this)">
+                                <div class="level-header">Excelente <span class="level-score">5.0</span></div>
+                                <div class="level-text">Presenta un cronograma detallado por semana y una rúbrica de evaluación que abarca todos los aspectos del proyecto. La evaluación se vincula a cada fase.</div>
+                            </td>
+                            <td class="level-cell lvl-4" onclick="selectLevel('cronograma', 4, this)">
+                                <div class="level-header">Bueno <span class="level-score">4.0</span></div>
+                                <div class="level-text">El cronograma es claro pero carece de detalle semanal. La evaluación considera los objetivos pero tiene errores en su planteamiento por fase.</div>
+                            </td>
+                            <td class="level-cell lvl-3" onclick="selectLevel('cronograma', 3, this)">
+                                <div class="level-header">En Desarrollo <span class="level-score">3.0</span></div>
+                                <div class="level-text">Cronograma incompleto o muy general. La evaluación está poco definida y solo toma parcialmente los objetivos.</div>
+                            </td>
+                            <td class="level-cell lvl-2" onclick="selectLevel('cronograma', 2, this)">
+                                <div class="level-header">Crítico <span class="level-score">2.0</span></div>
+                                <div class="level-text">El cronograma es confuso y la evaluación no toma en cuenta los objetivos ni las fases del proyecto.</div>
+                            </td>
+                            <td class="level-cell lvl-1" onclick="selectLevel('cronograma', 1, this)">
+                                <div class="level-header">Inicial <span class="level-score">1.0</span></div>
+                                <div class="level-text">Ausencia de cronograma y de un instrumento o plan de evaluación para el proyecto.</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>                </tr>
                 </tbody>
             </table>
         </div>
 
         <!-- CALCULADORA DE IAP (DERECHA) -->
         <div class="calculator-panel">
-            <div class="calc-header">
+            <div class="calc-header" id="calc-header-title">
                 📊 Calculadora de IAP
             </div>
 
@@ -828,7 +1029,8 @@
                 </div>
             </div>
 
-            <div class="calc-details">
+            <!-- DETALLES MULTI-RÚBRICA -->
+            <div class="calc-details" id="details-student">
                 <div class="detail-row">
                     <span class="detail-label">Inmersión (I):</span>
                     <span class="detail-value" id="val-inmersion">--</span>
@@ -843,9 +1045,38 @@
                 </div>
             </div>
 
-            <div class="formula-card">
+            <div class="calc-details" id="details-teacher" style="display: none;">
+                <div class="detail-row">
+                    <span class="detail-label">Naturaleza (N):</span>
+                    <span class="detail-value" id="val-naturaleza">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Objetivos (O):</span>
+                    <span class="detail-value" id="val-objetivos">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Metodología (M):</span>
+                    <span class="detail-value" id="val-metodologia">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Integración IA (I):</span>
+                    <span class="detail-value" id="val-integracion">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Cronograma (C):</span>
+                    <span class="detail-value" id="val-cronograma">--</span>
+                </div>
+            </div>
+
+            <!-- FÓRMULAS MULTI-RÚBRICA -->
+            <div class="formula-card" id="formula-student">
                 El Índice de Aprobación del Proceso se pondera según la fórmula:
                 <div class="formula-math">IAP = 0.20·I + 0.25·C + 0.55·D</div>
+            </div>
+
+            <div class="formula-card" id="formula-teacher" style="display: none;">
+                La Nota del Proyecto es el promedio de los 5 criterios:
+                <div class="formula-math">Nota = (N + O + M + I + C) / 5</div>
             </div>
 
             <button class="save-report-btn" onclick="saveEvaluationReport()">
@@ -886,12 +1117,21 @@
         ];
 
         // --- VARIABLES DE EVALUACIÓN ---
-        let scores = {
+        let studentScores = {
             inmersion: 0,
             apropiacion: 0,
             construccion: 0
         };
 
+        let teacherScores = {
+            naturaleza: 0,
+            objetivos: 0,
+            metodologia: 0,
+            integracion: 0,
+            cronograma: 0
+        };
+
+        let activeRubric = 'estudiante'; // 'estudiante' o 'profesor'
         let activeStudent = null;
 
         // Cargar sesión del estudiante desde localStorage (de acuerdo_etico o bitacora_session)
@@ -954,26 +1194,34 @@
 
         // Cargar las puntuaciones del estudiante activo
         function loadStudentScores() {
-            const key = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
-            const storedEval = localStorage.getItem(key);
+            const studentKey = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
+            const teacherKey = activeStudent ? `teacher_eval_${activeStudent.code}` : 'teacher_eval_guest';
             
-            if (storedEval) {
-                scores = JSON.parse(storedEval);
-                restoreSelectedLevels();
+            const storedStudent = localStorage.getItem(studentKey);
+            const storedTeacher = localStorage.getItem(teacherKey);
+            
+            if (storedStudent) {
+                studentScores = JSON.parse(storedStudent);
             } else {
-                // Si no hay evaluación, vaciar y deseleccionar
-                scores = {
-                    inmersion: 0,
-                    apropiacion: 0,
-                    construccion: 0
-                };
-                restoreSelectedLevels();
+                studentScores = { inmersion: 0, apropiacion: 0, construccion: 0 };
             }
+
+            if (storedTeacher) {
+                teacherScores = JSON.parse(storedTeacher);
+            } else {
+                teacherScores = { naturaleza: 0, objetivos: 0, metodologia: 0, integracion: 0, cronograma: 0 };
+            }
+            
+            restoreSelectedLevels();
         }
 
         // Seleccionar un nivel y deseleccionar los otros de la misma fila
         function selectLevel(criterion, val, element) {
-            scores[criterion] = val;
+            if (activeRubric === 'estudiante') {
+                studentScores[criterion] = val;
+            } else {
+                teacherScores[criterion] = val;
+            }
 
             // Deseleccionar hermanos
             const row = element.parentElement;
@@ -984,52 +1232,82 @@
             element.classList.add('selected');
 
             // Actualizar etiquetas laterales
-            document.getElementById(`val-${criterion}`).innerText = `${val.toFixed(1)} / 5.0`;
+            const valEl = document.getElementById(`val-${criterion}`);
+            if (valEl) valEl.innerText = `${val.toFixed(1)} / 5.0`;
 
-            calculateIAP();
+            calculateActiveScore();
         }
 
         // Restaurar niveles basados en la base de datos guardada
         function restoreSelectedLevels() {
-            // Deseleccionar todas las celdas primero
+            // Deseleccionar todas las celdas primero en ambas tablas
             document.querySelectorAll('.level-cell').forEach(c => c.classList.remove('selected'));
             
-            for (const key in scores) {
-                const val = scores[key];
+            // Cargar datos para Estudiante
+            for (const key in studentScores) {
+                const val = studentScores[key];
                 if (val > 0) {
                     const rowId = `row-${key}`;
-                    const element = document.querySelector(`#${rowId} .lvl-${val}`);
+                    const element = document.querySelector(`#table-container-student #${rowId} .lvl-${val}`);
                     if (element) {
-                        selectLevel(key, val, element);
+                        element.classList.add('selected');
+                        const valEl = document.getElementById(`val-${key}`);
+                        if (valEl) valEl.innerText = `${val.toFixed(1)} / 5.0`;
                     }
                 } else {
-                    document.getElementById(`val-${key}`).innerText = '--';
+                    const valEl = document.getElementById(`val-${key}`);
+                    if (valEl) valEl.innerText = '--';
                 }
             }
-            calculateIAP();
+
+            // Cargar datos para Profesor
+            for (const key in teacherScores) {
+                const val = teacherScores[key];
+                if (val > 0) {
+                    const rowId = `row-${key}`;
+                    const element = document.querySelector(`#table-container-teacher #${rowId} .lvl-${val}`);
+                    if (element) {
+                        element.classList.add('selected');
+                        const valEl = document.getElementById(`val-${key}`);
+                        if (valEl) valEl.innerText = `${val.toFixed(1)} / 5.0`;
+                    }
+                } else {
+                    const valEl = document.getElementById(`val-${key}`);
+                    if (valEl) valEl.innerText = '--';
+                }
+            }
+
+            calculateActiveScore();
         }
 
-        // Calcular el Índice de Aprobación del Proceso
-        function calculateIAP() {
-            const I = scores.inmersion || 0;
-            const C = scores.apropiacion || 0;
-            const D = scores.construccion || 0;
+        // Calcular la puntuación activa (IAP ponderado o Promedio Simple)
+        function calculateActiveScore() {
+            let finalScore = 0;
 
-            const iap = (0.20 * I) + (0.25 * C) + (0.55 * D);
+            if (activeRubric === 'estudiante') {
+                const I = studentScores.inmersion || 0;
+                const C = studentScores.apropiacion || 0;
+                const D = studentScores.construccion || 0;
+                finalScore = (0.20 * I) + (0.25 * C) + (0.55 * D);
+            } else {
+                const N = teacherScores.naturaleza || 0;
+                const O = teacherScores.objetivos || 0;
+                const M = teacherScores.metodologia || 0;
+                const I_ia = teacherScores.integracion || 0;
+                const C_cr = teacherScores.cronograma || 0;
+                finalScore = (N + O + M + I_ia + C_cr) / 5;
+            }
             
             // Actualizar texto del valor
-            document.getElementById('iap-value-text').innerText = iap.toFixed(2);
+            document.getElementById('iap-value-text').innerText = finalScore.toFixed(2);
 
             // Actualizar círculo de progreso (SVG)
-            // Radio de 60 -> Perímetro de 2 * PI * 60 ≈ 377
             const circle = document.getElementById('gauge-fill-circle');
             const circumference = 2 * Math.PI * 60; // ≈ 376.99
             
-            // Normalizar el IAP de 1.0-5.0 a 0-100%
-            // Si el mínimo es 1.0 y el máximo es 5.0, el porcentaje de avance es: (iap - 1) / (5 - 1)
             let percent = 0;
-            if (iap > 0) {
-                percent = (iap - 1) / 4;
+            if (finalScore > 0) {
+                percent = (finalScore - 1) / 4;
             }
             if (percent < 0) percent = 0;
             if (percent > 1) percent = 1;
@@ -1042,19 +1320,19 @@
             const badge = document.getElementById('iap-range-badge');
             badge.className = 'iap-range-badge'; // Reset
 
-            if (iap >= 4.5) {
+            if (finalScore >= 4.5) {
                 badge.innerText = 'Excelente';
                 badge.classList.add('badge-excelente');
                 circle.style.stroke = 'var(--excelente)';
-            } else if (iap >= 3.8) {
+            } else if (finalScore >= 3.8) {
                 badge.innerText = 'Bueno';
                 badge.classList.add('badge-bueno');
                 circle.style.stroke = 'var(--bueno)';
-            } else if (iap >= 3.0) {
+            } else if (finalScore >= 3.0) {
                 badge.innerText = 'En Desarrollo';
                 badge.classList.add('badge-desarrollo');
                 circle.style.stroke = 'var(--desarrollo)';
-            } else if (iap >= 2.0) {
+            } else if (finalScore >= 2.0) {
                 badge.innerText = 'Crítico';
                 badge.classList.add('badge-critico');
                 circle.style.stroke = 'var(--critico)';
@@ -1067,24 +1345,85 @@
 
         // Guardar la evaluación actual en el LocalStorage
         function saveEvaluationReport() {
-            if (!scores.inmersion || !scores.apropiacion || !scores.construccion) {
-                alert('Por favor, selecciona tu nivel de desempeño para todas las fases antes de guardar.');
-                return;
+            if (activeRubric === 'estudiante') {
+                if (!studentScores.inmersion || !studentScores.apropiacion || !studentScores.construccion) {
+                    alert('Por favor, selecciona tu nivel de desempeño para todas las fases antes de guardar.');
+                    return;
+                }
+
+                const key = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
+                localStorage.setItem(key, JSON.stringify(studentScores));
+
+                const I = studentScores.inmersion;
+                const C = studentScores.apropiacion;
+                const D = studentScores.construccion;
+                const iap = (0.20 * I) + (0.25 * C) + (0.55 * D);
+                localStorage.setItem(activeStudent ? `iap_score_${activeStudent.code}` : 'iap_score_guest', iap.toFixed(2));
+            } else {
+                if (!teacherScores.naturaleza || !teacherScores.objetivos || !teacherScores.metodologia || !teacherScores.integracion || !teacherScores.cronograma) {
+                    alert('Por favor, selecciona tu nivel de desempeño para todos los criterios del proyecto antes de guardar.');
+                    return;
+                }
+
+                const key = activeStudent ? `teacher_eval_${activeStudent.code}` : 'teacher_eval_guest';
+                localStorage.setItem(key, JSON.stringify(teacherScores));
+
+                const N = teacherScores.naturaleza;
+                const O = teacherScores.objetivos;
+                const M = teacherScores.metodologia;
+                const I_ia = teacherScores.integracion;
+                const C_cr = teacherScores.cronograma;
+                const notaProyecto = (N + O + M + I_ia + C_cr) / 5;
+                localStorage.setItem(activeStudent ? `teacher_score_${activeStudent.code}` : 'teacher_score_guest', notaProyecto.toFixed(2));
             }
 
-            const key = activeStudent ? `iap_eval_${activeStudent.code}` : 'iap_eval_guest';
-            localStorage.setItem(key, JSON.stringify(scores));
-
-            // Guardar también la nota final IAP en el perfil
-            const I = scores.inmersion;
-            const C = scores.apropiacion;
-            const D = scores.construccion;
-            const iap = (0.20 * I) + (0.25 * C) + (0.55 * D);
-
-            localStorage.setItem(activeStudent ? `iap_score_${activeStudent.code}` : 'iap_score_guest', iap.toFixed(2));
-
             const studentName = activeStudent ? activeStudent.name : 'Invitado';
-            alert(`La evaluación y cálculo del Índice IAP para ${studentName} se han guardado correctamente.`);
+            const rubricaName = activeRubric === 'estudiante' ? 'de Portafolio (IAP)' : 'de Proyecto (Profesor)';
+            alert(`La evaluación de la Rúbrica ${rubricaName} para ${studentName} se ha guardado correctamente.`);
+        }
+
+        // Alternar entre rúbricas
+        function switchRubric(rubricType) {
+            activeRubric = rubricType;
+
+            const btnStudent = document.getElementById('btn-toggle-student');
+            const btnTeacher = document.getElementById('btn-toggle-teacher');
+
+            const containerStudent = document.getElementById('table-container-student');
+            const containerTeacher = document.getElementById('table-container-teacher');
+
+            const detailsStudent = document.getElementById('details-student');
+            const detailsTeacher = document.getElementById('details-teacher');
+            const formulaStudent = document.getElementById('formula-student');
+            const formulaTeacher = document.getElementById('formula-teacher');
+            const headerTitle = document.getElementById('calc-header-title');
+            const descText = document.getElementById('rubric-desc-text');
+
+            if (rubricType === 'estudiante') {
+                btnStudent.classList.add('active');
+                btnTeacher.classList.remove('active');
+                containerStudent.style.display = 'block';
+                containerTeacher.style.display = 'none';
+                detailsStudent.style.display = 'flex';
+                detailsTeacher.style.display = 'none';
+                formulaStudent.style.display = 'block';
+                formulaTeacher.style.display = 'none';
+                headerTitle.innerHTML = '📊 Calculadora de IAP';
+                descText.innerHTML = 'Esta rúbrica interactiva te permite evaluar el avance de tu portafolio digital y tus niveles de apropiación tecnológica y co-creación con IA en cada una de las fases del proyecto. <strong>Haz clic sobre el nivel obtenido en cada fila</strong> para calcular dinámicamente tu Índice de Aprobación del Proceso (IAP).';
+            } else {
+                btnStudent.classList.remove('active');
+                btnTeacher.classList.add('active');
+                containerStudent.style.display = 'none';
+                containerTeacher.style.display = 'block';
+                detailsStudent.style.display = 'none';
+                detailsTeacher.style.display = 'flex';
+                formulaStudent.style.display = 'none';
+                formulaTeacher.style.display = 'block';
+                headerTitle.innerHTML = '📊 Nota del Proyecto';
+                descText.innerHTML = 'Esta rúbrica interactiva permite al docente evaluar la estructura general, fundamentación y planificación metodológica del proyecto de clase. <strong>Haz clic sobre el nivel de desempeño en cada criterio</strong> para calcular la nota final del proyecto.';
+            }
+
+            restoreSelectedLevels();
         }
 
         // --- FUNCIONES PARA POPUP ADDIE ---
