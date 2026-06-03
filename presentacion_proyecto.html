@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentación Proyecto de Clase: IA en Educación</title>
+    <title>Sustentación de Proyecto: IA en Educación</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,17 +12,17 @@
     
     <style>
         :root {
-            --bg-dark: #121214;
-            --panel-bg: rgba(30, 30, 34, 0.85);
-            --panel-border: rgba(255, 255, 255, 0.08);
-            --text-white: #ffffff;
-            --text-muted: #a0a0ab;
-            --header-yellow: #fbd008;
-            --header-yellow-hover: #e5bd00;
-            --accent-purple: #6c53a3;
-            --accent-blue: #30a0e0;
-            --accent-pink: #f4629e;
-            --accent-green: #5cc472;
+            --bg-light: #f3f4f6;
+            --slide-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --text-dark: #1f2937;
+            --text-muted: #4b5563;
+            --primary-blue: #2563eb;
+            --primary-blue-hover: #1d4ed8;
+            --accent-purple: #7c3aed;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
             --font-main: 'Montserrat', sans-serif;
             --font-labels: 'Nunito', sans-serif;
         }
@@ -36,13 +36,8 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(rgba(251, 208, 8, 0.03) 2px, transparent 2px),
-                radial-gradient(circle at 80% 20%, rgba(108, 83, 163, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 10% 80%, rgba(48, 160, 228, 0.12) 0%, transparent 50%);
-            background-size: 24px 24px, 100% 100%, 100% 100%;
-            color: var(--text-white);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             font-family: var(--font-main);
             overflow: hidden;
             display: flex;
@@ -52,67 +47,67 @@
         /* Custom Scrollbars inside slides */
         ::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
+            background: #f3f4f6;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1);
+            background: #d1d5db;
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--header-yellow);
+            background: #9ca3af;
         }
 
         /* --- CABECERA --- */
         .presentation-header {
-            height: 70px;
-            background: rgba(34, 33, 33, 0.9);
-            border-bottom: 2px solid var(--header-yellow);
+            height: 65px;
+            background: #ffffff;
+            border-bottom: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
+            padding: 0 24px;
             z-index: 10;
-            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .header-logo-placeholder {
+        .header-logo {
             font-family: var(--font-labels);
             font-weight: 900;
-            color: var(--header-yellow);
-            font-size: 20px;
-            letter-spacing: 0.5px;
+            color: var(--primary-blue);
+            font-size: 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .header-title {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             font-weight: 500;
-            border-left: 1px solid rgba(255,255,255,0.2);
-            padding-left: 15px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 12px;
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #ffffff;
+            background: #f3f4f6;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
             font-family: var(--font-main);
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -121,7 +116,7 @@
         .close-btn:hover {
             background: #ef4444;
             border-color: #ef4444;
-            transform: scale(1.03);
+            color: #ffffff;
         }
 
         /* --- CONTENEDOR DE DIAPOSITIVAS --- */
@@ -133,14 +128,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
         .slide-deck {
             position: relative;
-            width: 90%;
-            height: 85%;
-            max-width: 1300px;
-            max-height: 700px;
+            width: 100%;
+            height: 100%;
+            max-width: 1250px;
+            max-height: 680px;
         }
 
         .slide {
@@ -149,18 +145,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            background: var(--slide-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             opacity: 0;
-            transform: translateX(100px) scale(0.95);
+            transform: translateX(80px) scale(0.98);
             pointer-events: none;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .slide.active {
@@ -171,525 +166,499 @@
 
         .slide.prev-slide {
             opacity: 0;
-            transform: translateX(-100px) scale(0.95);
+            transform: translateX(-80px) scale(0.98);
         }
 
         /* --- ESTILOS DE CONTENIDO --- */
         .slide-header {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 12px;
             flex-shrink: 0;
         }
-
-        .slide-badge {
-            background: var(--accent-purple);
-            color: #ffffff;
-            font-family: var(--font-labels);
-            font-weight: 800;
-            font-size: 11px;
-            padding: 4px 12px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .slide-badge.b-f1 { background: var(--accent-blue); }
-        .slide-badge.b-f2 { background: var(--accent-pink); }
-        .slide-badge.b-f3 { background: var(--accent-purple); }
-        .slide-badge.b-f4 { background: var(--accent-green); }
 
         .slide-title {
             font-family: var(--font-labels);
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
-            color: #ffffff;
+            color: var(--text-dark);
         }
 
         .slide-title span {
-            color: var(--header-yellow);
+            color: var(--primary-blue);
         }
 
-        .slide-content-grid {
+        .slide-body {
             flex: 1;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 30px;
             overflow-y: auto;
-            padding-right: 5px;
+            display: flex;
+            flex-direction: column;
+            padding-right: 4px;
         }
 
-        .slide-content-full {
-            flex: 1;
+        /* Slide 1: Portada */
+        .cover-layout {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-align: center;
-            max-width: 950px;
-            margin: 0 auto;
-            gap: 20px;
-            width: 100%;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .text-block p {
-            font-size: 14.5px;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        .text-block strong {
-            color: #ffffff;
-        }
-
-        /* --- NUEVOS COMPONENTES DIAGRAMACIÓN (TEMA OSCURO VIDRIO) --- */
-        
-        /* Layout Portada */
-        .slide-content-grid.bleed-cover {
-            grid-template-columns: 1.2fr 0.8fr;
-            padding: 0;
             align-items: center;
-        }
-
-        .slide-content-grid.bleed-cover .cover-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            text-align: center;
             height: 100%;
+            gap: 24px;
+            background-image: radial-gradient(circle at center, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
         }
 
-        .slide-content-grid.bleed-cover .cover-right-img {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 16px;
-            border: 1px solid var(--panel-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .slide-content-grid.bleed-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .intro-title {
-            font-size: 40px;
-            font-weight: 900;
-            background: linear-gradient(to right, #ffffff, var(--header-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
+        .cover-badge {
+            background: #eff6ff;
+            color: var(--primary-blue);
             font-family: var(--font-labels);
-            line-height: 1.2;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid #dbeafe;
         }
 
-        .intro-subtitle {
-            font-size: 18px;
-            color: var(--accent-blue);
-            font-weight: 600;
-            margin-bottom: 25px;
-            font-family: var(--font-main);
+        .cover-title {
+            font-family: var(--font-labels);
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.1;
+            letter-spacing: -0.5px;
         }
 
-        .team-members {
-            font-size: 13.5px;
+        .cover-authors {
+            font-size: 14.5px;
             color: var(--text-muted);
-            border-left: 3.5px solid var(--header-yellow);
-            padding-left: 15px;
-            margin-top: 25px;
+            margin-top: 40px;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-weight: 500;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            width: 80%;
+            max-width: 700px;
         }
 
-        /* Dos columnas con tarjetas (tiled) */
-        .two-column {
+        .cover-authors span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cover-authors span::before {
+            content: "•";
+            color: var(--primary-blue);
+            font-size: 18px;
+        }
+
+        /* Slide 2: Naturaleza del Proyecto */
+        .nature-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            width: 100%;
+            gap: 20px;
+            flex: 1;
         }
 
-        .two-column.tiled {
-            align-items: stretch;
-        }
-
-        .two-column.tiled > div {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
+        .nature-left {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
-        .two-column.tiled > div:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(251, 208, 8, 0.2);
-            transform: translateY(-3px);
+        .nature-right {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
 
-        .two-column.tiled h3 {
+        .nature-intro-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 4px 8px 8px 4px;
+            padding: 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .simple-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .simple-card h3 {
             font-family: var(--font-labels);
-            font-size: 18px;
+            font-size: 14px;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
             font-weight: 800;
-            color: var(--header-yellow);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .two-column.tiled h3 i {
-            color: var(--accent-blue);
-            font-size: 20px;
-        }
-
-        .two-column.tiled p {
-            font-size: 13.5px;
-            line-height: 1.6;
-            color: var(--text-muted);
-        }
-
-        /* Lista de Viñetas Estilizadas */
-        .bullet-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .bullet-list li {
-            position: relative;
-            padding-left: 28px;
-            font-size: 13.5px;
+        .simple-card p {
+            font-size: 12px;
             line-height: 1.55;
             color: var(--text-muted);
-            text-align: left;
         }
 
-        .bullet-list li i {
-            position: absolute;
-            left: 0;
-            top: 3px;
-            color: var(--header-yellow);
-            font-size: 16px;
+        .problematic-list {
+            margin-top: 5px;
+            padding-left: 15px;
         }
 
-        .bullet-list li strong {
-            color: #ffffff;
+        .problematic-list li {
+            font-size: 12px;
+            margin-bottom: 4px;
+            color: #dc2626;
             font-weight: 600;
         }
 
-        /* Mosaico de 3 columnas (Problemática) */
-        .tiled-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            width: 100%;
+        /* Slide 4: Fundamentación Teórica */
+        .theory-top {
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
         }
 
-        .tile {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--panel-border);
-            border-radius: 16px;
-            padding: 25px;
+        .theory-top h3 {
+            font-family: var(--font-labels);
+            font-size: 15px;
+            color: var(--accent-purple);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .theory-top p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .theory-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
+            gap: 10px;
         }
 
-        .tile:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(251, 208, 8, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .tile .icon {
-            width: 55px;
-            height: 55px;
+        .theory-card .num-badge {
+            width: 32px;
+            height: 32px;
+            background: #f5f3ff;
+            color: var(--accent-purple);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .tile h3 {
-            font-family: var(--font-labels);
-            font-size: 17px;
             font-weight: 800;
-            color: #ffffff;
+            font-size: 14px;
+            font-family: var(--font-labels);
         }
 
-        .tile p {
-            font-size: 12.5px;
+        .theory-card h4 {
+            font-family: var(--font-labels);
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .theory-card p {
+            font-size: 12px;
             line-height: 1.5;
             color: var(--text-muted);
         }
 
-        /* Tabla de Cronograma */
-        .table-layout {
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--panel-border);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        /* Slide 5 & 6: Objetivos y metas */
+        .obj-general-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--accent-green);
+            border-radius: 4px 8px 8px 4px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        th, td {
-            padding: 10px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--panel-border);
-            font-size: 12.5px;
-        }
-
-        th {
-            background: rgba(108, 83, 163, 0.25);
-            color: var(--header-yellow);
+        .obj-general-box h3 {
             font-family: var(--font-labels);
+            font-size: 13.5px;
+            color: var(--accent-green);
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 11px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        td strong {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 13px;
-        }
-
-        .badge {
-            background: rgba(48, 160, 228, 0.15);
-            border: 1px solid rgba(48, 160, 228, 0.3);
-            color: var(--accent-blue);
-            padding: 3px 9px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 700;
-            display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Contenedores de imagen */
-        .image-wrapper {
-            width: 100%;
-            height: 100%;
-            max-height: 400px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--panel-border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-        }
-
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .image-contain img {
-            object-fit: contain;
-            background: rgba(0, 0, 0, 0.15);
-            padding: 15px;
-        }
-
-        /* Tarjeta de Rúbrica Alada */
-        .rubric-info-card {
-            background: rgba(0, 0, 0, 0.25);
-            border-left: 4px solid var(--header-yellow);
-            border-radius: 4px 12px 12px 4px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: fit-content;
-        }
-
-        .rubric-card-title {
-            font-family: var(--font-labels);
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--header-yellow);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rubric-level-desc {
-            font-size: 13px;
-            line-height: 1.5;
-            color: #ffffff;
-            font-style: italic;
-        }
-
-        .rubric-weight {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-align: right;
-        }
-
-        /* Ficha de Prompt */
-        .prompt-box {
-            background: #18181c;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-family: monospace;
-            font-size: 11px;
-            color: #d4d4d8;
-            line-height: 1.4;
-            max-height: 110px;
-            overflow-y: auto;
-            border-left: 3px solid var(--accent-blue);
-            text-align: left;
-        }
-
-        /* --- CONTROLES DE NAVEGACIÓN --- */
-        .controls-footer {
-            height: 75px;
-            background: rgba(24, 24, 28, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-
-        .nav-btn {
-            background: var(--header-yellow);
-            color: var(--bg-dark);
-            border: none;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(251, 208, 8, 0.2);
-        }
-
-        .nav-btn:hover {
-            background: var(--header-yellow-hover);
-            transform: translateY(-1px);
-        }
-
-        .nav-btn:disabled {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.2);
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .nav-dots {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .nav-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-dot:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .nav-dot.active {
-            background: var(--header-yellow);
-            transform: scale(1.3);
-            box-shadow: 0 0 10px rgba(251, 208, 8, 0.5);
-        }
-
-        .slide-counter {
-            font-family: var(--font-labels);
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--text-muted);
-        }
-
-        /* --- KPI SUMMARY GRID --- */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .kpi-summary-card {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .kpi-summary-title {
-            font-family: var(--font-labels);
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
 
-        .kpi-summary-value {
-            font-size: 18px;
+        .obj-general-box p {
+            font-size: 12.5px;
+            line-height: 1.55;
+            color: var(--text-dark);
+        }
+
+        .obj-split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .obj-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .obj-section h4 {
+            font-family: var(--font-labels);
             font-weight: 800;
-            color: #ffffff;
+            font-size: 13.5px;
+            color: var(--primary-blue);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .obj-section p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .meta-section {
+            background: #f8fafc;
+            border-left: 3px solid var(--accent-orange);
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .meta-section h5 {
+            font-family: var(--font-labels);
+            font-size: 11.5px;
+            color: var(--accent-orange);
+            font-weight: 800;
             margin-bottom: 2px;
         }
 
-        .kpi-summary-meta {
-            font-size: 9.5px;
-            color: var(--header-yellow);
+        .meta-section p {
+            font-size: 11.5px;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        /* Slide 7: Fases del Proyecto */
+        .fases-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .fase-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .fase-card:nth-child(2) { border-top-color: var(--accent-pink); }
+        .fase-card:nth-child(3) { border-top-color: var(--accent-purple); }
+        .fase-card:nth-child(4) { border-top-color: var(--accent-green); }
+
+        .fase-num {
+            font-family: var(--font-labels);
+            font-weight: 900;
+            font-size: 28px;
+            color: var(--primary-blue);
+        }
+
+        .fase-card:nth-child(2) .fase-num { color: var(--accent-pink); }
+        .fase-card:nth-child(3) .fase-num { color: var(--accent-purple); }
+        .fase-card:nth-child(4) .fase-num { color: var(--accent-green); }
+
+        .fase-name {
+            font-family: var(--font-labels);
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .fase-responsible {
+            font-size: 12px;
+            background: #f3f4f6;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
             font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Slide 8: Cronograma Table */
+        .cronograma-table-wrapper {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 10.5px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+            margin-top: 5px;
+        }
+
+        .cronograma-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cronograma-table th, .cronograma-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .cronograma-table th {
+            background: #f9fafb;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-family: var(--font-labels);
+            text-transform: uppercase;
+            font-size: 9px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-date {
+            background: #edf2f7;
+            color: var(--text-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 9px;
+            display: inline-block;
+        }
+
+        /* Image-Only Slide styles */
+        .slide-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #f9fafb;
+        }
+
+        .slide-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* --- CONTROLES DE NAVEGACIÓN --- */
+        .controls-footer {
+            height: 60px;
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 10;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
+            flex-shrink: 0;
+        }
+
+        .nav-btn {
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-blue-hover);
+        }
+
+        .nav-btn:disabled {
+            background: #edf2f7;
+            color: #a1a1aa;
+            cursor: not-allowed;
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e4e4e7;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot:hover {
+            background: #cbd5e1;
+        }
+
+        .nav-dot.active {
+            background: var(--primary-blue);
+            transform: scale(1.2);
+        }
+
+        .slide-counter {
+            font-family: var(--font-labels);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
         }
     </style>
 </head>
@@ -698,7 +667,7 @@
     <!-- CABECERA -->
     <header class="presentation-header">
         <div class="header-left">
-            <div class="header-logo-placeholder">
+            <div class="header-logo">
                 <span>🎓</span> Proyecto de Clase
             </div>
             <div class="header-title">Integración Pedagógica de IA en Estética</div>
@@ -712,168 +681,205 @@
     <main class="slides-wrapper">
         <div class="slide-deck">
             
-            <!-- DIAPOSITIVA 1: COVER (BLEED IMAGE RIGHT) -->
+            <!-- DIAPOSITIVA 1: PORTADA -->
             <div class="slide active">
-                <div class="slide-content-grid bleed-cover">
-                    <div class="cover-left">
-                        <div class="slide-badge" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));">IA en Educación</div>
-                        <h1 class="intro-title">Diseño de Materiales Didácticos</h1>
-                        <h2 class="intro-subtitle">En la asignatura de estética mediante inteligencia artificial</h2>
-                        <p style="font-size: 13.5px; font-weight: 500; color: var(--text-white);">Para proyectos de clase de grado once del Colegio Danilo Cifuentes</p>
+                <div class="slide-body">
+                    <div class="cover-layout">
+                        <div class="cover-badge">Sustentación de Proyecto</div>
+                        <h1 class="cover-title">IA en Educación</h1>
+                        <h2 class="cover-subtitle" style="font-size: 18px; font-weight: 500; color: var(--text-muted); margin-top: -10px;">
+                            Desarrollo de un repositorio de materiales didácticos apoyados en inteligencia artificial
+                        </h2>
                         
-                        <div class="team-members">
-                            <span style="font-weight: 800; color: var(--header-yellow); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px;">Equipo Investigador:</span>
+                        <div class="cover-authors">
                             <span>Víctor Ardila-Bayona</span>
                             <span>Isabel Alfonso-Sosa</span>
                             <span>Laura Villanueva-Rojas</span>
                             <span>José David Cortés-Torres</span>
                         </div>
                     </div>
-                    <div class="cover-right-img">
-                        <img src="slide_cover.png" alt="IA y Educación">
-                    </div>
                 </div>
             </div>
 
             <!-- DIAPOSITIVA 2: NATURALEZA DEL PROYECTO -->
             <div class="slide">
-                <div class="slide-content-full">
-                    <div class="slide-badge" style="margin: 0 auto 10px; background: var(--accent-purple);">Contexto</div>
-                    <h1 class="intro-title" style="font-size: 44px; text-align: center;">Naturaleza del Proyecto</h1>
-                    <p class="text-p" style="font-size: 18px; max-width: 800px; margin: 15px auto; line-height: 1.6; color: var(--text-muted);">
-                        Desarrollo de un repositorio que integra el uso de la inteligencia artificial como herramienta de apoyo en la creación de materiales didácticos.
-                    </p>
-                </div>
-            </div>
-
-            <!-- DIAPOSITIVA 3: INTRODUCCIÓN Y JUSTIFICACIÓN -->
-            <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f1">Introducción</div>
-                    <h2 class="slide-title">Introducción y <span>Justificación</span></h2>
+                    <h2 class="slide-title">Naturaleza del <span>Proyecto</span></h2>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="text-block">
-                        <ul class="bullet-list">
-                            <li><i class="fa-solid fa-lightbulb"></i> <strong>Naturaleza:</strong> Transformar una problemática observada en el salón de clase en una oportunidad de integrar el uso de la IA en un proceso guiado. El diseño y creación de recursos en el contexto actual.</li>
-                            <li><i class="fa-solid fa-rotate"></i> <strong>Propuesta:</strong> Replantear el uso de las tecnologías dentro del espacio de clase.</li>
-                            <li><i class="fa-solid fa-magnifying-glass-chart"></i> <strong>Análisis:</strong> Se analizan los criterios de diseño, implementación y regulación del uso de la IA en el contexto escolar, orientados a las necesidades formativas.</li>
-                            <li><i class="fa-solid fa-rocket"></i> <strong>Implementación:</strong> Materiales diseñados para integrar la IA en el proyecto de aula mediante el desarrollo de estrategias pedagógicas orientadas al uso responsable.</li>
-                        </ul>
-                    </div>
-                    <div class="image-wrapper image-contain">
-                        <img src="slide_introduccion.png" alt="Estudiante y tecnología">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DIAPOSITIVA 4: PROBLEMÁTICA IDENTIFICADA -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="slide-badge b-f2">Diagnóstico</div>
-                    <h2 class="slide-title">Problemática <span>Identificada</span></h2>
-                </div>
-                <div class="slide-content-full">
-                    <p style="text-align: center; margin-bottom: 25px; font-size: 15px; color: var(--text-muted);">Identificada por docentes y estudiantes en tres pilares principales:</p>
-                    <div class="tiled-content">
-                        <div class="tile">
-                            <div class="icon" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444;"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                            <h3>01. Uso Irresponsable</h3>
-                            <p>Uso poco responsable de las herramientas de Inteligencia Artificial en el desarrollo de actividades escolares.</p>
+                <div class="slide-body">
+                    <div class="nature-grid">
+                        <div class="nature-left">
+                            <div class="nature-intro-box">
+                                <strong>Naturaleza General:</strong> Desarrollo de un repositorio que integra el uso de la inteligencia artificial como herramienta de apoyo en la creación de materiales didácticos para abordar con los estudiantes de grado once, permitiendo el desarrollo de sus procesos de aprendizaje en el espacio académico de estética.
+                            </div>
+                            <div class="simple-card">
+                                <h3><i class="fa-solid fa-lightbulb"></i> Introducción</h3>
+                                <p>Replantear el uso de las tecnologías dentro del espacio de clase. Se analizan los criterios de diseño, implementación y regulación del uso de la IA en el contexto escolar, con el fin de orientar una propuesta coherente con las necesidades formativas de los estudiantes.</p>
+                            </div>
                         </div>
-                        <div class="tile">
-                            <div class="icon" style="background-color: rgba(249, 115, 22, 0.15); color: #f97316;"><i class="fa-solid fa-link"></i></div>
-                            <h3>02. Dependencia</h3>
-                            <p>Fuerte dependencia tecnológica que limita el desarrollo de habilidades fundamentales en el estudiante.</p>
-                        </div>
-                        <div class="tile">
-                            <div class="icon" style="background-color: rgba(168, 85, 247, 0.15); color: #a855f7;"><i class="fa-solid fa-eraser"></i></div>
-                            <h3>03. Pérdida de Autonomía</h3>
-                            <p>Pérdida de la creación autónoma, plagio, poca originalidad y reducción de la autoría en procesos creativos.</p>
+                        <div class="nature-right">
+                            <div class="simple-card">
+                                <h3><i class="fa-solid fa-triangle-exclamation"></i> Problemática Identificada</h3>
+                                <p>Identificada por docentes y estudiantes en tres pilares principales:</p>
+                                <ul class="problematic-list">
+                                    <li>Uso Irresponsable de la IA</li>
+                                    <li>Dependencia tecnológica</li>
+                                    <li>Pérdida de la creación autónoma</li>
+                                </ul>
+                            </div>
+                            <div class="simple-card">
+                                <h3><i class="fa-solid fa-circle-check"></i> Justificación y Propuesta</h3>
+                                <p><strong>Justificación:</strong> Fundamentar el diseño de materiales en la asignatura de Estética mediante el uso de IA.</p>
+                                <p style="margin-top: 5px;"><strong>Propuesta (Fases):</strong> Implementar materiales pedagógicos para integrar la IA en el proyecto de aula mediante el desarrollo de estrategias orientadas al uso responsable en los proyectos finales.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 5: FUNDAMENTACIÓN TEÓRICA -->
+            <!-- DIAPOSITIVA 3: ANÁLISIS SITUACIONAL -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f3">Teoría</div>
+                    <h2 class="slide-title">Análisis <span>Situacional</span></h2>
+                </div>
+                <div class="slide-body">
+                    <div class="slide-image-container">
+                        <img src="sustentacion_export/slide_3.png" alt="Análisis Situacional">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 4: FUNDAMENTACIÓN TEÓRICA -->
+            <div class="slide">
+                <div class="slide-header">
                     <h2 class="slide-title">Fundamentación <span>Teórica</span></h2>
                 </div>
-                <div class="slide-content-full">
-                    <div class="two-column tiled">
-                        <div>
-                            <h3><i class="fa-solid fa-scale-balanced"></i> Diseño Responsable y Formativo</h3>
-                            <p>
-                                <strong>Gobernanza y Protocolos:</strong> Propone una Gobernanza Ética que organiza responsabilidades y protocolos de uso escolar de la IA.
-                            </p>
-                            <p>
-                                <strong>Enfoque Humano:</strong> Defiende que la IA debe ser un apoyo para la ideación visual y exploración, no un sustituto de la autoría.
-                            </p>
-                            <p>
-                                <strong>Ética y Autoría:</strong> Establece las bases contractuales de honestidad intelectual reguladas a través de acuerdos interactivos.
-                            </p>
+                <div class="slide-body">
+                    <div class="theory-top">
+                        <h3>DISEÑO RESPONSABLE Y FORMATIVO</h3>
+                        <p>Propone una Gobernanza Ética que organiza responsabilidades y protocolos de uso. Defiende que la IA debe ser un apoyo para la ideación visual, no un sustituto de la autoría.</p>
+                    </div>
+                    
+                    <div class="theory-grid">
+                        <div class="theory-card">
+                            <div class="num-badge">01</div>
+                            <h4>Enfoque Humano</h4>
+                            <p>IA en educación: mediación pedagógica y transformación didáctica</p>
                         </div>
-                        <div>
-                            <h3><i class="fa-solid fa-chalkboard-user"></i> IA en Educación</h3>
-                            <p>
-                                <strong>Mediación Pedagógica:</strong> Exploración y andamiaje de la IA como un agente tecnológico que transforma la didáctica clásica.
-                            </p>
-                            <p>
-                                <strong>Modelo TPACK:</strong> Redefinición del rol docente y reestructuración curricular cruzando el contenido tecnológico, pedagógico y temático (IA-TPACK).
-                            </p>
-                            <p>
-                                <strong>Balance de Riesgos:</strong> Análisis equilibrado entre el potencial de co-creación y las necesidades reflexivas de los estudiantes de grado once.
-                            </p>
+                        <div class="theory-card">
+                            <div class="num-badge">02</div>
+                            <h4>Oportunidades y Riesgos</h4>
+                            <p>Diseño de materiales con IA y rol docente desde la IA Tpack</p>
+                        </div>
+                        <div class="theory-card">
+                            <div class="num-badge">03</div>
+                            <h4>Gobernanza y Protocolos</h4>
+                            <p>Ética, autoría y gobernanza escolar del uso de IA</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 6: OBJETIVOS Y METAS (I) -->
+            <!-- DIAPOSITIVA 5: OBJETIVOS Y METAS I -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f1">Objetivos</div>
-                    <h2 class="slide-title">Objetivos Específicos y <span>Metas (I)</span></h2>
+                    <h2 class="slide-title">Objetivos y <span>Metas (I)</span></h2>
                 </div>
-                <div class="slide-content-full">
-                    <div class="two-column tiled">
-                        <div>
-                            <h3><i class="fa-solid fa-book-open"></i> Objetivo Específico 1</h3>
-                            <p>Realizar el fundamento teórico para el diseño y la estructura de materiales didácticos mediante la metodología ADDIE en el proceso de cada proyecto de los estudiantes de grado once en el espacio académico de estética.</p>
-                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 1</div>
-                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Consolidar un marco referencial sólido y pertinente que permita el diseño de materiales que contextualicen a los estudiantes sobre los diferentes tipos de técnicas.</p>
+                <div class="slide-body">
+                    <div class="obj-general-box">
+                        <h3>Objetivo General</h3>
+                        <p>Desarrollar un portafolio de recursos con materiales eficientes y personalizados diseñados con el apoyo de la IA para ser integrados en los proyectos de grado once, del Colegio Danilo Cifuentes con el fin de establecer normas de uso ético, responsable y transparente de la IA.</p>
+                    </div>
+                    
+                    <div class="obj-split-grid">
+                        <div class="obj-card">
+                            <div class="obj-section">
+                                <h4><i class="fa-solid fa-graduation-cap"></i> Específico 1</h4>
+                                <p>Realizar el fundamento teórico para el diseño y la estructura de materiales didácticos mediante la metodología ADDIE en el proceso de cada proyecto de los estudiantes de grado once en el espacio académico de estética.</p>
+                            </div>
+                            <div class="meta-section">
+                                <h5>Meta 1</h5>
+                                <p>Consolidar un marco referencial sólido y pertinente que permita el diseño de materiales que contextualicen a los estudiantes sobre los diferentes tipos de técnicas que pueden poner en práctica dentro de su proyecto de aula.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3><i class="fa-solid fa-layer-group"></i> Objetivo Específico 2</h3>
-                            <p>Desarrollar un abanico de IAs y una plataforma de apoyo que permitan integrar el uso responsable de la inteligencia artificial dentro del proyecto de aula de cada estudiante, en los procesos de dibujo, diseño, creación y análisis visual.</p>
-                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 2</div>
-                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Establecer un repertorio de IAs que pueden utilizar los estudiantes para el desarrollo de su proyecto, resaltando un abordaje ético y responsable.</p>
+                        <div class="obj-card">
+                            <div class="obj-section">
+                                <h4><i class="fa-solid fa-laptop-code"></i> Específico 2</h4>
+                                <p>Desarrollar un abanico de IAs y una plataforma de apoyo que permitan integrar el uso responsable de la inteligencia artificial dentro del proyecto de aula de cada estudiante, en los procesos de dibujo, diseño, creación y análisis visual.</p>
+                            </div>
+                            <div class="meta-section">
+                                <h5>Meta 2</h5>
+                                <p>Establecer un repertorio de IAs que pueden utilizar los estudiantes para el desarrollo de su proyecto, resaltando un abordaje ético y responsable de la IA.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 7: OBJETIVOS Y METAS (II) -->
+            <!-- DIAPOSITIVA 6: OBJETIVOS Y METAS II -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f2">Objetivos</div>
-                    <h2 class="slide-title">Objetivos Específicos y <span>Metas (II)</span></h2>
+                    <h2 class="slide-title">Objetivos y <span>Metas (II)</span></h2>
                 </div>
-                <div class="slide-content-full">
-                    <div class="two-column tiled">
-                        <div>
-                            <h3><i class="fa-solid fa-chart-line"></i> Objetivo Específico 3</h3>
-                            <p>Diseñar un instrumento de seguimiento con criterios establecidos que permitan reconocer el proceso del estudiante en la ejecución de su proyecto e integración del portafolio de recursos.</p>
-                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 3</div>
-                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Que el docente y el estudiante puedan hacer un seguimiento del proceso, avance, integración y uso adecuado de la IA en el proyecto de aula en tiempo real.</p>
+                <div class="slide-body">
+                    <div class="obj-general-box">
+                        <h3>Objetivo General</h3>
+                        <p>Desarrollar un portafolio de recursos con materiales eficientes y personalizados diseñados con el apoyo de la IA para ser integrados en los proyectos de grado once, del Colegio Danilo Cifuentes con el fin de establecer normas de uso ético, responsable y transparente de la IA.</p>
+                    </div>
+                    
+                    <div class="obj-split-grid">
+                        <div class="obj-card">
+                            <div class="obj-section">
+                                <h4><i class="fa-solid fa-magnifying-glass-chart"></i> Específico 3</h4>
+                                <p>Diseñar un instrumento de seguimiento con criterios establecidos que permitan reconocer el proceso del estudiante en la ejecución de su proyecto.</p>
+                            </div>
+                            <div class="meta-section">
+                                <h5>Meta 3</h5>
+                                <p>Que el docente y estudiante puedan hacer un seguimiento del proceso, avance, integración y uso adecuado de la IA en el proyecto de aula.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3><i class="fa-solid fa-clipboard-check"></i> Objetivo Específico 4</h3>
-                            <p>Establecer unos criterios de evaluación que permitan reconocer la efectividad de los materiales en el proceso del estudiante, estableciendo normas de uso ético, responsable y transparente.</p>
-                            <div class="badge" style="align-self: flex-start; margin-top: 10px;">Meta 4</div>
-                            <p style="font-size: 13px; font-style: italic; color: var(--accent-blue);">Diseñar un instrumento evaluativo tipo rúbrica e índice IAP que permita determinar la viabilidad y eficacia del portafolio, asegurando que cumpla los objetivos.</p>
+                        <div class="obj-card">
+                            <div class="obj-section">
+                                <h4><i class="fa-solid fa-clipboard-check"></i> Específico 4</h4>
+                                <p>Establecer unos criterios de evaluación que permitan reconocer la efectividad de los materiales en el proceso del estudiante.</p>
+                            </div>
+                            <div class="meta-section">
+                                <h5>Meta 4</h5>
+                                <p>Diseñar un instrumento evaluativo tipo rúbrica que permita determinar la viabilidad y eficacia del portafolio de materiales, asegurando que cumpla los objetivos y metas establecidas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIAPOSITIVA 7: FASES DEL PROYECTO -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2 class="slide-title">Fases del <span>Proyecto</span></h2>
+                </div>
+                <div class="slide-body">
+                    <p style="font-size: 14px; margin-bottom: 20px; color: var(--text-muted); text-align: center;">Fases del proyecto dirigido al diseño de materiales didácticos y sus respectivos docentes responsables:</p>
+                    
+                    <div class="fases-grid">
+                        <div class="fase-card">
+                            <div class="fase-num">F1</div>
+                            <div class="fase-name">Inmersión y Diagnóstico</div>
+                            <div class="fase-responsible">Pr. David y Laura</div>
+                        </div>
+                        <div class="fase-card">
+                            <div class="fase-num">F2</div>
+                            <div class="fase-name">Apropiación Tecnológica</div>
+                            <div class="fase-responsible">Pr. Isabel y David</div>
+                        </div>
+                        <div class="fase-card">
+                            <div class="fase-num">F3</div>
+                            <div class="fase-name">Construcción Guiada</div>
+                            <div class="fase-responsible">Pr. Laura y David</div>
+                        </div>
+                        <div class="fase-card">
+                            <div class="fase-num">F4</div>
+                            <div class="fase-name">Evaluación Formativa</div>
+                            <div class="fase-responsible">Pr. Isabel y Víctor</div>
                         </div>
                     </div>
                 </div>
@@ -882,49 +888,89 @@
             <!-- DIAPOSITIVA 8: CRONOGRAMA DE ACTIVIDADES -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f3">Planeación</div>
                     <h2 class="slide-title">Cronograma de <span>Actividades</span></h2>
                 </div>
-                <div class="slide-content-full">
-                    <div class="table-layout">
-                        <table>
+                <div class="slide-body">
+                    <div class="cronograma-table-wrapper">
+                        <table class="cronograma-table">
                             <thead>
                                 <tr>
-                                    <th style="width: 25%;">Fechas</th>
-                                    <th style="width: 50%;">Fase / Actividad</th>
-                                    <th style="width: 25%;">Responsables</th>
+                                    <th style="width: 16%;">Actividades</th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(23-28) MAR</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(6-11) ABR</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(13-18) ABR</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(20-25) ABR</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(27-02) A-M</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(04-09) MAY</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(11-16) MAY</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(18-23) MAY</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(25-30) MAY</span></th>
+                                    <th style="width: 8.4%;"><span class="badge-date">(01-06) JUN</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="badge">23 - 28 MARZO</span></td>
-                                    <td><strong>Planeación del Proyecto</strong><br>Lluvia de ideas, problemática, justificación, objetivos, fundamentación, metodología.</td>
-                                    <td>Profs. Laura y José David</td>
+                                    <td><strong>Planeación de Proyecto</strong></td>
+                                    <td>• Lluvia de ideas<br>• Población<br>• Cronograma</td>
+                                    <td>• Problemática<br>• Justificación<br>• Objetivos<br>• Fundamentos</td>
+                                    <td>• Fases<br>• Metodología<br>• Evaluación</td>
+                                    <td>Revisión de la planeación</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td rowspan="5" style="background: #eff6ff; font-weight: bold; text-align: center; vertical-align: middle; color: var(--primary-blue); border-left: 3px solid var(--primary-blue);">
+                                        SOCIALIZACIÓN Y RETROALIMENTACIÓN FINAL DE LA ASIGNATURA
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge">06 - 11 ABRIL</span></td>
-                                    <td><strong>Documento de Planeación</strong><br>Estructuración final del documento de diseño curricular.</td>
-                                    <td>Profs. Isabel y José David</td>
+                                    <td><strong>Documento de planeación</strong></td>
+                                    <td></td>
+                                    <td>• Problemática<br>• Justificación<br>• Objetivos<br>• Fundamentos</td>
+                                    <td>• Fases<br>• Metodología<br>• Evaluación</td>
+                                    <td>Estructuración final del diseño instruccional</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge">13 - 18 ABRIL</span></td>
-                                    <td><strong>Elaboración de Recursos</strong><br>Inicio de creación de recursos didácticos digitales.</td>
-                                    <td>Profs. Laura y José David</td>
+                                    <td><strong>Elaboración de recursos</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Elaboración de las plantillas didácticas</td>
+                                    <td>Ejecución de prompts en IAs y calibración</td>
+                                    <td>Homogeneización entre plantillas y productos IA</td>
+                                    <td>Ajustes finales a recursos</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge">20 ABRIL - 02 MAYO</span></td>
-                                    <td><strong>Elaboración de Plantillas y Ejecución</strong><br>Ejecución de prompts en IAs y calibración de interfaces.</td>
-                                    <td>Profs. Isabel y Víctor</td>
+                                    <td><strong>Evaluación de recursos</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Asesoría y delimitación de recursos</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge">04 - 23 MAYO</span></td>
-                                    <td><strong>Homogeneización y Ajustes</strong><br>Ajustes finales y organización estética del portafolio.</td>
-                                    <td>Equipo de Trabajo</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge">25 MAYO - 06 JUNIO</span></td>
-                                    <td><strong>Socialización y Retroalimentación</strong><br>Evaluación de recursos, sustentación y presentación en clase.</td>
-                                    <td>Equipo de Trabajo</td>
+                                    <td><strong>Trabajo Final</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Organización final del portafolio</td>
+                                    <td>Presentación del portafolio en clase</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -932,135 +978,62 @@
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 9: RUTA METODOLÓGICA ADDIE -->
+            <!-- DIAPOSITIVA 9: RUTA METODOLÓGICA I -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f4">Metodología</div>
-                    <h2 class="slide-title">ADDIE: Ruta <span>Metodológica</span></h2>
+                    <h2 class="slide-title">ADDIE: Ruta <span>Metodológica (I)</span></h2>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="text-block">
-                        <ul class="bullet-list">
-                            <li><i class="fa-solid fa-diagram-project"></i> <strong>Estructura modular</strong>: ADDIE organiza el diseño de los materiales didácticos mediante cinco fases lógicas: Análisis, Diseño, Desarrollo, Implementación y Evaluación.</li>
-                            <li><i class="fa-solid fa-bridge"></i> <strong>Puente didáctico</strong>: En este proyecto, permite pasar de la problemática institucional detectada a recursos prácticos y coherentes en el aula de Estética.</li>
-                            <li><i class="fa-solid fa-crosshairs"></i> <strong>Intencionalidad</strong>: Asegura que cada recurso tenga una intención pedagógica clara (sensibilización, exploración visual, feedback tutorado o registro analítico).</li>
-                            <li><i class="fa-solid fa-user-graduate"></i> <strong>Roles activos</strong>: El docente actúa como mediador del aprendizaje y el estudiante como creador crítico que regula su interacción con la IA.</li>
-                        </ul>
-                    </div>
-                    <div class="image-wrapper image-contain">
-                        <img src="slide_addie.png" alt="Diagrama del modelo instruccional ADDIE">
+                <div class="slide-body">
+                    <div class="slide-image-container">
+                        <img src="sustentacion_export/slide_9.png" alt="ADDIE Hacia la ruta metodológica (I)">
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 10: APLICACIÓN DEL MODELO ADDIE -->
+            <!-- DIAPOSITIVA 10: RUTA METODOLÓGICA II -->
             <div class="slide">
                 <div class="slide-header">
-                    <div class="slide-badge b-f1">Metodología</div>
-                    <h2 class="slide-title">Del Diagnóstico al <span>Diseño</span></h2>
+                    <h2 class="slide-title">ADDIE: Ruta <span>Metodológica (II)</span></h2>
                 </div>
-                <div class="slide-content-full">
-                    <div class="bullet-list" style="width: 100%; display: grid; grid-template-columns: 1fr; gap: 10px;">
-                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-blue); position: relative;">
-                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 15px; color: var(--accent-blue);"></i>
-                            <strong>Análisis:</strong> Diagnóstico de dependencia e identificación del uso informal de IAs sin citación de prompts.
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-pink); position: relative;">
-                            <i class="fa-solid fa-pen-ruler" style="position: absolute; left: 16px; top: 15px; color: var(--accent-pink);"></i>
-                            <strong>Diseño:</strong> Estructuración de la ruta formativa de 4 fases y diseño instruccional cruzando IA y currículo artístico.
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-purple); position: relative;">
-                            <i class="fa-solid fa-code" style="position: absolute; left: 16px; top: 15px; color: var(--accent-purple);"></i>
-                            <strong>Desarrollo:</strong> Programación y construcción de interfaces interactivas, tutor bot DaVinci y matrices.
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--accent-green); position: relative;">
-                            <i class="fa-solid fa-gears" style="position: absolute; left: 16px; top: 15px; color: var(--accent-green);"></i>
-                            <strong>Implementación:</strong> Estudiantes ejecutan la co-creación, firman acuerdos y documentan su bitácora digital.
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 12px 20px 12px 50px; border-radius: 12px; border-left: 4px solid var(--header-yellow); position: relative;">
-                            <i class="fa-solid fa-clipboard-check" style="position: absolute; left: 16px; top: 15px; color: var(--header-yellow);"></i>
-                            <strong>Evaluación:</strong> Valoración formativa del proceso basada en rúbricas, métricas de coevaluación y el cálculo del IAP.
-                        </div>
+                <div class="slide-body">
+                    <div class="slide-image-container">
+                        <img src="sustentacion_export/slide_10.png" alt="ADDIE Hacia la ruta metodológica (II)">
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 11: RECURSOS DEL PORTAFOLIO -->
+            <!-- DIAPOSITIVA 11: RECURSOS -->
             <div class="slide">
-                <div class="slide-header">
-                    <div class="slide-badge b-f2">Recursos</div>
-                    <h2 class="slide-title">Recursos del <span>Portafolio</span></h2>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="text-block" style="font-size: 13.5px;">
-                        <ul class="bullet-list" style="gap: 8px;">
-                            <li><strong>Cápsula Introductoria (F1: Inmersión)</strong>: Despierta interés y sitúa la problemática de la tecnología en el arte.</li>
-                            <li><strong>Museo Digital y Fichas Técnicas (F1)</strong>: Galería 3D para exploración libre y andamiaje técnico.</li>
-                            <li><strong>Abanico IA y Capacitación (F2: Apropiación)</strong>: Clasifica herramientas de IA y las regula éticamente.</li>
-                            <li><strong>Tutor DaVinci (F3: Construcción)</strong>: Genera retroalimentación adaptativa para refinar bocetos.</li>
-                            <li><strong>Bitácora y Acuerdo Ético (F3-F4)</strong>: Custodian y registran la trazabilidad y la honestidad intelectual.</li>
-                            <li><strong>Rúbrica e Índice IAP (F4: Evaluación)</strong>: Evalúan de forma cuantitativa y cualitativa el proceso.</li>
-                        </ul>
-                    </div>
-                    <div class="image-wrapper image-contain">
-                        <img src="slide_recursos.png" alt="Estructura de Recursos">
+                <div class="slide-body" style="padding: 0;">
+                    <div class="slide-image-container" style="border: none; background: transparent;">
+                        <img src="sustentacion_export/slide_11.png" alt="Recursos del Portafolio">
                     </div>
                 </div>
             </div>
 
             <!-- DIAPOSITIVA 12: EVALUACIÓN Y TRAZABILIDAD -->
             <div class="slide">
-                <div class="slide-header">
-                    <div class="slide-badge b-f3">Evaluación</div>
-                    <h2 class="slide-title">Evaluación del <span>Proceso</span></h2>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="text-block">
-                        <ul class="bullet-list">
-                            <li><i class="fa-solid fa-route"></i> <strong>Trazabilidad:</strong> Monitoreo progresivo de los cambios, iteraciones y justificaciones del boceto con IA en el portafolio.</li>
-                            <li><i class="fa-solid fa-book-open-reader"></i> <strong>Bitácora:</strong> Registro continuo de versiones, prompts y auto-evaluación del nivel de agencia.</li>
-                            <li><i class="fa-solid fa-robot"></i> <strong>Rol de DaVinci:</strong> Guía formativa basada en preguntas reflexivas que el estudiante decide libremente aceptar o rechazar.</li>
-                            <li><i class="fa-solid fa-award"></i> <strong>Foco Evaluativo:</strong> Desplazamiento del resultado visual de la IA hacia la justificación crítica y la curaduría humana en todo el proceso.</li>
-                        </ul>
-                    </div>
-                    <div class="image-wrapper image-contain">
-                        <img src="slide_evaluacion.png" alt="Trazabilidad y evaluación">
+                <div class="slide-body" style="padding: 0;">
+                    <div class="slide-image-container" style="border: none; background: transparent;">
+                        <img src="sustentacion_export/slide_12.png" alt="Evaluación del Proceso y Trazabilidad">
                     </div>
                 </div>
             </div>
 
-            <!-- DIAPOSITIVA 13: RÚBRICAS PROYECTO Y RECURSOS -->
+            <!-- DIAPOSITIVA 13: RÚBRICAS -->
             <div class="slide">
-                <div class="slide-header">
-                    <div class="slide-badge b-f4">Evaluación</div>
-                    <h2 class="slide-title">Rúbricas: Proyecto y <span>Recursos</span></h2>
+                <div class="slide-body" style="padding: 0;">
+                    <div class="slide-image-container" style="border: none; background: transparent;">
+                        <img src="sustentacion_export/slide_13.png" alt="Rúbricas del Portafolio y Coevaluación">
+                    </div>
                 </div>
-                <div class="slide-content-full">
-                    <div class="two-column tiled">
-                        <div>
-                            <h3><i class="fa-solid fa-list-check"></i> Rúbrica del Proyecto (Formativa)</h3>
-                            <p>
-                                <strong>Desarrollo general:</strong> Evalúa el cumplimiento de los objetivos y la integración coherente del portafolio en el aula.
-                            </p>
-                            <p>
-                                <strong>Evidencias:</strong> Se basa en la trazabilidad de la bitácora digital, la calibración de prompts, y la validación del acuerdo ético.
-                            </p>
-                            <p>
-                                <strong>Foco:</strong> Prioriza la actitud reflexiva y la evolución del estudiante por encima del resultado final 100% automático.
-                            </p>
-                        </div>
-                        <div>
-                            <h3><i class="fa-solid fa-star-half-stroke"></i> Rúbrica de Recursos (Utilidad)</h3>
-                            <p>
-                                <strong>Evaluación del portafolio:</strong> Permite que los estudiantes valoren la usabilidad, claridad, accesibilidad y pertinencia didáctica de los materiales.
-                            </p>
-                            <p>
-                                <strong>Retroalimentación continua:</strong> Ayuda a los docentes a ajustar las interfaces (ej. DaVinci, abanicos) basándose en las sugerencias del aula.
-                            </p>
-                            <p>
-                                <strong>Pensamiento crítico:</strong> Promueve el rol activo y democrático del estudiante en la coconstrucción y mejora de su experiencia escolar.
-                            </p>
-                        </div>
+            </div>
+
+            <!-- DIAPOSITIVA 14: CIERRE -->
+            <div class="slide">
+                <div class="slide-body" style="padding: 0;">
+                    <div class="slide-image-container" style="border: none; background: transparent;">
+                        <img src="sustentacion_export/slide_14.png" alt="Cierre del Proyecto">
                     </div>
                 </div>
             </div>
@@ -1079,7 +1052,7 @@
         </div>
         
         <div class="slide-counter" id="slide-counter-display">
-            Diapositiva 1 de 13
+            Diapositiva 1 de 14
         </div>
         
         <button id="next-btn" class="nav-btn" onclick="changeSlide(1)">
