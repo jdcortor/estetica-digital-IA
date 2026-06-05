@@ -602,6 +602,27 @@
             gap: 15px;
         }
 
+        .btn-documento {
+            display: inline-block;
+            background-color: var(--bulb-blue);
+            color: #ffffff;
+            font-family: var(--font-labels);
+            font-size: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 12px 40px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+        }
+
+        .btn-documento:hover {
+            background-color: #2580b5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
         .carousel-controls-row {
             display: flex;
             align-items: center;
@@ -1064,6 +1085,7 @@
                             </div>
                             <button class="carousel-btn-large" onclick="moveTeacher(1)" title="Siguiente">&#10095;</button>
                         </div>
+                        <button class="btn-documento" onclick="openDocumentModal()">DOCUMENTO</button>
                     </div>
                 </div>
             </div>
@@ -1182,6 +1204,18 @@
             const modal = document.getElementById('presentation-modal');
             const iframe = document.getElementById('presentation-iframe');
             iframe.src = 'presentacion_proyecto.html';
+            modal.style.display = 'flex';
+            // Force reflow
+            modal.offsetHeight;
+            modal.classList.add('show');
+        }
+
+        // --- 6. LÓGICA DEL DOCUMENTO INCRUSTADO ---
+        function openDocumentModal() {
+            const modal = document.getElementById('presentation-modal');
+            const iframe = document.getElementById('presentation-iframe');
+            // El navegador visualizará el documento incrustado. Se cambia a .pdf porque los navegadores no renderizan .docx de forma nativa.
+            iframe.src = 'Proyecto de Clase IA en Educación.pdf';
             modal.style.display = 'flex';
             // Force reflow
             modal.offsetHeight;
